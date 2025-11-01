@@ -1,0 +1,461 @@
+/* Styles pour la perception */
+.collection-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.pending-payments {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.payment-item {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-item.overdue {
+    border-color: #e74c3c;
+    background: #fdf2f2;
+}
+
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.taxpayer-info h4 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.payment-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nif, .amount, .due-date {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.amount {
+    font-weight: 600;
+    color: #e74c3c;
+}
+
+.payment-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.status-badge.overdue {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.days-late {
+    font-size: 0.8rem;
+    color: #e74c3c;
+}
+
+.payment-details {
+    margin-bottom: 1.5rem;
+}
+
+.tax-details {
+    margin-bottom: 1.5rem;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.penalties {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.collection-history h5 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+}
+
+.history-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.history-date {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.history-action {
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.payment-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Interface de perception */
+.collection-interface {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.payment-methods h5 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+}
+
+.methods-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.method-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.method-card:hover {
+    border-color: #3498db;
+    background: #f0f8ff;
+}
+
+.method-icon {
+    font-size: 1.5rem;
+    color: #3498db;
+}
+
+.method-info h6 {
+    margin: 0 0 0.25rem 0;
+    color: #2c3e50;
+}
+
+.method-info p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.payment-form {
+    padding: 1rem;
+}
+
+.payment-form h5 {
+    margin: 0 0 1.5rem 0;
+    color: #2c3e50;
+    text-align: center;
+}
+
+/* Styles pour les transactions */
+.transaction-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.transaction-pipeline {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pipeline-stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.pipeline-stage {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.stage-header h5 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.stage-count {
+    background: #3498db;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.stage-transactions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pipeline-item {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.item-header h6 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 0.9rem;
+}
+
+.item-type {
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.item-type.rental {
+    background: #d1edff;
+    color: #0c5460;
+}
+
+.item-type.sale {
+    background: #d4edda;
+    color: #155724;
+}
+
+.item-type.management {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.item-content p {
+    margin: 0.25rem 0;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.item-actions {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.transactions-list {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.table-actions {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.badge-rental {
+    background: #d1edff;
+    color: #0c5460;
+}
+
+.badge-sale {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge-management {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.negotiation {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.contract {
+    background: #d1edff;
+    color: #0c5460;
+}
+
+.status-badge.completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* Calendrier des rendez-vous */
+.appointments-calendar {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.calendar-week {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.day-slot {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.day-slot.today {
+    background: #f0f8ff;
+    border: 2px solid #3498db;
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.day-label {
+    background: #3498db;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.appointments {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.appointment-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 6px;
+    border-left: 4px solid #27ae60;
+}
+
+.appointment-time {
+    font-weight: 600;
+    color: #2c3e50;
+    min-width: 50px;
+}
+
+.appointment-details strong {
+    display: block;
+    color: #2c3e50;
+    margin-bottom: 0.25rem;
+}
+
+.appointment-details p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .collection-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .methods-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .pipeline-stages {
+        grid-template-columns: 1fr;
+    }
+    
+    .payment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .payment-status {
+        align-items: flex-start;
+    }
+    
+    .calendar-week {
+        grid-template-columns: 1fr;
+    }
+    
+    .payment-actions {
+        flex-direction: column;
+    }
+}

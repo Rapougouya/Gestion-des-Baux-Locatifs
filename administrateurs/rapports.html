@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports Système - Administration | PNSBIL</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>⚙️ PNSBIL</span>
+                <span>Rapports Système</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Administrateur Système</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Administration</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="utilisateurs.html" class="nav-link">👥 Utilisateurs</a>
+            <a href="configurations.html" class="nav-link">⚙️ Configuration</a>
+            <a href="audit.html" class="nav-link">📋 Journal d'audit</a>
+            <a href="rapports.html" class="nav-link active">📈 Rapports</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Rapports et Analytics Système</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="exportSystemData()">
+                        <i class="fas fa-database me-2"></i>Export données
+                    </button>
+                    <button class="btn btn-primary" onclick="generateSystemReport()">
+                        <i class="fas fa-server me-2"></i>Rapport système
+                    </button>
+                </div>
+            </div>
+            <p>Surveillance et analyse des performances de la plateforme</p>
+        </div>
+
+        <!-- Métriques Système -->
+        <div class="system-metrics">
+            <div class="metrics-grid">
+                <div class="metric-card performance">
+                    <div class="metric-icon">⚡</div>
+                    <div class="metric-content">
+                        <div class="metric-value">99.8%</div>
+                        <div class="metric-label">Disponibilité</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Stable</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card users">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-content">
+                        <div class="metric-value">2,847</div>
+                        <div class="metric-label">Utilisateurs actifs</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+12% ce mois</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card transactions">
+                    <div class="metric-icon">🔄</div>
+                    <div class="metric-content">
+                        <div class="metric-value">15,842</div>
+                        <div class="metric-label">Transactions/jour</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+8%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card storage">
+                    <div class="metric-icon">💾</div>
+                    <div class="metric-content">
+                        <div class="metric-value">68%</div>
+                        <div class="metric-label">Utilisation stockage</div>
+                        <div class="metric-trend warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Surveillance requise</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rapports de Performance -->
+        <div class="performance-reports">
+            <div class="section-header">
+                <h3>📊 Performance de la Plateforme</h3>
+                <div class="time-range">
+                    <select id="timeRange" onchange="updatePerformanceReports()">
+                        <option value="24h">24 heures</option>
+                        <option value="7d" selected>7 jours</option>
+                        <option value="30d">30 jours</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="performance-dashboard">
+                <div class="dashboard-widget large">
+                    <div class="widget-header">
+                        <h5>📈 Activité des Utilisateurs</h5>
+                        <button class="btn-icon" onclick="downloadActivityReport()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="widget-content">
+                        <div class="activity-chart">
+                            <div class="chart-container">
+                                <div class="chart-placeholder">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <p>Graphique d'activité utilisateurs par type</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-stats">
+                            <div class="stat-row">
+                                <div class="stat-item">
+                                    <span class="stat-label">Propriétaires</span>
+                                    <span class="stat-value">1,245</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Locataires</span>
+                                    <span class="stat-value">892</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Agents</span>
+                                    <span class="stat-value">156</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-widget">
+                    <div class="widget-header">
+                        <h5>⚡ Performance API</h5>
+                        <button class="btn-icon" onclick="downloadAPIReport()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="widget-content">
+                        <div class="api-metrics">
+                            <div class="api-metric">
+                                <div class="metric-value">142ms</div>
+                                <div class="metric-label">Temps réponse moyen</div>
+                            </div>
+                            <div class="api-metric">
+                                <div class="metric-value">99.95%</div>
+                                <div class="metric-label">Taux de réussite</div>
+                            </div>
+                            <div class="api-metric">
+                                <div class="metric-value">2.4M</div>
+                                <div class="metric-label">Requêtes/jour</div>
+                            </div>
+                        </div>
+                        <div class="api-health">
+                            <div class="health-status healthy">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Tous les services opérationnels</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-widget">
+                    <div class="widget-header">
+                        <h5>🔒 Sécurité</h5>
+                        <button class="btn-icon" onclick="downloadSecurityReport()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="widget-content">
+                        <div class="security-metrics">
+                            <div class="security-metric">
+                                <div class="metric-value">0</div>
+                                <div class="metric-label">Incidents sécurité</div>
+                            </div>
+                            <div class="security-metric">
+                                <div class="metric-value">98%</div>
+                                <div class="metric-label">Authentifications 2FA</div>
+                            </div>
+                            <div class="security-metric">
+                                <div class="metric-value">42</div>
+                                <div class="metric-label">Tentatives bloquées</div>
+                            </div>
+                        </div>
+                        <div class="security-alerts">
+                            <div class="alert-item info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Scan de sécurité programmé</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Utilisateurs -->
+        <div class="user-analytics">
+            <div class="section-header">
+                <h3>👥 Analytics Utilisateurs</h3>
+                <button class="btn btn-outline" onclick="openUserInsights()">
+                    <i class="fas fa-chart-network me-2"></i>Insights détaillés
+                </button>
+            </div>
+
+            <div class="user-stats-grid">
+                <div class="user-stat-card">
+                    <h5>📱 Appareils et Navigateurs</h5>
+                    <div class="device-stats">
+                        <div class="device-item">
+                            <span class="device-name">Mobile</span>
+                            <div class="device-usage">
+                                <div class="usage-bar">
+                                    <div class="bar-fill" style="width: 65%"></div>
+                                </div>
+                                <span class="usage-percent">65%</span>
+                            </div>
+                        </div>
+                        <div class="device-item">
+                            <span class="device-name">Desktop</span>
+                            <div class="device-usage">
+                                <div class="usage-bar">
+                                    <div class="bar-fill" style="width: 30%"></div>
+                                </div>
+                                <span class="usage-percent">30%</span>
+                            </div>
+                        </div>
+                        <div class="device-item">
+                            <span class="device-name">Tablette</span>
+                            <div class="device-usage">
+                                <div class="usage-bar">
+                                    <div class="bar-fill" style="width: 5%"></div>
+                                </div>
+                                <span class="usage-percent">5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-stat-card">
+                    <h5>🌍 Répartition Géographique</h5>
+                    <div class="geo-stats">
+                        <div class="region-item">
+                            <span class="region-name">Dakar</span>
+                            <span class="region-users">1,842</span>
+                        </div>
+                        <div class="region-item">
+                            <span class="region-name">Thiès</span>
+                            <span class="region-users">458</span>
+                        </div>
+                        <div class="region-item">
+                            <span class="region-name">Saint-Louis</span>
+                            <span class="region-users">287</span>
+                        </div>
+                        <div class="region-item">
+                            <span class="region-name">Autres</span>
+                            <span class="region-users">260</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-stat-card">
+                    <h5>⏰ Heures de Pointe</h5>
+                    <div class="peak-hours">
+                        <div class="peak-item">
+                            <span class="time-slot">08:00 - 10:00</span>
+                            <span class="peak-intensity high">Élevé</span>
+                        </div>
+                        <div class="peak-item">
+                            <span class="time-slot">12:00 - 14:00</span>
+                            <span class="peak-intensity medium">Moyen</span>
+                        </div>
+                        <div class="peak-item">
+                            <span class="time-slot">18:00 - 20:00</span>
+                            <span class="peak-intensity high">Élevé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rapports de Sauvegarde -->
+        <div class="backup-reports">
+            <div class="section-header">
+                <h3>💾 Rapports de Sauvegarde</h3>
+                <button class="btn btn-outline" onclick="runBackupNow()">
+                    <i class="fas fa-play me-2"></i>Lancer sauvegarde
+                </button>
+            </div>
+
+            <div class="backup-status">
+                <div class="backup-item success">
+                    <div class="backup-info">
+                        <div class="backup-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="backup-details">
+                            <h6>Sauvegarde Quotidienne</h6>
+                            <p>Complétée aujourd'hui à 02:00</p>
+                            <small>Taille: 4.2 GB • Durée: 45 min</small>
+                        </div>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="btn btn-sm btn-outline" onclick="verifyBackup(1)">
+                            Vérifier
+                        </button>
+                    </div>
+                </div>
+
+                <div class="backup-item warning">
+                    <div class="backup-info">
+                        <div class="backup-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="backup-details">
+                            <h6>Sauvegarde Hebdomadaire</h6>
+                            <p>Échouée - Espace insuffisant</p>
+                            <small>Dernière tentative: Dimanche 02:00</small>
+                        </div>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="btn btn-sm btn-warning" onclick="retryBackup(2)">
+                            Réessayer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function updatePerformanceReports() {
+            const range = document.getElementById('timeRange').value;
+            console.log(`Mise à jour rapports performance pour: ${range}`);
+            // Actualiser les données
+        }
+
+        function downloadActivityReport() {
+            console.log("Téléchargement rapport activité");
+            // Implémentation téléchargement
+        }
+
+        function downloadAPIReport() {
+            console.log("Téléchargement rapport API");
+            // Implémentation téléchargement
+        }
+
+        function downloadSecurityReport() {
+            console.log("Téléchargement rapport sécurité");
+            // Implémentation téléchargement
+        }
+
+        function openUserInsights() {
+            console.log("Ouverture insights utilisateurs");
+            // Ouvrir analytics détaillés
+        }
+
+        function verifyBackup(backupId) {
+            console.log(`Vérification sauvegarde: ${backupId}`);
+            // Vérifier intégrité sauvegarde
+        }
+
+        function retryBackup(backupId) {
+            console.log(`Nouvelle tentative sauvegarde: ${backupId}`);
+            // Relancer sauvegarde
+        }
+
+        function runBackupNow() {
+            console.log("Lancement sauvegarde manuelle");
+            // Démarrer sauvegarde
+        }
+
+        function exportSystemData() {
+            console.log("Export données système");
+            // Implémentation export
+        }
+
+        function generateSystemReport() {
+            console.log("Génération rapport système");
+            // Génération rapport complet
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

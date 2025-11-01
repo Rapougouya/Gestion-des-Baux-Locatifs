@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - PNSBIL</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Left Side - Illustration -->
+        <div class="auth-illustration">
+            <div class="illustration-content">
+                <div class="logo">
+                    <span class="logo-icon">🏠</span>
+                    <span class="logo-text">PNSBIL</span>
+                </div>
+                
+                <div class="welcome-message">
+                    <h1>Content de vous revoir !</h1>
+                    <p>Accédez à votre espace de gestion immobilière</p>
+                </div>
+
+                <div class="login-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">2,847+</div>
+                        <div class="stat-label">Utilisateurs actifs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">18.5M</div>
+                        <div class="stat-label">FCFA gérés</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">99.8%</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <div class="quote">"PNSBIL a révolutionné ma gestion locative. Gain de temps et transparence totale !"</div>
+                        <div class="author">
+                            <div class="author-avatar">MS</div>
+                            <div class="author-info">
+                                <div class="author-name">Mariama Sow</div>
+                                <div class="author-role">Propriétaire</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Form -->
+        <div class="auth-form-side">
+            <div class="auth-form-container">
+                <!-- Quick Access Buttons -->
+                <div class="quick-access">
+                    <button class="access-btn active" data-type="particulier">
+                        <i class="fas fa-user"></i>
+                        Particulier
+                    </button>
+                    <button class="access-btn" data-type="professionnel">
+                        <i class="fas fa-building"></i>
+                        Professionnel
+                    </button>
+                </div>
+
+                <!-- Form Header -->
+                <div class="form-header">
+                    <h1>Connexion</h1>
+                    <p>Accédez à votre tableau de bord</p>
+                </div>
+
+                <!-- Social Login -->
+                <div class="social-login">
+                    <button class="btn-social google">
+                        <i class="fab fa-google"></i>
+                        Continuer avec Google
+                    </button>
+                    <button class="btn-social facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Continuer avec Facebook
+                    </button>
+                </div>
+
+                <div class="divider">
+                    <span>ou avec email</span>
+                </div>
+
+                <!-- Login Form -->
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Adresse email</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="loginEmail" name="email" required placeholder="votre@email.com">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Mot de passe</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="loginPassword" name="password" required placeholder="Votre mot de passe">
+                            <button type="button" class="password-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    <div class="password-options">
+                        <label class="checkbox remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span class="checkmark"></span>
+                            Se souvenir de moi
+                        </label>
+                        <a href="#forgot-password" class="forgot-password">Mot de passe oublié ?</a>
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Se connecter
+                        </button>
+                    </div>
+
+                    <!-- Security Notice -->
+                    <div class="security-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Connexion sécurisée - Vos données sont protégées</span>
+                    </div>
+                </form>
+
+                <!-- Alternative Login Methods -->
+                <div class="alternative-login">
+                    <h4>Accès rapide pour :</h4>
+                    <div class="quick-links">
+                        <a href="#agence" class="quick-link">
+                            <i class="fas fa-building"></i>
+                            Agences immobilières
+                        </a>
+                        <a href="#administration" class="quick-link">
+                            <i class="fas fa-landmark"></i>
+                            Administrations
+                        </a>
+                        <a href="#support" class="quick-link">
+                            <i class="fas fa-headset"></i>
+                            Support technique
+                        </a>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Nouveau sur PNSBIL ? <a href="inscription.html">Créer un compte</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Réinitialiser le mot de passe</h3>
+                <button class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Entrez votre adresse email pour recevoir les instructions de réinitialisation.</p>
+                <div class="form-group">
+                    <input type="email" placeholder="votre@email.com" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline btn-cancel">Annuler</button>
+                <button class="btn btn-primary">Envoyer les instructions</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

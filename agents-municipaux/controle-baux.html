@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrôle des Baux - Agent Municipal | PNSBIL</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard-new.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏛️ PNSBIL</span>
+                <span>Contrôle des Baux</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Mairie de Dakar</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Municipale</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="validation-cadastre.html" class="nav-link">🏠 Validation Cadastre</a>
+            <a href="controle-baux.html" class="nav-link active">📑 Contrôle des Baux</a>
+            <a href="mediation.html" class="nav-link">⚖️ Médiation</a>
+            <a href="rapports-locaux.html" class="nav-link">📈 Rapports Locaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Contrôle des Baux Locatifs</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="generateComplianceReport()">
+                        <i class="fas fa-file-export me-2"></i>Rapport de conformité
+                    </button>
+                    <button class="btn btn-primary" onclick="showComplianceStats()">
+                        <i class="fas fa-chart-bar me-2"></i>Statistiques
+                    </button>
+                </div>
+            </div>
+            <p>Vérifiez la conformité des contrats de location avec la réglementation</p>
+        </div>
+
+        <!-- Indicateurs de conformité -->
+        <div class="compliance-stats">
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-content">
+                    <div class="stat-value">1,847</div>
+                    <div class="stat-label">Baux enregistrés</div>
+                    <div class="stat-change positive">+5% ce mois</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">Taux de conformité</div>
+                    <div class="stat-change positive">+3%</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-content">
+                    <div class="stat-value">48</div>
+                    <div class="stat-label">Baux non conformes</div>
+                    <div class="stat-change negative">+8 cette semaine</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔍</div>
+                <div class="stat-content">
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Contrôles en cours</div>
+                    <div class="stat-change">En traitement</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtres et recherche -->
+        <div class="filters-section">
+            <div class="filter-row">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un bail..." id="leaseSearch">
+                </div>
+                <div class="filter-group">
+                    <select id="complianceStatus">
+                        <option value="">Tous les statuts</option>
+                        <option value="compliant">Conforme</option>
+                        <option value="non-compliant">Non conforme</option>
+                        <option value="pending">En vérification</option>
+                        <option value="suspended">Suspendu</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="leaseType">
+                        <option value="">Tous les types</option>
+                        <option value="residential">Résidentiel</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="mixed">Mixte</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="durationFilter">
+                        <option value="">Toutes durées</option>
+                        <option value="short">Court terme (< 1 an)</option>
+                        <option value="medium">Moyen terme (1-3 ans)</option>
+                        <option value="long">Long terme (> 3 ans)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des baux à contrôler -->
+        <div class="leases-control">
+            <div class="section-header">
+                <h3>📑 Baux à Contrôler</h3>
+                <span class="badge badge-warning">12 nécessitent attention</span>
+            </div>
+
+            <div class="leases-list">
+                <!-- Bail 1 -->
+                <div class="lease-item non-compliant">
+                    <div class="lease-header">
+                        <div class="lease-info">
+                            <h4>Contrat Résidence Les Almadies</h4>
+                            <div class="lease-meta">
+                                <span class="parties">👤 M. Diop → 👤 Mme Sy</span>
+                                <span class="ref">REF: BAL-2024-0452</span>
+                                <span class="amount">💵 450,000 FCFA/mois</span>
+                            </div>
+                        </div>
+                        <div class="lease-status">
+                            <span class="status-badge non-compliant">Non conforme</span>
+                            <span class="risk-level high">Risque élevé</span>
+                        </div>
+                    </div>
+                    
+                    <div class="lease-details">
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <label>Durée:</label>
+                                <span>12 mois (01/01/2024 - 31/12/2024)</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Type:</label>
+                                <span>Résidentiel</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Localisation:</label>
+                                <span>Almadies, Dakar</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Date enregistrement:</label>
+                                <span>15/01/2024</span>
+                            </div>
+                        </div>
+
+                        <div class="compliance-issues">
+                            <h5>🚨 Problèmes identifiés:</h5>
+                            <ul class="issues-list">
+                                <li class="issue critical">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span>Clause de révision abusive (+15% après 6 mois)</span>
+                                </li>
+                                <li class="issue warning">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span>Caution supérieure à 2 mois (3 mois demandés)</span>
+                                </li>
+                                <li class="issue info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Absence de clause d'entretien</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="documents-review">
+                            <h5>📄 Documents du contrat:</h5>
+                            <div class="documents">
+                                <div class="doc-item validated">
+                                    <i class="fas fa-file-contract"></i>
+                                    <span>Contrat principal</span>
+                                    <span class="doc-status valid">✅ Validé</span>
+                                </div>
+                                <div class="doc-item missing">
+                                    <i class="fas fa-file-invoice"></i>
+                                    <span>Quittance type</span>
+                                    <span class="doc-status missing">❌ Manquant</span>
+                                </div>
+                                <div class="doc-item pending">
+                                    <i class="fas fa-id-card"></i>
+                                    <span>Pièces d'identité</span>
+                                    <span class="doc-status pending">⏳ En attente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-actions">
+                        <button class="btn btn-success" onclick="approveLease(452)">
+                            <i class="fas fa-check me-1"></i> Approuver
+                        </button>
+                        <button class="btn btn-warning" onclick="requestCorrections(452)">
+                            <i class="fas fa-edit me-1"></i> Demander corrections
+                        </button>
+                        <button class="btn btn-danger" onclick="suspendLease(452)">
+                            <i class="fas fa-pause me-1"></i> Suspendre
+                        </button>
+                        <button class="btn btn-info" onclick="contactParties(452)">
+                            <i class="fas fa-comments me-1"></i> Contacter parties
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bail 2 -->
+                <div class="lease-item compliant">
+                    <div class="lease-header">
+                        <div class="lease-info">
+                            <h4>Contrat Villa Mermoz</h4>
+                            <div class="lease-meta">
+                                <span class="parties">🏢 SARL Premium → 👤 M. Ndiaye</span>
+                                <span class="ref">REF: BAL-2024-0387</span>
+                                <span class="amount">💵 750,000 FCFA/mois</span>
+                            </div>
+                        </div>
+                        <div class="lease-status">
+                            <span class="status-badge compliant">Conforme</span>
+                            <span class="risk-level low">Risque faible</span>
+                        </div>
+                    </div>
+                    
+                    <div class="lease-details">
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <label>Durée:</label>
+                                <span>24 mois (01/03/2024 - 28/02/2026)</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Type:</label>
+                                <span>Résidentiel</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Localisation:</label>
+                                <span>Mermoz, Dakar</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Date enregistrement:</label>
+                                <span>25/02/2024</span>
+                            </div>
+                        </div>
+
+                        <div class="compliance-check">
+                            <div class="check-item passed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Clauses conformes à la réglementation</span>
+                            </div>
+                            <div class="check-item passed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Montant caution réglementaire (2 mois)</span>
+                            </div>
+                            <div class="check-item passed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Tous documents fournis</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-actions">
+                        <button class="btn btn-outline" onclick="viewLeaseDetails(387)">
+                            <i class="fas fa-eye me-1"></i> Voir détails
+                        </button>
+                        <button class="btn btn-success" onclick="downloadLeaseCertificate(387)">
+                            <i class="fas fa-certificate me-1"></i> Certificat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques de conformité -->
+        <div class="compliance-analytics">
+            <div class="section-header">
+                <h3>📊 Analytics de Conformité</h3>
+            </div>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h5>📈 Évolution de la conformité</h5>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Graphique d'évolution mensuelle</p>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <h5>🏘️ Conformité par zone</h5>
+                    <div class="zones-compliance">
+                        <div class="zone-item">
+                            <span class="zone-name">Almadies</span>
+                            <div class="compliance-bar">
+                                <div class="bar-fill" style="width: 88%"></div>
+                            </div>
+                            <span class="compliance-rate">88%</span>
+                        </div>
+                        <div class="zone-item">
+                            <span class="zone-name">Plateau</span>
+                            <div class="compliance-bar">
+                                <div class="bar-fill" style="width: 92%"></div>
+                            </div>
+                            <span class="compliance-rate">92%</span>
+                        </div>
+                        <div class="zone-item">
+                            <span class="zone-name">Mermoz</span>
+                            <div class="compliance-bar">
+                                <div class="bar-fill" style="width: 85%"></div>
+                            </div>
+                            <span class="compliance-rate">85%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function approveLease(leaseId) {
+            if(confirm(`Approuver le bail REF: BAL-2024-${leaseId} ?`)) {
+                console.log(`Approbation bail ${leaseId}`);
+                // Implémentation API
+            }
+        }
+
+        function requestCorrections(leaseId) {
+            const corrections = prompt("Corrections demandées:");
+            if(corrections) {
+                console.log(`Demande corrections bail ${leaseId}: ${corrections}`);
+                // Implémentation API
+            }
+        }
+
+        function suspendLease(leaseId) {
+            const reason = prompt("Raison de la suspension:");
+            if(reason) {
+                console.log(`Suspension bail ${leaseId}: ${reason}`);
+                // Implémentation API
+            }
+        }
+
+        function contactParties(leaseId) {
+            console.log(`Contacter parties bail ${leaseId}`);
+            // Ouvrir interface messagerie
+        }
+
+        function generateComplianceReport() {
+            console.log("Génération rapport conformité");
+            // Implémentation génération rapport
+        }
+
+        function showComplianceStats() {
+            console.log("Afficher statistiques conformité");
+            // Navigation vers statistiques
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

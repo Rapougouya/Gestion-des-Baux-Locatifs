@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - PNSBIL</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboards.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="dashboard-page">
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Administrateur</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Admin Système</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Administration</h3>
+            <a href="dashboard.html" class="nav-link active">📊 Tableau de bord</a>
+            <a href="utilisateurs.html" class="nav-link">👥 Gestion utilisateurs</a>
+            <a href="audit.html" class="nav-link">📋 Journal d'audit</a>
+            <a href="configurations.html" class="nav-link">⚙️ Configurations</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Tableau de Bord Administrateur</h1>
+            <p>Supervision de la plateforme PNSBIL</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">👥</div>
+                <div class="metric-info">
+                    <h3>Utilisateurs</h3>
+                    <div class="metric-value">2,847</div>
+                    <div class="metric-change">+124 ce mois</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">🏠</div>
+                <div class="metric-info">
+                    <h3>Propriétés</h3>
+                    <div class="metric-value">15,623</div>
+                    <div class="metric-change">+342 cette semaine</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">📑</div>
+                <div class="metric-info">
+                    <h3>Baux Actifs</h3>
+                    <div class="metric-value">12,458</div>
+                    <div class="metric-change">92% occupation</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">💰</div>
+                <div class="metric-info">
+                    <h3>Revenus Totaux</h3>
+                    <div class="metric-value">₣ 4.2B</div>
+                    <div class="metric-change positive">+8%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h2>Actions Administratives</h2>
+            <div class="actions-grid">
+                <button class="action-btn" onclick="location.href='utilisateurs.html'">
+                    <span class="action-icon">👥</span>
+                    <span>Gérer utilisateurs</span>
+                </button>
+                <button class="action-btn" onclick="location.href='audit.html'">
+                    <span class="action-icon">📋</span>
+                    <span>Voir les logs</span>
+                </button>
+                <button class="action-btn" onclick="location.href='configurations.html'">
+                    <span class="action-icon">⚙️</span>
+                    <span>Configurations</span>
+                </button>
+                <button class="action-btn" onclick="location.href='communication.html'">
+                    <span class="action-icon">💬</span>
+                    <span>Support utilisateurs</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        if (!checkAuth('administrateur')) {}
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

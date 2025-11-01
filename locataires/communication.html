@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication - Espace Locataire | PNSBIL</title>
+    <link rel="stylesheet" href="../css/communication-modern.css">
+</head>
+<body class="communication-modern">
+    <div class="container">
+        <header class="comm-header">
+            <div class="container">
+                <h1>💬 Centre de Communication</h1>
+                <p class="comm-subtitle">Communiquez avec votre propriétaire et les services</p>
+                <nav class="breadcrumb">
+                    <a href="dashboard.html">Tableau de bord Locataire</a> > Communication
+                </nav>
+            </div>
+        </header>
+
+        <div class="communication-grid">
+            <!-- Panneau des contacts SPÉCIFIQUE LOCATAIRE -->
+            <div class="contacts-panel">
+                <div class="contacts-header">
+                    <h3>Mes Contacts</h3>
+                </div>
+                
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Rechercher un contact..." id="contactSearch">
+                    </div>
+                </div>
+                
+                <div class="contacts-list">
+                    <!-- Propriétaire -->
+                    <div class="contact-item active">
+                        <div class="contact-avatar">MD</div>
+                        <div class="status-indicator online"></div>
+                        <div class="contact-info">
+                            <div class="contact-name">Mohamed Diallo</div>
+                            <div class="contact-role">Mon Propriétaire</div>
+                            <div class="contact-lastmsg">A confirmé réception du loyer</div>
+                        </div>
+                        <div class="contact-meta">
+                            <div class="contact-time">10:30</div>
+                            <div class="unread-badge">2</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Maintenance -->
+                    <div class="contact-item">
+                        <div class="contact-avatar">⚙️</div>
+                        <div class="status-indicator online"></div>
+                        <div class="contact-info">
+                            <div class="contact-name">Service Maintenance</div>
+                            <div class="contact-role">Support technique</div>
+                            <div class="contact-lastmsg">Votre demande #MT456 est en cours</div>
+                        </div>
+                        <div class="contact-meta">
+                            <div class="contact-time">09:15</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Fiscal -->
+                    <div class="contact-item">
+                        <div class="contact-avatar">💰</div>
+                        <div class="status-indicator online"></div>
+                        <div class="contact-info">
+                            <div class="contact-name">Service Fiscal</div>
+                            <div class="contact-role">Administration</div>
+                            <div class="contact-lastmsg">Attestation de loyer disponible</div>
+                        </div>
+                        <div class="contact-meta">
+                            <div class="contact-time">Hier</div>
+                        </div>
+                    </div>
+
+                    <!-- Syndic -->
+                    <div class="contact-item">
+                        <div class="contact-avatar">🏢</div>
+                        <div class="status-indicator offline"></div>
+                        <div class="contact-info">
+                            <div class="contact-name">Syndic de l'immeuble</div>
+                            <div class="contact-role">Gestion commune</div>
+                            <div class="contact-lastmsg">Réunion copropriété le 15/12</div>
+                        </div>
+                        <div class="contact-meta">
+                            <div class="contact-time">23/11</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panneau de chat AVEC CONTEXTE LOCATAIRE -->
+            <div class="chat-panel">
+                <div class="chat-header">
+                    <div class="chat-header-info">
+                        <div class="chat-avatar">MD</div>
+                        <div>
+                            <h3>Mohamed Diallo</h3>
+                            <div class="chat-status">En ligne • Votre Propriétaire</div>
+                            <div class="chat-context">Appartement B12 - Dakar Plateau</div>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="action-btn" title="Voir le contrat" onclick="showContract()">📑</button>
+                        <button class="action-btn" title="Signaler un problème" onclick="reportIssue()">⚠️</button>
+                        <button class="action-btn" title="Informations propriétaire">ℹ️</button>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages existants adaptés -->
+                    <div class="message received">
+                        <div class="message-header">
+                            <span class="message-sender">Mohamed Diallo</span>
+                            <span class="message-time">10:15</span>
+                        </div>
+                        <div class="message-text">
+                            Bonjour, j'ai bien reçu votre paiement de loyer pour ce mois-ci. Merci de votre ponctualité.
+                        </div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-text">
+                            Bonjour, avec plaisir. Pourriez-vous m'envoyer l'attestation de loyer pour mes impôts ?
+                        </div>
+                        <div class="message-time">10:18</div>
+                        <div class="message-status">✓✓</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-header">
+                            <span class="message-sender">Mohamed Diallo</span>
+                            <span class="message-time">10:30</span>
+                        </div>
+                        <div class="message-text">
+                            Bien sûr, je la génère et vous l'envoie dans l'après-midi. Avez-vous d'autres questions concernant l'appartement ?
+                        </div>
+                    </div>
+
+                    <div class="quick-actions-chat">
+                        <button class="quick-btn" onclick="askForDocument()">📄 Demander un document</button>
+                        <button class="quick-btn" onclick="reportMaintenance()">🔧 Signaler une panne</button>
+                        <button class="quick-btn" onclick="askQuestion()">❓ Poser une question</button>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <div class="input-actions">
+                        <button class="attachment-btn" title="Joindre une photo">📷</button>
+                        <button class="attachment-btn" title="Joindre un document">📎</button>
+                        <button class="emoji-btn" title="Insérer un emoji">😊</button>
+                    </div>
+                    <div class="input-group">
+                        <textarea class="message-input" placeholder="Tapez votre message à votre propriétaire..." id="messageInput" rows="1"></textarea>
+                        <button class="send-btn" onclick="sendMessage()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/communication-locataire.js"></script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

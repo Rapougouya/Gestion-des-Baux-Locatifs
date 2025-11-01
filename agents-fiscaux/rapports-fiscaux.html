@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports Fiscaux - Agent Fiscal | PNSBIL</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>💰 PNSBIL</span>
+                <span>Rapports Fiscaux</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Direction Générale des Impôts</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Fiscale</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="calcul-impots.html" class="nav-link">🧮 Calcul des Impôts</a>
+            <a href="perception.html" class="nav-link">💳 Perception</a>
+            <a href="verification.html" class="nav-link">🔍 Vérification</a>
+            <a href="rapports-fiscaux.html" class="nav-link active">📈 Rapports Fiscaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Rapports et Analytics Fiscaux</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="exportFiscalData()">
+                        <i class="fas fa-file-export me-2"></i>Exporter données
+                    </button>
+                    <button class="btn btn-primary" onclick="generateComprehensiveReport()">
+                        <i class="fas fa-chart-pie me-2"></i>Rapport global
+                    </button>
+                </div>
+            </div>
+            <p>Analysez les performances fiscales et générez des rapports détaillés</p>
+        </div>
+
+        <!-- Tableau de bord fiscal -->
+        <div class="fiscal-dashboard">
+            <div class="dashboard-stats">
+                <div class="stat-card revenue">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-value">245M FCFA</div>
+                        <div class="stat-label">Recettes totales</div>
+                        <div class="stat-change positive">+15% vs période précédente</div>
+                    </div>
+                </div>
+                <div class="stat-card collection">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <div class="stat-value">87%</div>
+                        <div class="stat-label">Taux de recouvrement</div>
+                        <div class="stat-change positive">+5%</div>
+                    </div>
+                </div>
+                <div class="stat-card compliance">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <div class="stat-value">92%</div>
+                        <div class="stat-label">Taux de conformité</div>
+                        <div class="stat-change positive">+3%</div>
+                    </div>
+                </div>
+                <div class="stat-card audits">
+                    <div class="stat-icon">🔍</div>
+                    <div class="stat-content">
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Vérifications réalisées</div>
+                        <div class="stat-change positive">+28 ce trimestre</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rapports prédéfinis -->
+        <div class="predefined-reports">
+            <div class="section-header">
+                <h3>📋 Rapports Prédéfinis</h3>
+                <div class="period-selector">
+                    <select id="reportPeriod" onchange="updateReports()">
+                        <option value="month">Mois</option>
+                        <option value="quarter" selected>Trimestre</option>
+                        <option value="year">Année</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="reports-grid">
+                <div class="report-widget">
+                    <div class="widget-header">
+                        <h5>📈 Performance par Région</h5>
+                        <button class="btn-icon" onclick="generateRegionalReport()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="widget-content">
+                        <div class="regional-performance">
+                            <div class="region-item">
+                                <span class="region-name">Dakar</span>
+                                <div class="performance-bar">
+                                    <div class="bar-fill" style="width: 92%"></div>
+                                </div>
+                                <span class="region-value">125M FCFA</span>
+                            </div>
+                            <div class="region-item">
+                                <span class="region-name">Thiès</span>
+                                <div class="performance-bar">
+                                    <div class="bar-fill" style="width: 78%"></div>
+                                </div>
+                                <span class="region-value">45M FCFA</span>
+                            </div>
+                            <div class="region-item">
+                                <span class="region-name">Saint-Louis</span>
+                                <div class="performance-bar">
+                                    <div class="bar-fill" style="width: 65%"></div>
+                                </div>
+                                <span class="region-value">32M FCFA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-widget">
+                    <div class="widget-header">
+                        <h5>📅 Évolution Mensuelle</h5>
+                        <button class="btn-icon" onclick="generateTrendReport()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="widget-content">
+                        <div class="trend-chart">
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                                <p>Graphique d'évolution des recettes</p>
+                            </div>
+                        </div>
+                        <div class="trend-stats">
+                            <div class="trend-item positive">
+                                <span>Croissance moyenne:</span>
+                                <strong>+12%</strong>
+                            </div>
+                            <div class="trend-item positive">
+                                <span>Meilleur mois:</span>
+                                <strong>Mars 2024</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-widget">
+                    <div class="widget-header">
+                        <h5>🏘️ Répartition par Type</h5>
+                        <button class="btn-icon" onclick="generateTypeReport()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="widget-content">
+                        <div class="type-distribution">
+                            <div class="type-item">
+                                <div class="type-color residential"></div>
+                                <span>Résidentiel</span>
+                                <span class="type-percentage">65%</span>
+                            </div>
+                            <div class="type-item">
+                                <div class="type-color commercial"></div>
+                                <span>Commercial</span>
+                                <span class="type-percentage">25%</span>
+                            </div>
+                            <div class="type-item">
+                                <div class="type-color luxury"></div>
+                                <span>Luxe</span>
+                                <span class="type-percentage">10%</span>
+                            </div>
+                        </div>
+                        <div class="distribution-total">
+                            <span>Total collecté:</span>
+                            <strong>245M FCFA</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-widget">
+                    <div class="widget-header">
+                        <h5>⚖️ Conformité Fiscale</h5>
+                        <button class="btn-icon" onclick="generateComplianceReport()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="widget-content">
+                        <div class="compliance-metrics">
+                            <div class="metric-item">
+                                <div class="metric-value">92%</div>
+                                <div class="metric-label">Déclarations conformes</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">5%</div>
+                                <div class="metric-label">Rectifications</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">3%</div>
+                                <div class="metric-label">Non-déclarations</div>
+                            </div>
+                        </div>
+                        <div class="compliance-actions">
+                            <span>142 cas en traitement</span>
+                            <button class="btn btn-sm btn-outline" onclick="viewComplianceCases()">Voir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics avancés -->
+        <div class="advanced-analytics">
+            <div class="section-header">
+                <h3>🔬 Analytics Avancés</h3>
+                <button class="btn btn-outline" onclick="openAnalyticsStudio()">
+                    <i class="fas fa-sliders-h me-2"></i>Studio d'analyse
+                </button>
+            </div>
+
+            <div class="analytics-tabs">
+                <div class="tab-headers">
+                    <button class="tab-header active" onclick="switchTab('revenue')">
+                        💰 Analyse des Revenus
+                    </button>
+                    <button class="tab-header" onclick="switchTab('compliance')">
+                        📊 Performance Conformité
+                    </button>
+                    <button class="tab-header" onclick="switchTab('risk')">
+                        🎯 Analyse des Risques
+                    </button>
+                </div>
+
+                <div class="tab-content active" id="revenue-tab">
+                    <div class="revenue-analysis">
+                        <div class="analysis-chart">
+                            <div class="chart-container large">
+                                <div class="chart-placeholder">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <p>Analyse détaillée des revenus fiscaux</p>
+                                    <small>Comparaison par région et type de bien</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="analysis-insights">
+                            <h5>💡 Insights Clés</h5>
+                            <div class="insights-list">
+                                <div class="insight positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <div>
+                                        <strong>Croissance forte à Dakar</strong>
+                                        <p>+18% de recettes dans la région</p>
+                                    </div>
+                                </div>
+                                <div class="insight positive">
+                                    <i class="fas fa-chart-line"></i>
+                                    <div>
+                                        <strong>Segment luxe en expansion</strong>
+                                        <p>+25% de croissance trimestrielle</p>
+                                    </div>
+                                </div>
+                                <div class="insight warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <div>
+                                        <strong>Saint-Louis sous-performant</strong>
+                                        <p>-8% vs objectifs trimestriels</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="compliance-tab">
+                    <!-- Contenu conformité -->
+                </div>
+
+                <div class="tab-content" id="risk-tab">
+                    <!-- Contenu risques -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Export et partage -->
+        <div class="export-section">
+            <div class="section-header">
+                <h3>📤 Export et Partage</h3>
+            </div>
+            <div class="export-options">
+                <div class="export-format">
+                    <h5>Formats d'Export</h5>
+                    <div class="format-buttons">
+                        <button class="btn btn-outline" onclick="exportPDF()">
+                            <i class="fas fa-file-pdf me-2"></i>PDF
+                        </button>
+                        <button class="btn btn-outline" onclick="exportExcel()">
+                            <i class="fas fa-file-excel me-2"></i>Excel
+                        </button>
+                        <button class="btn btn-outline" onclick="exportCSV()">
+                            <i class="fas fa-file-csv me-2"></i>CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div class="share-options">
+                    <h5>Partage</h5>
+                    <div class="share-buttons">
+                        <button class="btn btn-outline" onclick="shareEmail()">
+                            <i class="fas fa-envelope me-2"></i>Email
+                        </button>
+                        <button class="btn btn-outline" onclick="shareTeams()">
+                            <i class="fas fa-users me-2"></i>Teams
+                        </button>
+                        <button class="btn btn-outline" onclick="generatePublicLink()">
+                            <i class="fas fa-link me-2"></i>Lien public
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function updateReports() {
+            const period = document.getElementById('reportPeriod').value;
+            console.log(`Mise à jour rapports pour: ${period}`);
+            // Actualiser les données des rapports
+        }
+
+        function generateRegionalReport() {
+            console.log("Génération rapport régional");
+            // Implémentation génération rapport
+        }
+
+        function generateTrendReport() {
+            console.log("Génération rapport tendances");
+            // Implémentation génération rapport
+        }
+
+        function generateTypeReport() {
+            console.log("Génération rapport par type");
+            // Implémentation génération rapport
+        }
+
+        function generateComplianceReport() {
+            console.log("Génération rapport conformité");
+            // Implémentation génération rapport
+        }
+
+        function switchTab(tabName) {
+            console.log(`Changement d'onglet: ${tabName}`);
+            // Logique changement d'onglet
+        }
+
+        function openAnalyticsStudio() {
+            console.log("Ouverture studio d'analyse");
+            // Ouvrir interface analytics avancés
+        }
+
+        function exportPDF() {
+            console.log("Export PDF");
+            // Implémentation export PDF
+        }
+
+        function exportExcel() {
+            console.log("Export Excel");
+            // Implémentation export Excel
+        }
+
+        function exportCSV() {
+            console.log("Export CSV");
+            // Implémentation export CSV
+        }
+
+        function shareEmail() {
+            console.log("Partage par email");
+            // Ouvrir interface partage email
+        }
+
+        function shareTeams() {
+            console.log("Partage Teams");
+            // Implémentation partage Teams
+        }
+
+        function generatePublicLink() {
+            console.log("Génération lien public");
+            // Générer lien partage
+        }
+
+        function exportFiscalData() {
+            console.log("Export données fiscales");
+            // Implémentation export données
+        }
+
+        function generateComprehensiveReport() {
+            console.log("Génération rapport global");
+            // Implémentation rapport complet
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

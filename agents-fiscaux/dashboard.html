@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Agent Fiscal | PNSBIL</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>💰 PNSBIL</span>
+                <span>Espace Agent Fiscal</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Direction Générale des Impôts</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Fiscale</h3>
+            <a href="dashboard.html" class="nav-link active">📊 Tableau de bord</a>
+            <a href="calcul-impots.html" class="nav-link">🧮 Calcul des Impôts</a>
+            <a href="perception.html" class="nav-link">💳 Perception</a>
+            <a href="verification.html" class="nav-link">🔍 Vérification</a>
+            <a href="rapports-fiscaux.html" class="nav-link">📈 Rapports Fiscaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Tableau de Bord Fiscal</h1>
+            <p>Suivi des recettes fiscales et contrôle des déclarations</p>
+        </div>
+
+        <!-- Statistiques Fiscales -->
+        <div class="stats-grid">
+            <div class="stat-card fiscal">
+                <div class="stat-icon">💰</div>
+                <div class="stat-content">
+                    <div class="stat-value">245M FCFA</div>
+                    <div class="stat-label">Recettes totales</div>
+                    <div class="stat-change positive">+15% ce trimestre</div>
+                </div>
+            </div>
+            <div class="stat-card fiscal">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <div class="stat-value">87%</div>
+                    <div class="stat-label">Taux de collecte</div>
+                    <div class="stat-change positive">+5%</div>
+                </div>
+            </div>
+            <div class="stat-card fiscal">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-content">
+                    <div class="stat-value">142</div>
+                    <div class="stat-label">Déclarations en retard</div>
+                    <div class="stat-change negative">+12 cette semaine</div>
+                </div>
+            </div>
+            <div class="stat-card fiscal">
+                <div class="stat-icon">🔍</div>
+                <div class="stat-content">
+                    <div class="stat-value">28</div>
+                    <div class="stat-label">Contrôles en cours</div>
+                    <div class="stat-change">En traitement</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Alertes Fiscales -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h3>🚨 Alertes Fiscales</h3>
+                    <span class="badge badge-danger">12 critiques</span>
+                </div>
+                <div class="alerts-list">
+                    <div class="alert-item critical">
+                        <div class="alert-icon">🔥</div>
+                        <div class="alert-content">
+                            <div class="alert-title">Sous-déclaration suspecte</div>
+                            <div class="alert-desc">3 propriétaires avec écarts > 50%</div>
+                            <div class="alert-date">Détecté: Aujourd'hui</div>
+                        </div>
+                        <button class="btn btn-sm btn-danger">Investiger</button>
+                    </div>
+                    <div class="alert-item warning">
+                        <div class="alert-icon">⏰</div>
+                        <div class="alert-content">
+                            <div class="alert-title">Retards de paiement</div>
+                            <div class="alert-desc">45 contribuables en défaut</div>
+                            <div class="alert-date">Échéance dépassée</div>
+                        </div>
+                        <button class="btn btn-sm btn-warning">Relancer</button>
+                    </div>
+                    <div class="alert-item info">
+                        <div class="alert-icon">📋</div>
+                        <div class="alert-content">
+                            <div class="alert-title">Nouvelles déclarations</div>
+                            <div class="alert-desc">78 déclarations à traiter</div>
+                            <div class="alert-date">Reçues cette semaine</div>
+                        </div>
+                        <button class="btn btn-sm btn-info">Traiter</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance par Région -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h3>📈 Performance par Région</h3>
+                </div>
+                <div class="regional-performance">
+                    <div class="performance-chart">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-bar"></i>
+                            <p>Graphique des recettes par région</p>
+                        </div>
+                    </div>
+                    <div class="performance-stats">
+                        <div class="region-stat">
+                            <div class="region-name">Dakar</div>
+                            <div class="region-amount">125M FCFA</div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                            <div class="region-rate">Taux: 92%</div>
+                        </div>
+                        <div class="region-stat">
+                            <div class="region-name">Thiès</div>
+                            <div class="region-amount">45M FCFA</div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 65%"></div>
+                            </div>
+                            <div class="region-rate">Taux: 78%</div>
+                        </div>
+                        <div class="region-stat">
+                            <div class="region-name">Saint-Louis</div>
+                            <div class="region-amount">32M FCFA</div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 45%"></div>
+                            </div>
+                            <div class="region-rate">Taux: 65%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contribuables à Contrôler -->
+        <div class="dashboard-section full-width">
+            <div class="section-header">
+                <h3>🔍 Contribuables Prioritaires</h3>
+                <button class="btn btn-sm btn-outline">Exporter la liste</button>
+            </div>
+            <div class="taxpayers-list">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Contribuable</th>
+                            <th>Région</th>
+                            <th>Revenu déclaré</th>
+                            <th>Revenu estimé</th>
+                            <th>Écart</th>
+                            <th>Risque</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="high-risk">
+                            <td>M. Abdoulaye Diop</td>
+                            <td>Dakar</td>
+                            <td>2.5M FCFA</td>
+                            <td>6.8M FCFA</td>
+                            <td class="text-danger">+172%</td>
+                            <td><span class="risk-badge high">Élevé</span></td>
+                            <td><button class="btn btn-sm btn-danger">Contrôler</button></td>
+                        </tr>
+                        <tr class="medium-risk">
+                            <td>SARL Immobilière Premium</td>
+                            <td>Thiès</td>
+                            <td>8.2M FCFA</td>
+                            <td>12.1M FCFA</td>
+                            <td class="text-warning">+48%</td>
+                            <td><span class="risk-badge medium">Moyen</span></td>
+                            <td><button class="btn btn-sm btn-warning">Vérifier</button></td>
+                        </tr>
+                        <tr class="low-risk">
+                            <td>Mme Aminata Sow</td>
+                            <td>Saint-Louis</td>
+                            <td>1.8M FCFA</td>
+                            <td>2.1M FCFA</td>
+                            <td class="text-info">+17%</td>
+                            <td><span class="risk-badge low">Faible</span></td>
+                            <td><button class="btn btn-sm btn-info">Surveiller</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/dashboard.js"></script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

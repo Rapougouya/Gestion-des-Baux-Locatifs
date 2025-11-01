@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration Système - Administration | PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/config.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>⚙️ PNSBIL</span>
+                <span>Espace Administrateur</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Administrateur Système</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Administration</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="utilisateurs.html" class="nav-link">👥 Utilisateurs</a>
+            <a href="configurations.html" class="nav-link active">⚙️ Configuration</a>
+            <a href="audit.html" class="nav-link">📋 Journal d'audit</a>
+            <a href="rapports.html" class="nav-link">📈 Rapports</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Configuration du Système</h1>
+                <button class="btn btn-success" onclick="saveConfigurations()">
+                    <i class="fas fa-save me-2"></i> Enregistrer
+                </button>
+            </div>
+            <p>Paramètres généraux et configuration de la plateforme</p>
+        </div>
+
+        <div class="config-sections">
+            <!-- Paramètres Généraux -->
+            <div class="config-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-cog me-2"></i>Paramètres Généraux</h3>
+                </div>
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label class="form-label">Nom de la Plateforme</label>
+                        <input type="text" class="form-control" value="PNSBIL - Plateforme Nationale" id="platformName">
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Devise par défaut</label>
+                        <select class="form-control" id="defaultCurrency">
+                            <option value="FCFA" selected>Franc CFA (FCFA)</option>
+                            <option value="EUR">Euro (€)</option>
+                            <option value="USD">Dollar US ($)</option>
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Langue par défaut</label>
+                        <select class="form-control" id="defaultLanguage">
+                            <option value="fr" selected>Français</option>
+                            <option value="en">English</option>
+                            <option value="wo">Wolof</option>
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Fuseau horaire</label>
+                        <select class="form-control" id="timezone">
+                            <option value="Africa/Dakar" selected>Afrique/Dakar (UTC+0)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paramètres Fiscaux -->
+            <div class="config-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-chart-line me-2"></i>Paramètres Fiscaux</h3>
+                </div>
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label class="form-label">Taux d'imposition locatif</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" value="10" id="taxRate">
+                            <span class="input-group-text">%</span>
+                        </div>
+                        <small class="form-text">Pourcentage appliqué sur le loyer annuel</small>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Période de déclaration</label>
+                        <select class="form-control" id="declarationPeriod">
+                            <option value="monthly">Mensuelle</option>
+                            <option value="quarterly" selected>Trimestrielle</option>
+                            <option value="yearly">Annuelle</option>
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Seuil d'exonération (FCFA)</label>
+                        <input type="number" class="form-control" value="500000" id="taxThreshold">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paramètres de Sécurité -->
+            <div class="config-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-shield-alt me-2"></i>Sécurité</h3>
+                </div>
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" id="twoFactorAuth" checked>
+                            <span class="form-check-label">Authentification à deux facteurs</span>
+                        </label>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" id="sessionTimeout" checked>
+                            <span class="form-check-label">Déconnexion automatique</span>
+                        </label>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Durée de session (minutes)</label>
+                        <input type="number" class="form-control" value="30" id="sessionDuration">
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Complexité des mots de passe</label>
+                        <select class="form-control" id="passwordPolicy">
+                            <option value="low">Faible</option>
+                            <option value="medium" selected>Moyenne</option>
+                            <option value="high">Élevée</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paramètres de Notification -->
+            <div class="config-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-bell me-2"></i>Notifications</h3>
+                </div>
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" id="emailNotifications" checked>
+                            <span class="form-check-label">Notifications par email</span>
+                        </label>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" id="smsNotifications">
+                            <span class="form-check-label">Notifications SMS</span>
+                        </label>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" id="pushNotifications" checked>
+                            <span class="form-check-label">Notifications push</span>
+                        </label>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Email d'administration</label>
+                        <input type="email" class="form-control" value="admin@pnsbil.sn" id="adminEmail">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paramètres Avancés -->
+            <div class="config-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-sliders-h me-2"></i>Paramètres Avancés</h3>
+                </div>
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label class="form-label">Intervalle de sauvegarde</label>
+                        <select class="form-control" id="backupInterval">
+                            <option value="daily">Quotidienne</option>
+                            <option value="weekly" selected>Hebdomadaire</option>
+                            <option value="monthly">Mensuelle</option>
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Limite de connexions échouées</label>
+                        <input type="number" class="form-control" value="5" id="failedLoginLimit">
+                    </div>
+                    <div class="config-item">
+                        <label class="form-label">Mode maintenance</label>
+                        <div class="form-switch">
+                            <input type="checkbox" class="form-check-input" id="maintenanceMode">
+                            <label class="form-check-label" for="maintenanceMode">Activer le mode maintenance</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions Système -->
+        <div class="system-actions">
+            <h3>Actions Système</h3>
+            <div class="action-buttons">
+                <button class="btn btn-warning" onclick="clearCache()">
+                    <i class="fas fa-broom me-2"></i> Vider le cache
+                </button>
+                <button class="btn btn-info" onclick="runBackup()">
+                    <i class="fas fa-download me-2"></i> Sauvegarde manuelle
+                </button>
+                <button class="btn btn-danger" onclick="showSystemLogs()">
+                    <i class="fas fa-file-alt me-2"></i> Journaux système
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function saveConfigurations() {
+            // Implémentation de la sauvegarde des configurations
+            console.log('Sauvegarde des configurations...');
+            alert('Configurations sauvegardées avec succès!');
+        }
+
+        function clearCache() {
+            if(confirm('Voulez-vous vraiment vider le cache système ?')) {
+                console.log('Cache vidé');
+                alert('Cache système vidé avec succès!');
+            }
+        }
+
+        function runBackup() {
+            console.log('Lancement de la sauvegarde...');
+            alert('Sauvegarde manuelle lancée!');
+        }
+
+        function showSystemLogs() {
+            console.log('Affichage des journaux système...');
+            // Implémentation de l'affichage des logs
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

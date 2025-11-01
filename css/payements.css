@@ -1,0 +1,69 @@
+/* Styles spécifiques pour les pages de paiements */
+
+.payment-method-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.payment-method-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.payment-method-card.selected {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.stat-card {
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.payment-instructions {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.payment-instructions ol {
+    margin-bottom: 0;
+}
+
+.payment-instructions li {
+    margin-bottom: 0.5rem;
+}
+
+/* Animation pour la progression */
+.progress-bar {
+    transition: width 0.5s ease;
+}
+
+/* Badges personnalisés */
+.badge-payment {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* Cartes de méthode de paiement avec couleurs spécifiques */
+.orange-money { background: linear-gradient(135deg, #FF7900, #FFA500); }
+.moov-money { background: linear-gradient(135deg, #00A0E3, #0078D7); }
+.telecel-money { background: linear-gradient(135deg, #00B140, #008C31); }
+.virement { background: linear-gradient(135deg, #6C757D, #495057); }
+.carte { background: linear-gradient(135deg, #1A1A1A, #333333); }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .payment-method-card {
+        margin-bottom: 1rem;
+    }
+    
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+}

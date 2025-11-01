@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions - Agence Immobilière | PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/percept-trans.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Gestion des Transactions</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Agence Immobilière Premium</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Professionnelle</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="portefeuille.html" class="nav-link">🏘️ Mon portefeuille</a>
+            <a href="transactions.html" class="nav-link active">🔄 Transactions</a>
+            <a href="conformite.html" class="nav-link">📋 Conformité</a>
+            <a href="rapports-pro.html" class="nav-link">📈 Rapports Pro</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Gestion des Transactions</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="exportTransactions()">
+                        <i class="fas fa-file-export me-2"></i>Exporter
+                    </button>
+                    <button class="btn btn-primary" onclick="newTransaction()">
+                        <i class="fas fa-plus me-2"></i>Nouvelle transaction
+                    </button>
+                </div>
+            </div>
+            <p>Suivez et géz toutes vos transactions immobilières</p>
+        </div>
+
+        <!-- Statistiques des transactions -->
+        <div class="transaction-stats">
+            <div class="stat-card">
+                <div class="stat-icon">🔄</div>
+                <div class="stat-content">
+                    <div class="stat-value">48</div>
+                    <div class="stat-label">Transactions actives</div>
+                    <div class="stat-change positive">+12 ce mois</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-content">
+                    <div class="stat-value">18.5M FCFA</div>
+                    <div class="stat-label">Chiffre d'affaires</div>
+                    <div class="stat-change positive">+15%</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-content">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">En négociation</div>
+                    <div class="stat-change warning">En cours</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                    <div class="stat-value">36</div>
+                    <div class="stat-label">Finalisées ce mois</div>
+                    <div class="stat-change positive">+8</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtres et recherche -->
+        <div class="filters-section">
+            <div class="filter-row">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher une transaction..." id="transactionSearch">
+                </div>
+                <div class="filter-group">
+                    <select id="transactionStatus">
+                        <option value="">Tous les statuts</option>
+                        <option value="negotiation">En négociation</option>
+                        <option value="contract">En contrat</option>
+                        <option value="pending">En attente</option>
+                        <option value="completed">Finalisée</option>
+                        <option value="cancelled">Annulée</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="transactionType">
+                        <option value="">Tous les types</option>
+                        <option value="rental">Location</option>
+                        <option value="sale">Vente</option>
+                        <option value="management">Gestion</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="agentFilter">
+                        <option value="">Tous les agents</option>
+                        <option value="agent1">M. Diallo</option>
+                        <option value="agent2">Mme Sow</option>
+                        <option value="agent3">M. Ndiaye</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pipeline des transactions -->
+        <div class="transaction-pipeline">
+            <div class="section-header">
+                <h3>📊 Pipeline des Transactions</h3>
+            </div>
+            <div class="pipeline-stages">
+                <div class="pipeline-stage">
+                    <div class="stage-header">
+                        <h5>📞 Premier contact</h5>
+                        <span class="stage-count">15</span>
+                    </div>
+                    <div class="stage-transactions">
+                        <div class="pipeline-item">
+                            <div class="item-header">
+                                <h6>TRX-2024-0158</h6>
+                                <span class="item-type rental">Location</span>
+                            </div>
+                            <div class="item-content">
+                                <p class="property">Résidence Les Almadies</p>
+                                <p class="client">Client: M. Abdoulaye Diop</p>
+                                <p class="amount">450,000 FCFA/mois</p>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-sm btn-outline" onclick="viewTransaction(158)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-primary" onclick="advanceStage(158)">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Autres transactions du stage -->
+                    </div>
+                </div>
+
+                <div class="pipeline-stage">
+                    <div class="stage-header">
+                        <h5>📝 Visite programmée</h5>
+                        <span class="stage-count">12</span>
+                    </div>
+                    <div class="stage-transactions">
+                        <!-- Transactions de ce stage -->
+                    </div>
+                </div>
+
+                <div class="pipeline-stage">
+                    <div class="stage-header">
+                        <h5>🤝 Négociation</h5>
+                        <span class="stage-count">8</span>
+                    </div>
+                    <div class="stage-transactions">
+                        <!-- Transactions de ce stage -->
+                    </div>
+                </div>
+
+                <div class="pipeline-stage">
+                    <div class="stage-header">
+                        <h5>📑 Signature</h5>
+                        <span class="stage-count">6</span>
+                    </div>
+                    <div class="stage-transactions">
+                        <!-- Transactions de ce stage -->
+                    </div>
+                </div>
+
+                <div class="pipeline-stage">
+                    <div class="stage-header">
+                        <h5>✅ Finalisée</h5>
+                        <span class="stage-count">7</span>
+                    </div>
+                    <div class="stage-transactions">
+                        <!-- Transactions de ce stage -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste détaillée des transactions -->
+        <div class="transactions-list">
+            <div class="section-header">
+                <h3>📋 Toutes les Transactions</h3>
+                <button class="btn btn-outline" onclick="toggleView()">
+                    <i class="fas fa-exchange-alt me-2"></i>Changer vue
+                </button>
+            </div>
+
+            <div class="transactions-table">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Référence</th>
+                            <th>Type</th>
+                            <th>Bien</th>
+                            <th>Client</th>
+                            <th>Montant</th>
+                            <th>Agent</th>
+                            <th>Statut</th>
+                            <th>Début</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TRX-2024-0158</td>
+                            <td><span class="badge badge-rental">Location</span></td>
+                            <td>Résidence Les Almadies</td>
+                            <td>M. Abdoulaye Diop</td>
+                            <td>450,000 FCFA/mois</td>
+                            <td>M. Diallo</td>
+                            <td><span class="status-badge negotiation">Négociation</span></td>
+                            <td>15/03/2024</td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn-icon" onclick="viewTransaction(158)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="editTransaction(158)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="contactParties(158)">
+                                        <i class="fas fa-comments"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TRX-2024-0147</td>
+                            <td><span class="badge badge-sale">Vente</span></td>
+                            <td>Villa Mermoz</td>
+                            <td>SARL Investissement Plus</td>
+                            <td>85,000,000 FCFA</td>
+                            <td>Mme Sow</td>
+                            <td><span class="status-badge contract">En contrat</span></td>
+                            <td>10/03/2024</td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn-icon" onclick="viewTransaction(147)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="generateContract(147)">
+                                        <i class="fas fa-file-contract"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TRX-2024-0132</td>
+                            <td><span class="badge badge-management">Gestion</span></td>
+                            <td>Appartement Fann</td>
+                            <td>Mme Aminata Sy</td>
+                            <td>8% commission</td>
+                            <td>M. Ndiaye</td>
+                            <td><span class="status-badge completed">Finalisée</span></td>
+                            <td>01/03/2024</td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn-icon" onclick="viewTransaction(132)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="downloadDocuments(132)">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Calendrier des rendez-vous -->
+        <div class="appointments-calendar">
+            <div class="section-header">
+                <h3>📅 Calendrier des Rendez-vous</h3>
+                <button class="btn btn-primary" onclick="scheduleAppointment()">
+                    <i class="fas fa-plus me-2"></i>Nouveau RDV
+                </button>
+            </div>
+            <div class="calendar-view">
+                <div class="calendar-week">
+                    <div class="day-slot today">
+                        <div class="day-header">
+                            <span>Lun 25</span>
+                            <span class="day-label">Aujourd'hui</span>
+                        </div>
+                        <div class="appointments">
+                            <div class="appointment-item">
+                                <div class="appointment-time">10:00</div>
+                                <div class="appointment-details">
+                                    <strong>Visite - Résidence Almadies</strong>
+                                    <p>Client: M. Diop • Agent: M. Diallo</p>
+                                </div>
+                            </div>
+                            <div class="appointment-item">
+                                <div class="appointment-time">14:30</div>
+                                <div class="appointment-details">
+                                    <strong>Signature contrat</strong>
+                                    <p>Villa Mermoz • Agent: Mme Sow</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Autres jours -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function viewTransaction(transactionId) {
+            console.log(`Voir transaction ${transactionId}`);
+            // Navigation vers détail transaction
+        }
+
+        function editTransaction(transactionId) {
+            console.log(`Modifier transaction ${transactionId}`);
+            // Ouvrir formulaire édition
+        }
+
+        function contactParties(transactionId) {
+            console.log(`Contacter parties transaction ${transactionId}`);
+            // Ouvrir messagerie
+        }
+
+        function generateContract(transactionId) {
+            console.log(`Générer contrat transaction ${transactionId}`);
+            // Génération contrat
+        }
+
+        function advanceStage(transactionId) {
+            console.log(`Avancer étape transaction ${transactionId}`);
+            // Logique avancement pipeline
+        }
+
+        function newTransaction() {
+            console.log("Nouvelle transaction");
+            // Ouvrir formulaire nouvelle transaction
+        }
+
+        function exportTransactions() {
+            console.log("Export des transactions");
+            // Implémentation export
+        }
+
+        function toggleView() {
+            console.log("Changer vue");
+            // Basculer entre vue tableau et vue carte
+        }
+
+        function scheduleAppointment() {
+            console.log("Programmer rendez-vous");
+            // Ouvrir formulaire RDV
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

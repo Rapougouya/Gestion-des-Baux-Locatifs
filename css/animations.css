@@ -1,0 +1,257 @@
+/* ==========================================================================
+   ANIMATIONS ET TRANSITIONS - PNSBIL
+   Styles pour les animations et améliorations interactives
+   ========================================================================== */
+
+/* Animations au scroll */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Barre de progression au scroll */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+    z-index: var(--z-tooltip);
+    transform-origin: left;
+    transition: width 0.1s ease;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+/* Styles pour le formulaire de contact */
+.form-row.is-focused label {
+    color: var(--color-primary);
+}
+
+.form-row input.is-valid,
+.form-row select.is-valid,
+.form-row textarea.is-valid {
+    border-color: var(--color-success);
+    background-color: rgba(39, 174, 96, 0.05);
+}
+
+.form-row input.is-invalid,
+.form-row select.is-invalid,
+.form-row textarea.is-invalid {
+    border-color: var(--color-accent);
+    background-color: rgba(231, 76, 60, 0.05);
+}
+
+.error-message {
+    display: block;
+    color: var(--color-accent);
+    font-size: var(--font-size-xs);
+    margin-top: var(--spacing-xs);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-message {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.form-message.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-message--success {
+    background-color: rgba(39, 174, 96, 0.1);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+}
+
+.form-message--error {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+}
+
+.form-message i {
+    font-size: var(--font-size-lg);
+}
+
+/* Effet ripple sur les boutons */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Animation pour les icônes au survol */
+.benefit-icon,
+.feature-icon,
+.actor-icon {
+    transition: transform var(--transition-base);
+}
+
+.benefit-item:hover .benefit-icon,
+.feature-card:hover .feature-icon,
+.actor-card:hover .actor-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Animation pulse pour les badges */
+.badge {
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(102, 126, 234, 0);
+    }
+}
+
+/* Animation pour les cartes au survol */
+.showcase-card,
+.feature-card,
+.actor-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.showcase-card::before,
+.feature-card::before,
+.actor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.showcase-card:hover::before,
+.feature-card:hover::before,
+.actor-card:hover::before {
+    left: 100%;
+}
+
+/* Animation de chargement pour les statistiques */
+.metric-value,
+.stat-number {
+    position: relative;
+}
+
+.metric-value::after,
+.stat-number::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--color-primary-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: underline-expand 2s ease forwards;
+}
+
+@keyframes underline-expand {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* Amélioration de la transition pour les cartes */
+.contact-detail,
+.benefit-item {
+    position: relative;
+}
+
+.contact-detail::after,
+.benefit-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--color-primary-gradient);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--transition-base);
+}
+
+.contact-detail:hover::after,
+.benefit-item:hover::after {
+    transform: scaleY(1);
+}
+
+/* Responsive - Désactiver certaines animations sur mobile */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .fade-in-up {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .scroll-progress {
+        height: 2px;
+    }
+}
+

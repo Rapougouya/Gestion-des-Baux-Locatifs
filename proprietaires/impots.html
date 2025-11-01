@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impôts Locatifs - PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Propriétaire</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">M. Mohamed Diallo</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Immobilière</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="proprietes.html" class="nav-link">🏠 Mes propriétés</a>
+            <a href="baux.html" class="nav-link">📑 Baux locatifs</a>
+            <a href="paiements.html" class="nav-link">💳 Paiements</a>
+            <a href="impots.html" class="nav-link active">💰 Impôts locatifs</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Impôts Locatifs</h1>
+            <p>Gérez vos obligations fiscales liées à la location</p>
+        </div>
+
+        <!-- Aperçu fiscal -->
+        <div class="tax-overview">
+            <div class="tax-card">
+                <div class="tax-icon">💰</div>
+                <div class="tax-info">
+                    <h3>Impôt Annuel 2024</h3>
+                    <div class="tax-amount">₣ 3,420,000</div>
+                    <div class="tax-breakdown">10% des loyers annuels</div>
+                </div>
+            </div>
+            <div class="tax-card">
+                <div class="tax-icon">📅</div>
+                <div class="tax-info">
+                    <h3>Prochaine Échéance</h3>
+                    <div class="tax-date">31/12/2024</div>
+                    <div class="tax-countdown">45 jours restants</div>
+                </div>
+            </div>
+            <div class="tax-card">
+                <div class="tax-icon">✅</div>
+                <div class="tax-info">
+                    <h3>Statut</h3>
+                    <div class="tax-status paid">À jour</div>
+                    <div class="tax-detail">Dernier paiement: 31/12/2023</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calcul automatique -->
+        <div class="tax-calculation">
+            <h2>Calcul des Impôts 2024</h2>
+            <div class="calculation-card">
+                <div class="calculation-row">
+                    <span>Revenus locatifs annuels estimés</span>
+                    <span>₣ 34,200,000</span>
+                </div>
+                <div class="calculation-row">
+                    <span>Taux d'imposition (10%)</span>
+                    <span>10%</span>
+                </div>
+                <div class="calculation-divider"></div>
+                <div class="calculation-row total">
+                    <span>Impôt à payer</span>
+                    <span>₣ 3,420,000</span>
+                </div>
+                <div class="calculation-actions">
+                    <button class="btn btn-primary" onclick="generateTaxStatement()">
+                        📄 Générer la déclaration
+                    </button>
+                    <button class="btn btn-outline" onclick="simulatePayment()">
+                        💳 Simuler le paiement
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historique des déclarations -->
+        <div class="tax-history">
+            <h2>Historique des Déclarations</h2>
+            <div class="declarations-list">
+                <div class="declaration-item">
+                    <div class="declaration-year">2023</div>
+                    <div class="declaration-info">
+                        <div class="declaration-amount">₣ 2,850,000</div>
+                        <div class="declaration-date">Déclarée le 15/12/2023</div>
+                    </div>
+                    <div class="declaration-status paid">Payée</div>
+                    <div class="declaration-actions">
+                        <button class="btn-sm btn-outline" onclick="viewDeclaration(2023)">Voir</button>
+                        <button class="btn-sm btn-primary" onclick="downloadDeclaration(2023)">📄</button>
+                    </div>
+                </div>
+                
+                <div class="declaration-item">
+                    <div class="declaration-year">2022</div>
+                    <div class="declaration-info">
+                        <div class="declaration-amount">₣ 2,400,000</div>
+                        <div class="declaration-date">Déclarée le 20/12/2022</div>
+                    </div>
+                    <div class="declaration-status paid">Payée</div>
+                    <div class="declaration-actions">
+                        <button class="btn-sm btn-outline" onclick="viewDeclaration(2022)">Voir</button>
+                        <button class="btn-sm btn-primary" onclick="downloadDeclaration(2022)">📄</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Échéances à venir -->
+        <div class="tax-deadlines">
+            <h2>Échéances Fiscales</h2>
+            <div class="deadlines-list">
+                <div class="deadline-item">
+                    <div class="deadline-date">31/12/2024</div>
+                    <div class="deadline-description">
+                        <strong>Déclaration des loyers 2024</strong>
+                        <span>Impôt sur les revenus locatifs</span>
+                    </div>
+                    <div class="deadline-amount">₣ 3,420,000</div>
+                    <div class="deadline-actions">
+                        <button class="btn btn-primary" onclick="prepareDeclaration()">Préparer</button>
+                    </div>
+                </div>
+                
+                <div class="deadline-item future">
+                    <div class="deadline-date">31/03/2025</div>
+                    <div class="deadline-description">
+                        <strong>Taxe foncière 2025</strong>
+                        <span>Premier acompte</span>
+                    </div>
+                    <div class="deadline-amount">À calculer</div>
+                    <div class="deadline-actions">
+                        <button class="btn btn-outline" disabled>Bientôt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        if (!checkAuth('proprietaire')) {}
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+            }
+        });
+
+        function generateTaxStatement() {
+            alert('Génération de la déclaration fiscale 2024...');
+        }
+
+        function simulatePayment() {
+            alert('Simulation de paiement des impôts...');
+        }
+
+        function viewDeclaration(year) {
+            alert(`Voir la déclaration ${year}`);
+        }
+
+        function downloadDeclaration(year) {
+            alert(`Télécharger la déclaration ${year}`);
+        }
+
+        function prepareDeclaration() {
+            alert('Préparation de la déclaration 2024...');
+        }
+    </script>
+
+    <style>
+        .tax-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tax-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            color: white;
+        }
+
+        .tax-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .tax-date {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .tax-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .tax-status.paid {
+            color: #10b981;
+        }
+
+        .tax-breakdown, .tax-countdown, .tax-detail {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .tax-calculation {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .calculation-card {
+            max-width: 500px;
+            margin-top: 1rem;
+        }
+
+        .calculation-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .calculation-row.total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1e293b;
+            border-bottom: none;
+        }
+
+        .calculation-divider {
+            height: 2px;
+            background: #667eea;
+            margin: 0.5rem 0;
+        }
+
+        .calculation-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tax-history {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .declarations-list {
+            margin-top: 1rem;
+        }
+
+        .declaration-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .declaration-year {
+            font-size: 1.2rem;
+            font-weight: 700;
+            min-width: 80px;
+        }
+
+        .declaration-info {
+            flex: 1;
+            margin: 0 2rem;
+        }
+
+        .declaration-amount {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .declaration-date {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .declaration-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .declaration-status.paid {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .declaration-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tax-deadlines {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .deadlines-list {
+            margin-top: 1rem;
+        }
+
+        .deadline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: #f0f4ff;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .deadline-item.future {
+            background: #f8fafc;
+            border-left-color: #cbd5e1;
+            opacity: 0.7;
+        }
+
+        .deadline-date {
+            font-weight: 700;
+            min-width: 100px;
+        }
+
+        .deadline-description {
+            flex: 1;
+            margin: 0 2rem;
+        }
+
+        .deadline-amount {
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+    </style>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Cadastrale - Agent Municipal | PNSBIL</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard-new.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏛️ PNSBIL</span>
+                <span>Validation Cadastrale</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Mairie de Dakar</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Municipale</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="validation-cadastre.html" class="nav-link active">🏠 Validation Cadastre</a>
+            <a href="controle-baux.html" class="nav-link">📑 Contrôle des Baux</a>
+            <a href="mediation.html" class="nav-link">⚖️ Médiation</a>
+            <a href="rapports-locaux.html" class="nav-link">📈 Rapports Locaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Validation Cadastrale</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="exportCadastralData()">
+                        <i class="fas fa-download me-2"></i>Exporter
+                    </button>
+                    <button class="btn btn-primary" onclick="showBulkValidation()">
+                        <i class="fas fa-check-double me-2"></i>Validation groupée
+                    </button>
+                </div>
+            </div>
+            <p>Validez et gérez les données cadastrales des biens immobiliers</p>
+        </div>
+
+        <!-- Filtres de validation -->
+        <div class="filters-section">
+            <div class="filter-row">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un bien..." id="cadastreSearch">
+                </div>
+                <div class="filter-group">
+                    <select id="validationStatus">
+                        <option value="">Tous les statuts</option>
+                        <option value="pending">En attente</option>
+                        <option value="approved">Validés</option>
+                        <option value="rejected">Rejetés</option>
+                        <option value="needs-review">À réviser</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="zoneFilter">
+                        <option value="">Toutes les zones</option>
+                        <option value="dakar-plateau">Dakar Plateau</option>
+                        <option value="almadies">Almadies</option>
+                        <option value="mermoz">Mermoz</option>
+                        <option value="fann">Fann</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="dateFilter">
+                        <option value="">Toutes les dates</option>
+                        <option value="today">Aujourd'hui</option>
+                        <option value="week">Cette semaine</option>
+                        <option value="month">Ce mois</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques de validation -->
+        <div class="validation-stats">
+            <div class="stat-card">
+                <div class="stat-icon pending">⏳</div>
+                <div class="stat-content">
+                    <div class="stat-value">42</div>
+                    <div class="stat-label">En attente</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon validated">✅</div>
+                <div class="stat-content">
+                    <div class="stat-value">1,284</div>
+                    <div class="stat-label">Validés ce mois</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon rejected">❌</div>
+                <div class="stat-content">
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">Rejetés</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon review">🔍</div>
+                <div class="stat-content">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Nécessitent révision</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des biens à valider -->
+        <div class="validation-list">
+            <div class="section-header">
+                <h3>📋 Demandes de Validation</h3>
+                <span class="badge badge-warning">15 demandes urgentes</span>
+            </div>
+
+            <div class="properties-validation">
+                <!-- Bien 1 -->
+                <div class="validation-item urgent">
+                    <div class="validation-header">
+                        <div class="property-info">
+                            <h4>Villa Les Palmiers</h4>
+                            <div class="property-meta">
+                                <span class="location">📍 Almadies, Dakar</span>
+                                <span class="ref">REF: CAD-2024-0158</span>
+                            </div>
+                        </div>
+                        <div class="validation-status pending">
+                            <span class="status-badge urgent">Urgent</span>
+                            <span class="days-left">⏰ 2 jours restants</span>
+                        </div>
+                    </div>
+                    
+                    <div class="validation-details">
+                        <div class="cadastral-info">
+                            <div class="info-group">
+                                <label>Superficie déclarée:</label>
+                                <span>450 m²</span>
+                            </div>
+                            <div class="info-group">
+                                <label>Parcelle cadastrale:</label>
+                                <span>DK-ALM-4587-25</span>
+                            </div>
+                            <div class="info-group">
+                                <label>Propriétaire:</label>
+                                <span>M. Abdoulaye Diop</span>
+                            </div>
+                            <div class="info-group">
+                                <label>Date soumission:</label>
+                                <span>15/03/2024</span>
+                            </div>
+                        </div>
+                        
+                        <div class="documents-list">
+                            <h5>📎 Documents fournis:</h5>
+                            <div class="documents">
+                                <div class="document-item">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>Titre foncier</span>
+                                    <button class="btn-icon" onclick="viewDocument('title')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="document-item">
+                                    <i class="fas fa-file-image"></i>
+                                    <span>Plan cadastral</span>
+                                    <button class="btn-icon" onclick="viewDocument('plan')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="document-item">
+                                    <i class="fas fa-file-contract"></i>
+                                    <span>Attestation urbanisme</span>
+                                    <button class="btn-icon" onclick="viewDocument('urbanism')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="validation-actions">
+                        <button class="btn btn-success" onclick="validateProperty(158)">
+                            <i class="fas fa-check me-1"></i> Valider
+                        </button>
+                        <button class="btn btn-outline" onclick="requestRevision(158)">
+                            <i class="fas fa-edit me-1"></i> Demander révision
+                        </button>
+                        <button class="btn btn-danger" onclick="rejectProperty(158)">
+                            <i class="fas fa-times me-1"></i> Rejeter
+                        </button>
+                        <button class="btn btn-info" onclick="viewDetails(158)">
+                            <i class="fas fa-info-circle me-1"></i> Détails
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bien 2 -->
+                <div class="validation-item">
+                    <div class="validation-header">
+                        <div class="property-info">
+                            <h4>Résidence Sacré Cœur</h4>
+                            <div class="property-meta">
+                                <span class="location">📍 Fann, Dakar</span>
+                                <span class="ref">REF: CAD-2024-0162</span>
+                            </div>
+                        </div>
+                        <div class="validation-status">
+                            <span class="status-badge normal">Normal</span>
+                            <span class="days-left">📅 5 jours restants</span>
+                        </div>
+                    </div>
+                    
+                    <div class="validation-details">
+                        <div class="cadastral-info">
+                            <div class="info-group">
+                                <label>Superficie déclarée:</label>
+                                <span>320 m²</span>
+                            </div>
+                            <div class="info-group">
+                                <label>Parcelle cadastrale:</label>
+                                <span>DK-FAN-3621-14</span>
+                            </div>
+                            <div class="info-group">
+                                <label>Propriétaire:</label>
+                                <span>SARL Immobilière Premium</span>
+                            </div>
+                            <div class="info-group">
+                                <label>Date soumission:</label>
+                                <span>18/03/2024</span>
+                            </div>
+                        </div>
+                        
+                        <div class="documents-list">
+                            <h5>📎 Documents fournis:</h5>
+                            <div class="documents">
+                                <div class="document-item missing">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>Titre foncier</span>
+                                    <span class="missing-badge">Manquant</span>
+                                </div>
+                                <div class="document-item">
+                                    <i class="fas fa-file-image"></i>
+                                    <span>Plan cadastral</span>
+                                    <button class="btn-icon" onclick="viewDocument('plan')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="validation-actions">
+                        <button class="btn btn-success" onclick="validateProperty(162)">
+                            <i class="fas fa-check me-1"></i> Valider
+                        </button>
+                        <button class="btn btn-warning" onclick="requestDocuments(162)">
+                            <i class="fas fa-paperclip me-1"></i> Demander documents
+                        </button>
+                        <button class="btn btn-danger" onclick="rejectProperty(162)">
+                            <i class="fas fa-times me-1"></i> Rejeter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte cadastrale -->
+        <div class="cadastral-map-section">
+            <div class="section-header">
+                <h3>🗺️ Carte Cadastrale Interactive</h3>
+                <button class="btn btn-outline" onclick="toggleSatelliteView()">
+                    <i class="fas fa-satellite me-2"></i>Vue satellite
+                </button>
+            </div>
+            <div class="cadastral-map">
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Carte cadastrale interactive</p>
+                        <small>Visualisation des parcelles en attente de validation</small>
+                    </div>
+                </div>
+                <div class="map-legend">
+                    <h5>Légende:</h5>
+                    <div class="legend-item">
+                        <span class="legend-color pending"></span>
+                        <span>En attente</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color validated"></span>
+                        <span>Validé</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color rejected"></span>
+                        <span>Rejeté</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color conflict"></span>
+                        <span>Conflit cadastral</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function validateProperty(propertyId) {
+            if(confirm(`Valider le bien REF: CAD-2024-${propertyId} ?`)) {
+                console.log(`Validation du bien ${propertyId}`);
+                // Implémentation API
+            }
+        }
+
+        function rejectProperty(propertyId) {
+            const reason = prompt("Raison du rejet:");
+            if(reason) {
+                console.log(`Rejet du bien ${propertyId}: ${reason}`);
+                // Implémentation API
+            }
+        }
+
+        function requestRevision(propertyId) {
+            const comments = prompt("Commentaires pour la révision:");
+            if(comments) {
+                console.log(`Demande révision bien ${propertyId}: ${comments}`);
+                // Implémentation API
+            }
+        }
+
+        function requestDocuments(propertyId) {
+            const docs = prompt("Documents manquants (séparés par des virgules):");
+            if(docs) {
+                console.log(`Demande documents bien ${propertyId}: ${docs}`);
+                // Implémentation API
+            }
+        }
+
+        function viewDetails(propertyId) {
+            console.log(`Voir détails bien ${propertyId}`);
+            // Navigation vers page détails
+        }
+
+        function exportCadastralData() {
+            console.log("Export des données cadastrales");
+            // Implémentation export
+        }
+
+        function showBulkValidation() {
+            console.log("Validation groupée");
+            // Implémentation validation groupée
+        }
+
+        function toggleSatelliteView() {
+            console.log("Basculer vue satellite");
+            // Implémentation carte
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

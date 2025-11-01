@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance - PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Locataire</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Mme Aminata Sy</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Mon Logement</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="recherche.html" class="nav-link">🔍 Rechercher un logement</a>
+            <a href="mes-contrats.html" class="nav-link">📑 Mes contrats</a>
+            <a href="paiements.html" class="nav-link">💳 Mes paiements</a>
+            <a href="maintenance.html" class="nav-link active">🔧 Maintenance</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Demandes de Maintenance</h1>
+                <button class="btn btn-primary" onclick="showNewRequestModal()">
+                    <i class="fas fa-plus me-2"></i> Nouvelle demande
+                </button>
+            </div>
+            <p>Signalez et suivez vos problèmes de maintenance</p>
+        </div>
+
+        <!-- Statistiques rapides -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">🔧</div>
+                <div class="metric-info">
+                    <h3>En Cours</h3>
+                    <div class="metric-value">2</div>
+                    <div class="metric-change">Demandes actives</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">✅</div>
+                <div class="metric-info">
+                    <h3>Résolues</h3>
+                    <div class="metric-value">8</div>
+                    <div class="metric-change positive">Cette année</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⏱️</div>
+                <div class="metric-info">
+                    <h3>Délai Moyen</h3>
+                    <div class="metric-value">3.2j</div>
+                    <div class="metric-change">Temps de résolution</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⭐</div>
+                <div class="metric-info">
+                    <h3>Satisfaction</h3>
+                    <div class="metric-value">4.5/5</div>
+                    <div class="metric-change positive">+0.3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demandes en cours -->
+        <div class="maintenance-section">
+            <h2>Demandes en Cours</h2>
+            <div class="requests-grid">
+                <div class="request-card urgent">
+                    <div class="request-header">
+                        <div class="request-title">
+                            <h4>Fuite d'eau salle de bain</h4>
+                            <span class="request-badge urgent">Urgent</span>
+                        </div>
+                        <div class="request-id">#MT-2024-001</div>
+                    </div>
+                    <div class="request-details">
+                        <div class="request-info">
+                            <span><i class="fas fa-calendar me-1"></i> Créée le 15/11/2024</span>
+                            <span><i class="fas fa-clock me-1"></i> Il y a 2 jours</span>
+                        </div>
+                        <p class="request-description">
+                            Fuite importante sous le lavabo de la salle de bain principale. Eau qui coule en continu.
+                        </p>
+                    </div>
+                    <div class="request-status">
+                        <div class="status-info">
+                            <span class="status-label">Statut:</span>
+                            <span class="status-value in-progress">En cours de traitement</span>
+                        </div>
+                        <div class="status-update">
+                            <span class="update-text">Technicien programmé pour demain</span>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-outline" onclick="viewRequestDetails(1)">
+                            <i class="fas fa-eye me-1"></i> Détails
+                        </button>
+                        <button class="btn btn-primary" onclick="contactTechnician(1)">
+                            <i class="fas fa-phone me-1"></i> Contacter
+                        </button>
+                    </div>
+                </div>
+
+                <div class="request-card normal">
+                    <div class="request-header">
+                        <div class="request-title">
+                            <h4>Prise électrique défectueuse</h4>
+                            <span class="request-badge normal">Normal</span>
+                        </div>
+                        <div class="request-id">#MT-2024-002</div>
+                    </div>
+                    <div class="request-details">
+                        <div class="request-info">
+                            <span><i class="fas fa-calendar me-1"></i> Créée le 18/11/2024</span>
+                            <span><i class="fas fa-clock me-1"></i> Aujourd'hui</span>
+                        </div>
+                        <p class="request-description">
+                            Prise du salon ne fonctionne plus. Aucun appareil ne se charge lorsqu'elle est branchée.
+                        </p>
+                    </div>
+                    <div class="request-status">
+                        <div class="status-info">
+                            <span class="status-label">Statut:</span>
+                            <span class="status-value pending">En attente</span>
+                        </div>
+                        <div class="status-update">
+                            <span class="update-text">En attente d'assignation</span>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-outline" onclick="viewRequestDetails(2)">
+                            <i class="fas fa-eye me-1"></i> Détails
+                        </button>
+                        <button class="btn btn-warning" onclick="escalateRequest(2)">
+                            <i class="fas fa-exclamation me-1"></i> Escalader
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historique des demandes -->
+        <div class="history-section">
+            <h2>Historique des Demandes</h2>
+            <div class="history-table">
+                <div class="table-header">
+                    <div>Référence</div>
+                    <div>Description</div>
+                    <div>Date</div>
+                    <div>Statut</div>
+                    <div>Actions</div>
+                </div>
+                <div class="table-row">
+                    <div>#MT-2024-045</div>
+                    <div>Chaudière en panne</div>
+                    <div>10/11/2024</div>
+                    <div><span class="status-badge completed">Résolu</span></div>
+                    <div>
+                        <button class="btn-sm btn-outline" onclick="viewRequestDetails(45)">Voir</button>
+                        <button class="btn-sm btn-primary" onclick="rateRequest(45)">Noter</button>
+                    </div>
+                </div>
+                <div class="table-row">
+                    <div>#MT-2024-044</div>
+                    <div>Fenêtre bloquée</div>
+                    <div>05/11/2024</div>
+                    <div><span class="status-badge completed">Résolu</span></div>
+                    <div>
+                        <button class="btn-sm btn-outline" onclick="viewRequestDetails(44)">Voir</button>
+                        <button class="btn-sm btn-primary" onclick="rateRequest(44)">Noter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Nouvelle Demande -->
+    <div id="newRequestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nouvelle Demande de Maintenance</h2>
+                <span class="close" onclick="closeNewRequestModal()">&times;</span>
+            </div>
+            <form id="newRequestForm" class="modal-form">
+                <div class="form-group">
+                    <label>Type de problème</label>
+                    <select id="problemType" required>
+                        <option value="">Sélectionnez...</option>
+                        <option value="plomberie">Plomberie</option>
+                        <option value="electricite">Électricité</option>
+                        <option value="chauffage">Chauffage</option>
+                        <option value="menuiserie">Menuiserie</option>
+                        <option value="peinture">Peinture</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Urgence</label>
+                    <div class="urgency-options">
+                        <label class="urgency-option">
+                            <input type="radio" name="urgency" value="low" required>
+                            <span class="urgency-badge low">Faible</span>
+                        </label>
+                        <label class="urgency-option">
+                            <input type="radio" name="urgency" value="normal" required>
+                            <span class="urgency-badge normal">Normal</span>
+                        </label>
+                        <label class="urgency-option">
+                            <input type="radio" name="urgency" value="urgent" required>
+                            <span class="urgency-badge urgent">Urgent</span>
+                        </label>
+                        <label class="urgency-option">
+                            <input type="radio" name="urgency" value="emergency" required>
+                            <span class="urgency-badge emergency">Urgence</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description détaillée</label>
+                    <textarea id="problemDescription" rows="4" placeholder="Décrivez le problème en détail..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Photos (optionnel)</label>
+                    <div class="file-upload">
+                        <input type="file" id="problemPhotos" accept="image/*" multiple>
+                        <label for="problemPhotos" class="upload-btn">
+                            <i class="fas fa-camera me-2"></i> Ajouter des photos
+                        </label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeNewRequestModal()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Soumettre la demande</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        if (!checkAuth('locataire')) {}
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+            }
+
+            // Gestion du formulaire
+            document.getElementById('newRequestForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitMaintenanceRequest();
+            });
+        });
+
+        function showNewRequestModal() {
+            document.getElementById('newRequestModal').style.display = 'block';
+        }
+
+        function closeNewRequestModal() {
+            document.getElementById('newRequestModal').style.display = 'none';
+        }
+
+        function submitMaintenanceRequest() {
+            const problemType = document.getElementById('problemType').value;
+            const urgency = document.querySelector('input[name="urgency"]:checked').value;
+            const description = document.getElementById('problemDescription').value;
+
+            alert(`Demande soumise: ${problemType} - ${urgency}\n${description}`);
+            closeNewRequestModal();
+            
+            // Ici, envoi des données au serveur
+        }
+
+        function viewRequestDetails(id) {
+            alert(`Détails de la demande ${id}`);
+        }
+
+        function contactTechnician(id) {
+            alert(`Contacter le technicien pour la demande ${id}`);
+        }
+
+        function escalateRequest(id) {
+            alert(`Escalade de la demande ${id}`);
+        }
+
+        function rateRequest(id) {
+            alert(`Noter la demande ${id}`);
+        }
+
+        // Fermer la modal en cliquant à l'extérieur
+        window.onclick = function(event) {
+            const modal = document.getElementById('newRequestModal');
+            if (event.target === modal) {
+                closeNewRequestModal();
+            }
+        }
+    </script>
+
+    <style>
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .maintenance-section, .history-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .requests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .request-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .request-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .request-card.urgent {
+            border-left: 4px solid #ef4444;
+        }
+
+        .request-card.normal {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .request-title h4 {
+            margin: 0 0 0.5rem 0;
+            color: #1f2937;
+        }
+
+        .request-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .request-badge.urgent {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .request-badge.normal {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .request-id {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        .request-details {
+            margin-bottom: 1rem;
+        }
+
+        .request-info {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .request-description {
+            color: #4b5563;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .request-status {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .status-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .status-value {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-value.in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-value.pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-value.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .update-text {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .history-table {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+            background: #f8fafc;
+            padding: 1rem;
+            font-weight: 600;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            align-items: center;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-form {
+            padding: 1.5rem;
+        }
+
+        .urgency-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .urgency-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .urgency-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .urgency-badge.low {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #dcfce7;
+        }
+
+        .urgency-badge.normal {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 2px solid #dbeafe;
+        }
+
+        .urgency-badge.urgent {
+            background: #fef3c7;
+            color: #d97706;
+            border: 2px solid #fef3c7;
+        }
+
+        .urgency-badge.emergency {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 2px solid #fee2e2;
+        }
+
+        .urgency-option input:checked + .urgency-badge {
+            border-color: #667eea;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #f8fafc;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .upload-btn:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .close:hover {
+            color: #1e293b;
+        }
+
+        @media (max-width: 768px) {
+            .requests-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .table-header, .table-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .urgency-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

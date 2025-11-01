@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul des Impôts - Agent Fiscal | PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/mediat-impo.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>💰 PNSBIL</span>
+                <span>Calcul des Impôts</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Direction Générale des Impôts</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Fiscale</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="calcul-impots.html" class="nav-link active">🧮 Calcul des Impôts</a>
+            <a href="perception.html" class="nav-link">💳 Perception</a>
+            <a href="verification.html" class="nav-link">🔍 Vérification</a>
+            <a href="rapports-fiscaux.html" class="nav-link">📈 Rapports Fiscaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Calcul des Impôts Locatifs</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="batchCalculate()">
+                        <i class="fas fa-calculator me-2"></i>Calcul groupé
+                    </button>
+                    <button class="btn btn-primary" onclick="generateTaxCertificates()">
+                        <i class="fas fa-file-certificate me-2"></i>Générer avis
+                    </button>
+                </div>
+            </div>
+            <p>Calculez et gérez les impôts sur les revenus locatifs</p>
+        </div>
+
+        <!-- Calculateur d'impôt -->
+        <div class="tax-calculator-section">
+            <div class="section-header">
+                <h3>🧮 Calculateur d'Impôt</h3>
+            </div>
+            <div class="calculator-card">
+                <div class="calculator-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Revenu locatif annuel (FCFA)</label>
+                            <input type="number" id="annualRent" placeholder="Ex: 6000000" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Type de bien</label>
+                            <select id="propertyType" class="form-control">
+                                <option value="residential">Résidentiel</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="luxury">Luxe</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Zone fiscale</label>
+                            <select id="taxZone" class="form-control">
+                                <option value="A">Zone A (Dakar Centre)</option>
+                                <option value="B">Zone B (Périphérie)</option>
+                                <option value="C">Zone C (Rurale)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Déductions applicables</label>
+                            <input type="number" id="deductions" placeholder="0" class="form-control">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" onclick="calculateTax()">
+                        <i class="fas fa-calculator me-2"></i> Calculer l'impôt
+                    </button>
+                </div>
+                
+                <div class="calculator-results">
+                    <div class="result-card">
+                        <h5>Résultat du calcul</h5>
+                        <div class="result-item">
+                            <span>Revenu imposable:</span>
+                            <strong id="taxableIncome">-</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Taux d'imposition:</span>
+                            <strong id="taxRate">10%</strong>
+                        </div>
+                        <div class="result-item total">
+                            <span>Impôt dû:</span>
+                            <strong class="tax-amount" id="taxDue">-</strong>
+                        </div>
+                        <div class="result-breakdown">
+                            <h6>Détail du calcul:</h6>
+                            <div class="breakdown-item">
+                                <span>Revenu annuel:</span>
+                                <span id="breakdownAnnual">-</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Déductions:</span>
+                                <span id="breakdownDeductions">-</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Assiette imposable:</span>
+                                <span id="breakdownBase">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculs en attente -->
+        <div class="pending-calculations">
+            <div class="section-header">
+                <h3>⏳ Calculs en Attente de Validation</h3>
+                <span class="badge badge-warning">23 calculs à valider</span>
+            </div>
+
+            <div class="calculations-list">
+                <div class="calculation-item">
+                    <div class="calc-header">
+                        <div class="taxpayer-info">
+                            <h4>M. Abdoulaye Diop</h4>
+                            <div class="tax-meta">
+                                <span class="nif">NIF: 123456789</span>
+                                <span class="property">🏠 Résidence Les Almadies</span>
+                                <span class="period">Période: Q1 2024</span>
+                            </div>
+                        </div>
+                        <div class="calc-status">
+                            <span class="status-badge pending">À valider</span>
+                            <span class="tax-amount">Impôt: 540,000 FCFA</span>
+                        </div>
+                    </div>
+                    
+                    <div class="calc-details">
+                        <div class="tax-breakdown">
+                            <div class="breakdown-grid">
+                                <div class="breakdown-item">
+                                    <label>Loyer mensuel:</label>
+                                    <span>450,000 FCFA</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <label>Revenu annuel:</label>
+                                    <span>5,400,000 FCFA</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <label>Taux imposition:</label>
+                                    <span>10%</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <label>Impôt calculé:</label>
+                                    <span class="calculated-amount">540,000 FCFA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="supporting-docs">
+                            <h5>📄 Justificatifs:</h5>
+                            <div class="docs-list">
+                                <div class="doc-item validated">
+                                    <i class="fas fa-file-contract"></i>
+                                    <span>Contrat de location</span>
+                                    <span class="doc-status">✅</span>
+                                </div>
+                                <div class="doc-item validated">
+                                    <i class="fas fa-file-invoice"></i>
+                                    <span>Quittances de loyer</span>
+                                    <span class="doc-status">✅</span>
+                                </div>
+                                <div class="doc-item missing">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Déclaration revenue</span>
+                                    <span class="doc-status">❌</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calc-actions">
+                        <button class="btn btn-success" onclick="validateCalculation(1)">
+                            <i class="fas fa-check me-1"></i> Valider
+                        </button>
+                        <button class="btn btn-warning" onclick="adjustCalculation(1)">
+                            <i class="fas fa-edit me-1"></i> Ajuster
+                        </button>
+                        <button class="btn btn-danger" onclick="rejectCalculation(1)">
+                            <i class="fas fa-times me-1"></i> Rejeter
+                        </button>
+                        <button class="btn btn-info" onclick="requestDocuments(1)">
+                            <i class="fas fa-paperclip me-1"></i> Documents
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Autres calculs -->
+            </div>
+        </div>
+
+        <!-- Règles fiscales -->
+        <div class="tax-rules-section">
+            <div class="section-header">
+                <h3>📚 Règles Fiscales Applicables</h3>
+            </div>
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <div class="rule-icon">🏠</div>
+                    <div class="rule-content">
+                        <h5>Biens Résidentiels</h5>
+                        <p>Taux: 10% du revenu locatif annuel</p>
+                        <small>Exonération: Revenus < 500,000 FCFA/an</small>
+                    </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-icon">🏢</div>
+                    <div class="rule-content">
+                        <h5>Biens Commerciaux</h5>
+                        <p>Taux: 15% du revenu locatif annuel</p>
+                        <small>Majoration zone A: +2%</small>
+                    </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-icon">⭐</div>
+                    <div class="rule-content">
+                        <h5>Biens de Luxe</h5>
+                        <p>Taux: 20% du revenu locatif annuel</p>
+                        <small>Appartements > 5M FCFA/mois</small>
+                    </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-icon">💸</div>
+                    <div class="rule-content">
+                        <h5>Déductions</h5>
+                        <p>Frais de gestion: 15% maximum</p>
+                        <small>Charges récupérables déductibles</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function calculateTax() {
+            const annualRent = parseFloat(document.getElementById('annualRent').value) || 0;
+            const deductions = parseFloat(document.getElementById('deductions').value) || 0;
+            const propertyType = document.getElementById('propertyType').value;
+            
+            let taxRate = 0.10; // 10% par défaut
+            
+            // Ajustement du taux selon le type de bien
+            if (propertyType === 'commercial') taxRate = 0.15;
+            if (propertyType === 'luxury') taxRate = 0.20;
+            
+            const taxableIncome = annualRent - deductions;
+            const taxDue = taxableIncome * taxRate;
+            
+            // Affichage des résultats
+            document.getElementById('taxableIncome').textContent = formatCurrency(taxableIncome);
+            document.getElementById('taxRate').textContent = (taxRate * 100) + '%';
+            document.getElementById('taxDue').textContent = formatCurrency(taxDue);
+            document.getElementById('breakdownAnnual').textContent = formatCurrency(annualRent);
+            document.getElementById('breakdownDeductions').textContent = formatCurrency(deductions);
+            document.getElementById('breakdownBase').textContent = formatCurrency(taxableIncome);
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'XOF'
+            }).format(amount);
+        }
+
+        function batchCalculate() {
+            console.log("Calcul groupé des impôts");
+            // Implémentation calcul groupé
+        }
+
+        function generateTaxCertificates() {
+            console.log("Génération des avis d'imposition");
+            // Implémentation génération avis
+        }
+
+        function validateCalculation(calcId) {
+            if(confirm("Valider ce calcul d'impôt ?")) {
+                console.log(`Validation calcul ${calcId}`);
+                // Implémentation API
+            }
+        }
+
+        function adjustCalculation(calcId) {
+            const newAmount = prompt("Nouveau montant d'impôt:");
+            if(newAmount) {
+                console.log(`Ajustement calcul ${calcId}: ${newAmount}`);
+                // Implémentation API
+            }
+        }
+
+        function rejectCalculation(calcId) {
+            const reason = prompt("Raison du rejet:");
+            if(reason) {
+                console.log(`Rejet calcul ${calcId}: ${reason}`);
+                // Implémentation API
+            }
+        }
+
+        function requestDocuments(calcId) {
+            console.log(`Demander documents calcul ${calcId}`);
+            // Ouvrir interface demande documents
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Locataire | PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/portefe-dashbord-locat.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Locataire</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Aminata Sy</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Mon Espace</h3>
+            <a href="dashboard.html" class="nav-link active">📊 Tableau de bord</a>
+            <a href="mes-contrats.html" class="nav-link">📑 Mes contrats</a>
+            <a href="paiements.html" class="nav-link">💳 Paiements</a>
+            <a href="maintenance.html" class="nav-link">🔧 Maintenance</a>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Recherche</h3>
+            <a href="recherche.html" class="nav-link">🔍 Trouver un logement</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Mon Tableau de Bord</h1>
+            <p>Bienvenue dans votre espace locataire</p>
+        </div>
+
+        <!-- Alertes et notifications -->
+        <div class="tenant-alerts">
+            <div class="alert-banner warning">
+                <div class="alert-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Paiement en attente</strong>
+                        <p>Votre loyer du mois de Mars 2024 n'a pas encore été réglé</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="payRent()">
+                    Payer maintenant
+                </button>
+            </div>
+        </div>
+
+        <!-- Vue d'ensemble -->
+        <div class="tenant-overview">
+            <div class="overview-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-content">
+                        <div class="stat-value">Résidence Almadies</div>
+                        <div class="stat-label">Mon logement</div>
+                        <div class="stat-change">Appartement 85m²</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-value">450,000 FCFA</div>
+                        <div class="stat-label">Loyer mensuel</div>
+                        <div class="stat-change positive">Payé jusqu'au 31/03/2024</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-content">
+                        <div class="stat-value">285 jours</div>
+                        <div class="stat-label">Durée restante</div>
+                        <div class="stat-change">Fin: 31/12/2024</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-content">
+                        <div class="stat-value">4.8/5</div>
+                        <div class="stat-label">Satisfaction</div>
+                        <div class="stat-change">12 avis donnés</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Mon logement -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h3>🏠 Mon Logement</h3>
+                    <button class="btn btn-outline" onclick="viewPropertyDetails()">
+                        <i class="fas fa-eye me-2"></i>Voir détails
+                    </button>
+                </div>
+                <div class="property-summary">
+                    <div class="property-image">
+                        <img src="../assets/images/property1.jpg" alt="Résidence Les Almadies">
+                    </div>
+                    <div class="property-info">
+                        <h4>Résidence Les Almadies</h4>
+                        <div class="property-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Almadies, Dakar - Appartement B12</span>
+                        </div>
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>85m²</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-bed"></i>
+                                <span>3 pièces</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-bath"></i>
+                                <span>2 sdb</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-car"></i>
+                                <span>Parking inclus</span>
+                            </div>
+                        </div>
+                        <div class="property-owner">
+                            <div class="owner-avatar">AD</div>
+                            <div class="owner-details">
+                                <div class="owner-name">Agence Immobilière Premium</div>
+                                <div class="owner-contact">contact@agence-premium.sn</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prochaines échéances -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h3>📅 Prochaines Échéances</h3>
+                    <button class="btn btn-outline" onclick="viewAllPayments()">
+                        <i class="fas fa-list me-2"></i>Voir tout
+                    </button>
+                </div>
+                <div class="upcoming-payments">
+                    <div class="payment-item urgent">
+                        <div class="payment-date">
+                            <div class="date-day">31</div>
+                            <div class="date-month">MAR</div>
+                        </div>
+                        <div class="payment-details">
+                            <h5>Loyer Mars 2024</h5>
+                            <p>Échéance dans 5 jours</p>
+                            <span class="amount">450,000 FCFA</span>
+                        </div>
+                        <div class="payment-status overdue">
+                            <span>En attente</span>
+                        </div>
+                    </div>
+                    <div class="payment-item">
+                        <div class="payment-date">
+                            <div class="date-day">30</div>
+                            <div class="date-month">AVR</div>
+                        </div>
+                        <div class="payment-details">
+                            <h5>Loyer Avril 2024</h5>
+                            <p>Prochaine échéance</p>
+                            <span class="amount">450,000 FCFA</span>
+                        </div>
+                        <div class="payment-status pending">
+                            <span>À venir</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions rapides -->
+        <div class="quick-actions">
+            <div class="section-header">
+                <h3>🚀 Actions Rapides</h3>
+            </div>
+            <div class="actions-grid">
+                <div class="action-card" onclick="payRent()">
+                    <div class="action-icon primary">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="action-content">
+                        <h5>Payer mon loyer</h5>
+                        <p>Effectuez votre paiement en ligne</p>
+                    </div>
+                </div>
+                <div class="action-card" onclick="reportIssue()">
+                    <div class="action-icon warning">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="action-content">
+                        <h5>Signaler un problème</h5>
+                        <p>Maintenance ou réparation</p>
+                    </div>
+                </div>
+                <div class="action-card" onclick="downloadDocuments()">
+                    <div class="action-icon info">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="action-content">
+                        <h5>Mes documents</h5>
+                        <p>Contrats et quittances</p>
+                    </div>
+                </div>
+                <div class="action-card" onclick="contactOwner()">
+                    <div class="action-icon success">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="action-content">
+                        <h5>Contacter le propriétaire</h5>
+                        <p>Envoyer un message</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dernières activités -->
+        <div class="recent-activity">
+            <div class="section-header">
+                <h3>📋 Dernières Activités</h3>
+            </div>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Quittance de loyer générée</div>
+                        <div class="activity-desc">Loyer Février 2024 - 450,000 FCFA</div>
+                        <div class="activity-date">25/02/2024</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Problème de plomberie résolu</div>
+                        <div class="activity-desc">Réparation fuite salle de bain</div>
+                        <div class="activity-date">20/02/2024</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-comment"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Nouveau message</div>
+                        <div class="activity-desc">De votre propriétaire</div>
+                        <div class="activity-date">18/02/2024</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/dashboard.js"></script>
+    <script>
+        function payRent() {
+            console.log('Paiement du loyer');
+            // Redirection vers page paiement
+        }
+
+        function viewPropertyDetails() {
+            console.log('Voir détails du logement');
+        }
+
+        function viewAllPayments() {
+            console.log('Voir tous les paiements');
+        }
+
+        function reportIssue() {
+            console.log('Signaler un problème');
+        }
+
+        function downloadDocuments() {
+            console.log('Télécharger documents');
+        }
+
+        function contactOwner() {
+            console.log('Contacter propriétaire');
+        }
+
+        function logout() {
+            console.log('Déconnexion');
+            // Implémentation déconnexion
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

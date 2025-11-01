@@ -1,0 +1,233 @@
+/* Styles de base PNSBIL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.layout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: #5a6fd8;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.btn-outline:hover {
+    background: #667eea;
+    color: #ffffff;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    backdrop-filter: blur(12px);
+    z-index: 1200;
+    transition: box-shadow 0.3s ease;
+}
+
+.site-header.scrolled {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    min-height: 80px;
+}
+
+.site-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    text-decoration: none;
+}
+
+.site-logo__icon {
+    font-size: 2rem;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+}
+
+.site-nav__link {
+    font-weight: 500;
+    color: #1e293b;
+    text-decoration: none;
+    padding: 0.25rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.site-nav__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    height: 2px;
+    background: #667eea;
+    border-radius: 999px;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+.site-nav__link:hover,
+.site-nav__link.is-active {
+    color: #667eea;
+}
+
+.site-nav__link:hover::after,
+.site-nav__link.is-active::after {
+    transform: scaleX(1);
+}
+
+.site-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.site-burger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    border-radius: 12px;
+    background: transparent;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.site-burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #1e293b;
+    border-radius: 999px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.site-header.is-open .site-burger span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.site-header.is-open .site-burger span:nth-child(2) {
+    opacity: 0;
+}
+
+.site-header.is-open .site-burger span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.site-nav__mobile {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+.site-nav--mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+}
+
+.site-nav--mobile .site-nav__link {
+    padding: 0.75rem 0;
+    font-size: 1.05rem;
+}
+
+.site-actions--mobile {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.site-actions--mobile .btn {
+    width: 100%;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .site-nav {
+        display: none;
+    }
+
+    .site-actions {
+        display: none;
+    }
+
+    .site-burger {
+        display: flex;
+    }
+
+    .site-header.is-open .site-nav__mobile {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .layout-container {
+        padding: 0 1.25rem;
+    }
+
+    .site-header__inner {
+        min-height: 70px;
+    }
+}

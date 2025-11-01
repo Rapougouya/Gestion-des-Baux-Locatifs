@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Médiation Locative - Agent Municipal | PNSBIL</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mediat-impo.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏛️ PNSBIL</span>
+                <span>Médiation Locative</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Mairie de Dakar</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Municipale</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="validation-cadastre.html" class="nav-link">🏠 Validation Cadastre</a>
+            <a href="controle-baux.html" class="nav-link">📑 Contrôle des Baux</a>
+            <a href="mediation.html" class="nav-link active">⚖️ Médiation</a>
+            <a href="rapports-locaux.html" class="nav-link">📈 Rapports Locaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Médiation Locative</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="exportMediationCases()">
+                        <i class="fas fa-file-export me-2"></i>Exporter dossiers
+                    </button>
+                    <button class="btn btn-primary" onclick="newMediationCase()">
+                        <i class="fas fa-plus me-2"></i>Nouveau dossier
+                    </button>
+                </div>
+            </div>
+            <p>Gérez les conflits locatifs et les processus de médiation</p>
+        </div>
+
+        <!-- Statistiques de médiation -->
+        <div class="mediation-stats">
+            <div class="stat-card">
+                <div class="stat-icon">⚖️</div>
+                <div class="stat-content">
+                    <div class="stat-value">28</div>
+                    <div class="stat-label">Dossiers actifs</div>
+                    <div class="stat-change positive">-5 cette semaine</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                    <div class="stat-value">42</div>
+                    <div class="stat-label">Résolus ce mois</div>
+                    <div class="stat-change positive">+12%</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-content">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Cas urgents</div>
+                    <div class="stat-change negative">+3</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-content">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Audiences cette semaine</div>
+                    <div class="stat-change">En préparation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtres et recherche -->
+        <div class="filters-section">
+            <div class="filter-row">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un dossier..." id="mediationSearch">
+                </div>
+                <div class="filter-group">
+                    <select id="caseStatus">
+                        <option value="">Tous les statuts</option>
+                        <option value="new">Nouveau</option>
+                        <option value="in-progress">En cours</option>
+                        <option value="hearing">Audience programmée</option>
+                        <option value="resolved">Résolu</option>
+                        <option value="escalated">Escaladé</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="conflictType">
+                        <option value="">Tous les types</option>
+                        <option value="rent">Loyer impayé</option>
+                        <option value="maintenance">Entretien</option>
+                        <option value="deposit">Caution</option>
+                        <option value="eviction">Expulsion</option>
+                        <option value="contract">Litige contractuel</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="priorityFilter">
+                        <option value="">Toutes priorités</option>
+                        <option value="urgent">Urgent</option>
+                        <option value="high">Haute</option>
+                        <option value="normal">Normale</option>
+                        <option value="low">Basse</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dossiers de médiation -->
+        <div class="mediation-cases">
+            <div class="section-header">
+                <h3>📋 Dossiers de Médiation</h3>
+                <span class="badge badge-warning">5 nécessitent attention immédiate</span>
+            </div>
+
+            <div class="cases-list">
+                <!-- Cas 1 -->
+                <div class="case-item urgent">
+                    <div class="case-header">
+                        <div class="case-info">
+                            <h4>MED-2024-0158 - Loyer impayé</h4>
+                            <div class="case-parties">
+                                <span class="party landlord">👤 Propriétaire: M. Diop</span>
+                                <span class="party tenant">👤 Locataire: Mme Sy</span>
+                            </div>
+                        </div>
+                        <div class="case-status">
+                            <span class="status-badge urgent">Urgent</span>
+                            <span class="hearing-date">📅 Audience: 25/03/2024</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-details">
+                        <div class="conflict-info">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Type de conflit:</label>
+                                    <span class="conflict-type rent">Loyer impayé</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Montant en jeu:</label>
+                                    <span class="amount">1,350,000 FCFA</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Début du conflit:</label>
+                                    <span>15/01/2024</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Dernière action:</label>
+                                    <span>23/03/2024 - Convocation audience</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="case-timeline">
+                            <h5>🕒 Chronologie du dossier:</h5>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-date">15/01/2024</div>
+                                    <div class="timeline-content">
+                                        <strong>Début du conflit</strong>
+                                        <p>3 mois de loyer impayé - 1,350,000 FCFA</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">20/02/2024</div>
+                                    <div class="timeline-content">
+                                        <strong>Première médiation</strong>
+                                        <p>Accord de paiement échelonné non respecté</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">23/03/2024</div>
+                                    <div class="timeline-content">
+                                        <strong>Convocation audience</strong>
+                                        <p>Audience programmée pour le 25/03/2024</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="case-documents">
+                            <h5>📄 Documents du dossier:</h5>
+                            <div class="documents-grid">
+                                <div class="doc-item">
+                                    <i class="fas fa-file-contract"></i>
+                                    <span>Contrat de location</span>
+                                    <button class="btn-icon" onclick="viewDocument('contract')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="doc-item">
+                                    <i class="fas fa-file-invoice"></i>
+                                    <span>Quittances impayées</span>
+                                    <button class="btn-icon" onclick="viewDocument('receipts')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="doc-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Procès-verbal médiation</span>
+                                    <button class="btn-icon" onclick="viewDocument('minutes')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-actions">
+                        <button class="btn btn-primary" onclick="scheduleHearing(158)">
+                            <i class="fas fa-calendar-alt me-1"></i> Programmer audience
+                        </button>
+                        <button class="btn btn-success" onclick="recordAgreement(158)">
+                            <i class="fas fa-handshake me-1"></i> Enregistrer accord
+                        </button>
+                        <button class="btn btn-warning" onclick="escalateCase(158)">
+                            <i class="fas fa-level-up-alt me-1"></i> Escalader
+                        </button>
+                        <button class="btn btn-info" onclick="contactParties(158)">
+                            <i class="fas fa-phone me-1"></i> Contacter parties
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cas 2 -->
+                <div class="case-item in-progress">
+                    <div class="case-header">
+                        <div class="case-info">
+                            <h4>MED-2024-0142 - Problème d'entretien</h4>
+                            <div class="case-parties">
+                                <span class="party landlord">👤 Propriétaire: SARL Premium</span>
+                                <span class="party tenant">👤 Locataire: M. Ndiaye</span>
+                            </div>
+                        </div>
+                        <div class="case-status">
+                            <span class="status-badge in-progress">En médiation</span>
+                            <span class="next-action">📞 Rappel: 26/03/2024</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-details">
+                        <div class="conflict-info">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Type de conflit:</label>
+                                    <span class="conflict-type maintenance">Entretien</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Problème:</label>
+                                    <span>Fuite d'eau - Salle de bain</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Début du conflit:</label>
+                                    <span>05/03/2024</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Dernière action:</label>
+                                    <span>20/03/2024 - Expertise technique</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="resolution-progress">
+                            <h5>📊 État d'avancement:</h5>
+                            <div class="progress-container">
+                                <div class="progress-labels">
+                                    <span>Ouverture</span>
+                                    <span>Enquête</span>
+                                    <span>Médiation</span>
+                                    <span>Résolution</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-step completed"></div>
+                                    <div class="progress-step completed"></div>
+                                    <div class="progress-step active"></div>
+                                    <div class="progress-step"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-actions">
+                        <button class="btn btn-outline" onclick="addNote(142)">
+                            <i class="fas fa-edit me-1"></i> Ajouter note
+                        </button>
+                        <button class="btn btn-success" onclick="recordAgreement(142)">
+                            <i class="fas fa-check me-1"></i> Clôturer
+                        </button>
+                        <button class="btn btn-info" onclick="viewCaseDetails(142)">
+                            <i class="fas fa-folder-open me-1"></i> Dossier complet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendrier des audiences -->
+        <div class="hearing-calendar">
+            <div class="section-header">
+                <h3>📅 Calendrier des Audiences</h3>
+                <button class="btn btn-outline" onclick="syncCalendar()">
+                    <i class="fas fa-sync me-2"></i>Synchroniser
+                </button>
+            </div>
+            <div class="calendar-view">
+                <div class="calendar-week">
+                    <div class="day-slot">
+                        <div class="day-header">Lun 25</div>
+                        <div class="hearing-item urgent">
+                            <div class="hearing-time">10:00</div>
+                            <div class="hearing-case">MED-2024-0158</div>
+                            <div class="hearing-parties">Diop vs Sy</div>
+                        </div>
+                        <div class="hearing-item">
+                            <div class="hearing-time">14:30</div>
+                            <div class="hearing-case">MED-2024-0165</div>
+                            <div class="hearing-parties">Sow vs Fall</div>
+                        </div>
+                    </div>
+                    <div class="day-slot">
+                        <div class="day-header">Mar 26</div>
+                        <div class="hearing-item">
+                            <div class="hearing-time">09:00</div>
+                            <div class="hearing-case">MED-2024-0142</div>
+                            <div class="hearing-parties">Premium vs Ndiaye</div>
+                        </div>
+                    </div>
+                    <!-- Autres jours de la semaine -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function scheduleHearing(caseId) {
+            const date = prompt("Date de l'audience (JJ/MM/AAAA):");
+            const time = prompt("Heure de l'audience:");
+            if(date && time) {
+                console.log(`Programmation audience cas ${caseId}: ${date} ${time}`);
+                // Implémentation API
+            }
+        }
+
+        function recordAgreement(caseId) {
+            const agreement = prompt("Termes de l'accord:");
+            if(agreement) {
+                console.log(`Enregistrement accord cas ${caseId}: ${agreement}`);
+                // Implémentation API
+            }
+        }
+
+        function escalateCase(caseId) {
+            const reason = prompt("Raison de l'escalade:");
+            if(reason) {
+                console.log(`Escalade cas ${caseId}: ${reason}`);
+                // Implémentation API
+            }
+        }
+
+        function contactParties(caseId) {
+            console.log(`Contacter parties cas ${caseId}`);
+            // Ouvrir interface communication
+        }
+
+        function newMediationCase() {
+            console.log("Nouveau dossier médiation");
+            // Ouvrir formulaire nouveau dossier
+        }
+
+        function exportMediationCases() {
+            console.log("Export des dossiers médiation");
+            // Implémentation export
+        }
+
+        function syncCalendar() {
+            console.log("Synchronisation calendrier");
+            // Implémentation sync
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

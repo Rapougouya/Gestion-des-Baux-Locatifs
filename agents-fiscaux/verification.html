@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification - Agent Fiscal | PNSBIL</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/rapport-local-verification.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>💰 PNSBIL</span>
+                <span>Vérification Fiscale</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Direction Générale des Impôts</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Fiscale</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="calcul-impots.html" class="nav-link">🧮 Calcul des Impôts</a>
+            <a href="perception.html" class="nav-link">💳 Perception</a>
+            <a href="verification.html" class="nav-link active">🔍 Vérification</a>
+            <a href="rapports-fiscaux.html" class="nav-link">📈 Rapports Fiscaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Vérification et Contrôle Fiscal</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="generateAuditReport()">
+                        <i class="fas fa-file-alt me-2"></i>Rapport de vérification
+                    </button>
+                    <button class="btn btn-primary" onclick="initiateRiskAnalysis()">
+                        <i class="fas fa-radar me-2"></i>Analyse de risque
+                    </button>
+                </div>
+            </div>
+            <p>Contrôlez et vérifiez les déclarations fiscales</p>
+        </div>
+
+        <!-- Alertes de vérification -->
+        <div class="verification-alerts">
+            <div class="alert-stats">
+                <div class="stat-card alert">
+                    <div class="stat-icon">🚨</div>
+                    <div class="stat-content">
+                        <div class="stat-value">28</div>
+                        <div class="stat-label">Alertes critiques</div>
+                        <div class="stat-change negative">+5 cette semaine</div>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-content">
+                        <div class="stat-value">142</div>
+                        <div class="stat-label">Vérifications en cours</div>
+                        <div class="stat-change">En traitement</div>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <div class="stat-value">856</div>
+                        <div class="stat-label">Vérifications terminées</div>
+                        <div class="stat-change positive">+42 ce mois</div>
+                    </div>
+                </div>
+                <div class="stat-card info">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <div class="stat-value">12.5M FCFA</div>
+                        <div class="stat-label">Rectifications</div>
+                        <div class="stat-change positive">+3.2M FCFA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtres de vérification -->
+        <div class="filters-section">
+            <div class="filter-row">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un contribuable..." id="verificationSearch">
+                </div>
+                <div class="filter-group">
+                    <select id="riskLevel">
+                        <option value="">Tous risques</option>
+                        <option value="high">Risque élevé</option>
+                        <option value="medium">Risque moyen</option>
+                        <option value="low">Risque faible</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="verificationStatus">
+                        <option value="">Tous statuts</option>
+                        <option value="pending">En attente</option>
+                        <option value="in-progress">En cours</option>
+                        <option value="completed">Terminée</option>
+                        <option value="suspended">Suspendue</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="discrepancyType">
+                        <option value="">Tous types</option>
+                        <option value="underreporting">Sous-déclaration</option>
+                        <option value="non-filing">Non-déclaration</option>
+                        <option value="late-filing">Déclaration tardive</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des vérifications -->
+        <div class="verification-cases">
+            <div class="section-header">
+                <h3>🔍 Cas à Vérifier</h3>
+                <span class="badge badge-danger">8 cas prioritaires</span>
+            </div>
+
+            <div class="cases-list">
+                <div class="verification-item high-risk">
+                    <div class="case-header">
+                        <div class="taxpayer-info">
+                            <h4>M. Abdoulaye Diop</h4>
+                            <div class="case-meta">
+                                <span class="nif">NIF: 123456789</span>
+                                <span class="discrepancy">Écart: +172%</span>
+                                <span class="amount">1,250,000 FCFA</span>
+                            </div>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge high">Risque élevé</span>
+                            <span class="case-priority">🔥 Priorité haute</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-details">
+                        <div class="discrepancy-analysis">
+                            <h5>📊 Analyse des Écarts</h5>
+                            <div class="analysis-grid">
+                                <div class="analysis-item">
+                                    <label>Revenu déclaré:</label>
+                                    <span>2,500,000 FCFA</span>
+                                </div>
+                                <div class="analysis-item">
+                                    <label>Revenu estimé:</label>
+                                    <span>6,800,000 FCFA</span>
+                                </div>
+                                <div class="analysis-item">
+                                    <label>Écart:</label>
+                                    <span class="discrepancy-amount">+4,300,000 FCFA</span>
+                                </div>
+                                <div class="analysis-item">
+                                    <label>Impôt manquant:</label>
+                                    <span class="tax-gap">430,000 FCFA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="risk-indicators">
+                            <h5>🎯 Indicateurs de Risque</h5>
+                            <div class="indicators-list">
+                                <div class="indicator high">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span>Historique de sous-déclaration</span>
+                                </div>
+                                <div class="indicator medium">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Croissance anormale des loyers</span>
+                                </div>
+                                <div class="indicator low">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Déclarations fréquemment tardives</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="supporting-evidence">
+                            <h5>📄 Preuves et Documents</h5>
+                            <div class="evidence-list">
+                                <div class="evidence-item">
+                                    <i class="fas fa-file-contract"></i>
+                                    <span>Contrats de location</span>
+                                    <span class="evidence-status match">✅ Correspond</span>
+                                </div>
+                                <div class="evidence-item">
+                                    <i class="fas fa-file-invoice"></i>
+                                    <span>Relevés bancaires</span>
+                                    <span class="evidence-status mismatch">❌ Incohérence</span>
+                                </div>
+                                <div class="evidence-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>Cadastre municipal</span>
+                                    <span class="evidence-status pending">⏳ En attente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="verification-actions">
+                        <button class="btn btn-success" onclick="approveCase(1)">
+                            <i class="fas fa-check me-1"></i> Clôturer
+                        </button>
+                        <button class="btn btn-warning" onclick="requestDocuments(1)">
+                            <i class="fas fa-paperclip me-1"></i> Demander preuves
+                        </button>
+                        <button class="btn btn-danger" onclick="initiateAudit(1)">
+                            <i class="fas fa-search me-1"></i> Audit approfondi
+                        </button>
+                        <button class="btn btn-info" onclick="contactTaxpayer(1)">
+                            <i class="fas fa-phone me-1"></i> Contacter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Autres cas de vérification -->
+            </div>
+        </div>
+
+        <!-- Outils d'analyse -->
+        <div class="analysis-tools">
+            <div class="section-header">
+                <h3>🛠️ Outils d'Analyse</h3>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card" onclick="openCrossReference()">
+                    <div class="tool-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h5>Recoupement de Données</h5>
+                        <p>Croisement des informations avec bases externes</p>
+                    </div>
+                </div>
+                <div class="tool-card" onclick="openPatternAnalysis()">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-network"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h5>Analyse des Schémas</h5>
+                        <p>Détection de patterns suspects</p>
+                    </div>
+                </div>
+                <div class="tool-card" onclick="openBenchmarking()">
+                    <div class="tool-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h5>Analyse Comparative</h5>
+                        <p>Comparaison avec référentiels sectoriels</p>
+                    </div>
+                </div>
+                <div class="tool-card" onclick="openRiskScoring()">
+                    <div class="tool-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h5>Scoring de Risque</h5>
+                        <p>Calcul automatique du niveau de risque</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function approveCase(caseId) {
+            if(confirm("Clôturer ce cas de vérification ?")) {
+                console.log(`Clôture cas ${caseId}`);
+                // Implémentation API
+            }
+        }
+
+        function requestDocuments(caseId) {
+            const documents = prompt("Documents demandés:");
+            if(documents) {
+                console.log(`Demande documents cas ${caseId}: ${documents}`);
+                // Implémentation API
+            }
+        }
+
+        function initiateAudit(caseId) {
+            if(confirm("Démarrer un audit approfondi ?")) {
+                console.log(`Audit cas ${caseId}`);
+                // Implémentation API
+            }
+        }
+
+        function contactTaxpayer(caseId) {
+            console.log(`Contacter contribuable cas ${caseId}`);
+            // Ouvrir interface communication
+        }
+
+        function generateAuditReport() {
+            console.log("Génération rapport de vérification");
+            // Implémentation génération rapport
+        }
+
+        function initiateRiskAnalysis() {
+            console.log("Lancement analyse de risque");
+            // Ouvrir interface analyse risque
+        }
+
+        function openCrossReference() {
+            console.log("Ouvrir recoupement données");
+            // Ouvrir outil recoupement
+        }
+
+        function openPatternAnalysis() {
+            console.log("Ouvrir analyse schémas");
+            // Ouvrir outil analyse
+        }
+
+        function openBenchmarking() {
+            console.log("Ouvrir analyse comparative");
+            // Ouvrir outil benchmarking
+        }
+
+        function openRiskScoring() {
+            console.log("Ouvrir scoring risque");
+            // Ouvrir outil scoring
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

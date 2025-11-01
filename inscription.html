@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un compte - PNSBIL</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Left Side - Illustration -->
+        <div class="auth-illustration">
+            <div class="illustration-content">
+                <div class="logo">
+                    <span class="logo-icon">🏠</span>
+                    <span class="logo-text">PNSBIL</span>
+                </div>
+                
+                <div class="illustration-main">
+                    <div class="floating-card card-1">
+                        <i class="fas fa-home"></i>
+                        <span>Gestion de biens</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Contrats digitaux</span>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </div>
+                    <div class="main-illustration">
+                        <div class="illustration-building">
+                            <div class="building-window"></div>
+                            <div class="building-window"></div>
+                            <div class="building-window"></div>
+                            <div class="building-door"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="illustration-features">
+                    <div class="feature-item">
+                        <i class="fas fa-shield-check"></i>
+                        <div>
+                            <h4>Plateforme Sécurisée</h4>
+                            <p>Données cryptées et conformes RGPD</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <h4>Processus Rapide</h4>
+                            <p>Inscription en moins de 2 minutes</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <h4>2,847+ Membres</h4>
+                            <p>Rejoignez notre communauté</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Form -->
+        <div class="auth-form-side">
+            <div class="auth-form-container">
+                <!-- Progress Steps -->
+                <div class="signup-progress">
+                    <div class="progress-steps">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Profil</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Type de compte</div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Finalisation</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 33%"></div>
+                    </div>
+                </div>
+
+                <!-- Form Header -->
+                <div class="form-header">
+                    <h1>Créer votre compte</h1>
+                    <p>Rejoignez la plateforme nationale de gestion immobilière</p>
+                </div>
+
+                <!-- Social Login -->
+                <div class="social-login">
+                    <button class="btn-social google">
+                        <i class="fab fa-google"></i>
+                        Continuer avec Google
+                    </button>
+                    <button class="btn-social facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Continuer avec Facebook
+                    </button>
+                </div>
+
+                <div class="divider">
+                    <span>ou</span>
+                </div>
+
+                <!-- Signup Form -->
+                <form class="auth-form" id="signupForm">
+                    <!-- Step 1: Personal Information -->
+                    <div class="form-step active" data-step="1">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName">Prénom *</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="firstName" name="firstName" required placeholder="Votre prénom">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Nom *</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="lastName" name="lastName" required placeholder="Votre nom">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Adresse email *</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phone" name="phone" placeholder="+221 XX XXX XX XX">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mot de passe *</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" required placeholder="Créez un mot de passe sécurisé">
+                                <button type="button" class="password-toggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill" data-strength="0"></div>
+                                </div>
+                                <div class="strength-text">Faible</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirmer le mot de passe *</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirmez votre mot de passe">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Account Type -->
+                    <div class="form-step" data-step="2">
+                        <div class="account-type-selection">
+                            <h3>Choisissez votre type de compte</h3>
+                            <p>Sélectionnez le profil qui correspond à vos besoins</p>
+
+                            <div class="account-types">
+                                <label class="account-type-card">
+                                    <input type="radio" name="accountType" value="proprietaire" class="sr-only">
+                                    <div class="card-content">
+                                        <div class="card-icon">
+                                            <i class="fas fa-user-tie"></i>
+                                        </div>
+                                        <div class="card-details">
+                                            <h4>Propriétaire</h4>
+                                            <p>Gérez vos biens immobiliers et locations</p>
+                                            <ul class="features-list">
+                                                <li><i class="fas fa-check"></i> Gestion multi-biens</li>
+                                                <li><i class="fas fa-check"></i> Suivi des loyers</li>
+                                                <li><i class="fas fa-check"></i> Documents automatisés</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="account-type-card">
+                                    <input type="radio" name="accountType" value="locataire" class="sr-only">
+                                    <div class="card-content">
+                                        <div class="card-icon">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div class="card-details">
+                                            <h4>Locataire</h4>
+                                            <p>Simplifiez votre recherche et gestion locative</p>
+                                            <ul class="features-list">
+                                                <li><i class="fas fa-check"></i> Recherche avancée</li>
+                                                <li><i class="fas fa-check"></i> Paiements en ligne</li>
+                                                <li><i class="fas fa-check"></i> Service maintenance</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="account-type-card">
+                                    <input type="radio" name="accountType" value="agence" class="sr-only">
+                                    <div class="card-content">
+                                        <div class="card-icon">
+                                            <i class="fas fa-building"></i>
+                                        </div>
+                                        <div class="card-details">
+                                            <h4>Agence Immobilière</h4>
+                                            <p>Outils professionnels pour votre activité</p>
+                                            <ul class="features-list">
+                                                <li><i class="fas fa-check"></i> Gestion de portefeuille</li>
+                                                <li><i class="fas fa-check"></i> Rapports détaillés</li>
+                                                <li><i class="fas fa-check"></i> Équipe collaborative</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Finalization -->
+                    <div class="form-step" data-step="3">
+                        <div class="final-step">
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h3>Compte presque créé !</h3>
+                            <p>Vérifiez vos informations avant de finaliser</p>
+
+                            <div class="review-info">
+                                <div class="info-item">
+                                    <span class="info-label">Nom complet:</span>
+                                    <span class="info-value" id="reviewName">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value" id="reviewEmail">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Type de compte:</span>
+                                    <span class="info-value" id="reviewAccountType">-</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="terms" name="terms" required>
+                                    <span class="checkmark"></span>
+                                    J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="newsletter" name="newsletter">
+                                    <span class="checkmark"></span>
+                                    Je souhaite recevoir les actualités et conseils PNSBIL
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="prevBtn" style="display: none;">
+                            <i class="fas fa-arrow-left"></i>
+                            Retour
+                        </button>
+                        <button type="button" class="btn btn-primary" id="nextBtn">
+                            Continuer
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">
+                            <i class="fas fa-check"></i>
+                            Créer mon compte
+                        </button>
+                    </div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Déjà un compte ? <a href="login.html">Se connecter</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

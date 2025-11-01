@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche de Logement - PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Locataire</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Mme Aminata Sy</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Mon Logement</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="recherche.html" class="nav-link active">🔍 Rechercher un logement</a>
+            <a href="mes-contrats.html" class="nav-link">📑 Mes contrats</a>
+            <a href="paiements.html" class="nav-link">💳 Mes paiements</a>
+            <a href="maintenance.html" class="nav-link">🔧 Maintenance</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Recherche de Logement</h1>
+            <p>Trouvez le logement parfait selon vos critères</p>
+        </div>
+
+        <!-- Filtres de recherche -->
+        <div class="search-filters">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Localisation</label>
+                    <select class="filter-select">
+                        <option value="">Toutes les villes</option>
+                        <option value="dakar">Dakar</option>
+                        <option value="thies">Thiès</option>
+                        <option value="saint-louis">Saint-Louis</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Type de bien</label>
+                    <select class="filter-select">
+                        <option value="">Tous les types</option>
+                        <option value="appartement">Appartement</option>
+                        <option value="maison">Maison</option>
+                        <option value="villa">Villa</option>
+                        <option value="studio">Studio</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Budget mensuel (FCFA)</label>
+                    <div class="range-inputs">
+                        <input type="number" placeholder="Min" class="range-input">
+                        <span>-</span>
+                        <input type="number" placeholder="Max" class="range-input">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Nombre de pièces</label>
+                    <select class="filter-select">
+                        <option value="">Toutes</option>
+                        <option value="1">1 pièce</option>
+                        <option value="2">2 pièces</option>
+                        <option value="3">3 pièces</option>
+                        <option value="4">4 pièces et plus</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary search-btn">
+                <i class="fas fa-search me-2"></i> Rechercher
+            </button>
+        </div>
+
+        <!-- Résultats de recherche -->
+        <div class="search-results">
+            <div class="results-header">
+                <h2>125 logements disponibles</h2>
+                <div class="sort-options">
+                    <select class="sort-select">
+                        <option value="recent">Plus récents</option>
+                        <option value="price-asc">Prix croissant</option>
+                        <option value="price-desc">Prix décroissant</option>
+                        <option value="surface">Surface</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="properties-grid">
+                <!-- Propriété 1 -->
+                <div class="property-card">
+                    <div class="property-image">
+                        <img src="../assets/images/property1.jpg" alt="Appartement moderne">
+                        <div class="property-badge new">Nouveau</div>
+                    </div>
+                    <div class="property-content">
+                        <div class="property-header">
+                            <h3>Appartement moderne 3 pièces</h3>
+                            <div class="property-price">350,000 FCFA/mois</div>
+                        </div>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Dakar Plateau, Rue 12
+                        </div>
+                        <div class="property-features">
+                            <span><i class="fas fa-ruler-combined"></i> 85m²</span>
+                            <span><i class="fas fa-bed"></i> 3 pièces</span>
+                            <span><i class="fas fa-bath"></i> 2 salles de bain</span>
+                        </div>
+                        <div class="property-description">
+                            Bel appartement lumineux avec vue sur la mer, entièrement rénové et proche de tous les commodités.
+                        </div>
+                        <div class="property-actions">
+                            <button class="btn btn-outline" onclick="viewProperty(1)">
+                                <i class="fas fa-eye me-1"></i> Voir détails
+                            </button>
+                            <button class="btn btn-primary" onclick="contactOwner(1)">
+                                <i class="fas fa-envelope me-1"></i> Contacter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Propriété 2 -->
+                <div class="property-card">
+                    <div class="property-image">
+                        <img src="../assets/images/property2.jpg" alt="Villa spacieuse">
+                        <div class="property-badge popular">Populaire</div>
+                    </div>
+                    <div class="property-content">
+                        <div class="property-header">
+                            <h3>Villa spacieuse 5 pièces</h3>
+                            <div class="property-price">1,200,000 FCFA/mois</div>
+                        </div>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Almadies, Corniche
+                        </div>
+                        <div class="property-features">
+                            <span><i class="fas fa-ruler-combined"></i> 220m²</span>
+                            <span><i class="fas fa-bed"></i> 5 pièces</span>
+                            <span><i class="fas fa-bath"></i> 3 salles de bain</span>
+                            <span><i class="fas fa-car"></i> 2 places</span>
+                        </div>
+                        <div class="property-description">
+                            Magnifique villa avec jardin, piscine et garage. Quartier résidentiel calme et sécurisé.
+                        </div>
+                        <div class="property-actions">
+                            <button class="btn btn-outline" onclick="viewProperty(2)">
+                                <i class="fas fa-eye me-1"></i> Voir détails
+                            </button>
+                            <button class="btn btn-primary" onclick="contactOwner(2)">
+                                <i class="fas fa-envelope me-1"></i> Contacter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Propriété 3 -->
+                <div class="property-card">
+                    <div class="property-image">
+                        <img src="../assets/images/property3.jpg" alt="Studio fonctionnel">
+                        <div class="property-badge discount">-10%</div>
+                    </div>
+                    <div class="property-content">
+                        <div class="property-header">
+                            <h3>Studio fonctionnel</h3>
+                            <div class="property-price">
+                                <span class="original-price">275,000 FCFA</span>
+                                <span class="discount-price">250,000 FCFA/mois</span>
+                            </div>
+                        </div>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Point E, Avenue 10
+                        </div>
+                        <div class="property-features">
+                            <span><i class="fas fa-ruler-combined"></i> 35m²</span>
+                            <span><i class="fas fa-bed"></i> 1 pièce</span>
+                            <span><i class="fas fa-bath"></i> 1 salle de bain</span>
+                        </div>
+                        <div class="property-description">
+                            Studio entièrement meublé, proche des universités et des transports. Idéal pour étudiant ou jeune actif.
+                        </div>
+                        <div class="property-actions">
+                            <button class="btn btn-outline" onclick="viewProperty(3)">
+                                <i class="fas fa-eye me-1"></i> Voir détails
+                            </button>
+                            <button class="btn btn-primary" onclick="contactOwner(3)">
+                                <i class="fas fa-envelope me-1"></i> Contacter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn disabled">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        if (!checkAuth('locataire')) {}
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+            }
+        });
+
+        function viewProperty(id) {
+            alert(`Voir les détails de la propriété ${id}`);
+            // Redirection vers la page de détails
+        }
+
+        function contactOwner(id) {
+            alert(`Contacter le propriétaire de la propriété ${id}`);
+            // Ouverture du modal de contact
+        }
+    </script>
+
+    <style>
+        .search-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .filter-select, .range-input {
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .range-inputs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .range-input {
+            flex: 1;
+        }
+
+        .search-btn {
+            width: 100%;
+            padding: 0.75rem;
+        }
+
+        .search-results {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .sort-select {
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .property-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .property-image {
+            position: relative;
+            height: 200px;
+            background: #f3f4f6;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .property-badge.new { background: #10b981; }
+        .property-badge.popular { background: #f59e0b; }
+        .property-badge.discount { background: #ef4444; }
+
+        .property-content {
+            padding: 1.5rem;
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .property-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #1f2937;
+        }
+
+        .property-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        .discount-price {
+            color: #ef4444;
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .property-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .property-features span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        .property-description {
+            color: #6b7280;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .property-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover:not(.disabled) {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .page-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .page-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

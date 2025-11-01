@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perception des Impôts - Agent Fiscal | PNSBIL</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>💰 PNSBIL</span>
+                <span>Perception des Impôts</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Direction Générale des Impôts</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Fiscale</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="calcul-impots.html" class="nav-link">🧮 Calcul des Impôts</a>
+            <a href="perception.html" class="nav-link active">💳 Perception</a>
+            <a href="verification.html" class="nav-link">🔍 Vérification</a>
+            <a href="rapports-fiscaux.html" class="nav-link">📈 Rapports Fiscaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Perception des Impôts Locatifs</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="generateCollectionReport()">
+                        <i class="fas fa-file-export me-2"></i>Rapport perception
+                    </button>
+                    <button class="btn btn-primary" onclick="initiateBatchCollection()">
+                        <i class="fas fa-bolt me-2"></i>Perception groupée
+                    </button>
+                </div>
+            </div>
+            <p>Gérez la perception et le suivi des impôts locatifs</p>
+        </div>
+
+        <!-- Statistiques de perception -->
+        <div class="collection-stats">
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-content">
+                    <div class="stat-value">156M FCFA</div>
+                    <div class="stat-label">Collecté ce mois</div>
+                    <div class="stat-change positive">+18%</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <div class="stat-value">87%</div>
+                    <div class="stat-label">Taux de recouvrement</div>
+                    <div class="stat-change positive">+5%</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏰</div>
+                <div class="stat-content">
+                    <div class="stat-value">142</div>
+                    <div class="stat-label">Impayés en cours</div>
+                    <div class="stat-change negative">+23</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-content">
+                    <div class="stat-value">45</div>
+                    <div class="stat-label">Échéances aujourd'hui</div>
+                    <div class="stat-change warning">À traiter</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtres et recherche -->
+        <div class="filters-section">
+            <div class="filter-row">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un contribuable..." id="taxpayerSearch">
+                </div>
+                <div class="filter-group">
+                    <select id="paymentStatus">
+                        <option value="">Tous les statuts</option>
+                        <option value="paid">Payé</option>
+                        <option value="pending">En attente</option>
+                        <option value="overdue">En retard</option>
+                        <option value="partial">Partiel</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="amountRange">
+                        <option value="">Tous montants</option>
+                        <option value="small">0 - 100K FCFA</option>
+                        <option value="medium">100K - 1M FCFA</option>
+                        <option value="large">1M+ FCFA</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="collectionPeriod">
+                        <option value="">Toutes périodes</option>
+                        <option value="today">Aujourd'hui</option>
+                        <option value="week">Cette semaine</option>
+                        <option value="month">Ce mois</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paiements en attente -->
+        <div class="pending-payments">
+            <div class="section-header">
+                <h3>⏳ Paiements en Attente</h3>
+                <span class="badge badge-warning">45 échéances critiques</span>
+            </div>
+
+            <div class="payments-list">
+                <div class="payment-item overdue">
+                    <div class="payment-header">
+                        <div class="taxpayer-info">
+                            <h4>M. Abdoulaye Diop</h4>
+                            <div class="payment-meta">
+                                <span class="nif">NIF: 123456789</span>
+                                <span class="amount">540,000 FCFA</span>
+                                <span class="due-date">Échéance: 15/03/2024</span>
+                            </div>
+                        </div>
+                        <div class="payment-status">
+                            <span class="status-badge overdue">En retard</span>
+                            <span class="days-late">⚠️ 10 jours de retard</span>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-details">
+                        <div class="tax-details">
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <label>Période fiscale:</label>
+                                    <span>Q1 2024</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Type d'impôt:</label>
+                                    <span>Impôt locatif</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Date émission:</label>
+                                    <span>01/03/2024</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Pénalités accumulées:</label>
+                                    <span class="penalties">27,000 FCFA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collection-history">
+                            <h5>📋 Historique de relance:</h5>
+                            <div class="history-timeline">
+                                <div class="history-item">
+                                    <span class="history-date">05/03/2024</span>
+                                    <span class="history-action">Avis d'imposition envoyé</span>
+                                </div>
+                                <div class="history-item">
+                                    <span class="history-date">10/03/2024</span>
+                                    <span class="history-action">SMS de rappel envoyé</span>
+                                </div>
+                                <div class="history-item">
+                                    <span class="history-date">18/03/2024</span>
+                                    <span class="history-action">Mise en demeure</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-actions">
+                        <button class="btn btn-success" onclick="recordPayment(1)">
+                            <i class="fas fa-money-bill-wave me-1"></i> Enregistrer paiement
+                        </button>
+                        <button class="btn btn-warning" onclick="sendReminder(1)">
+                            <i class="fas fa-bell me-1"></i> Relancer
+                        </button>
+                        <button class="btn btn-danger" onclick="initiateEnforcement(1)">
+                            <i class="fas fa-gavel me-1"></i> Procédure contentieuse
+                        </button>
+                        <button class="btn btn-info" onclick="contactTaxpayer(1)">
+                            <i class="fas fa-phone me-1"></i> Contacter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Autres paiements -->
+            </div>
+        </div>
+
+        <!-- Interface de perception -->
+        <div class="collection-interface">
+            <div class="section-header">
+                <h3>💳 Interface de Perception</h3>
+            </div>
+            <div class="collection-grid">
+                <div class="payment-methods">
+                    <h5>Méthodes de Paiement</h5>
+                    <div class="methods-list">
+                        <div class="method-card" onclick="selectPaymentMethod('wave')">
+                            <div class="method-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="method-info">
+                                <h6>Wave</h6>
+                                <p>Paiement mobile</p>
+                            </div>
+                        </div>
+                        <div class="method-card" onclick="selectPaymentMethod('om')">
+                            <div class="method-icon">
+                                <i class="fas fa-sim-card"></i>
+                            </div>
+                            <div class="method-info">
+                                <h6>Orange Money</h6>
+                                <p>Paiement mobile</p>
+                            </div>
+                        </div>
+                        <div class="method-card" onclick="selectPaymentMethod('card')">
+                            <div class="method-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="method-info">
+                                <h6>Carte Bancaire</h6>
+                                <p>Visa/Mastercard</p>
+                            </div>
+                        </div>
+                        <div class="method-card" onclick="selectPaymentMethod('bank')">
+                            <div class="method-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="method-info">
+                                <h6>Virement Bancaire</h6>
+                                <p>Transfert bancaire</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-form">
+                    <h5>Enregistrement de Paiement</h5>
+                    <form id="paymentForm">
+                        <div class="form-group">
+                            <label>Contribuable</label>
+                            <select class="form-control" id="taxpayerSelect">
+                                <option value="">Sélectionner un contribuable</option>
+                                <option value="1">M. Abdoulaye Diop (NIF: 123456789)</option>
+                                <option value="2">SARL Immobilière Premium (NIF: 987654321)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Montant à payer</label>
+                            <input type="number" class="form-control" id="paymentAmount" placeholder="Montant en FCFA">
+                        </div>
+                        <div class="form-group">
+                            <label>Méthode de paiement</label>
+                            <select class="form-control" id="paymentMethod">
+                                <option value="">Sélectionner une méthode</option>
+                                <option value="wave">Wave</option>
+                                <option value="om">Orange Money</option>
+                                <option value="card">Carte bancaire</option>
+                                <option value="bank">Virement bancaire</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Référence de transaction</label>
+                            <input type="text" class="form-control" id="transactionRef" placeholder="Numéro de transaction">
+                        </div>
+                        <button type="button" class="btn btn-success btn-block" onclick="processPayment()">
+                            <i class="fas fa-check me-2"></i> Valider le paiement
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function recordPayment(paymentId) {
+            const amount = prompt("Montant payé:");
+            const method = prompt("Méthode de paiement:");
+            if(amount && method) {
+                console.log(`Enregistrement paiement ${paymentId}: ${amount} FCFA via ${method}`);
+                // Implémentation API
+            }
+        }
+
+        function sendReminder(paymentId) {
+            const method = prompt("Méthode de relance (SMS/EMAIL/PHONE):");
+            if(method) {
+                console.log(`Relance paiement ${paymentId} via ${method}`);
+                // Implémentation API
+            }
+        }
+
+        function initiateEnforcement(paymentId) {
+            if(confirm("Démarrer une procédure contentieuse ?")) {
+                console.log(`Procédure contentieuse paiement ${paymentId}`);
+                // Implémentation API
+            }
+        }
+
+        function contactTaxpayer(paymentId) {
+            console.log(`Contacter contribuable paiement ${paymentId}`);
+            // Ouvrir interface communication
+        }
+
+        function selectPaymentMethod(method) {
+            document.getElementById('paymentMethod').value = method;
+            // Mettre en évidence la méthode sélectionnée
+        }
+
+        function processPayment() {
+            const taxpayer = document.getElementById('taxpayerSelect').value;
+            const amount = document.getElementById('paymentAmount').value;
+            const method = document.getElementById('paymentMethod').value;
+            const reference = document.getElementById('transactionRef').value;
+
+            if(taxpayer && amount && method && reference) {
+                console.log(`Traitement paiement: ${amount} FCFA pour ${taxpayer} via ${method}`);
+                // Implémentation API
+                alert('Paiement enregistré avec succès!');
+                document.getElementById('paymentForm').reset();
+            } else {
+                alert('Veuillez remplir tous les champs');
+            }
+        }
+
+        function generateCollectionReport() {
+            console.log("Génération rapport perception");
+            // Implémentation génération rapport
+        }
+
+        function initiateBatchCollection() {
+            console.log("Lancement perception groupée");
+            // Implémentation perception groupée
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

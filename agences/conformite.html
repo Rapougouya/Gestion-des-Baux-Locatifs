@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conformité - Agence Immobilière | PNSBIL</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/ficaux-conformite.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Conformité Réglementaire</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Agence Immobilière Premium</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Professionnelle</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="portefeuille.html" class="nav-link">🏘️ Mon portefeuille</a>
+            <a href="transactions.html" class="nav-link">🔄 Transactions</a>
+            <a href="conformite.html" class="nav-link active">📋 Conformité</a>
+            <a href="rapports-pro.html" class="nav-link">📈 Rapports Pro</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Conformité Réglementaire</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="generateComplianceCertificate()">
+                        <i class="fas fa-certificate me-2"></i>Attestation
+                    </button>
+                    <button class="btn btn-primary" onclick="runComplianceCheck()">
+                        <i class="fas fa-shield-alt me-2"></i>Vérifier conformité
+                    </button>
+                </div>
+            </div>
+            <p>Surveillez et maintenez la conformité de vos activités immobilières</p>
+        </div>
+
+        <!-- État de conformité -->
+        <div class="compliance-status">
+            <div class="status-overview">
+                <div class="status-card compliant">
+                    <div class="status-icon">✅</div>
+                    <div class="status-content">
+                        <div class="status-value">94%</div>
+                        <div class="status-label">Taux de conformité</div>
+                        <div class="status-desc">127/135 biens conformes</div>
+                    </div>
+                </div>
+                <div class="status-card warning">
+                    <div class="status-icon">⚠️</div>
+                    <div class="status-content">
+                        <div class="status-value">8</div>
+                        <div class="status-label">Alertes actives</div>
+                        <div class="status-desc">Nécessitent attention</div>
+                    </div>
+                </div>
+                <div class="status-card critical">
+                    <div class="status-icon">🚨</div>
+                    <div class="status-content">
+                        <div class="status-value">3</div>
+                        <div class="status-label">Non-conformités critiques</div>
+                        <div class="status-desc">Action immédiate requise</div>
+                    </div>
+                </div>
+                <div class="status-card info">
+                    <div class="status-icon">📅</div>
+                    <div class="status-content">
+                        <div class="status-value">15</div>
+                        <div class="status-label">Échéances ce mois</div>
+                        <div class="status-desc">Documents à mettre à jour</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checklist de conformité -->
+        <div class="compliance-checklist">
+            <div class="section-header">
+                <h3>📋 Checklist de Conformité</h3>
+                <button class="btn btn-outline" onclick="exportChecklist()">
+                    <i class="fas fa-download me-2"></i>Exporter
+                </button>
+            </div>
+
+            <div class="checklist-categories">
+                <div class="category-card">
+                    <div class="category-header">
+                        <h5>📑 Conformité des Baux</h5>
+                        <span class="completion-rate">92%</span>
+                    </div>
+                    <div class="checklist-items">
+                        <div class="checklist-item completed">
+                            <div class="check-status">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="check-content">
+                                <span>Clauses obligatoires incluses</span>
+                                <small>Article L.121-1 du Code de l'habitation</small>
+                            </div>
+                            <div class="check-actions">
+                                <button class="btn-icon" onclick="viewDetails('clauses')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="checklist-item completed">
+                            <div class="check-status">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="check-content">
+                                <span>Montant caution réglementaire</span>
+                                <small>Maximum 2 mois de loyer</small>
+                            </div>
+                            <div class="check-actions">
+                                <button class="btn-icon" onclick="viewDetails('caution')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="checklist-item warning">
+                            <div class="check-status">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="check-content">
+                                <span>Indexation des loyers</span>
+                                <small>3 baux nécessitent révision</small>
+                            </div>
+                            <div class="check-actions">
+                                <button class="btn btn-sm btn-warning" onclick="fixIssue('indexation')">
+                                    Corriger
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <h5>💰 Conformité Fiscale</h5>
+                        <span class="completion-rate">88%</span>
+                    </div>
+                    <div class="checklist-items">
+                        <div class="checklist-item completed">
+                            <div class="check-status">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="check-content">
+                                <span>Déclarations fiscales à jour</span>
+                                <small>Trimestre Q1 2024 déposé</small>
+                            </div>
+                        </div>
+                        <div class="checklist-item critical">
+                            <div class="check-status">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <div class="check-content">
+                                <span>Paiement impôts locatifs</span>
+                                <small>2 propriétés en retard</small>
+                            </div>
+                            <div class="check-actions">
+                                <button class="btn btn-sm btn-danger" onclick="payTaxes()">
+                                    Payer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <h5>🏛️ Conformité Urbanistique</h5>
+                        <span class="completion-rate">96%</span>
+                    </div>
+                    <div class="checklist-items">
+                        <div class="checklist-item completed">
+                            <div class="check-status">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="check-content">
+                                <span>Certificat d'urbanisme</span>
+                                <small>Valide pour tous les biens</small>
+                            </div>
+                        </div>
+                        <div class="checklist-item completed">
+                            <div class="check-status">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="check-content">
+                                <span>Conformité PLU</span>
+                                <small>Respect des règles d'occupation</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertes de conformité -->
+        <div class="compliance-alerts">
+            <div class="section-header">
+                <h3>🚨 Alertes de Conformité</h3>
+                <span class="badge badge-warning">8 alertes non traitées</span>
+            </div>
+
+            <div class="alerts-list">
+                <div class="alert-item critical">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <h6>Impôt locatif en retard</h6>
+                        <p>Villa Mermoz - 45 jours de retard</p>
+                        <small>Échéance: 15/02/2024 • Montant: 540,000 FCFA</small>
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn btn-sm btn-danger" onclick="resolveAlert(1)">
+                            Régler
+                        </button>
+                    </div>
+                </div>
+
+                <div class="alert-item warning">
+                    <div class="alert-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="alert-content">
+                        <h6>Document expirant</h6>
+                        <p>Certificat de conformité - Résidence Almadies</p>
+                        <small>Expire dans 15 jours • Action requise</small>
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn btn-sm btn-warning" onclick="renewDocument(1)">
+                            Renouveler
+                        </button>
+                    </div>
+                </div>
+
+                <div class="alert-item info">
+                    <div class="alert-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <h6>Nouvelle réglementation</h6>
+                        <p>Modification du code de l'habitation</p>
+                        <small>Entrée en vigueur: 01/04/2024</small>
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn btn-sm btn-info" onclick="viewRegulation()">
+                            Consulter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historique des audits -->
+        <div class="audit-history">
+            <div class="section-header">
+                <h3>📊 Historique des Audits</h3>
+                <button class="btn btn-outline" onclick="scheduleAudit()">
+                    <i class="fas fa-calendar-plus me-2"></i>Programmer audit
+                </button>
+            </div>
+
+            <div class="audit-timeline">
+                <div class="audit-item completed">
+                    <div class="audit-date">15/03/2024</div>
+                    <div class="audit-content">
+                        <div class="audit-header">
+                            <h6>Audit de conformité trimestriel</h6>
+                            <span class="audit-score positive">94%</span>
+                        </div>
+                        <p>Vérification complète des 135 biens gérés</p>
+                        <div class="audit-details">
+                            <span class="detail-item">✅ 127 biens conformes</span>
+                            <span class="detail-item">⚠️ 5 alertes mineures</span>
+                            <span class="detail-item">🚨 3 non-conformités majeures</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="audit-item completed">
+                    <div class="audit-date">15/12/2023</div>
+                    <div class="audit-content">
+                        <div class="audit-header">
+                            <h6>Audit fiscal annuel</h6>
+                            <span class="audit-score positive">96%</span>
+                        </div>
+                        <p>Contrôle des déclarations et paiements fiscaux</p>
+                        <div class="audit-details">
+                            <span class="detail-item">✅ Toutes déclarations déposées</span>
+                            <span class="detail-item">✅ Paiements à jour</span>
+                            <span class="detail-item">📝 2 recommandations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function generateComplianceCertificate() {
+            console.log("Génération attestation de conformité");
+            // Implémentation génération certificat
+        }
+
+        function runComplianceCheck() {
+            console.log("Lancement vérification conformité");
+            // Lancer scan de conformité
+        }
+
+        function exportChecklist() {
+            console.log("Export checklist conformité");
+            // Implémentation export
+        }
+
+        function viewDetails(checkType) {
+            console.log(`Voir détails: ${checkType}`);
+            // Afficher détails spécifiques
+        }
+
+        function fixIssue(issueType) {
+            console.log(`Corriger problème: ${issueType}`);
+            // Ouvrir interface correction
+        }
+
+        function payTaxes() {
+            console.log("Paiement des impôts");
+            // Ouvrir interface paiement
+        }
+
+        function resolveAlert(alertId) {
+            console.log(`Résoudre alerte: ${alertId}`);
+            // Marquer alerte comme résolue
+        }
+
+        function renewDocument(docId) {
+            console.log(`Renouveler document: ${docId}`);
+            // Ouvrir interface renouvellement
+        }
+
+        function viewRegulation() {
+            console.log("Consulter réglementation");
+            // Afficher détails réglementation
+        }
+
+        function scheduleAudit() {
+            console.log("Programmer audit");
+            // Ouvrir formulaire programmation audit
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

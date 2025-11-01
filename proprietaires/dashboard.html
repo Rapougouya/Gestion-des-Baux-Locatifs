@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Propriétaire | PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Propriétaire</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">M. Mohamed Diallo</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Immobilière</h3>
+            <a href="dashboard.html" class="nav-link active">📊 Tableau de bord</a>
+            <a href="proprietes.html" class="nav-link">🏠 Mes propriétés</a>
+            <a href="baux.html" class="nav-link">📑 Baux locatifs</a>
+            <a href="paiements.html" class="nav-link">💳 Paiements</a>
+            <a href="impots.html" class="nav-link">💰 Impôts locatifs</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Tableau de Bord Propriétaire</h1>
+            <p>Bienvenue dans votre espace de gestion immobilière</p>
+        </div>
+
+        <!-- Métriques principales -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">🏠</div>
+                <div class="metric-info">
+                    <h3>Propriétés</h3>
+                    <div class="metric-value">8</div>
+                    <div class="metric-change">+2 cette année</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">💰</div>
+                <div class="metric-info">
+                    <h3>Revenus Mensuels</h3>
+                    <div class="metric-value">2.5M FCFA</div>
+                    <div class="metric-change positive">+12%</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">📑</div>
+                <div class="metric-info">
+                    <h3>Baux Actifs</h3>
+                    <div class="metric-value">6</div>
+                    <div class="metric-change">94% occupation</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">⚠️</div>
+                <div class="metric-info">
+                    <h3>En Attente</h3>
+                    <div class="metric-value">3</div>
+                    <div class="metric-change">Paiements retard</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphiques et statistiques -->
+        <div class="dashboard-grid">
+            <div class="chart-card">
+                <h3>Évolution des Revenus</h3>
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <h3>Répartition par Type</h3>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-label">Appartements</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 45%"></div>
+                        </div>
+                        <span class="stat-value">45%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Maisons</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 25%"></div>
+                        </div>
+                        <span class="stat-value">25%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Villas</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 20%"></div>
+                        </div>
+                        <span class="stat-value">20%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Commerces</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 10%"></div>
+                        </div>
+                        <span class="stat-value">10%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dernières activités -->
+        <div class="recent-activities">
+            <h2>Activités Récentes</h2>
+            <div class="activities-list">
+                <div class="activity-item">
+                    <div class="activity-icon success">💰</div>
+                    <div class="activity-content">
+                        <p>Paiement reçu - Appartement B12</p>
+                        <span class="activity-time">Il y a 2 heures</span>
+                    </div>
+                    <div class="activity-amount">450,000 FCFA</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon info">📑</div>
+                    <div class="activity-content">
+                        <p>Nouveau bail signé - Villa 45</p>
+                        <span class="activity-time">Hier</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon warning">⚠️</div>
+                    <div class="activity-content">
+                        <p>Paiement en retard - Studio C5</p>
+                        <span class="activity-time">Il y a 3 jours</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon primary">🔧</div>
+                    <div class="activity-content">
+                        <p>Demande maintenance - Appartement B12</p>
+                        <span class="activity-time">Il y a 5 jours</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions rapides -->
+        <div class="quick-actions">
+            <h2>Actions Rapides</h2>
+            <div class="actions-grid">
+                <button class="action-btn" onclick="location.href='proprietes.html'">
+                    <span class="action-icon">➕</span>
+                    <span>Ajouter une propriété</span>
+                </button>
+                <button class="action-btn" onclick="location.href='baux.html'">
+                    <span class="action-icon">📝</span>
+                    <span>Nouveau bail</span>
+                </button>
+                <button class="action-btn" onclick="location.href='paiements.html'">
+                    <span class="action-icon">💳</span>
+                    <span>Vérifier paiements</span>
+                </button>
+                <button class="action-btn" onclick="location.href='communication.html'">
+                    <span class="action-icon">💬</span>
+                    <span>Messagerie</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        if (!checkAuth('proprietaire')) {}
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+            }
+            initializeCharts();
+        });
+
+        function initializeCharts() {
+            // Graphique des revenus
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov'],
+                    datasets: [{
+                        label: 'Revenus (FCFA)',
+                        data: [1800000, 1950000, 2100000, 2200000, 2300000, 2400000, 2350000, 2450000, 2500000, 2450000, 2500000],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 1000000).toFixed(1) + 'M';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card, .stats-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .chart-container {
+            height: 200px;
+            margin-top: 1rem;
+        }
+
+        .stats-container {
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .stat-label {
+            flex: 1;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .stat-bar {
+            flex: 2;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            background: #667eea;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #1e293b;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .activity-icon.success { background: #dcfce7; color: #166534; }
+        .activity-icon.info { background: #dbeafe; color: #1e40af; }
+        .activity-icon.warning { background: #fef3c7; color: #92400e; }
+        .activity-icon.primary { background: #f0f4ff; color: #667eea; }
+    </style>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

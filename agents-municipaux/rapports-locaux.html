@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports Locaux - Agent Municipal | PNSBIL</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/rapport-local-verification.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏛️ PNSBIL</span>
+                <span>Rapports Locaux</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Mairie de Dakar</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Municipale</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="validation-cadastre.html" class="nav-link">🏠 Validation Cadastre</a>
+            <a href="controle-baux.html" class="nav-link">📑 Contrôle des Baux</a>
+            <a href="mediation.html" class="nav-link">⚖️ Médiation</a>
+            <a href="rapports-locaux.html" class="nav-link active">📈 Rapports Locaux</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Rapports et Statistiques Locales</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="generateMonthlyReport()">
+                        <i class="fas fa-file-pdf me-2"></i>Rapport mensuel
+                    </button>
+                    <button class="btn btn-primary" onclick="createCustomReport()">
+                        <i class="fas fa-chart-bar me-2"></i>Rapport personnalisé
+                    </button>
+                </div>
+            </div>
+            <p>Analysez les données immobilières de votre territoire</p>
+        </div>
+
+        <!-- Vue d'ensemble des rapports -->
+        <div class="reports-overview">
+            <div class="overview-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🏘️</div>
+                    <div class="stat-content">
+                        <div class="stat-value">2,847</div>
+                        <div class="stat-label">Biens enregistrés</div>
+                        <div class="stat-change positive">+5% ce trimestre</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📑</div>
+                    <div class="stat-content">
+                        <div class="stat-value">1,924</div>
+                        <div class="stat-label">Baux actifs</div>
+                        <div class="stat-change positive">+8%</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-value">156M FCFA</div>
+                        <div class="stat-label">Taxes collectées</div>
+                        <div class="stat-change positive">+18%</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚖️</div>
+                    <div class="stat-content">
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Taux de conformité</div>
+                        <div class="stat-change positive">+3%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rapports rapides -->
+        <div class="quick-reports">
+            <div class="section-header">
+                <h3>🚀 Rapports Rapides</h3>
+            </div>
+            <div class="reports-grid">
+                <div class="report-card" onclick="generateZoneReport()">
+                    <div class="report-icon">🗺️</div>
+                    <div class="report-content">
+                        <h5>Rapport par Zone</h5>
+                        <p>Analyse par quartier et secteur</p>
+                        <small>Dernière mise à jour: Aujourd'hui</small>
+                    </div>
+                    <div class="report-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="report-card" onclick="generateComplianceReport()">
+                    <div class="report-icon">✅</div>
+                    <div class="report-content">
+                        <h5>Conformité des Baux</h5>
+                        <p>Taux de conformité et infractions</p>
+                        <small>Mise à jour hebdomadaire</small>
+                    </div>
+                    <div class="report-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="report-card" onclick="generateMediationReport()">
+                    <div class="report-icon">⚖️</div>
+                    <div class="report-content">
+                        <h5>Activité de Médiation</h5>
+                        <p>Conflits et résolutions</p>
+                        <small>Mise à jour quotidienne</small>
+                    </div>
+                    <div class="report-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="report-card" onclick="generateRevenueReport()">
+                    <div class="report-icon">💸</div>
+                    <div class="report-content">
+                        <h5>Revenus Fiscaux</h5>
+                        <p>Collecte et tendances</p>
+                        <small>Mise à jour mensuelle</small>
+                    </div>
+                    <div class="report-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques détaillées -->
+        <div class="detailed-analytics">
+            <div class="section-header">
+                <h3>📊 Analytics Détaillés</h3>
+                <div class="period-selector">
+                    <select id="analyticsPeriod" onchange="updateAnalytics()">
+                        <option value="month">Mois en cours</option>
+                        <option value="quarter">Trimestre</option>
+                        <option value="year">Année</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h5>📈 Évolution du Marché Locatif</h5>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Graphique des loyers moyens par zone</p>
+                        </div>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="color-almadies"></span>
+                            <span>Almadies: 450K FCFA</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="color-plateau"></span>
+                            <span>Plateau: 380K FCFA</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="color-mermoz"></span>
+                            <span>Mermoz: 320K FCFA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h5>🏘️ Répartition des Biens</h5>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-pie"></i>
+                            <p>Répartition par type de bien</p>
+                        </div>
+                    </div>
+                    <div class="distribution-stats">
+                        <div class="dist-item">
+                            <span class="dist-label">Appartements</span>
+                            <span class="dist-value">45%</span>
+                        </div>
+                        <div class="dist-item">
+                            <span class="dist-label">Maisons</span>
+                            <span class="dist-value">30%</span>
+                        </div>
+                        <div class="dist-item">
+                            <span class="dist-label">Villas</span>
+                            <span class="dist-value">15%</span>
+                        </div>
+                        <div class="dist-item">
+                            <span class="dist-label">Commerces</span>
+                            <span class="dist-value">10%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card full-width">
+                    <h5>📋 Activité par Quartier</h5>
+                    <div class="neighborhood-table">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Quartier</th>
+                                    <th>Biens</th>
+                                    <th>Baux actifs</th>
+                                    <th>Loyer moyen</th>
+                                    <th>Conformité</th>
+                                    <th>Revenus fiscaux</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Almadies</td>
+                                    <td>425</td>
+                                    <td>312</td>
+                                    <td>450K FCFA</td>
+                                    <td>96%</td>
+                                    <td>45.2M FCFA</td>
+                                </tr>
+                                <tr>
+                                    <td>Plateau</td>
+                                    <td>387</td>
+                                    <td>298</td>
+                                    <td>380K FCFA</td>
+                                    <td>94%</td>
+                                    <td>38.7M FCFA</td>
+                                </tr>
+                                <tr>
+                                    <td>Mermoz</td>
+                                    <td>342</td>
+                                    <td>265</td>
+                                    <td>320K FCFA</td>
+                                    <td>92%</td>
+                                    <td>28.9M FCFA</td>
+                                </tr>
+                                <tr>
+                                    <td>Fann</td>
+                                    <td>298</td>
+                                    <td>234</td>
+                                    <td>350K FCFA</td>
+                                    <td>91%</td>
+                                    <td>25.4M FCFA</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rapports sauvegardés -->
+        <div class="saved-reports">
+            <div class="section-header">
+                <h3>💾 Rapports Sauvegardés</h3>
+                <button class="btn btn-outline" onclick="showReportTemplates()">
+                    <i class="fas fa-plus me-2"></i>Nouveau modèle
+                </button>
+            </div>
+            <div class="reports-list">
+                <div class="saved-report-item">
+                    <div class="report-info">
+                        <div class="report-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="report-details">
+                            <h6>Rapport Mensuel - Mars 2024</h6>
+                            <p>Analyse complète du marché locatif</p>
+                            <small>Généré le 25/03/2024 • PDF • 2.4 MB</small>
+                        </div>
+                    </div>
+                    <div class="report-actions">
+                        <button class="btn-icon" onclick="downloadReport(1)">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn-icon" onclick="shareReport(1)">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="btn-icon" onclick="deleteReport(1)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="saved-report-item">
+                    <div class="report-info">
+                        <div class="report-icon">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                        <div class="report-details">
+                            <h6>Données Brutes - Q1 2024</h6>
+                            <p>Export complet des données cadastrales</p>
+                            <small>Généré le 20/03/2024 • Excel • 5.7 MB</small>
+                        </div>
+                    </div>
+                    <div class="report-actions">
+                        <button class="btn-icon" onclick="downloadReport(2)">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn-icon" onclick="shareReport(2)">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="btn-icon" onclick="deleteReport(2)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/dashboard.js"></script>
+    <script>
+        function generateMonthlyReport() {
+            console.log("Génération rapport mensuel");
+            // Implémentation génération rapport
+        }
+
+        function createCustomReport() {
+            console.log("Création rapport personnalisé");
+            // Ouvrir interface création rapport
+        }
+
+        function generateZoneReport() {
+            console.log("Génération rapport par zone");
+            // Implémentation rapport zone
+        }
+
+        function generateComplianceReport() {
+            console.log("Génération rapport conformité");
+            // Implémentation rapport conformité
+        }
+
+        function generateMediationReport() {
+            console.log("Génération rapport médiation");
+            // Implémentation rapport médiation
+        }
+
+        function generateRevenueReport() {
+            console.log("Génération rapport revenus");
+            // Implémentation rapport revenus
+        }
+
+        function updateAnalytics() {
+            const period = document.getElementById('analyticsPeriod').value;
+            console.log(`Mise à jour analytics pour: ${period}`);
+            // Actualiser les graphiques
+        }
+
+        function downloadReport(reportId) {
+            console.log(`Téléchargement rapport ${reportId}`);
+            // Implémentation téléchargement
+        }
+
+        function shareReport(reportId) {
+            console.log(`Partage rapport ${reportId}`);
+            // Ouvrir interface partage
+        }
+
+        function deleteReport(reportId) {
+            if(confirm("Supprimer ce rapport ?")) {
+                console.log(`Suppression rapport ${reportId}`);
+                // Implémentation suppression
+            }
+        }
+
+        function showReportTemplates() {
+            console.log("Affichage modèles de rapport");
+            // Afficher modèles
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

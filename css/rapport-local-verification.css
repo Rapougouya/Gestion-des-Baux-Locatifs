@@ -1,0 +1,504 @@
+/* Styles pour les rapports locaux */
+.reports-overview {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.overview-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.quick-reports {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.report-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.report-card:hover {
+    border-color: #3498db;
+    background: #f0f8ff;
+    transform: translateY(-2px);
+}
+
+.report-icon {
+    font-size: 2rem;
+    color: #3498db;
+}
+
+.report-content h5 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.report-content p {
+    margin: 0 0 0.5rem 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.report-content small {
+    color: #95a5a6;
+    font-size: 0.8rem;
+}
+
+.report-arrow {
+    margin-left: auto;
+    color: #3498db;
+}
+
+.detailed-analytics {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.period-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.analytics-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.analytics-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.analytics-card h5 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+}
+
+.chart-container {
+    height: 200px;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.chart-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.color-almadies { background: #e74c3c; }
+.color-plateau { background: #3498db; }
+.color-mermoz { background: #27ae60; }
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-item span:first-child {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.distribution-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.dist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: white;
+    border-radius: 4px;
+}
+
+.dist-label {
+    color: #495057;
+}
+
+.dist-value {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.neighborhood-table {
+    overflow-x: auto;
+}
+
+.saved-reports {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.reports-list {
+    margin-top: 1rem;
+}
+
+.saved-report-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.report-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.report-icon {
+    font-size: 1.5rem;
+    color: #e74c3c;
+}
+
+.report-details h6 {
+    margin: 0 0 0.25rem 0;
+    color: #2c3e50;
+}
+
+.report-details p {
+    margin: 0 0 0.25rem 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.report-details small {
+    color: #95a5a6;
+    font-size: 0.8rem;
+}
+
+.report-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Styles pour la vérification */
+.verification-alerts {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.alert-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card.alert {
+    border-left: 4px solid #e74c3c;
+}
+
+.stat-card.warning {
+    border-left: 4px solid #f39c12;
+}
+
+.stat-card.success {
+    border-left: 4px solid #27ae60;
+}
+
+.stat-card.info {
+    border-left: 4px solid #3498db;
+}
+
+.verification-cases {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.verification-item {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.verification-item.high-risk {
+    border-color: #e74c3c;
+    background: #fdf2f2;
+}
+
+.case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.taxpayer-info h4 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.case-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nif, .discrepancy, .amount {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.discrepancy, .amount {
+    font-weight: 600;
+    color: #e74c3c;
+}
+
+.case-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.risk-badge.high {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.case-priority {
+    font-size: 0.8rem;
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.case-details {
+    margin-bottom: 1.5rem;
+}
+
+.discrepancy-analysis {
+    margin-bottom: 1.5rem;
+}
+
+.discrepancy-analysis h5 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.discrepancy-amount, .tax-gap {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.risk-indicators {
+    margin-bottom: 1.5rem;
+}
+
+.risk-indicators h5 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+}
+
+.indicators-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.indicator.high {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.indicator.medium {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.indicator.low {
+    background: #d1edff;
+    color: #0c5460;
+}
+
+.supporting-evidence h5 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+}
+
+.evidence-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.evidence-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.evidence-status.match {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.evidence-status.mismatch {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.evidence-status.pending {
+    color: #f39c12;
+    font-weight: 600;
+}
+
+.verification-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.analysis-tools {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.tool-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tool-card:hover {
+    border-color: #3498db;
+    background: #f0f8ff;
+    transform: translateY(-2px);
+}
+
+.tool-icon {
+    font-size: 2rem;
+    color: #3498db;
+}
+
+.tool-content h5 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.tool-content p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reports-grid,
+    .analytics-grid,
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .case-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .case-status {
+        align-items: flex-start;
+    }
+    
+    .saved-report-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .report-actions {
+        align-self: flex-end;
+    }
+    
+    .verification-actions {
+        flex-direction: column;
+    }
+}

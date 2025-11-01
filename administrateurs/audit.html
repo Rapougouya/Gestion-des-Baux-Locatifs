@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal d'Audit - PNSBIL</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/audit.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Administrateur</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Admin Système</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Administration</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="utilisateurs.html" class="nav-link">👥 Gestion utilisateurs</a>
+            <a href="audit.html" class="nav-link active">📋 Journal d'audit</a>
+            <a href="configurations.html" class="nav-link">⚙️ Configurations</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Journal d'Audit</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-outline" onclick="exportAuditLogs()">
+                        <i class="fas fa-download me-2"></i> Exporter
+                    </button>
+                    <button class="btn btn-primary" onclick="showFilters()">
+                        <i class="fas fa-filter me-2"></i> Filtres avancés
+                    </button>
+                </div>
+            </div>
+            <p>Surveillance et traçabilité des activités système</p>
+        </div>
+
+        <!-- Statistics Grid -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">📊</div>
+                <div class="metric-info">
+                    <h3>Événements Aujourd'hui</h3>
+                    <div class="metric-value">1,247</div>
+                    <div class="metric-change positive">+5% vs hier</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚠️</div>
+                <div class="metric-info">
+                    <h3>Alertes Sécurité</h3>
+                    <div class="metric-value">23</div>
+                    <div class="metric-change negative">-3 cette semaine</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">👤</div>
+                <div class="metric-info">
+                    <h3>Utilisateurs Actifs</h3>
+                    <div class="metric-value">156</div>
+                    <div class="metric-change neutral">Session en cours</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🔍</div>
+                <div class="metric-info">
+                    <h3>Actions Critiques</h3>
+                    <div class="metric-value">8</div>
+                    <div class="metric-change neutral">Dernières 24h</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="audit-filters">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label for="timeRange">Période</label>
+                    <select id="timeRange" class="form-control">
+                        <option value="today">Aujourd'hui</option>
+                        <option value="yesterday">Hier</option>
+                        <option value="week" selected>7 derniers jours</option>
+                        <option value="month">30 derniers jours</option>
+                        <option value="custom">Personnalisée</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="eventType">Type d'événement</label>
+                    <select id="eventType" class="form-control">
+                        <option value="">Tous les types</option>
+                        <option value="login">Connexions</option>
+                        <option value="logout">Déconnexions</option>
+                        <option value="create">Créations</option>
+                        <option value="update">Modifications</option>
+                        <option value="delete">Suppressions</option>
+                        <option value="security">Sécurité</option>
+                        <option value="system">Système</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="severityLevel">Niveau de sévérité</label>
+                    <select id="severityLevel" class="form-control">
+                        <option value="">Tous les niveaux</option>
+                        <option value="info">Information</option>
+                        <option value="warning">Avertissement</option>
+                        <option value="error">Erreur</option>
+                        <option value="critical">Critique</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="userFilter">Utilisateur</label>
+                    <input type="text" id="userFilter" class="form-control" placeholder="ID ou nom d'utilisateur">
+                </div>
+            </div>
+            <div class="filters-actions">
+                <button class="btn btn-primary" onclick="applyFilters()">
+                    <i class="fas fa-search me-2"></i> Appliquer les filtres
+                </button>
+                <button class="btn btn-outline" onclick="resetFilters()">
+                    <i class="fas fa-redo me-2"></i> Réinitialiser
+                </button>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="audit-chart-section">
+            <div class="chart-header">
+                <h3>Activité du Système - 7 derniers jours</h3>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-color success"></span>
+                        <span>Connexions</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color warning"></span>
+                        <span>Modifications</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color danger"></span>
+                        <span>Erreurs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="auditActivityChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Audit Logs Section -->
+        <div class="audit-logs-section">
+            <div class="section-header">
+                <h3>Journal des Événements</h3>
+                <div class="logs-info">
+                    <span class="logs-count">Affichage de 50 événements sur 8,742</span>
+                    <div class="view-options">
+                        <button class="view-option active" data-view="table">
+                            <i class="fas fa-table"></i>
+                        </button>
+                        <button class="view-option" data-view="cards">
+                            <i class="fas fa-grip-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="audit-logs-table" id="auditLogsView">
+                <div class="table-container">
+                    <table class="logs-table">
+                        <thead>
+                            <tr>
+                                <th>Horodatage</th>
+                                <th>Utilisateur</th>
+                                <th>Événement</th>
+                                <th>Type</th>
+                                <th>Niveau</th>
+                                <th>Adresse IP</th>
+                                <th>Détails</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Log Entry 1 -->
+                            <tr class="log-entry critical">
+                                <td>
+                                    <div class="timestamp">
+                                        <div class="time">14:23:45</div>
+                                        <div class="date">25/11/2024</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">AD</div>
+                                        <div class="user-details">
+                                            <div class="user-name">Admin Système</div>
+                                            <div class="user-role">Administrateur</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="event-description">
+                                        Suppression d'utilisateur
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="event-type delete">Suppression</span>
+                                </td>
+                                <td>
+                                    <span class="severity-badge critical">Critique</span>
+                                </td>
+                                <td>192.168.1.100</td>
+                                <td>
+                                    <button class="btn-details" onclick="showEventDetails(1)">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="log-actions">
+                                        <button class="btn-icon" title="Exporter" onclick="exportEvent(1)">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Marquer" onclick="flagEvent(1)">
+                                            <i class="fas fa-flag"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Log Entry 2 -->
+                            <tr class="log-entry warning">
+                                <td>
+                                    <div class="timestamp">
+                                        <div class="time">14:15:32</div>
+                                        <div class="date">25/11/2024</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">MD</div>
+                                        <div class="user-details">
+                                            <div class="user-name">Mohamed Diallo</div>
+                                            <div class="user-role">Propriétaire</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="event-description">
+                                        Modification de propriété
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="event-type update">Modification</span>
+                                </td>
+                                <td>
+                                    <span class="severity-badge warning">Avertissement</span>
+                                </td>
+                                <td>196.200.45.123</td>
+                                <td>
+                                    <button class="btn-details" onclick="showEventDetails(2)">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="log-actions">
+                                        <button class="btn-icon" title="Exporter" onclick="exportEvent(2)">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Log Entry 3 -->
+                            <tr class="log-entry info">
+                                <td>
+                                    <div class="timestamp">
+                                        <div class="time">14:10:15</div>
+                                        <div class="date">25/11/2024</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">AS</div>
+                                        <div class="user-details">
+                                            <div class="user-name">Aminata Sy</div>
+                                            <div class="user-role">Locataire</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="event-description">
+                                        Paiement de loyer
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="event-type create">Création</span>
+                                </td>
+                                <td>
+                                    <span class="severity-badge info">Information</span>
+                                </td>
+                                <td>196.200.45.124</td>
+                                <td>
+                                    <button class="btn-details" onclick="showEventDetails(3)">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="log-actions">
+                                        <button class="btn-icon" title="Exporter" onclick="exportEvent(3)">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Log Entry 4 -->
+                            <tr class="log-entry error">
+                                <td>
+                                    <div class="timestamp">
+                                        <div class="time">13:45:22</div>
+                                        <div class="date">25/11/2024</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar system">⚙️</div>
+                                        <div class="user-details">
+                                            <div class="user-name">Système</div>
+                                            <div class="user-role">Service</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="event-description">
+                                        Erreur de connexion base de données
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="event-type system">Système</span>
+                                </td>
+                                <td>
+                                    <span class="severity-badge error">Erreur</span>
+                                </td>
+                                <td>127.0.0.1</td>
+                                <td>
+                                    <button class="btn-details" onclick="showEventDetails(4)">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="log-actions">
+                                        <button class="btn-icon" title="Exporter" onclick="exportEvent(4)">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Marquer" onclick="flagEvent(4)">
+                                            <i class="fas fa-flag"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="pagination-controls">
+                    <button class="page-btn disabled">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">4</button>
+                    <button class="page-btn">5</button>
+                    <button class="page-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="pagination-info">
+                    Page 1 sur 175
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Event Details Modal -->
+    <div id="eventDetailsModal" class="modal">
+        <div class="modal-overlay" onclick="closeEventDetails()"></div>
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2><i class="fas fa-clipboard-list me-2"></i>Détails de l'Événement d'Audit</h2>
+                <button class="close" onclick="closeEventDetails()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="event-details">
+                    <!-- Informations Générales -->
+                    <div class="detail-section">
+                        <h4><i class="fas fa-info-circle me-2"></i>Informations Générales</h4>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <label>ID Événement</label>
+                                <div class="detail-value">AUD-2024-001245</div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Horodatage</label>
+                                <div class="detail-value">25/11/2024 14:23:45.123</div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Type</label>
+                                <div class="detail-value">
+                                    <span class="event-type delete">Suppression</span>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Niveau</label>
+                                <div class="detail-value">
+                                    <span class="severity-badge critical">Critique</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Utilisateur et Session -->
+                    <div class="detail-section">
+                        <h4><i class="fas fa-user me-2"></i>Utilisateur et Session</h4>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <label>Utilisateur</label>
+                                <div class="detail-value">Admin Système (USR-000001)</div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Rôle</label>
+                                <div class="detail-value">Administrateur</div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Adresse IP</label>
+                                <div class="detail-value">192.168.1.100</div>
+                            </div>
+                            <div class="detail-item">
+                                <label>User Agent</label>
+                                <div class="detail-value">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Détails de l'Action -->
+                    <div class="detail-section">
+                        <h4><i class="fas fa-cog me-2"></i>Détails de l'Action</h4>
+                        <div class="action-details">
+                            <pre class="json-data">{
+  "action": "user_delete",
+  "target_user_id": "USR-001863",
+  "target_user_name": "Aminata Sy",
+  "reason": "Demande de suppression",
+  "performed_by": "USR-000001",
+  "timestamp": "2024-11-25T14:23:45.123Z",
+  "ip_address": "192.168.1.100"
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Métadonnées -->
+                    <div class="detail-section">
+                        <h4><i class="fas fa-database me-2"></i>Métadonnées</h4>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <label>Application</label>
+                                <div class="detail-value">PNSBIL Web Portal</div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Version</label>
+                                <div class="detail-value">2.1.0</div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Session ID</label>
+                                <div class="detail-value">SESS-a1b2c3d4e5f6</div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Durée</label>
+                                <div class="detail-value">0.45s</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeEventDetails()">
+                    <i class="fas fa-times me-2"></i> Fermer
+                </button>
+                <button class="btn btn-primary" onclick="exportEventDetails()">
+                    <i class="fas fa-download me-2"></i> Exporter en JSON
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="../js/auth.js"></script>
+    <script>
+        // Vérification d'authentification
+        if (!checkAuth('administrateur')) {
+            // Redirection si non autorisé
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+            }
+            initializeAuditChart();
+            setupViewToggle();
+            loadFooter();
+        });
+
+        // Initialisation du graphique
+        function initializeAuditChart() {
+            const ctx = document.getElementById('auditActivityChart').getContext('2d');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+                        datasets: [
+                            {
+                                label: 'Connexions',
+                                data: [245, 280, 312, 298, 345, 210, 185],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Modifications',
+                                data: [89, 112, 98, 145, 167, 95, 78],
+                                borderColor: '#f59e0b',
+                                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Erreurs',
+                                data: [12, 8, 15, 23, 18, 9, 5],
+                                borderColor: '#ef4444',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Configuration du toggle de vue
+        function setupViewToggle() {
+            document.querySelectorAll('.view-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.view-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const view = this.dataset.view;
+                    const container = document.getElementById('auditLogsView');
+                    
+                    if (view === 'cards') {
+                        container.classList.add('cards-view');
+                    } else {
+                        container.classList.remove('cards-view');
+                    }
+                });
+            });
+        }
+
+        // Chargement du footer
+        function loadFooter() {
+            fetch('../shared/footer.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Footer non trouvé');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Erreur de chargement du footer:', error);
+                    // Footer de secours
+                    document.getElementById('footer-container').innerHTML = `
+                        <footer style="background: #1e293b; color: white; padding: 2rem; text-align: center; margin-top: 3rem;">
+                            <p>&copy; 2024 PNSBIL - Tous droits réservés</p>
+                        </footer>
+                    `;
+                });
+        }
+
+        // Fonctions des boutons
+        function showFilters() {
+            const filters = document.querySelector('.audit-filters');
+            filters.classList.toggle('expanded');
+        }
+
+        function applyFilters() {
+            // Implémentation réelle de l'application des filtres
+            console.log('Application des filtres...');
+        }
+
+        function resetFilters() {
+            document.getElementById('timeRange').value = 'week';
+            document.getElementById('eventType').value = '';
+            document.getElementById('severityLevel').value = '';
+            document.getElementById('userFilter').value = '';
+        }
+
+        function exportAuditLogs() {
+            alert('Export des logs d\'audit démarré...');
+        }
+
+        function showEventDetails(id) {
+            document.getElementById('eventDetailsModal').classList.add('active');
+        }
+
+        function closeEventDetails() {
+            document.getElementById('eventDetailsModal').classList.remove('active');
+        }
+
+        function exportEvent(id) {
+            alert(`Export de l'événement ${id}`);
+        }
+
+        function flagEvent(id) {
+            alert(`Marquage de l'événement ${id}`);
+        }
+
+        function exportEventDetails() {
+            alert('Export des détails en JSON');
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                // Implémentation de la déconnexion
+                window.location.href = '../index.html';
+            }
+        }
+
+        // Fermer la modal avec ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeEventDetails();
+            }
+        });
+    </script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

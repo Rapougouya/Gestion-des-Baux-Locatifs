@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portefeuille - Agence | PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/portefe-dashbord-locat.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Agence Immobilière</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Agence Immobilière Premium</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Professionnelle</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="portefeuille.html" class="nav-link active">🏘️ Mon portefeuille</a>
+            <a href="transactions.html" class="nav-link">🔄 Transactions</a>
+            <a href="conformite.html" class="nav-link">📋 Conformité</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-actions">
+                <h1>Mon Portefeuille Immobilier</h1>
+                <button class="btn btn-primary" onclick="showAddPropertyModal()">
+                    <i class="fas fa-plus me-2"></i> Ajouter un bien
+                </button>
+            </div>
+            <p>Gérez votre portefeuille de biens immobiliers</p>
+        </div>
+
+        <!-- Vue d'ensemble du portefeuille -->
+        <div class="portfolio-overview">
+            <div class="overview-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🏘️</div>
+                    <div class="stat-content">
+                        <div class="stat-value">127</div>
+                        <div class="stat-label">Biens gérés</div>
+                        <div class="stat-change positive">+8 ce mois</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-value">18.5M FCFA</div>
+                        <div class="stat-label">Chiffre d'affaires</div>
+                        <div class="stat-change positive">+15%</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-content">
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Taux d'occupation</div>
+                        <div class="stat-change positive">+2.3%</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-content">
+                        <div class="stat-value">4.7/5</div>
+                        <div class="stat-label">Satisfaction clients</div>
+                        <div class="stat-change">156 avis</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtres et recherche -->
+        <div class="portfolio-filters">
+            <div class="filter-row">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un bien..." id="propertySearch">
+                </div>
+                <div class="filter-group">
+                    <select id="propertyTypeFilter">
+                        <option value="">Tous les types</option>
+                        <option value="appartement">Appartements</option>
+                        <option value="maison">Maisons</option>
+                        <option value="villa">Villas</option>
+                        <option value="commercial">Commerces</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="statusFilter">
+                        <option value="">Tous les statuts</option>
+                        <option value="occupied">Occupé</option>
+                        <option value="vacant">Vacant</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="locationFilter">
+                        <option value="">Toutes les localisations</option>
+                        <option value="dakar">Dakar</option>
+                        <option value="thies">Thiès</option>
+                        <option value="saint-louis">Saint-Louis</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions groupées -->
+        <div class="bulk-actions">
+            <div class="bulk-header">
+                <h4>Actions Groupées</h4>
+                <div class="bulk-buttons">
+                    <button class="btn btn-outline" onclick="exportProperties()">
+                        <i class="fas fa-download me-2"></i>Exporter
+                    </button>
+                    <button class="btn btn-outline" onclick="bulkUpdateStatus()">
+                        <i class="fas fa-sync me-2"></i>Modifier statut
+                    </button>
+                    <button class="btn btn-outline" onclick="generatePortfolioReport()">
+                        <i class="fas fa-chart-bar me-2"></i>Rapport portefeuille
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des biens -->
+        <div class="properties-grid">
+            <!-- Bien 1 -->
+            <div class="property-card">
+                <div class="property-header">
+                    <div class="property-badge occupied">Occupé</div>
+                    <div class="property-actions">
+                        <button class="btn-icon" title="Modifier" onclick="editProperty(1)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon" title="Statistiques" onclick="showPropertyStats(1)">
+                            <i class="fas fa-chart-bar"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="property-image">
+                    <img src="../assets/images/property1.jpg" alt="Résidence Les Almadies">
+                    <div class="property-type">Appartement</div>
+                </div>
+                <div class="property-content">
+                    <h3 class="property-title">Résidence Les Almadies</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Almadies, Dakar
+                    </div>
+                    <div class="property-details">
+                        <div class="detail">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>85m²</span>
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-bed"></i>
+                            <span>3 pièces</span>
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-bath"></i>
+                            <span>2 sdb</span>
+                        </div>
+                    </div>
+                    <div class="property-financial">
+                        <div class="rent-price">450,000 FCFA/mois</div>
+                        <div class="property-id">REF: AG-2024-001</div>
+                    </div>
+                    <div class="property-tenant">
+                        <div class="tenant-info">
+                            <div class="tenant-avatar">AS</div>
+                            <div class="tenant-details">
+                                <div class="tenant-name">Aminata Sy</div>
+                                <div class="lease-period">Bail: 01/01/2024 - 31/12/2024</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="property-footer">
+                        <button class="btn btn-outline" onclick="viewPropertyDetails(1)">
+                            <i class="fas fa-eye me-1"></i> Détails
+                        </button>
+                        <button class="btn btn-primary" onclick="contactTenant(1)">
+                            <i class="fas fa-envelope me-1"></i> Contacter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bien 2 -->
+            <div class="property-card">
+                <div class="property-header">
+                    <div class="property-badge vacant">Vacant</div>
+                    <div class="property-actions">
+                        <button class="btn-icon" title="Modifier" onclick="editProperty(2)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon" title="Publier" onclick="publishProperty(2)">
+                            <i class="fas fa-share"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="property-image">
+                    <img src="../assets/images/property2.jpg" alt="Villa Mermoz">
+                    <div class="property-type">Villa</div>
+                </div>
+                <div class="property-content">
+                    <h3 class="property-title">Villa Mermoz</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Mermoz, Dakar
+                    </div>
+                    <div class="property-details">
+                        <div class="detail">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>185m²</span>
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-bed"></i>
+                            <span>5 pièces</span>
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-bath"></i>
+                            <span>3 sdb</span>
+                        </div>
+                    </div>
+                    <div class="property-financial">
+                        <div class="rent-price">750,000 FCFA/mois</div>
+                        <div class="property-id">REF: AG-2024-002</div>
+                    </div>
+                    <div class="property-vacancy">
+                        <div class="vacancy-info">
+                            <i class="fas fa-clock"></i>
+                            <span>Disponible depuis 15 jours</span>
+                        </div>
+                        <div class="vacancy-actions">
+                            <button class="btn btn-sm btn-success" onclick="addProspect(2)">
+                                Ajouter prospect
+                            </button>
+                        </div>
+                    </div>
+                    <div class="property-footer">
+                        <button class="btn btn-outline" onclick="viewPropertyDetails(2)">
+                            <i class="fas fa-eye me-1"></i> Détails
+                        </button>
+                        <button class="btn btn-primary" onclick="marketingActions(2)">
+                            <i class="fas fa-bullhorn me-1"></i> Promouvoir
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bien 3 -->
+            <div class="property-card">
+                <div class="property-header">
+                    <div class="property-badge maintenance">Maintenance</div>
+                    <div class="property-actions">
+                        <button class="btn-icon" title="Modifier" onclick="editProperty(3)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon" title="Maintenance" onclick="showMaintenance(3)">
+                            <i class="fas fa-tools"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="property-image">
+                    <img src="../assets/images/property3.jpg" alt="Appartement Fann">
+                    <div class="property-type">Appartement</div>
+                </div>
+                <div class="property-content">
+                    <h3 class="property-title">Appartement Fann Residence</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Fann, Dakar
+                    </div>
+                    <div class="property-details">
+                        <div class="detail">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>65m²</span>
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-bed"></i>
+                            <span>2 pièces</span>
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-bath"></i>
+                            <span>1 sdb</span>
+                        </div>
+                    </div>
+                    <div class="property-financial">
+                        <div class="rent-price">280,000 FCFA/mois</div>
+                        <div class="property-id">REF: AG-2024-003</div>
+                    </div>
+                    <div class="property-maintenance">
+                        <div class="maintenance-info">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Rénovation en cours - Fin prévue: 15/04/2024</span>
+                        </div>
+                        <div class="maintenance-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                            <span>65% terminé</span>
+                        </div>
+                    </div>
+                    <div class="property-footer">
+                        <button class="btn btn-outline" onclick="viewPropertyDetails(3)">
+                            <i class="fas fa-eye me-1"></i> Détails
+                        </button>
+                        <button class="btn btn-warning" onclick="updateMaintenance(3)">
+                            <i class="fas fa-tools me-1"></i> Suivi travaux
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bien 4 -->
+            <div class="property-card">
+                <div class="property-header">
+                    <div class="property-badge occupied">Occupé</div>
+                    <div class="property-actions">
+                        <button class="btn-icon" title="Modifier" onclick="editProperty(4)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon" title="Documents" onclick="showDocuments(4)">
+                            <i class="fas fa-folder"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="property-image">
+                    <img src="../assets/images/property4.jpg" alt="Studio Plateau">
+                    <div class="property-type">Studio</div>
+                </div>
+                <div class="property-content">
+                    <h3 class="property-title">Studio Plateau</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Plateau, Dakar
+                    </div>
+                    <div class="property-details">
+                        <div class="detail">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>35m²</span>
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-bed"></i>
+                            <span>1 pièce</span>
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-bath"></i>
+                            <span>1 sdb</span>
+                        </div>
+                    </div>
+                    <div class="property-financial">
+                        <div class="rent-price">180,000 FCFA/mois</div>
+                        <div class="property-id">REF: AG-2024-004</div>
+                    </div>
+                    <div class="property-tenant">
+                        <div class="tenant-info">
+                            <div class="tenant-avatar">MN</div>
+                            <div class="tenant-details">
+                                <div class="tenant-name">Moussa Ndiaye</div>
+                                <div class="lease-period">Bail: 01/02/2024 - 31/01/2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="property-alert">
+                        <div class="alert-badge warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Paiement en attente</span>
+                        </div>
+                    </div>
+                    <div class="property-footer">
+                        <button class="btn btn-outline" onclick="viewPropertyDetails(4)">
+                            <i class="fas fa-eye me-1"></i> Détails
+                        </button>
+                        <button class="btn btn-danger" onclick="sendPaymentReminder(4)">
+                            <i class="fas fa-bell me-1"></i> Rappeler
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="btn btn-outline" disabled>
+                <i class="fas fa-chevron-left"></i> Précédent
+            </button>
+            <div class="page-numbers">
+                <span class="page-number active">1</span>
+                <span class="page-number">2</span>
+                <span class="page-number">3</span>
+                <span class="page-dots">...</span>
+                <span class="page-number">12</span>
+            </div>
+            <button class="btn btn-outline">
+                Suivant <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- Modal d'ajout de bien -->
+    <div id="addPropertyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter un nouveau bien</h3>
+                <button class="btn-icon" onclick="closeAddPropertyModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addPropertyForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Type de bien *</label>
+                            <select class="form-control" required>
+                                <option value="">Sélectionner...</option>
+                                <option value="appartement">Appartement</option>
+                                <option value="maison">Maison</option>
+                                <option value="villa">Villa</option>
+                                <option value="commercial">Local commercial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse *</label>
+                            <input type="text" class="form-control" placeholder="Adresse complète" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Surface (m²) *</label>
+                            <input type="number" class="form-control" placeholder="Surface en m²" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre de pièces *</label>
+                            <input type="number" class="form-control" placeholder="Nombre de pièces" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Loyer mensuel (FCFA) *</label>
+                            <input type="number" class="form-control" placeholder="Montant du loyer" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Description</label>
+                            <textarea class="form-control" rows="3" placeholder="Description du bien"></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Équipements</label>
+                            <div class="equipment-checklist">
+                                <label class="checkbox">
+                                    <input type="checkbox"> Climatisation
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox"> Parking
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox"> Ascenseur
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox"> Gardiennage
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeAddPropertyModal()">Annuler</button>
+                <button class="btn btn-primary" onclick="saveProperty()">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
+    <script>
+        function showAddPropertyModal() {
+            document.getElementById('addPropertyModal').style.display = 'block';
+        }
+
+        function closeAddPropertyModal() {
+            document.getElementById('addPropertyModal').style.display = 'none';
+        }
+
+        function saveProperty() {
+            // Implémentation de la sauvegarde
+            console.log('Sauvegarde du bien...');
+            closeAddPropertyModal();
+        }
+
+        function editProperty(propertyId) {
+            console.log(`Modification du bien ${propertyId}`);
+        }
+
+        function showPropertyStats(propertyId) {
+            console.log(`Statistiques du bien ${propertyId}`);
+        }
+
+        function publishProperty(propertyId) {
+            console.log(`Publication du bien ${propertyId}`);
+        }
+
+        function viewPropertyDetails(propertyId) {
+            console.log(`Voir détails du bien ${propertyId}`);
+        }
+
+        function contactTenant(propertyId) {
+            console.log(`Contacter locataire du bien ${propertyId}`);
+        }
+
+        function addProspect(propertyId) {
+            console.log(`Ajouter prospect pour bien ${propertyId}`);
+        }
+
+        function marketingActions(propertyId) {
+            console.log(`Actions marketing pour bien ${propertyId}`);
+        }
+
+        function showMaintenance(propertyId) {
+            console.log(`Maintenance du bien ${propertyId}`);
+        }
+
+        function updateMaintenance(propertyId) {
+            console.log(`Mise à jour maintenance du bien ${propertyId}`);
+        }
+
+        function showDocuments(propertyId) {
+            console.log(`Documents du bien ${propertyId}`);
+        }
+
+        function sendPaymentReminder(propertyId) {
+            console.log(`Rappel paiement pour bien ${propertyId}`);
+        }
+
+        function exportProperties() {
+            console.log('Export des biens');
+        }
+
+        function bulkUpdateStatus() {
+            console.log('Modification groupée du statut');
+        }
+
+        function generatePortfolioReport() {
+            console.log('Génération rapport portefeuille');
+        }
+
+        // Fermer la modal en cliquant en dehors
+        window.onclick = function(event) {
+            const modal = document.getElementById('addPropertyModal');
+            if (event.target === modal) {
+                closeAddPropertyModal();
+            }
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
+                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
+                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Ressources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>
