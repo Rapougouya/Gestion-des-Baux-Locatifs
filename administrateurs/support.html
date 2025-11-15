@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre d'aide - PNSBIL</title>
+    <style>
+        /* =============================================
+           VARIABLES ET RESET MODERNES
+        ============================================= */
+        :root {
+            /* Couleurs */
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #dbeafe;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            
+            /* Espacements */
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            
+            /* Bordures */
+            --radius: 0.5rem;
+            --radius-lg: 0.75rem;
+            
+            /* Ombres */
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            
+            /* Typographie */
+            --font-sm: 0.875rem;
+            --font-base: 1rem;
+            --font-lg: 1.125rem;
+            --font-xl: 1.25rem;
+            --font-2xl: 1.5rem;
+            --font-3xl: 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* =============================================
+           HEADER
+        ============================================= */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-md) var(--space-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-weight: 700;
+            font-size: var(--font-lg);
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+        }
+
+        .nav ul {
+            display: flex;
+            gap: var(--space-md);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+        }
+
+        .nav a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* =============================================
+           CONTENU PRINCIPAL
+        ============================================= */
+        .container {
+            max-width: 1200px;
+            margin: var(--space-2xl) auto;
+            padding: 0 var(--space-xl);
+        }
+
+        /* =============================================
+           HERO SECTION
+        ============================================= */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-light) 0%, transparent 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            margin-bottom: var(--space-2xl);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: var(--space-2xl);
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: var(--font-3xl);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: var(--space-sm);
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            color: var(--text-light);
+            font-size: var(--font-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .support-hours {
+            background: var(--surface);
+            padding: var(--space-lg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            min-width: 280px;
+        }
+
+        .support-hours h3 {
+            font-size: var(--font-base);
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: var(--space-sm);
+        }
+
+        .support-hours p {
+            color: var(--text-light);
+            font-size: var(--font-sm);
+            margin: 0;
+        }
+
+        /* =============================================
+           RECHERCHE ET CATÉGORIES
+        ============================================= */
+        .search-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .search-box {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: var(--space-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: var(--font-base);
+            background: var(--surface);
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: all 0.2s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .category-btn {
+            background: var(--surface);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: var(--font-sm);
+            transition: all 0.2s ease;
+        }
+
+        .category-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* =============================================
+           GRID PRINCIPALE
+        ============================================= */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: var(--space-xl);
+            align-items: start;
+        }
+
+        /* =============================================
+           CARTES
+        ============================================= */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .card h2 {
+            font-size: var(--font-xl);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: var(--space-sm);
+        }
+
+        .card h3 {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: var(--space-sm);
+        }
+
+        /* =============================================
+           FAQ
+        ============================================= */
+        .faq-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .filter-section {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .filter-input {
+            flex: 1;
+            padding: var(--space-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: var(--font-base);
+            background: var(--surface);
+        }
+
+        .clear-filter {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .clear-filter:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--surface);
+            transition: all 0.2s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .faq-item.open {
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-lg);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.2s ease;
+        }
+
+        .faq-item.open .faq-question {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .faq-meta {
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: var(--font-sm);
+        }
+
+        .faq-answer {
+            padding: var(--space-lg);
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: var(--font-base);
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* =============================================
+           RESSOURCES
+        ============================================= */
+        .resources-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .resource-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s ease;
+        }
+
+        .resource-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .resource-icon {
+            font-size: 1.25rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .resource-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        /* =============================================
+           FORMULAIRE DE CONTACT
+        ============================================= */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text);
+            font-size: var(--font-sm);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            padding: var(--space-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: var(--font-base);
+            background: var(--surface);
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: flex-end;
+            margin-top: var(--space-sm);
+        }
+
+        /* =============================================
+           BOUTONS
+        ============================================= */
+        .btn {
+            padding: var(--space-md) var(--space-lg);
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--font-base);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* =============================================
+           FOOTER
+        ============================================= */
+        .footer {
+            background: var(--text);
+            color: white;
+            margin-top: var(--space-2xl);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-2xl) var(--space-xl);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-2xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .footer-section h5 {
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            font-size: var(--font-lg);
+        }
+
+        .footer-section p {
+            color: #cbd5e1;
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-contact {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: #94a3b8;
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: var(--space-lg);
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        /* =============================================
+           NOTIFICATIONS
+        ============================================= */
+        .notification {
+            position: fixed;
+            right: var(--space-xl);
+            bottom: var(--space-xl);
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            border-left: 4px solid var(--success);
+            transform: translateY(150%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+        }
+
+        .notification.error {
+            border-left-color: var(--error);
+        }
+
+        .notification.info {
+            border-left-color: var(--primary);
+        }
+
+        .notification-content {
+            flex: 1;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: var(--space-xs);
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+        }
+
+        .notification-close:hover {
+            background: var(--background);
+            color: var(--text);
+        }
+
+        /* =============================================
+           ANIMATIONS
+        ============================================= */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =============================================
+           RESPONSIVE
+        ============================================= */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .support-hours {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--space-lg);
+            }
+            
+            .header-content {
+                padding: var(--space-md) var(--space-lg);
+            }
+            
+            .nav ul {
+                gap: var(--space-sm);
+            }
+            
+            .hero {
+                padding: var(--space-xl);
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav ul {
+                display: none;
+            }
+            
+            .categories {
+                justify-content: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* =============================================
+           ACCESSIBILITÉ
+        ============================================= */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus visible pour l'accessibilité */
+        button:focus-visible, 
+        a:focus-visible, 
+        .faq-question:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🛟</span>
+                <span>Centre d'aide PNSBIL</span>
+            </div>
+            <nav class="nav" role="navigation" aria-label="Navigation principale">
+                <ul>
+                    <li><a href="dashboard.html">Retour au tableau de bord</a></li>
+                    <li><a href="#faq" class="active">FAQ</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#resources">Ressources</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="container" role="main">
+        <!-- Section Hero -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 id="hero-title">Comment pouvons-nous vous aider ?</h1>
+                    <p>Trouvez rapidement des réponses à vos questions ou contactez notre équipe de support.</p>
+                    
+                    <!-- Recherche -->
+                    <div class="search-section">
+                        <div class="search-box" role="search">
+                            <input type="search" 
+                                   class="search-input" 
+                                   id="searchInput" 
+                                   placeholder="Rechercher une question, un article ou un guide..."
+                                   aria-label="Recherche dans le centre d'aide">
+                            <button class="search-btn" id="searchBtn">
+                                <span>🔍</span>
+                                <span>Rechercher</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Catégories -->
+                        <div class="categories" aria-label="Filtrer par catégorie" id="categories">
+                            <button class="category-btn active" data-category="all">Toutes les catégories</button>
+                            <button class="category-btn" data-category="comptes">📱 Comptes</button>
+                            <button class="category-btn" data-category="baux">📑 Baux</button>
+                            <button class="category-btn" data-category="facturation">💰 Facturation</button>
+                            <button class="category-btn" data-category="technique">⚙️ Technique</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Horaires de support -->
+                <aside class="support-hours">
+                    <h3>📞 Support disponible</h3>
+                    <p><strong>Lun - Ven:</strong> 8h00 - 18h00</p>
+                    <p><strong>Sam:</strong> 9h00 - 13h00</p>
+                    <p><strong>Réponse sous 24h ouvrables</strong></p>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Grille Principale -->
+        <div class="main-grid">
+            <!-- Colonne de gauche : FAQ -->
+            <section class="card faq-section" id="faq" aria-labelledby="faq-title">
+                <h2 id="faq-title">Questions fréquemment posées</h2>
+                <p style="color: var(--text-light); margin-bottom: var(--space-lg);">
+                    Retrouvez les réponses aux questions les plus courantes de nos utilisateurs.
+                </p>
+
+                <!-- Filtrage -->
+                <div class="filter-section">
+                    <input type="text" 
+                           class="filter-input" 
+                           id="filterInput" 
+                           placeholder="Filtrer les questions..."
+                           aria-label="Filtrer les questions de la FAQ">
+                    <button class="clear-filter" id="clearFilter">Effacer le filtre</button>
+                </div>
+
+                <!-- Liste FAQ -->
+                <div class="faq-list" id="faqList" aria-live="polite">
+                    <!-- Question 1 -->
+                    <div class="faq-item" data-category="comptes">
+                        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+                            <span>Comment réinitialiser mon mot de passe ?</span>
+                            <span class="faq-meta">Comptes</span>
+                        </div>
+                        <div class="faq-answer" aria-hidden="true">
+                            <p>Pour réinitialiser votre mot de passe :</p>
+                            <ol>
+                                <li>Allez dans <strong>Mon compte → Paramètres de sécurité</strong></li>
+                                <li>Cliquez sur <strong>"Réinitialiser le mot de passe"</strong></li>
+                                <li>Suivez les instructions envoyées par email</li>
+                            </ol>
+                            <p>Le lien de réinitialisation est valable 24 heures.</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="faq-item" data-category="baux">
+                        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+                            <span>Comment enregistrer un nouveau bail ?</span>
+                            <span class="faq-meta">Baux</span>
+                        </div>
+                        <div class="faq-answer" aria-hidden="true">
+                            <p>Pour enregistrer un nouveau bail :</p>
+                            <ul>
+                                <li>Accédez à <strong>Baux → Nouveau bail</strong></li>
+                                <li>Remplissez les informations du locataire</li>
+                                <li>Téléversez les documents requis (pièce d'identité, justificatif de domicile)</li>
+                                <li>Validez le contrat généré automatiquement</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="faq-item" data-category="facturation">
+                        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+                            <span>Comment consulter mes factures et paiements ?</span>
+                            <span class="faq-meta">Facturation</span>
+                        </div>
+                        <div class="faq-answer" aria-hidden="true">
+                            <p>Dans la section <strong>Facturation → Historique</strong>, vous pouvez :</p>
+                            <ul>
+                                <li>Consulter toutes vos factures</li>
+                                <li>Télécharger les PDF</li>
+                                <li>Voir le statut des paiements</li>
+                                <li>Exporter vos données fiscales</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="faq-item" data-category="technique">
+                        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+                            <span>L'application ne se charge pas correctement, que faire ?</span>
+                            <span class="faq-meta">Technique</span>
+                        </div>
+                        <div class="faq-answer" aria-hidden="true">
+                            <p>Si vous rencontrez des problèmes de chargement :</p>
+                            <ol>
+                                <li>Videz le cache de votre navigateur</li>
+                                <li>Essayez en navigation privée</li>
+                                <li>Vérifiez votre connexion internet</li>
+                                <li>Mettez à jour votre navigateur</li>
+                            </ol>
+                            <p>Si le problème persiste, contactez le support technique avec une capture d'écran.</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="faq-item" data-category="comptes">
+                        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+                            <span>Comment modifier les permissions d'un utilisateur ?</span>
+                            <span class="faq-meta">Administration</span>
+                        </div>
+                        <div class="faq-answer" aria-hidden="true">
+                            <p>Seuls les administrateurs peuvent modifier les permissions :</p>
+                            <ul>
+                                <li>Allez dans <strong>Administration → Utilisateurs</strong></li>
+                                <li>Sélectionnez l'utilisateur concerné</li>
+                                <li>Cliquez sur "Modifier les permissions"</li>
+                                <li>Attribuez les rôles appropriés</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Colonne de droite : Ressources et Contact -->
+            <aside>
+                <!-- Ressources -->
+                <section class="card resources-section" id="resources" aria-labelledby="resources-title">
+                    <h3 id="resources-title">📚 Ressources utiles</h3>
+                    <div class="resource-list">
+                        <a href="#" class="resource-item" onclick="openResource(event, 'guide-administrateur')">
+                            <span class="resource-icon">📘</span>
+                            <span class="resource-text">Guide complet de l'administrateur</span>
+                        </a>
+                        <a href="#" class="resource-item" onclick="openResource(event, 'politique-securite')">
+                            <span class="resource-icon">🔒</span>
+                            <span class="resource-text">Politique de sécurité et confidentialité</span>
+                        </a>
+                        <a href="#" class="resource-item" onclick="openResource(event, 'documentation-api')">
+                            <span class="resource-icon">⚙️</span>
+                            <span class="resource-text">Documentation API et intégrations</span>
+                        </a>
+                        <a href="#" class="resource-item" onclick="openResource(event, 'journal-mises-a-jour')">
+                            <span class="resource-icon">📝</span>
+                            <span class="resource-text">Journal des mises à jour</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Formulaire de contact -->
+                <section class="card" id="contact" aria-labelledby="contact-title" style="margin-top: var(--space-xl);">
+                    <h3 id="contact-title">✉️ Contactez notre support</h3>
+                    <p style="color: var(--text-light); margin-bottom: var(--space-lg);">
+                        Notre équipe est là pour vous aider rapidement et efficacement.
+                    </p>
+                    
+                    <form class="contact-form" id="contactForm" onsubmit="return submitContact(event)">
+                        <div class="form-group">
+                            <label for="contactName" class="form-label">Votre nom complet *</label>
+                            <input type="text" id="contactName" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactEmail" class="form-label">Adresse email *</label>
+                            <input type="email" id="contactEmail" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactTopic" class="form-label">Sujet de votre demande *</label>
+                            <select id="contactTopic" class="form-select" required>
+                                <option value="">Choisir un sujet...</option>
+                                <option value="comptes">Problème de compte</option>
+                                <option value="baux">Gestion des baux</option>
+                                <option value="facturation">Facturation et paiements</option>
+                                <option value="technique">Problème technique</option>
+                                <option value="autre">Autre demande</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMessage" class="form-label">Description détaillée *</label>
+                            <textarea id="contactMessage" class="form-textarea" 
+                                      placeholder="Décrivez votre problème ou votre demande en détail..."
+                                      required></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="resetContactForm()">
+                                Effacer le formulaire
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <span>📨</span>
+                                <span>Envoyer la demande</span>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </aside>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer" role="contentinfo">
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <h5>PNSBIL</h5>
+                        <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                        <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h5>Liens rapides</h5>
+                        <ul class="footer-links">
+                            <li><a href="dashboard.html">Tableau de bord</a></li>
+                            <li><a href="portefeuille.html">Mon portefeuille</a></li>
+                            <li><a href="conformite.html">Conformité</a></li>
+                            <li><a href="rapports.html">Rapports</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h5>Contact</h5>
+                        <ul class="footer-contact">
+                            <li>📍 Avenue de la Nation, Ouagadougou</li>
+                            <li>📞 +226 25 45 67 89</li>
+                            <li>📧 support@pnsbil.bf</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h5>Ressources</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Centre d'aide</a></li>
+                            <li><a href="#">Documentation API</a></li>
+                            <li><a href="#">Statut des services</a></li>
+                            <li><a href="#">Mentions légales</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2024 PNSBIL - Tous droits réservés | 
+                       <a href="support.html" style="color: #fff; text-decoration: underline;">Besoin d'aide ? Contactez-nous</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Notification -->
+    <div id="notification" class="notification" role="alert" aria-live="polite">
+        <div class="notification-content" id="notificationText"></div>
+        <button class="notification-close" onclick="hideNotification()" aria-label="Fermer la notification">✕</button>
+    </div>
+
+    <script>
+       // =============================================
+// GESTIONNAIRE PRINCIPAL
+// =============================================
+class HelpCenterManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.setupFAQAccordion();
+        this.setCurrentYear();
+    }
+
+    setupEventListeners() {
+        // Recherche principale
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        
+        searchBtn.addEventListener('click', () => this.performSearch());
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.performSearch();
+        });
+
+        // Filtrage FAQ
+        const filterInput = document.getElementById('filterInput');
+        const clearFilter = document.getElementById('clearFilter');
+        
+        filterInput.addEventListener('input', () => this.applyFilters());
+        clearFilter.addEventListener('click', () => {
+            filterInput.value = '';
+            this.applyFilters();
+        });
+
+        // Catégories
+        const categories = document.getElementById('categories');
+        categories.addEventListener('click', (e) => {
+            const btn = e.target.closest('.category-btn');
+            if (!btn) return;
+            
+            // Mettre à jour l'état actif
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            this.applyFilters();
+        });
+    }
+
+    setupFAQAccordion() {
+        const faqList = document.getElementById('faqList');
+        
+        // Clic sur les questions
+        faqList.addEventListener('click', (e) => {
+            const question = e.target.closest('.faq-question');
+            if (!question) return;
+
+            const faqItem = question.parentElement;
+            const isOpen = faqItem.classList.contains('open');
+            
+            // Fermer tous les autres items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('open');
+                item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                item.querySelector('.faq-answer').setAttribute('aria-hidden', 'true');
+            });
+            
+            // Ouvrir l'item cliqué s'il n'était pas ouvert
+            if (!isOpen) {
+                faqItem.classList.add('open');
+                question.setAttribute('aria-expanded', 'true');
+                faqItem.querySelector('.faq-answer').setAttribute('aria-hidden', 'false');
+            }
+        });
+
+        // Support clavier pour l'accessibilité
+        faqList.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.target.closest('.faq-question')?.click();
+            }
+        });
+    }
+
+    performSearch() {
+        const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+        const category = document.querySelector('.category-btn.active').dataset.category;
+        
+        if (!searchTerm) {
+            this.showNotification('Veuillez saisir un terme de recherche', 'info');
+            return;
+        }
+
+        // Filtrer les questions FAQ
+        const faqItems = document.querySelectorAll('.faq-item');
+        let resultsFound = false;
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question span:first-child').textContent.toLowerCase();
+            const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+            const itemCategory = item.dataset.category;
+            
+            const matchesSearch = question.includes(searchTerm) || answer.includes(searchTerm);
+            const matchesCategory = category === 'all' || itemCategory === category;
+            
+            if (matchesSearch && matchesCategory) {
+                item.style.display = 'block';
+                resultsFound = true;
+                
+                // Ouvrir l'item pour montrer la réponse
+                item.classList.add('open');
+                item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
+                item.querySelector('.faq-answer').setAttribute('aria-hidden', 'false');
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        if (!resultsFound) {
+            this.showNotification('Aucun résultat trouvé pour votre recherche', 'info');
+        } else {
+            this.showNotification(`${this.countVisibleItems(faqItems)} résultat(s) trouvé(s)`, 'success');
+        }
+    }
+
+    applyFilters() {
+        const searchTerm = document.getElementById('filterInput').value.trim().toLowerCase();
+        const category = document.querySelector('.category-btn.active').dataset.category;
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question span:first-child').textContent.toLowerCase();
+            const itemCategory = item.dataset.category;
+            
+            const matchesSearch = question.includes(searchTerm);
+            const matchesCategory = category === 'all' || itemCategory === category;
+            
+            if (matchesSearch && matchesCategory) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    countVisibleItems(items) {
+        return Array.from(items).filter(item => item.style.display !== 'none').length;
+    }
+
+    showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        
+        notification.className = 'notification';
+        notification.classList.add(type, 'show');
+        notificationText.textContent = message;
+
+        // Auto-hide après 5 secondes
+        setTimeout(() => {
+            this.hideNotification();
+        }, 5000);
+    }
+
+    hideNotification() {
+        const notification = document.getElementById('notification');
+        notification.classList.remove('show');
+    }
+
+    setCurrentYear() {
+        const yearElements = document.querySelectorAll('[data-current-year]');
+        const currentYear = new Date().getFullYear();
+        yearElements.forEach(el => {
+            el.textContent = currentYear;
+        });
+    }
+}
+
+// =============================================
+// FONCTIONS GLOBALES
+// =============================================
+
+function openResource(event, resourceId) {
+    event.preventDefault();
+    // Simuler l'ouverture d'une ressource
+    const helpCenter = window.helpCenter;
+    helpCenter.showNotification(`Ouverture de la ressource: ${resourceId}`, 'info');
+    
+    // Ici vous pouvez ajouter la logique pour ouvrir le PDF ou la page de documentation
+    console.log(`Ouverture de la ressource: ${resourceId}`);
+}
+
+function submitContact(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = {
+        name: document.getElementById('contactName').value,
+        email: document.getElementById('contactEmail').value,
+        topic: document.getElementById('contactTopic').value,
+        message: document.getElementById('contactMessage').value
+    };
+
+    // Validation basique
+    if (!formData.name || !formData.email || !formData.topic || !formData.message) {
+        window.helpCenter.showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+        return false;
+    }
+
+    // Simulation d'envoi
+    console.log('Données du formulaire:', formData);
+    
+    // Afficher le message de succès
+    window.helpCenter.showNotification('Votre message a été envoyé avec succès ! Nous vous répondrons dans les 24 heures.', 'success');
+    
+    // Réinitialiser le formulaire
+    resetContactForm();
+    
+    return false;
+}
+
+function resetContactForm() {
+    document.getElementById('contactForm').reset();
+    window.helpCenter.showNotification('Formulaire réinitialisé', 'info');
+}
+
+function hideNotification() {
+    window.helpCenter.hideNotification();
+}
+
+// =============================================
+// INITIALISATION
+// =============================================
+
+// Initialiser quand le DOM est chargé
+document.addEventListener('DOMContentLoaded', () => {
+    window.helpCenter = new HelpCenterManager();
+    
+    // Mettre à jour le footer avec l'année courante
+    const currentYear = new Date().getFullYear();
+    const yearElement = document.querySelector('[data-current-year]');
+    if (yearElement) {
+        yearElement.textContent = currentYear;
+    }
+});
+
+// Gestion des erreurs globales
+window.addEventListener('error', (e) => {
+    console.error('Erreur:', e.error);
+    if (window.helpCenter) {
+        window.helpCenter.showNotification('Une erreur est survenue. Veuillez réessayer.', 'error');
+    }
+});
+</script>
+</body>
+</html>

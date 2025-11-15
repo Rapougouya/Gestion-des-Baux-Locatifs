@@ -1,21 +1,74 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PNSBIL - Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs au Burkina Faso. Gérez vos biens immobiliers en toute simplicité.">
+    <meta name="keywords" content="gestion immobilière, baux locatifs, impôts, Burkina Faso, PNSBIL">
+    <meta name="author" content="PNSBIL">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pnsbil.bf/">
+    <meta property="og:title" content="PNSBIL - Plateforme Nationale de Suivi des Baux Locatifs">
+    <meta property="og:description" content="La plateforme qui révolutionne la gestion immobilière au Burkina Faso">
+    <meta property="og:image" content="https://pnsbil.bf/assets/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pnsbil.bf/">
+    <meta property="twitter:title" content="PNSBIL - Plateforme Nationale de Suivi des Baux Locatifs">
+    <meta property="twitter:description" content="La plateforme qui révolutionne la gestion immobilière au Burkina Faso">
+    <meta property="twitter:image" content="https://pnsbil.bf/assets/og-image.jpg">
+
     <title>PNSBIL - Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</title>
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/sections.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/footer.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div id="site-header"></div>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-home logo-icon"></i>
+                    <span>PNSBIL</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="#accueil" class="nav-link active">Accueil</a></li>
+                    <li><a href="#fonctionnalites" class="nav-link">Fonctionnalités</a></li>
+                    <li><a href="#avantages" class="nav-link">Avantages</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-outline">Connexion</a>
+                    <a href="inscription.html" class="btn btn-primary">Inscription</a>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-    <!-- Hero Section -->
     <!-- Hero Section -->
     <section id="accueil" class="hero-section">
         <div class="hero-background">
@@ -27,117 +80,117 @@
             </div>
         </div>
         
-        <div class="hero-container">
-        <!-- Content Column -->
-        <div class="hero-content">
-            <!-- Trust Badges -->
-            <div class="trust-badges">
-                <div class="badge official">
-                    <i class="fas fa-shield-check"></i>
-                    <span>Plateforme Nationale Officielle</span>
+        <div class="container hero-container">
+            <!-- Content Column -->
+            <div class="hero-content">
+                <!-- Trust Badges -->
+                <div class="trust-badges">
+                    <div class="badge official">
+                        <i class="fas fa-shield-check"></i>
+                        <span>Plateforme Nationale Officielle</span>
+                    </div>
+                    <div class="badge secure">
+                        <i class="fas fa-lock"></i>
+                        <span>Données Sécurisées</span>
+                    </div>
                 </div>
-                <div class="badge secure">
-                    <i class="fas fa-lock"></i>
-                    <span>Données Sécurisées</span>
-                </div>
-            </div>
 
-            <!-- Main Heading -->
-            <div class="hero-heading">
-                <h1 class="hero-title">
-                    <span class="title-line">Gestion Immobilière</span>
-                    <span class="title-line highlight">
-                        <span class="highlight-text">Simplifiée</span>
-                        <span class="highlight-underline"></span>
-                    </span>
-                    <span class="title-line">au BURKINA FASO</span>
-                </h1>
-                <p class="hero-subtitle">
-                    La plateforme nationale qui révolutionne la gestion locative avec 
-                    <span class="accent-text">transparence, efficacité et sécurité</span> 
-                    pour tous les acteurs du marché.
-                </p>
-            </div>
-
-            <!-- Key Benefits -->
-            <div class="hero-benefits">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="benefit-text">
-                        <strong>Gestion 100% digitale</strong>
-                        <span>Automatisez vos processus</span>
-                    </div>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="benefit-text">
-                        <strong>Données en temps réel</strong>
-                        <span>Suivez vos indicateurs</span>
-                    </div>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-hand-holding-usd"></i>
-                    </div>
-                    <div class="benefit-text">
-                        <strong>Optimisation fiscale</strong>
-                        <span>Conforme à la réglementation</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CTA Buttons -->
-            <div class="hero-actions">
-                <div class="cta-primary">
-                    <a href="inscription.html" class="btn btn-primary btn-large btn-with-icon">
-                        <span class="btn-content">
-                            <i class="fas fa-rocket"></i>
-                            Commencer gratuitement
+                <!-- Main Heading -->
+                <div class="hero-heading">
+                    <h1 class="hero-title">
+                        <span class="title-line">Gestion Immobilière</span>
+                        <span class="title-line highlight">
+                            <span class="highlight-text">Simplifiée</span>
+                            <span class="highlight-underline"></span>
                         </span>
-                        <span class="btn-badge">30 jours d'essai</span>
-                    </a>
+                        <span class="title-line">au BURKINA FASO</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        La plateforme nationale qui révolutionne la gestion locative avec 
+                        <span class="accent-text">transparence, efficacité et sécurité</span> 
+                        pour tous les acteurs du marché.
+                    </p>
                 </div>
-                <div class="cta-secondary">
-                    <a href="#fonctionnalites" class="btn btn-outline btn-large">
-                        <i class="fas fa-play-circle"></i>
-                        Voir la démo vidéo
-                    </a>
-                    <a href="#fonctionnalites" class="btn btn-ghost">
-                        <i class="fas fa-arrow-down"></i>
-                        Découvrir les fonctionnalités
-                    </a>
-                </div>
-            </div>
 
-            <!-- Social Proof -->
-            <div class="social-proof">
-                <div class="users-stats">
-                    <div class="avatar-group">
-                        <div class="avatar" style="background: #3498db;">AS</div>
-                        <div class="avatar" style="background: #e74c3c;">MD</div>
-                        <div class="avatar" style="background: #27ae60;">BS</div>
-                        <div class="avatar" style="background: #f39c12;">+2.8k</div>
+                <!-- Key Benefits -->
+                <div class="hero-benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <strong>Gestion 100% digitale</strong>
+                            <span>Automatisez vos processus</span>
+                        </div>
                     </div>
-                    <div class="stats-text">
-                        <strong>2,847+ professionnels</strong> nous font déjà confiance
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <strong>Données en temps réel</strong>
+                            <span>Suivez vos indicateurs</span>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <strong>Optimisation fiscale</strong>
+                            <span>Conforme à la réglementation</span>
+                        </div>
                     </div>
                 </div>
-                <div class="ratings">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
+
+                <!-- CTA Buttons -->
+                <div class="hero-actions">
+                    <div class="cta-primary">
+                        <a href="inscription.html" class="btn btn-primary btn-large btn-with-icon">
+                            <span class="btn-content">
+                                <i class="fas fa-rocket"></i>
+                                Commencer gratuitement
+                            </span>
+                            <span class="btn-badge">30 jours d'essai</span>
+                        </a>
                     </div>
-                    <div class="rating-text">4.8/5 sur 156 avis</div>
+                    <div class="cta-secondary">
+                        <a href="#fonctionnalites" class="btn btn-outline btn-large">
+                            <i class="fas fa-play-circle"></i>
+                            Voir la démo vidéo
+                        </a>
+                        <a href="#fonctionnalites" class="btn btn-ghost">
+                            <i class="fas fa-arrow-down"></i>
+                            Découvrir les fonctionnalités
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Social Proof -->
+                <div class="social-proof">
+                    <div class="users-stats">
+                        <div class="avatar-group">
+                            <div class="avatar" style="background: #3498db;">AS</div>
+                            <div class="avatar" style="background: #e74c3c;">MD</div>
+                            <div class="avatar" style="background: #27ae60;">BS</div>
+                            <div class="avatar" style="background: #f39c12;">+2.8k</div>
+                        </div>
+                        <div class="stats-text">
+                            <strong>2,847+ professionnels</strong> nous font déjà confiance
+                        </div>
+                    </div>
+                    <div class="ratings">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="rating-text">4.8/5 sur 156 avis</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
             <!-- Visual Column -->
             <div class="hero-visual">
@@ -192,10 +245,10 @@
                                     </div>
                                 </div>
                                 <div class="chart-labels">
-                                    <span>Almadies</span>
-                                    <span>Mermoz</span>
-                                    <span>Fann</span>
-                                    <span>Plateau</span>
+                                    <span>Secteur 1</span>
+                                    <span>Secteur 2</span>
+                                    <span>Secteur 3</span>
+                                    <span>Secteur 4</span>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +268,7 @@
                                 </div>
                                 <div class="notification-content">
                                     <div class="notification-title">Loyer perçu</div>
-                                    <div class="notification-desc">Villa Mermoz - 750K FCFA</div>
+                                    <div class="notification-desc">Villa Zone 1 - 750K FCFA</div>
                                     <div class="notification-time">Il y a 2 min</div>
                                 </div>
                             </div>
@@ -225,7 +278,7 @@
                                 </div>
                                 <div class="notification-content">
                                     <div class="notification-title">Bail signé</div>
-                                    <div class="notification-desc">Appartement Fann</div>
+                                    <div class="notification-desc">Appartement Zone 3</div>
                                     <div class="notification-time">Il y a 1h</div>
                                 </div>
                             </div>
@@ -241,10 +294,10 @@
                             </div>
                         </div>
                         <div class="property-details">
-                            <div class="property-title">Villa Mermoz</div>
+                            <div class="property-title">Villa Moderne</div>
                             <div class="property-location">
                                 <i class="fas fa-map-marker-alt"></i>
-                                Mermoz, Dakar
+                                Ouagadougou, Zone 1
                             </div>
                             <div class="property-features">
                                 <span><i class="fas fa-ruler-combined"></i> 185m²</span>
@@ -266,27 +319,26 @@
                         </div>
                     </div>
                 </div>
-                    
-                    <!-- Floating Elements Container -->
-                    <div class="floating-elements">
-                        <div class="floating-element element-1">
-                            <div class="element-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <span>Conforme RGPD</span>
+                
+                <!-- Floating Elements Container -->
+                <div class="floating-elements">
+                    <div class="floating-element element-1">
+                        <div class="element-icon">
+                            <i class="fas fa-check-circle"></i>
                         </div>
-                        <div class="floating-element element-2">
-                            <div class="element-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <span>App mobile</span>
+                        <span>Conforme RGPD</span>
+                    </div>
+                    <div class="floating-element element-2">
+                        <div class="element-icon">
+                            <i class="fas fa-mobile-alt"></i>
                         </div>
-                        <div class="floating-element element-3">
-                            <div class="element-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <span>100% sécurisé</span>
+                        <span>App mobile</span>
+                    </div>
+                    <div class="floating-element element-3">
+                        <div class="element-icon">
+                            <i class="fas fa-shield-alt"></i>
                         </div>
+                        <span>100% sécurisé</span>
                     </div>
                 </div>
             </div>
@@ -302,7 +354,7 @@
     </section>
 
     <!-- Acteurs Section -->
-    <section class="actors-section">
+    <section class="actors-section section">
         <div class="container">
             <div class="section-header">
                 <h2>Une plateforme pour tous les acteurs</h2>
@@ -369,7 +421,7 @@
     </section>
 
     <!-- Fonctionnalités Section -->
-    <section id="fonctionnalites" class="features-section">
+    <section id="fonctionnalites" class="features-section section">
         <div class="container">
             <div class="section-header">
                 <h2>Fonctionnalités principales</h2>
@@ -422,7 +474,7 @@
                     <h3>Analytics & Reporting</h3>
                     <p>Tableaux de bord personnalisés et rapports détaillés pour une prise de décision éclairée</p>
                     <div class="feature-highlights">
-                        <span class="highlight">📈 indicateurs en temps réel</span>
+                        <span class="highlight">📈 Indicateurs en temps réel</span>
                         <span class="highlight">📋 Rapports exportables</span>
                         <span class="highlight">🎯 Insights personnalisés</span>
                     </div>
@@ -458,7 +510,7 @@
     </section>
 
     <!-- Avantages Section -->
-    <section id="avantages" class="benefits-section">
+    <section id="avantages" class="benefits-section section">
         <div class="container">
             <div class="benefits-grid">
                 <div class="benefits-content">
@@ -527,18 +579,18 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section">
+    <section class="cta-section section">
         <div class="container">
             <div class="cta-content">
                 <h2>Prêt à révolutionner votre gestion immobilière ?</h2>
                 <p>Rejoignez des milliers d'utilisateurs qui font déjà confiance à PNSBIL</p>
                 <div class="cta-actions">
                     <a href="inscription.html" class="btn btn-primary btn-large">
-                        <i class="fas fa-user-plus me-2"></i>
+                        <i class="fas fa-user-plus"></i>
                         Créer mon compte
                     </a>
                     <a href="#contact" class="btn btn-outline btn-large">
-                        <i class="fas fa-question-circle me-2"></i>
+                        <i class="fas fa-question-circle"></i>
                         En savoir plus
                     </a>
                 </div>
@@ -560,7 +612,8 @@
         </div>
     </section>
 
-    <section id="contact" class="contact-section">
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section section">
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-content">
@@ -584,7 +637,7 @@
                             </div>
                             <div class="contact-info">
                                 <p class="contact-label">Courriel</p>
-                                <p class="contact-value">contact@pnsbil.sn</p>
+                                <p class="contact-value">contact@pnsbil.bf</p>
                                 <span class="contact-meta">Réponse garantie sous 24h</span>
                             </div>
                         </div>
@@ -595,24 +648,27 @@
                             <div class="contact-info">
                                 <p class="contact-label">Siège social</p>
                                 <p class="contact-value">Ouagadougou, Burkina Faso</p>
-                                <span class="contact-meta">Avenue Kouamé Kourma, Point E</span>
+                                <span class="contact-meta">Avenue Kouamé Kourma</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Formulaire de contact -->
                 <div class="contact-form-card">
-                    <form class="contact-form">
+                    <form class="contact-form" id="contactForm">
                         <div class="form-row">
                             <label for="contactName">Nom complet</label>
-                            <input type="text" id="contactName" name="contactName" placeholder="Entrez votre nom">
+                            <input type="text" id="contactName" name="contactName" placeholder="Entrez votre nom" required>
                         </div>
                         <div class="form-row">
                             <label for="contactEmail">Adresse e-mail</label>
-                            <input type="email" id="contactEmail" name="contactEmail" placeholder="nom@exemple.com">
+                            <input type="email" id="contactEmail" name="contactEmail" placeholder="nom@exemple.com" required>
                         </div>
                         <div class="form-row">
                             <label for="contactType">Vous êtes</label>
-                            <select id="contactType" name="contactType">
+                            <select id="contactType" name="contactType" required>
+                                <option value="">Sélectionnez votre profil</option>
                                 <option value="proprietaire">Propriétaire</option>
                                 <option value="locataire">Locataire</option>
                                 <option value="agence">Agence immobilière</option>
@@ -621,7 +677,7 @@
                         </div>
                         <div class="form-row">
                             <label for="contactMessage">Message</label>
-                            <textarea id="contactMessage" name="contactMessage" rows="4" placeholder="Expliquez votre besoin"></textarea>
+                            <textarea id="contactMessage" name="contactMessage" rows="5" placeholder="Expliquez votre besoin..." required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary contact-submit">
                             <i class="fas fa-paper-plane"></i>
@@ -633,7 +689,8 @@
         </div>
     </section>
 
-    <section id="mentions" class="legal-preview">
+    <!-- Mentions légales Section -->
+    <section id="mentions" class="legal-preview section">
         <div class="container">
             <div class="legal-card">
                 <div class="legal-icon">
@@ -648,9 +705,78 @@
         </div>
     </section>
 
-    <div id="site-footer"></div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-home"></i>
+                        <span>PNSBIL</span>
+                    </div>
+                    <p class="footer-description">
+                        La plateforme nationale de référence pour la gestion des baux locatifs et la perception des impôts au Burkina Faso.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Plateforme</h4>
+                    <ul class="footer-links">
+                        <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                        <li><a href="#avantages">Avantages</a></li>
+                        <li><a href="#">Tarifs</a></li>
+                        <li><a href="#">Témoignages</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Ressources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Centre d'aide</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Entreprise</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Carrières</a></li>
+                        <li><a href="#">Presse</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 PNSBIL. Tous droits réservés.</p>
+                <div class="footer-legal">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Conditions d'utilisation</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-    <script src="js/layout.js"></script>
-    <script src="js/home.js"></script>
+     <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/form-handler.js"></script>
 </body>
 </html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre d'Aide - Agents Municipaux | PNSBIL</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-left: 1000px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) translateX(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .search-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .category-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .faq-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: var(--background);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .faq-answer {
+            padding: 1.5rem;
+            display: none;
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .quick-links {
+            list-style: none;
+        }
+
+        .quick-links li {
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quick-links li:last-child {
+            border-bottom: none;
+        }
+
+        .quick-links a {
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: var(--primary);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .urgent-support {
+            background: linear-gradient(135deg, var(--warning), var(--danger));
+            color: white;
+            text-align: center;
+        }
+
+        .municipality-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin-bottom: 1rem;
+                align-self: flex-start;
+            }
+
+            .header {
+                padding: 1.5rem 0;
+            }
+
+            .header-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <button class="back-btn" onclick="goBackToDashboard()">
+                ← Retour au tableau de bord
+            </button>
+            <div class="header-content">
+                <h1>Centre d'Aide - Agents Municipaux</h1>
+                <p>Support dédié pour la gestion urbaine et territoriale</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Comment pouvons-nous vous aider ?</h2>
+            <p>Solutions complètes pour la gestion municipale et le suivi du territoire</p>
+            
+            <div class="municipality-stats">
+                <div class="stat-card">
+                    <div class="stat-value">2,847</div>
+                    <div class="stat-label">Biens enregistrés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1,924</div>
+                    <div class="stat-label">Baux actifs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">156M</div>
+                    <div class="stat-label">FCFA collectés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">94%</div>
+                    <div class="stat-label">Taux conformité</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Rechercher dans l'aide municipale...">
+                <button class="btn btn-primary">
+                    <i class="fas fa-search"></i> Rechercher
+                </button>
+            </div>
+            <div class="categories">
+                <button class="category-btn active">Toutes les catégories</button>
+                <button class="category-btn">Cadastre</button>
+                <button class="category-btn">Fiscalité</button>
+                <button class="category-btn">Urbanisme</button>
+                <button class="category-btn">Médiation</button>
+                <button class="category-btn">Rapports</button>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="faq-section">
+                <h3>Guides Municipaux - Questions Fréquentes</h3>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment gérer le cadastre municipal avec PNSBIL ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Processus complet de gestion cadastrale :</strong></p>
+                        <ol>
+                            <li>Accédez au module "Cadastre" dans votre dashboard</li>
+                            <li>Importez les données existantes ou créez de nouveaux enregistrements</li>
+                            <li>Validez les mutations et changements de propriété</li>
+                            <li>Générez les certificats cadastraux automatiquement</li>
+                        </ol>
+                        <p><strong>Délai :</strong> Mise à jour en temps réel</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment contrôler la conformité urbaine des biens ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Processus de contrôle :</strong></p>
+                        <ul>
+                            <li>Vérification automatique des autorisations d'occupation</li>
+                            <li>Contrôle de la destination des biens (résidentiel/commercial)</li>
+                            <li>Détection des infractions urbanistiques</li>
+                            <li>Gestion des procédures de régularisation</li>
+                        </ul>
+                        <p><strong>Alertes :</strong> Notifications automatiques pour les non-conformités</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quels sont les délais pour le traitement des dossiers ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Délais standards :</strong></p>
+                        <ul>
+                            <li><strong>Validation cadastrale :</strong> 24-48h</li>
+                            <li><strong>Autorisations urbanisme :</strong> 72h maximum</li>
+                            <li><strong>Traitement médiation :</strong> 5 jours ouvrables</li>
+                            <li><strong>Rapports fiscaux :</strong> Génération instantanée</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment suivre les recettes fiscales municipales ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Monitoring financier complet :</strong></p>
+                        <ul>
+                            <li>Tableau de bord temps réel des recettes</li>
+                            <li>Prévisions fiscales automatiques</li>
+                            <li>Alertes pour les retards de paiement</li>
+                            <li>Rapprochement avec la comptabilité municipale</li>
+                        </ul>
+                        <p><strong>Reporting :</strong> Rapports automatiques pour la direction financière</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment gérer la médiation locative ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Processus de médiation :</strong></p>
+                        <ul>
+                            <li>Enregistrement des conflits locatifs</li>
+                            <li>Assignation automatique aux médiateurs</li>
+                            <li>Suivi du processus de résolution</li>
+                            <li>Génération des procès-verbaux</li>
+                        </ul>
+                        <p><strong>Avantages :</strong> Réduction de 60% des contentieux judiciaires</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card urgent-support">
+                    <h4>🚨 Alertes Municipales</h4>
+                    <p><strong>3 biens</strong> non déclarés</p>
+                    <p><strong>12 retards</strong> de paiement critiques</p>
+                    <p><strong>5 infractions</strong> urbanistiques</p>
+                    <p><strong>2 médiations</strong> en attente</p>
+                </div>
+
+                <div class="card">
+                    <h4>📞 Support Municipal</h4>
+                    <p><strong>Lun-Ven:</strong> 7h30-17h30</p>
+                    <p><strong>Urgences:</strong> +226 25 45 67 91</p>
+                    <p><strong>Email dédié:</strong> municipalites@pnsbil.bf</p>
+                    <p><strong>Réponse garantie sous 2h</strong></p>
+                </div>
+
+                <div class="card">
+                    <h4>🔗 Guides Rapides</h4>
+                    <ul class="quick-links">
+                        <li><a href="#">📋 Procédures cadastrales</a></li>
+                        <li><a href="#">🏛️ Règlement urbanisme</a></li>
+                        <li><a href="#">💰 Guide fiscal municipal</a></li>
+                        <li><a href="#">⚖️ Processus médiation</a></li>
+                        <li><a href="#">📊 Modèles de rapports</a></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>🔄 Actions Immédiates</h4>
+                    <button class="btn btn-primary" style="width: 100%; margin-bottom: 0.5rem;" onclick="generateReport()">
+                        <i class="fas fa-file-pdf"></i> Nouveau Rapport
+                    </button>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="reportIssue()">
+                        <i class="fas fa-exclamation-triangle"></i> Signaler Problème
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h4>✉️ Contact Direct</h4>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label>Type de demande</label>
+                            <select class="form-control">
+                                <option>Support technique</option>
+                                <option>Question cadastrale</option>
+                                <option>Problème fiscal</option>
+                                <option>Formation</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea class="form-control" rows="4" placeholder="Décrivez votre demande..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Envoyer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestion des FAQ
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const isOpen = item.classList.contains('open');
+                
+                // Fermer toutes les autres FAQ
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.classList.remove('open');
+                });
+                
+                // Ouvrir celle cliquée si elle n'était pas ouverte
+                if (!isOpen) {
+                    item.classList.add('open');
+                }
+            });
+        });
+
+        // Gestion des catégories
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                
+                // Ici, vous pouvez filtrer le contenu par catégorie
+                filterByCategory(btn.textContent);
+            });
+        });
+
+        function filterByCategory(category) {
+            console.log('Filtrer par catégorie:', category);
+            // Implémentez le filtrage des FAQ par catégorie
+        }
+
+        function goBackToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        function generateReport() {
+            alert('Génération du rapport municipal...');
+            // Implémentez la génération de rapport
+        }
+
+        function reportIssue() {
+            alert('Ouverture du formulaire de signalement...');
+            // Implémentez le signalement de problème
+        }
+
+        // Simulation de recherche
+        document.querySelector('.search-input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            if (searchTerm.length > 2) {
+                // Implémentez la recherche en temps réel
+                console.log('Recherche:', searchTerm);
+            }
+        });
+    </script>
+
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</body>
+</html>

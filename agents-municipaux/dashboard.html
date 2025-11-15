@@ -1,241 +1,1528 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord - Agent Municipal | PNSBIL</title>
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Variables CSS modernes */
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset et base moderne */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Layout principal avec CSS Grid */
+        .dashboard-container {
+            display: grid;
+            grid-template-areas: 
+                "header header"
+                "sidebar main"
+                "footer footer";
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            grid-area: header;
+            background: var(--surface-color);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Sidebar moderne */
+        .sidebar {
+            grid-area: sidebar;
+            background: var(--surface-color);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        /* Contenu principal */
+        .main-content {
+            grid-area: main;
+            padding: 2rem;
+            background: var(--background-color);
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        /* Grid de statistiques moderne */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card.municipal::before {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .stat-change.positive {
+            color: var(--success-color);
+        }
+
+        .stat-change.negative {
+            color: var(--error-color);
+        }
+
+        /* Layout du contenu du dashboard */
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-section {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .dashboard-section.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Liste des actions */
+        .actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .action-item:hover {
+            border-color: var(--primary-color);
+            transform: translateX(4px);
+        }
+
+        .action-item.urgent {
+            border-left: 4px solid var(--error-color);
+            background: linear-gradient(135deg, #fef2f2, #fff);
+        }
+
+        .action-icon {
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            background: var(--background-color);
+        }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .action-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .action-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Carte municipale */
+        .municipal-map {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .map-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .map-placeholder i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .map-legend {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: var(--surface-color);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .legend-color.high-activity {
+            background: var(--error-color);
+        }
+
+        .legend-color.medium-activity {
+            background: var(--warning-color);
+        }
+
+        .legend-color.low-activity {
+            background: var(--success-color);
+        }
+
+        /* Table moderne */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .data-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover {
+            background: var(--background-color);
+        }
+
+        /* Badges et statuts */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-badge.completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        /* Boutons modernes */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* Footer */
+footer {
+    grid-area: footer;
+    background: var(--text-primary);
+    color: white;
+    padding: 3rem 0 1.5rem;
+    margin-top: auto;
+    margin-left: 280px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h5 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: white;
+}
+
+.footer-section p {
+    color: #cbd5e1;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-links a:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: #94a3b8;
+}
+
+.footer-contact i {
+    color: var(--accent-color);
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #374151;
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+/* Responsive Footer */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-section:first-child {
+        grid-column: 1 / -1;
+    }
+
+    footer {
+        margin-left: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .footer-container {
+        padding: 0 1rem;
+    }
+    
+    footer {
+        padding: 2rem 0 1rem;
+        margin-left: 0;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-contact li {
+        justify-content: center;
+        text-align: left;
+    }
+}
+
+/* Animation pour le footer */
+.footer-section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        .notification-content {
+            background: var(--surface-color);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .notification.notification-error .notification-content {
+            border-left-color: var(--error-color);
+        }
+
+        .notification.notification-success .notification-content {
+            border-left-color: var(--success-color);
+        }
+
+        .notification-message {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Indicateur de chargement */
+        .loading-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1001;
+            animation: loading 2s infinite;
+            display: none;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .stat-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Scrollbar personnalisée */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                grid-template-columns: 240px 1fr;
+            }
+            
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "footer";
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+
+            .user-menu {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Menu mobile */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .sidebar.mobile-open {
+                display: block;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 80px);
+                z-index: 99;
+                background: var(--surface-color);
+            }
+        }
+    </style>
 </head>
 <body>
-    <header class="dashboard-header">
-        <div class="header-content">
-            <div class="logo">
-                <span>🏛️ PNSBIL</span>
-                <span>Espace Agent Municipal</span>
-            </div>
-            <div class="user-menu">
-                <span class="user-name" id="userName">Mairie de Dakar</span>
-                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
-            </div>
-        </div>
-    </header>
+    <div class="dashboard-container">
+        <!-- Indicateur de chargement -->
+        <div class="loading-indicator" id="loadingIndicator"></div>
 
-    <nav class="sidebar">
-        <div class="nav-section">
-            <h3>Gestion Municipale</h3>
-            <a href="dashboard.html" class="nav-link active">📊 Tableau de bord</a>
-            <a href="validation-cadastre.html" class="nav-link">🏠 Validation Cadastre</a>
-            <a href="controle-baux.html" class="nav-link">📑 Contrôle des Baux</a>
-            <a href="mediation.html" class="nav-link">⚖️ Médiation</a>
-            <a href="rapports-locaux.html" class="nav-link">📈 Rapports Locaux</a>
-        </div>
-    </nav>
-
-    <main class="main-content">
-        <div class="page-header">
-            <h1>Tableau de Bord Municipal</h1>
-            <p>Vue d'ensemble des activités immobilières sur votre territoire</p>
-        </div>
-
-        <!-- Statistiques Municipales -->
-        <div class="stats-grid">
-            <div class="stat-card municipal">
-                <div class="stat-icon">🏘️</div>
-                <div class="stat-content">
-                    <div class="stat-value">2,847</div>
-                    <div class="stat-label">Biens enregistrés</div>
-                    <div class="stat-change positive">+12% ce trimestre</div>
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span>🏠 PNSBIL</span>
+                    <span>Espace Agent Municipal</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="user-menu">
+                    <span class="user-name" id="userName">Mairie de Ouagadougou</span>
+                    <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
                 </div>
             </div>
-            <div class="stat-card municipal">
-                <div class="stat-icon">📑</div>
-                <div class="stat-content">
-                    <div class="stat-value">1,924</div>
-                    <div class="stat-label">Baux validés</div>
-                    <div class="stat-change positive">+8%</div>
-                </div>
-            </div>
-            <div class="stat-card municipal">
-                <div class="stat-icon">⚖️</div>
-                <div class="stat-content">
-                    <div class="stat-value">23</div>
-                    <div class="stat-label">Médiations en cours</div>
-                    <div class="stat-change negative">+5 cette semaine</div>
-                </div>
-            </div>
-            <div class="stat-card municipal">
-                <div class="stat-icon">💰</div>
-                <div class="stat-content">
-                    <div class="stat-value">156M FCFA</div>
-                    <div class="stat-label">Taxes collectées</div>
-                    <div class="stat-change positive">+18%</div>
-                </div>
-            </div>
-        </div>
+        </header>
 
-        <div class="dashboard-content">
-            <!-- Alertes et Actions Urgentes -->
-            <div class="dashboard-section">
+        <nav class="sidebar" id="sidebar">
+            <div class="nav-section">
+                <h3>Gestion Municipale</h3>
+                <a href="dashboard.html" class="nav-link active">📊 Tableau de bord</a>
+                <a href="validation-cadastre.html" class="nav-link">🏠 Validation Cadastre</a>
+                <a href="controle-baux.html" class="nav-link">📑 Contrôle des Baux</a>
+                <a href="mediation.html" class="nav-link">⚖️ Médiation</a>
+                <a href="rapports-locaux.html" class="nav-link">📈 Rapports Locaux</a>
+            </div>
+            <div class="nav-section">
+            <div class="nav-title">Support</div>
+            <a href="support.html" class="nav-link">
+                <span class="nav-icon">🛟</span>
+                <span>Centre d'aide</span>
+            </a>
+            <a href="parametres.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span>Paramètres</span>
+            </a>
+        </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Tableau de Bord Municipal</h1>
+                <p>Vue d'ensemble des activités immobilières sur votre territoire</p>
+            </div>
+
+            <!-- Statistiques Municipales -->
+            <div class="stats-grid">
+                <div class="stat-card municipal">
+                    <div class="stat-icon">🏘️</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="stat-properties">2,847</div>
+                        <div class="stat-label">Biens enregistrés</div>
+                        <div class="stat-change positive">+12% ce trimestre</div>
+                    </div>
+                </div>
+                <div class="stat-card municipal">
+                    <div class="stat-icon">📑</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="stat-leases">1,924</div>
+                        <div class="stat-label">Baux validés</div>
+                        <div class="stat-change positive">+8%</div>
+                    </div>
+                </div>
+                <div class="stat-card municipal">
+                    <div class="stat-icon">⚖️</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="stat-mediations">23</div>
+                        <div class="stat-label">Médiations en cours</div>
+                        <div class="stat-change negative">+5 cette semaine</div>
+                    </div>
+                </div>
+                <div class="stat-card municipal">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="stat-taxes">156M FCFA</div>
+                        <div class="stat-label">Taxes collectées</div>
+                        <div class="stat-change positive">+18%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <!-- Alertes et Actions Urgentes -->
+                <div class="dashboard-section">
+                    <div class="section-header">
+                        <h3>🔄 Actions Requises</h3>
+                        <span class="badge badge-warning">8 en attente</span>
+                    </div>
+                    <div class="actions-list" id="actionsList">
+                        <div class="action-item urgent">
+                            <div class="action-icon">⚠️</div>
+                            <div class="action-content">
+                                <div class="action-title">Validation cadastrale en retard</div>
+                                <div class="action-desc">15 biens nécessitent une validation urgente</div>
+                                <div class="action-date">Échéance: Aujourd'hui</div>
+                            </div>
+                            <button class="btn btn-sm btn-primary" onclick="handleAction(1)">Traiter</button>
+                        </div>
+                        <div class="action-item">
+                            <div class="action-icon">📋</div>
+                            <div class="action-content">
+                                <div class="action-title">Contrôle de conformité</div>
+                                <div class="action-desc">8 baux nécessitent une vérification</div>
+                                <div class="action-date">Échéance: 3 jours</div>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="handleAction(2)">Examiner</button>
+                        </div>
+                        <div class="action-item">
+                            <div class="action-icon">⚖️</div>
+                            <div class="action-content">
+                                <div class="action-title">Demandes de médiation</div>
+                                <div class="action-desc">5 nouveaux conflits locatifs</div>
+                                <div class="action-date">En attente</div>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="handleAction(3)">Voir</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carte du Territoire -->
+                <div class="dashboard-section">
+                    <div class="section-header">
+                        <h3>🗺️ Vue Territoriale</h3>
+                    </div>
+                    <div class="municipal-map">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <p>Carte interactive du territoire municipal</p>
+                            <small>Zones de forte activité immobilière mises en évidence</small>
+                        </div>
+                        <div class="map-legend">
+                            <div class="legend-item">
+                                <span class="legend-color high-activity"></span>
+                                <span>Forte activité</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color medium-activity"></span>
+                                <span>Activité moyenne</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color low-activity"></span>
+                                <span>Faible activité</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activité Récente -->
+            <div class="dashboard-section full-width">
                 <div class="section-header">
-                    <h3>🔄 Actions Requises</h3>
-                    <span class="badge badge-warning">8 en attente</span>
+                    <h3>📋 Activité Récente</h3>
+                    <button class="btn btn-sm btn-outline" onclick="refreshData()">
+                        <i class="fas fa-sync-alt"></i> Actualiser
+                    </button>
                 </div>
-                <div class="actions-list">
-                    <div class="action-item urgent">
-                        <div class="action-icon">⚠️</div>
-                        <div class="action-content">
-                            <div class="action-title">Validation cadastrale en retard</div>
-                            <div class="action-desc">15 biens nécessitent une validation urgente</div>
-                            <div class="action-date">Échéance: Aujourd'hui</div>
-                        </div>
-                        <button class="btn btn-sm btn-primary">Traiter</button>
-                    </div>
-                    <div class="action-item">
-                        <div class="action-icon">📋</div>
-                        <div class="action-content">
-                            <div class="action-title">Contrôle de conformité</div>
-                            <div class="action-desc">8 baux nécessitent une vérification</div>
-                            <div class="action-date">Échéance: 3 jours</div>
-                        </div>
-                        <button class="btn btn-sm btn-outline">Examiner</button>
-                    </div>
-                    <div class="action-item">
-                        <div class="action-icon">⚖️</div>
-                        <div class="action-content">
-                            <div class="action-title">Demandes de médiation</div>
-                            <div class="action-desc">5 nouveaux conflits locatifs</div>
-                            <div class="action-date">En attente</div>
-                        </div>
-                        <button class="btn btn-sm btn-outline">Voir</button>
-                    </div>
+                <div class="recent-activity">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Quartier</th>
+                                <th>Statut</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivityBody">
+                            <tr>
+                                <td>15/03/2024</td>
+                                <td>Validation</td>
+                                <td>Résidence Les Almadies - Appartement B12</td>
+                                <td>Almadies</td>
+                                <td><span class="status-badge pending">En attente</span></td>
+                                <td><button class="btn btn-sm btn-outline" onclick="handleActivity(1)">Valider</button></td>
+                            </tr>
+                            <tr>
+                                <td>14/03/2024</td>
+                                <td>Contrôle</td>
+                                <td>Contrôle bail - Villa Mermoz</td>
+                                <td>Mermoz</td>
+                                <td><span class="status-badge completed">Terminé</span></td>
+                                <td><button class="btn btn-sm btn-outline" onclick="handleActivity(2)">Voir</button></td>
+                            </tr>
+                            <tr>
+                                <td>13/03/2024</td>
+                                <td>Médiation</td>
+                                <td>Conflit locatif - Rue 10 x 12</td>
+                                <td>Plateau</td>
+                                <td><span class="status-badge in-progress">En cours</span></td>
+                                <td><button class="btn btn-sm btn-outline" onclick="handleActivity(3)">Intervenir</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </main>
 
-            <!-- Carte du Territoire -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <h3>🗺️ Vue Territoriale</h3>
-                </div>
-                <div class="municipal-map">
-                    <div class="map-placeholder">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <p>Carte interactive du territoire municipal</p>
-                        <small>Zones de forte activité immobilière mises en évidence</small>
-                    </div>
-                    <div class="map-legend">
-                        <div class="legend-item">
-                            <span class="legend-color high-activity"></span>
-                            <span>Forte activité</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color medium-activity"></span>
-                            <span>Activité moyenne</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color low-activity"></span>
-                            <span>Faible activité</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Footer -->
+        <!-- Footer -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h5>PNSBIL</h5>
+                <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+            </div>
+            <div class="footer-section">
+                <h5>Liens rapides</h5>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i>Accueil</a></li>
+                    <li><a href="properties.html"><i class="fas fa-building"></i>Propriétés</a></li>
+                    <li><a href="leases.html"><i class="fas fa-file-contract"></i>Baux</a></li>
+                    <li><a href="taxes.html"><i class="fas fa-chart-line"></i>Impôts</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Ressources</h5>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-question-circle"></i>FAQ</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i>Guides</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i>Contact</a></li>
+                    <li><a href="#"><i class="fas fa-gavel"></i>Mentions légales</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Contact</h5>
+                <ul class="footer-links footer-contact">
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Avenue XXXXX,<br>Ouagadougou, Burkina Faso</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone"></i>
+                        <span>+226 33 123 45 67</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@pnsbil.bf</span>
+                    </li>
+                </ul>
             </div>
         </div>
-
-        <!-- Activité Récente -->
-        <div class="dashboard-section full-width">
-            <div class="section-header">
-                <h3>📋 Activité Récente</h3>
-            </div>
-            <div class="recent-activity">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Quartier</th>
-                            <th>Statut</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>15/03/2024</td>
-                            <td>Validation</td>
-                            <td>Résidence Les Almadies - Appartement B12</td>
-                            <td>Almadies</td>
-                            <td><span class="status-badge pending">En attente</span></td>
-                            <td><button class="btn btn-sm btn-outline">Valider</button></td>
-                        </tr>
-                        <tr>
-                            <td>14/03/2024</td>
-                            <td>Contrôle</td>
-                            <td>Contrôle bail - Villa Mermoz</td>
-                            <td>Mermoz</td>
-                            <td><span class="status-badge completed">Terminé</span></td>
-                            <td><button class="btn btn-sm btn-outline">Voir</button></td>
-                        </tr>
-                        <tr>
-                            <td>13/03/2024</td>
-                            <td>Médiation</td>
-                            <td>Conflit locatif - Rue 10 x 12</td>
-                            <td>Plateau</td>
-                            <td><span class="status-badge in-progress">En cours</span></td>
-                            <td><button class="btn btn-sm btn-outline">Intervenir</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PNSBIL - Tous droits réservés</p>
         </div>
-    </main>
+    </div>
+</footer>
+    </div>
 
-    <script src="../../js/dashboard.js"></script>
+    <script>
+        // Configuration et constantes
+        const CONFIG = {
+            API_BASE_URL: '/api/v1',
+            UPDATE_INTERVAL: 30000, // 30 secondes
+            ANIMATION_DELAY: 150
+        };
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
-                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
-            </div>
-        </div>
-    </footer>
+        // État de l'application
+        class DashboardState {
+            constructor() {
+                this.stats = {};
+                this.actions = [];
+                this.recentActivity = [];
+                this.isLoading = false;
+            }
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+        // Instance de l'état
+        const state = new DashboardState();
+
+        // Gestionnaire du dashboard
+        class DashboardManager {
+            constructor() {
+                this.init();
+            }
+
+            async init() {
+                try {
+                    await this.loadInitialData();
+                    this.setupEventListeners();
+                    this.startAutoRefresh();
+                    this.initializeAnimations();
+                } catch (error) {
+                    console.error('Erreur lors de l\'initialisation:', error);
+                    this.showError('Erreur de chargement du tableau de bord');
+                }
+            }
+
+            async loadInitialData() {
+                this.setLoading(true);
+                
+                await Promise.all([
+                    this.loadStats(),
+                    this.loadPendingActions(),
+                    this.loadRecentActivity()
+                ]);
+                
+                this.setLoading(false);
+            }
+
+            async loadStats() {
+                try {
+                    const stats = await this.fetchStats();
+                    this.updateStatsDisplay(stats);
+                    state.stats = stats;
+                } catch (error) {
+                    console.error('Erreur chargement stats:', error);
+                    throw error;
+                }
+            }
+
+            async loadPendingActions() {
+                try {
+                    const actions = await this.fetchPendingActions();
+                    this.renderActionsList(actions);
+                    state.actions = actions;
+                } catch (error) {
+                    console.error('Erreur chargement actions:', error);
+                    throw error;
+                }
+            }
+
+            async loadRecentActivity() {
+                try {
+                    const activity = await this.fetchRecentActivity();
+                    this.renderRecentActivity(activity);
+                    state.recentActivity = activity;
+                } catch (error) {
+                    console.error('Erreur chargement activité:', error);
+                    throw error;
+                }
+            }
+
+            // Méthodes de simulation d'API
+            async fetchStats() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve({
+                            properties: 2847,
+                            leases: 1924,
+                            mediations: 23,
+                            taxes: 156000000
+                        });
+                    }, 1000);
+                });
+            }
+
+            async fetchPendingActions() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve([
+                            {
+                                id: 1,
+                                type: 'validation',
+                                title: 'Validation cadastrale en retard',
+                                description: '15 biens nécessitent une validation urgente',
+                                date: 'Aujourd\'hui',
+                                priority: 'high',
+                                action: 'Traiter'
+                            },
+                            {
+                                id: 2,
+                                type: 'control',
+                                title: 'Contrôle de conformité',
+                                description: '8 baux nécessitent une vérification',
+                                date: '3 jours',
+                                priority: 'medium',
+                                action: 'Examiner'
+                            },
+                            {
+                                id: 3,
+                                type: 'mediation',
+                                title: 'Demandes de médiation',
+                                description: '5 nouveaux conflits locatifs',
+                                date: 'En attente',
+                                priority: 'medium',
+                                action: 'Voir'
+                            }
+                        ]);
+                    }, 800);
+                });
+            }
+
+            async fetchRecentActivity() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve([
+                            {
+                                id: 1,
+                                date: '15/03/2024',
+                                type: 'Validation',
+                                description: 'Résidence Les Almadies - Appartement B12',
+                                neighborhood: 'Almadies',
+                                status: 'pending',
+                                action: 'Valider'
+                            },
+                            {
+                                id: 2,
+                                date: '14/03/2024',
+                                type: 'Contrôle',
+                                description: 'Contrôle bail - Villa Mermoz',
+                                neighborhood: 'Mermoz',
+                                status: 'completed',
+                                action: 'Voir'
+                            },
+                            {
+                                id: 3,
+                                date: '13/03/2024',
+                                type: 'Médiation',
+                                description: 'Conflit locatif - Rue 10 x 12',
+                                neighborhood: 'Plateau',
+                                status: 'in-progress',
+                                action: 'Intervenir'
+                            }
+                        ]);
+                    }, 600);
+                });
+            }
+
+            // Mise à jour de l'affichage
+            updateStatsDisplay(stats) {
+                this.animateValue('stat-properties', stats.properties);
+                this.animateValue('stat-leases', stats.leases);
+                this.animateValue('stat-mediations', stats.mediations);
+                this.formatTaxesDisplay(stats.taxes);
+            }
+
+            animateValue(elementId, targetValue) {
+                const element = document.getElementById(elementId);
+                if (!element) return;
+
+                const duration = 2000;
+                const start = 0;
+                const increment = targetValue / (duration / 16);
+                let current = start;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= targetValue) {
+                        clearInterval(timer);
+                        current = targetValue;
+                    }
+                    element.textContent = Math.floor(current).toLocaleString();
+                }, 16);
+            }
+
+            formatTaxesDisplay(amount) {
+                const element = document.getElementById('stat-taxes');
+                if (element) {
+                    element.textContent = `${(amount / 1000000).toFixed(0)}M FCFA`;
+                }
+            }
+
+            renderActionsList(actions) {
+                const container = document.getElementById('actionsList');
+                if (!container) return;
+
+                container.innerHTML = actions.map(action => `
+                    <div class="action-item ${action.priority === 'high' ? 'urgent' : ''}" 
+                         data-action-id="${action.id}">
+                        <div class="action-icon">${this.getActionIcon(action.type)}</div>
+                        <div class="action-content">
+                            <div class="action-title">${action.title}</div>
+                            <div class="action-desc">${action.description}</div>
+                            <div class="action-date">Échéance: ${action.date}</div>
+                        </div>
+                        <button class="btn btn-sm ${action.priority === 'high' ? 'btn-primary' : 'btn-outline'}"
+                                onclick="handleAction(${action.id})">
+                            ${action.action}
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            renderRecentActivity(activities) {
+                const tbody = document.getElementById('recentActivityBody');
+                if (!tbody) return;
+
+                tbody.innerHTML = activities.map(activity => `
+                    <tr data-activity-id="${activity.id}">
+                        <td>${activity.date}</td>
+                        <td>${activity.type}</td>
+                        <td>${activity.description}</td>
+                        <td>${activity.neighborhood}</td>
+                        <td><span class="status-badge ${activity.status}">${this.getStatusText(activity.status)}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline" 
+                                    onclick="handleActivity(${activity.id})">
+                                ${activity.action}
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            getActionIcon(type) {
+                const icons = {
+                    validation: '📋',
+                    control: '⚖️',
+                    mediation: '🔍'
+                };
+                return icons[type] || '📄';
+            }
+
+            getStatusText(status) {
+                const statusMap = {
+                    pending: 'En attente',
+                    completed: 'Terminé',
+                    'in-progress': 'En cours'
+                };
+                return statusMap[status] || status;
+            }
+
+            // Gestion des événements
+            setupEventListeners() {
+                // Navigation
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', this.handleNavigation.bind(this));
+                });
+
+                // Menu mobile
+                document.getElementById('mobileMenuToggle').addEventListener('click', this.toggleMobileMenu.bind(this));
+
+                // Fermer le menu mobile en cliquant à l'extérieur
+                document.addEventListener('click', (event) => {
+                    const sidebar = document.getElementById('sidebar');
+                    const menuToggle = document.getElementById('mobileMenuToggle');
+                    if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                        sidebar.classList.remove('mobile-open');
+                    }
+                });
+            }
+
+            handleNavigation(event) {
+                event.preventDefault();
+                const target = event.currentTarget;
+                
+                // Mise à jour de l'état actif
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                target.classList.add('active');
+
+                // Animation de transition
+                this.animatePageTransition(target.href);
+            }
+
+            animatePageTransition(url) {
+                document.body.style.opacity = '0.7';
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 300);
+            }
+
+            toggleMobileMenu() {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('mobile-open');
+            }
+
+            setLoading(loading) {
+                state.isLoading = loading;
+                const loader = document.getElementById('loadingIndicator');
+                if (loader) {
+                    loader.style.display = loading ? 'block' : 'none';
+                }
+            }
+
+            initializeAnimations() {
+                // Animation d'entrée des cartes
+                const cards = document.querySelectorAll('.stat-card, .dashboard-section');
+                cards.forEach((card, index) => {
+                    card.style.animationDelay = `${index * CONFIG.ANIMATION_DELAY}ms`;
+                });
+
+                // Observateur d'intersection pour l'animation au scroll
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.stat-card, .action-item').forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(el);
+                });
+            }
+
+            startAutoRefresh() {
+                setInterval(() => {
+                    this.loadStats();
+                }, CONFIG.UPDATE_INTERVAL);
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <span class="notification-message">${message}</span>
+                        <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 5000);
+            }
+
+            showError(message) {
+                this.showNotification(message, 'error');
+            }
+        }
+
+        // Initialisation au chargement de la page
+        let dashboard;
+        document.addEventListener('DOMContentLoaded', () => {
+            dashboard = new DashboardManager();
+        });
+
+        // Fonctions globales
+        function handleAction(actionId) {
+            const action = state.actions.find(a => a.id === actionId);
+            if (action) {
+                dashboard.showNotification(`Traitement de l'action: ${action.title}`, 'info');
+            }
+        }
+
+        function handleActivity(activityId) {
+            const activity = state.recentActivity.find(a => a.id === activityId);
+            if (activity) {
+                dashboard.showNotification(`Ouverture de: ${activity.description}`, 'info');
+            }
+        }
+
+        function refreshData() {
+            dashboard.loadInitialData();
+            dashboard.showNotification('Données rafraîchies', 'success');
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                dashboard.showNotification('Déconnexion réussie', 'success');
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 1500);
+            }
+        }
+
+        // Gestion des erreurs globales
+        window.addEventListener('error', (event) => {
+            console.error('Erreur globale:', event.error);
+            dashboard.showError('Une erreur inattendue est survenue');
+        });
+
+        // Gestion de la visibilité de la page
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && dashboard) {
+                dashboard.loadStats();
+            }
+        });
+    </script>
 </body>
 </html>

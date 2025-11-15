@@ -1,14 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rapports Professionnels - Agence Immobilière | PNSBIL</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/rapport-pro.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="dashboard-header">
@@ -24,228 +21,615 @@
         </div>
     </header>
 
-    <nav class="sidebar">
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
         <div class="nav-section">
-            <h3>Gestion Professionnelle</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="portefeuille.html" class="nav-link">🏘️ Mon portefeuille</a>
-            <a href="transactions.html" class="nav-link">🔄 Transactions</a>
-            <a href="conformite.html" class="nav-link">📋 Conformité</a>
-            <a href="rapports-pro.html" class="nav-link active">📈 Rapports Pro</a>
+            <div class="nav-title">Gestion Professionnelle</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="portefeuille.html" class="nav-link">
+                <span class="nav-icon">🏘️</span>
+                <span>Mon portefeuille</span>
+            </a>
+            <a href="transactions.html" class="nav-link">
+                <span class="nav-icon">🔄</span>
+                <span>Transactions</span>
+            </a>
+            <a href="conformite.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span>Conformité</span>
+            </a>
+            <a href="rapports-pro.html" class="nav-link active">
+                <span class="nav-icon">📈</span>
+                <span>Rapports Pro</span>
+            </a>
         </div>
         
         <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+            <div class="nav-title">Communication</div>
+            <a href="communication.html" class="nav-link">
+                <span class="nav-icon">💬</span>
+                <span>Messagerie</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Support</div>
+            <a href="support.html" class="nav-link">
+                <span class="nav-icon">🛟</span>
+                <span>Centre d'aide</span>
+            </a>
+            <a href="parametres.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span>Paramètres</span>
+            </a>
         </div>
     </nav>
 
-    <main class="main-content">
-        <div class="page-header">
-            <div class="header-actions">
-                <h1>Rapports Professionnels</h1>
-                <div class="header-buttons">
-                    <button class="btn btn-outline" onclick="exportBusinessIntelligence()">
-                        <i class="fas fa-file-export me-2"></i>Export BI
-                    </button>
-                    <button class="btn btn-primary" onclick="createExecutiveReport()">
-                        <i class="fas fa-chart-line me-2"></i>Rapport direction
-                    </button>
-                </div>
-            </div>
-            <p>Analysez vos performances et générez des rapports détaillés</p>
-        </div>
-
-        <!-- KPI Principaux -->
-        <div class="business-kpis">
-            <div class="kpi-grid">
-                <div class="kpi-card primary">
-                    <div class="kpi-icon">💰</div>
-                    <div class="kpi-content">
-                        <div class="kpi-value">18.5M FCFA</div>
-                        <div class="kpi-label">Chiffre d'affaires</div>
-                        <div class="kpi-trend positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+15% vs mois dernier</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="kpi-card success">
-                    <div class="kpi-icon">🏘️</div>
-                    <div class="kpi-content">
-                        <div class="kpi-value">127</div>
-                        <div class="kpi-label">Biens gérés</div>
-                        <div class="kpi-trend positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+8 ce mois</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="kpi-card warning">
-                    <div class="kpi-icon">📊</div>
-                    <div class="kpi-content">
-                        <div class="kpi-value">94%</div>
-                        <div class="kpi-label">Taux d'occupation</div>
-                        <div class="kpi-trend positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+2.3%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="kpi-card info">
-                    <div class="kpi-icon">⭐</div>
-                    <div class="kpi-content">
-                        <div class="kpi-value">4.7/5</div>
-                        <div class="kpi-label">Satisfaction clients</div>
-                        <div class="kpi-trend">
-                            <span>156 avis</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rapports de Performance -->
-        <div class="performance-reports">
-            <div class="section-header">
-                <h3>📈 Performance Commerciale</h3>
-                <div class="report-period">
-                    <select id="performancePeriod" onchange="updatePerformanceCharts()">
-                        <option value="month">Mois</option>
-                        <option value="quarter" selected>Trimestre</option>
-                        <option value="year">Année</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="performance-grid">
-                <div class="performance-widget">
-                    <div class="widget-header">
-                        <h5>💰 Évolution du CA</h5>
-                        <button class="btn-icon" onclick="downloadRevenueReport()">
-                            <i class="fas fa-download"></i>
+        <main class="main-content">
+            <div class="page-header">
+                <div class="header-actions">
+                    <h1>Rapports Professionnels</h1>
+                    <div class="header-buttons">
+                        <button class="btn btn-outline" onclick="exportBusinessIntelligence()">
+                            <i class="fas fa-file-export me-2"></i>Export BI
+                        </button>
+                        <button class="btn btn-primary" onclick="createExecutiveReport()">
+                            <i class="fas fa-chart-line me-2"></i>Rapport direction
                         </button>
                     </div>
-                    <div class="widget-content">
-                        <div class="revenue-chart">
-                            <div class="chart-container">
-                                <div class="chart-placeholder">
-                                    <i class="fas fa-chart-line"></i>
-                                    <p>Graphique d'évolution du chiffre d'affaires</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="revenue-breakdown">
-                            <div class="breakdown-item">
-                                <span>Location:</span>
-                                <strong>12.8M FCFA</strong>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>Gestion:</span>
-                                <strong>4.2M FCFA</strong>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>Vente:</span>
-                                <strong>1.5M FCFA</strong>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+                <p>Analysez vos performances et générez des rapports détaillés</p>
+            </div>
 
-                <div class="performance-widget">
-                    <div class="widget-header">
-                        <h5>🏘️ Performance du Portefeuille</h5>
-                        <button class="btn-icon" onclick="downloadPortfolioReport()">
-                            <i class="fas fa-download"></i>
-                        </button>
-                    </div>
-                    <div class="widget-content">
-                        <div class="portfolio-metrics">
-                            <div class="metric-row">
-                                <div class="metric">
-                                    <div class="metric-value">94%</div>
-                                    <div class="metric-label">Taux d'occupation</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">87%</div>
-                                    <div class="metric-label">Taux de rotation</div>
-                                </div>
+            <!-- Navigation par onglets -->
+            <div class="reports-tabs">
+                <button class="tab-btn active" data-tab="overview">
+                    <i class="fas fa-chart-pie me-2"></i> Vue d'ensemble
+                </button>
+                <button class="tab-btn" data-tab="performance">
+                    <i class="fas fa-trending-up me-2"></i> Performance
+                </button>
+                <button class="tab-btn" data-tab="analytics">
+                    <i class="fas fa-chart-bar me-2"></i> Analytics
+                </button>
+                <button class="tab-btn" data-tab="automation">
+                    <i class="fas fa-robot me-2"></i> Automatisation
+                </button>
+            </div>
+
+            <!-- Vue d'ensemble -->
+            <div class="reports-section active" id="overview-tab">
+                <!-- KPI Principaux -->
+                <div class="business-kpis">
+                    <div class="kpi-grid">
+                        <div class="kpi-card primary fade-in">
+                            <div class="kpi-icon">
+                                <i class="fas fa-money-bill-wave"></i>
                             </div>
-                            <div class="metric-row">
-                                <div class="metric">
-                                    <div class="metric-value">23j</div>
-                                    <div class="metric-label">Délai moyen location</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">4.7/5</div>
-                                    <div class="metric-label">Satisfaction locataires</div>
+                            <div class="kpi-content">
+                                <div class="kpi-value">18.5M</div>
+                                <div class="kpi-label">Chiffre d'affaires</div>
+                                <div class="kpi-trend positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+15% vs mois dernier</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="portfolio-growth">
-                            <div class="growth-item positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>+8 nouveaux biens ce mois</span>
+                        <div class="kpi-card success fade-in delay-1">
+                            <div class="kpi-icon">
+                                <i class="fas fa-home"></i>
                             </div>
-                            <div class="growth-item positive">
+                            <div class="kpi-content">
+                                <div class="kpi-value">127</div>
+                                <div class="kpi-label">Biens gérés</div>
+                                <div class="kpi-trend positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+8 ce mois</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-card warning fade-in delay-2">
+                            <div class="kpi-icon">
                                 <i class="fas fa-chart-line"></i>
-                                <span>+12% de valorisation</span>
+                            </div>
+                            <div class="kpi-content">
+                                <div class="kpi-value">94%</div>
+                                <div class="kpi-label">Taux d'occupation</div>
+                                <div class="kpi-trend positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+2.3%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-card info fade-in delay-3">
+                            <div class="kpi-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <div class="kpi-value">4.7/5</div>
+                                <div class="kpi-label">Satisfaction clients</div>
+                                <div class="kpi-trend">
+                                    <span>156 avis</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="performance-widget">
-                    <div class="widget-header">
-                        <h5>👥 Performance des Agents</h5>
-                        <button class="btn-icon" onclick="downloadAgentReport()">
-                            <i class="fas fa-download"></i>
-                        </button>
+                <!-- Vue d'ensemble rapide -->
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <div class="overview-header">
+                            <h4><i class="fas fa-bullseye me-2"></i>Objectifs du Mois</h4>
+                            <span class="progress-badge">82%</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 82%"></div>
+                            </div>
+                            <div class="progress-labels">
+                                <span>Objectif: 20M FCFA</span>
+                                <span>Réalisé: 16.4M FCFA</span>
+                            </div>
+                        </div>
+                        <div class="target-metrics">
+                            <div class="target-item">
+                                <span class="target-label">Transactions</span>
+                                <span class="target-value">48/60</span>
+                            </div>
+                            <div class="target-item">
+                                <span class="target-label">Nouveaux biens</span>
+                                <span class="target-value">8/10</span>
+                            </div>
+                            <div class="target-item">
+                                <span class="target-label">Satisfaction</span>
+                                <span class="target-value">4.7/5.0</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="widget-content">
-                        <div class="agents-ranking">
-                            <div class="agent-item">
+
+                    <div class="overview-card">
+                        <div class="overview-header">
+                            <h4><i class="fas fa-trophy me-2"></i>Performance Équipe</h4>
+                            <span class="performance-badge excellent">Excellent</span>
+                        </div>
+                        <div class="team-performance">
+                            <div class="performance-item">
                                 <div class="agent-info">
                                     <div class="agent-avatar">MD</div>
                                     <div class="agent-details">
                                         <strong>M. Diallo</strong>
-                                        <span>28 transactions</span>
+                                        <span>Top performer</span>
                                     </div>
                                 </div>
-                                <div class="agent-performance">
-                                    <span class="performance-value">4.2M FCFA</span>
-                                    <div class="performance-bar">
-                                        <div class="bar-fill" style="width: 95%"></div>
+                                <div class="performance-score">
+                                    <span class="score">98%</span>
+                                    <div class="score-bar">
+                                        <div class="bar-fill" style="width: 98%"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="agent-item">
+                            <div class="performance-item">
                                 <div class="agent-info">
                                     <div class="agent-avatar">MS</div>
                                     <div class="agent-details">
                                         <strong>Mme Sow</strong>
-                                        <span>24 transactions</span>
+                                        <span>Très bon</span>
                                     </div>
                                 </div>
-                                <div class="agent-performance">
-                                    <span class="performance-value">3.8M FCFA</span>
-                                    <div class="performance-bar">
-                                        <div class="bar-fill" style="width: 85%"></div>
+                                <div class="performance-score">
+                                    <span class="score">92%</span>
+                                    <div class="score-bar">
+                                        <div class="bar-fill" style="width: 92%"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="agent-item">
+                            <div class="performance-item">
                                 <div class="agent-info">
                                     <div class="agent-avatar">BN</div>
                                     <div class="agent-details">
                                         <strong>M. Ndiaye</strong>
-                                        <span>19 transactions</span>
+                                        <span>Bon</span>
                                     </div>
                                 </div>
-                                <div class="agent-performance">
-                                    <span class="performance-value">2.9M FCFA</span>
-                                    <div class="performance-bar">
-                                        <div class="bar-fill" style="width: 70%"></div>
+                                <div class="performance-score">
+                                    <span class="score">85%</span>
+                                    <div class="score-bar">
+                                        <div class="bar-fill" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overview-card">
+                        <div class="overview-header">
+                            <h4><i class="fas fa-chart-pie me-2"></i>Répartition CA</h4>
+                            <span class="revenue-total">18.5M FCFA</span>
+                        </div>
+                        <div class="revenue-distribution">
+                            <div class="distribution-item">
+                                <div class="distribution-info">
+                                    <span class="distribution-label">Location</span>
+                                    <span class="distribution-percent">69%</span>
+                                </div>
+                                <div class="distribution-bar">
+                                    <div class="bar-fill rental" style="width: 69%"></div>
+                                </div>
+                                <span class="distribution-amount">12.8M FCFA</span>
+                            </div>
+                            <div class="distribution-item">
+                                <div class="distribution-info">
+                                    <span class="distribution-label">Gestion</span>
+                                    <span class="distribution-percent">23%</span>
+                                </div>
+                                <div class="distribution-bar">
+                                    <div class="bar-fill management" style="width: 23%"></div>
+                                </div>
+                                <span class="distribution-amount">4.2M FCFA</span>
+                            </div>
+                            <div class="distribution-item">
+                                <div class="distribution-info">
+                                    <span class="distribution-label">Vente</span>
+                                    <span class="distribution-percent">8%</span>
+                                </div>
+                                <div class="distribution-bar">
+                                    <div class="bar-fill sale" style="width: 8%"></div>
+                                </div>
+                                <span class="distribution-amount">1.5M FCFA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance -->
+            <div class="reports-section" id="performance-tab">
+                <div class="section-header">
+                    <h3><i class="fas fa-trending-up me-2"></i>Performance Commerciale</h3>
+                    <div class="section-actions">
+                        <div class="period-selector">
+                            <select id="performancePeriod" onchange="updatePerformanceCharts()">
+                                <option value="week">Semaine</option>
+                                <option value="month">Mois</option>
+                                <option value="quarter" selected>Trimestre</option>
+                                <option value="year">Année</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-outline" onclick="exportPerformanceReport()">
+                            <i class="fas fa-download me-2"></i> Exporter
+                        </button>
+                    </div>
+                </div>
+
+                <div class="performance-grid">
+                    <div class="performance-widget large">
+                        <div class="widget-header">
+                            <h5><i class="fas fa-money-bill-trend-up me-2"></i>Évolution du Chiffre d'Affaires</h5>
+                            <div class="widget-actions">
+                                <button class="btn-icon" onclick="downloadRevenueReport()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn-icon" onclick="toggleChartView()">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="widget-content">
+                            <div class="revenue-chart">
+                                <div class="chart-container">
+                                    <div class="chart-placeholder">
+                                        <i class="fas fa-chart-line"></i>
+                                        <p>Graphique d'évolution du chiffre d'affaires</p>
+                                        <small>Données mises à jour aujourd'hui à 09:30</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="revenue-insights">
+                                <div class="insight-card positive">
+                                    <div class="insight-icon">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="insight-content">
+                                        <div class="insight-value">+15%</div>
+                                        <div class="insight-label">Croissance mensuelle</div>
+                                    </div>
+                                </div>
+                                <div class="insight-card warning">
+                                    <div class="insight-icon">
+                                        <i class="fas fa-target"></i>
+                                    </div>
+                                    <div class="insight-content">
+                                        <div class="insight-value">82%</div>
+                                        <div class="insight-label">Objectif mensuel</div>
+                                    </div>
+                                </div>
+                                <div class="insight-card info">
+                                    <div class="insight-icon">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                    <div class="insight-content">
+                                        <div class="insight-value">12j</div>
+                                        <div class="insight-label">Jours restants</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="performance-widget">
+                        <div class="widget-header">
+                            <h5><i class="fas fa-home me-2"></i>Performance du Portefeuille</h5>
+                            <button class="btn-icon" onclick="downloadPortfolioReport()">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <div class="widget-content">
+                            <div class="portfolio-metrics">
+                                <div class="metric-grid">
+                                    <div class="metric-card compact">
+                                        <div class="metric-value">94%</div>
+                                        <div class="metric-label">Occupation</div>
+                                        <div class="metric-trend positive">+2.3%</div>
+                                    </div>
+                                    <div class="metric-card compact">
+                                        <div class="metric-value">87%</div>
+                                        <div class="metric-label">Rotation</div>
+                                        <div class="metric-trend positive">+5.1%</div>
+                                    </div>
+                                    <div class="metric-card compact">
+                                        <div class="metric-value">23j</div>
+                                        <div class="metric-label">Délai location</div>
+                                        <div class="metric-trend negative">+2j</div>
+                                    </div>
+                                    <div class="metric-card compact">
+                                        <div class="metric-value">4.7/5</div>
+                                        <div class="metric-label">Satisfaction</div>
+                                        <div class="metric-trend positive">+0.2</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portfolio-growth">
+                                <div class="growth-item positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+8 nouveaux biens ce mois</span>
+                                </div>
+                                <div class="growth-item positive">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>+12% de valorisation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="performance-widget">
+                        <div class="widget-header">
+                            <h5><i class="fas fa-users me-2"></i>Performance des Agents</h5>
+                            <button class="btn-icon" onclick="downloadAgentReport()">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <div class="widget-content">
+                            <div class="agents-ranking">
+                                <div class="agent-item featured">
+                                    <div class="agent-info">
+                                        <div class="agent-avatar">MD</div>
+                                        <div class="agent-details">
+                                            <strong>M. Diallo</strong>
+                                            <span>Top performer</span>
+                                        </div>
+                                        <div class="agent-badge">
+                                            <i class="fas fa-crown"></i>
+                                        </div>
+                                    </div>
+                                    <div class="agent-performance">
+                                        <span class="performance-value">4.2M FCFA</span>
+                                        <div class="performance-bar">
+                                            <div class="bar-fill" style="width: 95%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="agent-item">
+                                    <div class="agent-info">
+                                        <div class="agent-avatar">MS</div>
+                                        <div class="agent-details">
+                                            <strong>Mme Sow</strong>
+                                            <span>24 transactions</span>
+                                        </div>
+                                    </div>
+                                    <div class="agent-performance">
+                                        <span class="performance-value">3.8M FCFA</span>
+                                        <div class="performance-bar">
+                                            <div class="bar-fill" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="agent-item">
+                                    <div class="agent-info">
+                                        <div class="agent-avatar">BN</div>
+                                        <div class="agent-details">
+                                            <strong>M. Ndiaye</strong>
+                                            <span>19 transactions</span>
+                                        </div>
+                                    </div>
+                                    <div class="agent-performance">
+                                        <span class="performance-value">2.9M FCFA</span>
+                                        <div class="performance-bar">
+                                            <div class="bar-fill" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="performance-summary">
+                                <div class="summary-item">
+                                    <span>Moyenne équipe:</span>
+                                    <strong>3.6M FCFA</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Objectif moyen:</span>
+                                    <strong>3.0M FCFA</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="reports-section" id="analytics-tab">
+                <div class="section-header">
+                    <h3><i class="fas fa-chart-bar me-2"></i>Analytics Avancés</h3>
+                    <button class="btn btn-primary" onclick="openDataStudio()">
+                        <i class="fas fa-sliders-h me-2"></i>Studio de données
+                    </button>
+                </div>
+
+                <div class="analytics-tabs">
+                    <div class="tab-headers">
+                        <button class="tab-header active" data-tab="market">
+                            <i class="fas fa-chart-line me-2"></i>Analyse Marché
+                        </button>
+                        <button class="tab-header" data-tab="clients">
+                            <i class="fas fa-user-chart me-2"></i>Comportement Clients
+                        </button>
+                        <button class="tab-header" data-tab="financial">
+                            <i class="fas fa-coins me-2"></i>Analyse Financière
+                        </button>
+                    </div>
+
+                    <div class="tab-content active" id="market-tab">
+                        <div class="market-analysis">
+                            <div class="analysis-section">
+                                <h5><i class="fas fa-map-marker-alt me-2"></i>Performance par Zone Géographique</h5>
+                                <div class="zones-performance">
+                                    <div class="zone-performance highlight">
+                                        <div class="zone-header">
+                                            <span class="zone-name">Almadies</span>
+                                            <span class="zone-rating excellent">Excellent</span>
+                                        </div>
+                                        <div class="performance-stats">
+                                            <div class="stat">
+                                                <span class="stat-label">Loyer moyen</span>
+                                                <span class="stat-value">450K FCFA</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Occupation</span>
+                                                <span class="stat-value">96%</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Rendement</span>
+                                                <span class="stat-value">7.2%</span>
+                                            </div>
+                                        </div>
+                                        <div class="zone-trend positive">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <span>+3.2% vs dernier trimestre</span>
+                                        </div>
+                                    </div>
+                                    <div class="zone-performance">
+                                        <div class="zone-header">
+                                            <span class="zone-name">Plateau</span>
+                                            <span class="zone-rating good">Bon</span>
+                                        </div>
+                                        <div class="performance-stats">
+                                            <div class="stat">
+                                                <span class="stat-label">Loyer moyen</span>
+                                                <span class="stat-value">380K FCFA</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Occupation</span>
+                                                <span class="stat-value">94%</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Rendement</span>
+                                                <span class="stat-value">6.8%</span>
+                                            </div>
+                                        </div>
+                                        <div class="zone-trend positive">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <span>+1.8% vs dernier trimestre</span>
+                                        </div>
+                                    </div>
+                                    <div class="zone-performance">
+                                        <div class="zone-header">
+                                            <span class="zone-name">Mermoz</span>
+                                            <span class="zone-rating good">Bon</span>
+                                        </div>
+                                        <div class="performance-stats">
+                                            <div class="stat">
+                                                <span class="stat-label">Loyer moyen</span>
+                                                <span class="stat-value">320K FCFA</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Occupation</span>
+                                                <span class="stat-value">92%</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Rendement</span>
+                                                <span class="stat-value">6.5%</span>
+                                            </div>
+                                        </div>
+                                        <div class="zone-trend stable">
+                                            <i class="fas fa-minus"></i>
+                                            <span>Stable vs dernier trimestre</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="clients-tab">
+                        <div class="clients-analysis">
+                            <div class="analysis-section">
+                                <h5><i class="fas fa-user-friends me-2"></i>Profil des Clients</h5>
+                                <div class="clients-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-value">42%</div>
+                                        <div class="stat-label">Expatriés</div>
+                                        <div class="stat-trend positive">+5%</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-value">35%</div>
+                                        <div class="stat-label">Cadres supérieurs</div>
+                                        <div class="stat-trend positive">+3%</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-value">23%</div>
+                                        <div class="stat-label">Familles</div>
+                                        <div class="stat-trend stable">Stable</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="financial-tab">
+                        <div class="financial-analysis">
+                            <div class="analysis-section">
+                                <h5><i class="fas fa-chart-pie me-2"></i>Analyse de Rentabilité</h5>
+                                <div class="profitability-metrics">
+                                    <div class="metric-large">
+                                        <div class="metric-value">24.8%</div>
+                                        <div class="metric-label">Marge nette</div>
+                                        <div class="metric-trend positive">+2.1%</div>
+                                    </div>
+                                    <div class="profitability-details">
+                                        <div class="detail-item">
+                                            <span>Charges opérationnelles</span>
+                                            <span class="value">8.2M FCFA</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span>Coûts marketing</span>
+                                            <span class="value">1.5M FCFA</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span>Frais personnels</span>
+                                            <span class="value">4.8M FCFA</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -253,223 +637,1609 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Analytics Avancés -->
-        <div class="advanced-analytics">
-            <div class="section-header">
-                <h3>🔍 Analytics Avancés</h3>
-                <button class="btn btn-outline" onclick="openDataStudio()">
-                    <i class="fas fa-sliders-h me-2"></i>Studio de données
-                </button>
-            </div>
-
-            <div class="analytics-tabs">
-                <div class="tab-headers">
-                    <button class="tab-header active" onclick="switchAnalyticsTab('market')">
-                        📊 Analyse Marché
-                    </button>
-                    <button class="tab-header" onclick="switchAnalyticsTab('clients')">
-                        👥 Comportement Clients
-                    </button>
-                    <button class="tab-header" onclick="switchAnalyticsTab('financial')">
-                        💰 Analyse Financière
+            <!-- Automatisation -->
+            <div class="reports-section" id="automation-tab">
+                <div class="section-header">
+                    <h3><i class="fas fa-robot me-2"></i>Rapports Automatisés</h3>
+                    <button class="btn btn-primary" onclick="configureAutomation()">
+                        <i class="fas fa-cog me-2"></i>Configurer
                     </button>
                 </div>
 
-                <div class="tab-content active" id="market-tab">
-                    <div class="market-analysis">
-                        <div class="analysis-section">
-                            <h5>🏙️ Performance par Zone</h5>
-                            <div class="zones-performance">
-                                <div class="zone-performance">
-                                    <span class="zone-name">Almadies</span>
-                                    <div class="performance-stats">
-                                        <span class="stat">Loyer moyen: 450K FCFA</span>
-                                        <span class="stat">Occupation: 96%</span>
-                                        <span class="stat">Rendement: 7.2%</span>
-                                    </div>
-                                </div>
-                                <div class="zone-performance">
-                                    <span class="zone-name">Plateau</span>
-                                    <div class="performance-stats">
-                                        <span class="stat">Loyer moyen: 380K FCFA</span>
-                                        <span class="stat">Occupation: 94%</span>
-                                        <span class="stat">Rendement: 6.8%</span>
-                                    </div>
-                                </div>
-                                <div class="zone-performance">
-                                    <span class="zone-name">Mermoz</span>
-                                    <div class="performance-stats">
-                                        <span class="stat">Loyer moyen: 320K FCFA</span>
-                                        <span class="stat">Occupation: 92%</span>
-                                        <span class="stat">Rendement: 6.5%</span>
-                                    </div>
-                                </div>
+                <div class="automation-grid">
+                    <div class="automation-card">
+                        <div class="automation-header">
+                            <div class="automation-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="automation-info">
+                                <h5>Rapport Hebdomadaire</h5>
+                                <p>Performance globale et indicateurs clés</p>
+                            </div>
+                            <span class="automation-badge active">Actif</span>
+                        </div>
+                        <div class="automation-details">
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Chaque lundi à 8h</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-users"></i>
+                                <span>Direction, Équipe commerciale</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>PDF + Excel</span>
                             </div>
                         </div>
+                        <div class="automation-actions">
+                            <button class="btn btn-outline" onclick="editAutomation(1)">
+                                <i class="fas fa-edit me-2"></i>Modifier
+                            </button>
+                            <button class="btn btn-primary" onclick="testAutomation(1)">
+                                <i class="fas fa-play me-2"></i>Tester
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="tab-content" id="clients-tab">
-                    <!-- Analyse clients -->
-                </div>
-
-                <div class="tab-content" id="financial-tab">
-                    <!-- Analyse financière -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Rapports Automatisés -->
-        <div class="automated-reports">
-            <div class="section-header">
-                <h3>🤖 Rapports Automatisés</h3>
-                <button class="btn btn-primary" onclick="configureAutomation()">
-                    <i class="fas fa-cog me-2"></i>Configurer
-                </button>
-            </div>
-
-            <div class="automation-list">
-                <div class="automation-item">
-                    <div class="automation-info">
-                        <div class="automation-icon">
-                            <i class="fas fa-envelope"></i>
+                    <div class="automation-card">
+                        <div class="automation-header">
+                            <div class="automation-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="automation-info">
+                                <h5>Rapport Mensuel Direction</h5>
+                                <p>Analyse détaillée et prévisions</p>
+                            </div>
+                            <span class="automation-badge active">Actif</span>
                         </div>
                         <div class="automation-details">
-                            <h6>Rapport Hebdomadaire</h6>
-                            <p>Envoyé chaque lundi à 8h</p>
-                            <small>Destinataires: Direction, Équipe commerciale</small>
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>1er de chaque mois</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-users"></i>
+                                <span>Comité de direction</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>PDF détaillé</span>
+                            </div>
+                        </div>
+                        <div class="automation-actions">
+                            <button class="btn btn-outline" onclick="editAutomation(2)">
+                                <i class="fas fa-edit me-2"></i>Modifier
+                            </button>
+                            <button class="btn btn-primary" onclick="testAutomation(2)">
+                                <i class="fas fa-play me-2"></i>Tester
+                            </button>
                         </div>
                     </div>
-                    <div class="automation-status active">
-                        <span class="status-badge active">Actif</span>
-                        <button class="btn-icon" onclick="editAutomation(1)">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
-                </div>
 
-                <div class="automation-item">
-                    <div class="automation-info">
-                        <div class="automation-icon">
-                            <i class="fas fa-chart-pie"></i>
+                    <div class="automation-card">
+                        <div class="automation-header">
+                            <div class="automation-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="automation-info">
+                                <h5>Alertes Performance</h5>
+                                <p>Notifications en temps réel</p>
+                            </div>
+                            <span class="automation-badge inactive">Inactif</span>
                         </div>
                         <div class="automation-details">
-                            <h6>Rapport Mensuel Direction</h6>
-                            <p>Généré le 1er de chaque mois</p>
-                            <small>Destinataires: Comité de direction</small>
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>En temps réel</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-users"></i>
+                                <span>Managers</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Notifications push</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="automation-status active">
-                        <span class="status-badge active">Actif</span>
-                        <button class="btn-icon" onclick="editAutomation(2)">
-                            <i class="fas fa-edit"></i>
-                        </button>
+                        <div class="automation-actions">
+                            <button class="btn btn-outline" onclick="editAutomation(3)">
+                                <i class="fas fa-edit me-2"></i>Modifier
+                            </button>
+                            <button class="btn btn-primary" onclick="activateAutomation(3)">
+                                <i class="fas fa-power-off me-2"></i>Activer
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
-    <script src="../../js/dashboard.js"></script>
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --info: #118ab2;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--gray-800);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--gray-600);
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background: var(--gray-100);
+            color: var(--gray-800);
+        }
+
+        /* Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 1.5rem 0;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .nav-section h3 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.25rem;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-actions h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        /* Reports Tabs */
+        .reports-tabs {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--gray-600);
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            white-space: nowrap;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .tab-btn:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        /* Reports Sections */
+        .reports-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .reports-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .period-selector select {
+            padding: 0.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            background: white;
+        }
+
+        /* KPI Cards */
+        .business-kpis {
+            margin-bottom: 2rem;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            border-left: 4px solid;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .kpi-card.primary {
+            border-left-color: var(--primary);
+        }
+
+        .kpi-card.success {
+            border-left-color: var(--success);
+        }
+
+        .kpi-card.warning {
+            border-left-color: var(--warning);
+        }
+
+        .kpi-card.info {
+            border-left-color: var(--info);
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+        }
+
+        .kpi-card.primary .kpi-icon { background: var(--primary); }
+        .kpi-card.success .kpi-icon { background: var(--success); }
+        .kpi-card.warning .kpi-icon { background: var(--warning); }
+        .kpi-card.info .kpi-icon { background: var(--info); }
+
+        .kpi-content {
+            flex: 1;
+        }
+
+        .kpi-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .kpi-trend.positive {
+            color: var(--success);
+        }
+
+        /* Overview Grid */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .overview-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .overview-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .overview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .overview-header h4 {
+            font-weight: 600;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .performance-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .performance-badge.excellent {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .revenue-total {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .target-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .target-item {
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+        }
+
+        .target-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .target-value {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .team-performance {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .performance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+        }
+
+        .performance-item.featured {
+            background: rgba(67, 97, 238, 0.05);
+            border: 1px solid var(--primary);
+        }
+
+        .agent-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .agent-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .agent-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .agent-details strong {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .agent-details span {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .agent-badge {
+            color: var(--warning);
+        }
+
+        .performance-score {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+
+        .score {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .score-bar {
+            width: 80px;
+            height: 4px;
+            background: var(--gray-200);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .revenue-distribution {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .distribution-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .distribution-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .distribution-label {
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .distribution-percent {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .distribution-bar {
+            width: 100px;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .bar-fill.rental { background: var(--primary); }
+        .bar-fill.management { background: var(--success); }
+        .bar-fill.sale { background: var(--warning); }
+
+        .distribution-amount {
+            font-weight: 600;
+            color: var(--gray-700);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        /* Performance Grid */
+        .performance-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .performance-widget {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .performance-widget:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .performance-widget.large {
+            grid-column: 1;
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .widget-header h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+        }
+
+        .widget-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .widget-content {
+            padding: 1.5rem;
+        }
+
+        .chart-container {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-placeholder {
+            text-align: center;
+            color: var(--gray-500);
+        }
+
+        .chart-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .revenue-insights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .insight-card {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            border-left: 4px solid;
+        }
+
+        .insight-card.positive { border-left-color: var(--success); }
+        .insight-card.warning { border-left-color: var(--warning); }
+        .insight-card.info { border-left-color: var(--info); }
+
+        .insight-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .insight-card.positive .insight-icon { color: var(--success); }
+        .insight-card.warning .insight-icon { color: var(--warning); }
+        .insight-card.info .insight-icon { color: var(--info); }
+
+        .insight-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .insight-label {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card.compact {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-trend {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .metric-trend.positive { color: var(--success); }
+        .metric-trend.negative { color: var(--danger); }
+        .metric-trend.stable { color: var(--gray-500); }
+
+        .portfolio-growth {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .growth-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+        }
+
+        .growth-item.positive {
+            color: var(--success);
+        }
+
+        .agents-ranking {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .performance-summary {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .summary-item {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .summary-item span {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .summary-item strong {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* Analytics Tabs */
+        .analytics-tabs {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .tab-headers {
+            display: flex;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .tab-header {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tab-header:hover {
+            background: var(--gray-50);
+        }
+
+        .tab-header.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .analysis-section {
+            margin-bottom: 2rem;
+        }
+
+        .analysis-section h5 {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .zones-performance {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .zone-performance {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .zone-performance:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .zone-performance.highlight {
+            background: rgba(67, 97, 238, 0.05);
+            border: 1px solid var(--primary);
+        }
+
+        .zone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .zone-name {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .zone-rating {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .zone-rating.excellent {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .zone-rating.good {
+            background: rgba(255, 209, 102, 0.2);
+            color: #b38f00;
+        }
+
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .zone-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .zone-trend.positive { color: var(--success); }
+        .zone-trend.stable { color: var(--gray-600); }
+
+        .clients-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .profitability-metrics {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .metric-large {
+            text-align: center;
+        }
+
+        .metric-large .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-large .metric-label {
+            font-size: 1rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .profitability-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+        }
+
+        .detail-item .value {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* Automation Grid */
+        .automation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .automation-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .automation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .automation-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .automation-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .automation-info {
+            flex: 1;
+        }
+
+        .automation-info h5 {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .automation-info p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .automation-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .automation-badge.active {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .automation-badge.inactive {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .automation-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .automation-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--info);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--info);
+        }
+
+        .toast-content h6 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-content p {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+            }
+
+            .header-content, .header-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reports-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .section-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .revenue-insights {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-headers {
+                flex-direction: column;
+            }
+
+            .zones-performance {
+                grid-template-columns: 1fr;
+            }
+
+            .performance-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .clients-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .profitability-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .automation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .automation-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+
     <script>
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            initTabs();
+            initAnalyticsTabs();
+            animateKPIs();
+        });
+
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const sections = document.querySelectorAll('.reports-section');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+                    
+                    // Mettre à jour les boutons d'onglet
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Afficher la section correspondante
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === `${targetTab}-tab`) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        function initAnalyticsTabs() {
+            const tabHeaders = document.querySelectorAll('.tab-header');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+                    
+                    // Mettre à jour les en-têtes d'onglet
+                    tabHeaders.forEach(h => h.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Afficher le contenu correspondant
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === `${targetTab}-tab`) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        function animateKPIs() {
+            const kpis = document.querySelectorAll('.kpi-card');
+            kpis.forEach((kpi, index) => {
+                kpi.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+
         function updatePerformanceCharts() {
             const period = document.getElementById('performancePeriod').value;
-            console.log(`Mise à jour performance pour: ${period}`);
-            // Actualiser les graphiques
+            showToast(`Graphiques mis à jour pour la période: ${period}`, 'info');
         }
 
         function downloadRevenueReport() {
-            console.log("Téléchargement rapport revenus");
-            // Implémentation téléchargement
+            showToast('Téléchargement du rapport revenus...', 'info');
+            setTimeout(() => {
+                showToast('Rapport revenus téléchargé avec succès', 'success');
+            }, 2000);
         }
 
         function downloadPortfolioReport() {
-            console.log("Téléchargement rapport portefeuille");
-            // Implémentation téléchargement
+            showToast('Téléchargement du rapport portefeuille...', 'info');
+            setTimeout(() => {
+                showToast('Rapport portefeuille téléchargé avec succès', 'success');
+            }, 2000);
         }
 
         function downloadAgentReport() {
-            console.log("Téléchargement rapport agents");
-            // Implémentation téléchargement
+            showToast('Téléchargement du rapport agents...', 'info');
+            setTimeout(() => {
+                showToast('Rapport agents téléchargé avec succès', 'success');
+            }, 2000);
         }
 
-        function switchAnalyticsTab(tabName) {
-            console.log(`Changement onglet analytics: ${tabName}`);
-            // Logique changement d'onglet
+        function exportPerformanceReport() {
+            showToast('Export du rapport performance...', 'info');
+            setTimeout(() => {
+                showToast('Rapport performance exporté avec succès', 'success');
+            }, 2000);
         }
 
         function openDataStudio() {
-            console.log("Ouverture studio de données");
-            // Ouvrir interface analytics avancés
+            showToast('Ouverture du studio de données...', 'info');
         }
 
         function configureAutomation() {
-            console.log("Configuration automatisation");
-            // Ouvrir interface configuration
+            showToast('Configuration des automatisations...', 'info');
         }
 
         function editAutomation(automationId) {
-            console.log(`Édition automatisation: ${automationId}`);
-            // Ouvrir édition automatisation
+            showToast(`Modification de l'automatisation ${automationId}`, 'info');
+        }
+
+        function testAutomation(automationId) {
+            showToast(`Test de l'automatisation ${automationId}...`, 'info');
+            setTimeout(() => {
+                showToast('Test d\'automatisation réussi', 'success');
+            }, 1500);
+        }
+
+        function activateAutomation(automationId) {
+            showToast(`Activation de l'automatisation ${automationId}`, 'success');
         }
 
         function exportBusinessIntelligence() {
-            console.log("Export Business Intelligence");
-            // Implémentation export BI
+            showToast('Export Business Intelligence en cours...', 'info');
+            setTimeout(() => {
+                showToast('Export BI terminé avec succès', 'success');
+            }, 3000);
         }
 
         function createExecutiveReport() {
-            console.log("Création rapport direction");
-            // Génération rapport exécutif
+            showToast('Création du rapport direction...', 'info');
+            setTimeout(() => {
+                showToast('Rapport direction généré avec succès', 'success');
+            }, 2500);
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                showToast('Déconnexion en cours...', 'info');
+                setTimeout(() => {
+                    window.location.href = '../login.html';
+                }, 1500);
+            }
+        }
+
+        // Système de notifications toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.id = toastId;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="toast-content">
+                    <h6>${type === 'success' ? 'Succès' : type === 'warning' ? 'Attention' : 'Information'}</h6>
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Afficher le toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Masquer et supprimer le toast après 4 secondes
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 4000);
         }
     </script>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
-                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
 </body>
 </html>

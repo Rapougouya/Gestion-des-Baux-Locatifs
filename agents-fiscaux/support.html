@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre d'Aide - Agents Fiscaux | PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/agents-fiscaux.css">
+    <style>
+        :root {
+            --primary: #DC2626;
+            --primary-dark: #B91C1C;
+            --primary-light: #EF4444;
+            --secondary: #059669;
+            --background: #fef2f2;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .faq-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-item {
+            border-left: 4px solid var(--primary);
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            background: var(--surface);
+        }
+
+        .faq-question {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .alert-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Centre d'Aide - Agents Fiscaux</h1>
+            <p>Plateforme de contrôle et de vérification fiscale</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-value">1,247</div>
+                <div>Déclarations à vérifier</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">89</div>
+                <div>Contrôles en cours</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">5.2M</div>
+                <div>FCFA de redressement</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">94%</div>
+                <div>Taux de conformité</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div>
+                <div class="faq-section">
+                    <h3>Guides de Contrôle Fiscal</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Procédure de contrôle des déclarations</div>
+                        <p>Vérification en 3 étapes : pré-contrôle automatique, analyse manuelle, validation finale. Délai moyen : 72h.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Gestion des redressements fiscaux</div>
+                        <p>Établissement des avis de redressement avec calcul automatique des pénalités. Notification électronique obligatoire.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Contrôle des agences immobilières</div>
+                        <p>Vérification des déclarations groupées, audit des registres, contrôle de cohérence des loyers déclarés.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Traitement des réclamations</div>
+                        <p>Circuit de traitement des réclamations : accusé réception sous 24h, réponse définitive sous 15 jours.</p>
+                    </div>
+
+                    <div class="tools-grid">
+                        <div class="tool-card">
+                            <h4>🔍 Contrôle Automatique</h4>
+                            <p>Lancez une vérification automatique</p>
+                        </div>
+                        <div class="tool-card">
+                            <h4>📊 Analytics Avancés</h4>
+                            <p>Analyses de données fiscales</p>
+                        </div>
+                        <div class="tool-card">
+                            <h4>🚨 Alertes Suspicion</h4>
+                            <p>Détection d'anomalies</p>
+                        </div>
+                        <div class="tool-card">
+                            <h4>📋 Génération PV</h4>
+                            <p>Procès-verbaux automatiques</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card alert-card">
+                    <h4>🚨 Alertes en Cours</h4>
+                    <p><strong>12 suspicions</strong> de fraude détectées</p>
+                    <p><strong>5 contrôles</strong> prioritaires</p>
+                    <p><strong>3 réclamations</strong> en attente</p>
+                </div>
+
+                <div class="card">
+                    <h4>📞 Support Fiscal</h4>
+                    <p><strong>Lun-Ven:</strong> 7h-19h</p>
+                    <p><strong>Urgences:</strong> 24h/24</p>
+                    <p><strong>Hotline:</strong> +226 25 45 67 90</p>
+                    <p><strong>Email:</strong> fiscal@pnsbil.bf</p>
+                </div>
+
+                <div class="card">
+                    <h4>📚 Ressources</h4>
+                    <ul>
+                        <li>📋 Guide des procédures</li>
+                        <li>⚖️ Textes réglementaires</li>
+                        <li>📊 Modèles de PV</li>
+                        <li>🔍 Outils d'audit</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>🔄 Actions Rapides</h4>
+                    <button style="width: 100%; margin-bottom: 0.5rem; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: var(--border-radius);">
+                        Nouveau Contrôle
+                    </button>
+                    <button style="width: 100%; padding: 1rem; background: var(--secondary); color: white; border: none; border-radius: var(--border-radius);">
+                        Rapport Hebdomadaire
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

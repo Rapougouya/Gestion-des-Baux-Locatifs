@@ -1,14 +1,785 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord - Locataire | PNSBIL</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/portefe-dashbord-locat.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --info-color: #3b82f6;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Layout principal */
+        .dashboard-page {
+            display: grid;
+            grid-template-areas: 
+                "header header"
+                "sidebar main"
+                "footer footer";
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            grid-area: header;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            font-weight: 700;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: linear-gradient(180deg, var(--surface-color) 0%, #fafbfc 100%);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 0.875rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        /* Contenu principal */
+        .main-content {
+            grid-area: main;
+            padding: 2rem;
+            background: var(--background-color);
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        /* Alertes */
+        .tenant-alerts {
+            margin-bottom: 2rem;
+        }
+
+        .alert-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .alert-banner.warning {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-color: #f59e0b;
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .alert-content i {
+            font-size: 1.5rem;
+            color: #d97706;
+        }
+
+        /* Boutons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Vue d'ensemble */
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 70px;
+            height: 70px;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .stat-change.positive {
+            color: var(--success-color);
+        }
+
+        /* Sections du dashboard */
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-section {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Logement */
+        .property-summary {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .property-image {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .property-info {
+            flex: 1;
+        }
+
+        .property-info h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-address {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .property-features {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .property-owner {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .owner-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Paiements */
+        .upcoming-payments {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .payment-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .payment-item:hover {
+            transform: translateX(4px);
+            border-color: var(--primary-color);
+        }
+
+        .payment-item.urgent {
+            border-color: var(--error-color);
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+        }
+
+        .payment-date {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            min-width: 60px;
+        }
+
+        .date-day {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .date-month {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .payment-details {
+            flex: 1;
+        }
+
+        .payment-details h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .payment-details p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .amount {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .payment-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .payment-status.overdue {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .payment-status.pending {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        /* Actions rapides */
+        .quick-actions {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .action-icon.primary {
+            background: var(--primary-color);
+        }
+
+        .action-icon.warning {
+            background: var(--warning-color);
+        }
+
+        .action-icon.info {
+            background: var(--info-color);
+        }
+
+        .action-icon.success {
+            background: var(--success-color);
+        }
+
+        .action-content h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-content p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Activités récentes */
+        .recent-activity {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .activity-item:hover {
+            transform: translateX(4px);
+            border-color: var(--primary-color);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-date {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        /* Footer */
+        footer {
+            grid-area: footer;
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: auto;
+            margin-left: 280px;
+        }
+
+        footer .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        footer h5 {
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-card,
+        .action-card,
+        .payment-item,
+        .activity-item {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-page {
+                grid-template-columns: 240px 1fr;
+            }
+            
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-page {
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "footer";
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .dashboard-header {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .overview-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .property-summary {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .property-features {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .overview-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="dashboard-page">
     <header class="dashboard-header">
         <div class="header-content">
             <div class="logo">
@@ -104,18 +875,18 @@
                 <div class="section-header">
                     <h3>🏠 Mon Logement</h3>
                     <button class="btn btn-outline" onclick="viewPropertyDetails()">
-                        <i class="fas fa-eye me-2"></i>Voir détails
+                        <i class="fas fa-eye"></i>Voir détails
                     </button>
                 </div>
                 <div class="property-summary">
                     <div class="property-image">
-                        <img src="../assets/images/property1.jpg" alt="Résidence Les Almadies">
+                        <i class="fas fa-home fa-2x"></i>
                     </div>
                     <div class="property-info">
                         <h4>Résidence Les Almadies</h4>
                         <div class="property-address">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Almadies, Dakar - Appartement B12</span>
+                            <span>Almadies, Ouagadougou - Appartement B12</span>
                         </div>
                         <div class="property-features">
                             <div class="feature">
@@ -151,7 +922,7 @@
                 <div class="section-header">
                     <h3>📅 Prochaines Échéances</h3>
                     <button class="btn btn-outline" onclick="viewAllPayments()">
-                        <i class="fas fa-list me-2"></i>Voir tout
+                        <i class="fas fa-list"></i>Voir tout
                     </button>
                 </div>
                 <div class="upcoming-payments">
@@ -272,83 +1043,442 @@
         </div>
     </main>
 
-    <script src="../js/dashboard.js"></script>
-    <script>
-        function payRent() {
-            console.log('Paiement du loyer');
-            // Redirection vers page paiement
-        }
-
-        function viewPropertyDetails() {
-            console.log('Voir détails du logement');
-        }
-
-        function viewAllPayments() {
-            console.log('Voir tous les paiements');
-        }
-
-        function reportIssue() {
-            console.log('Signaler un problème');
-        }
-
-        function downloadDocuments() {
-            console.log('Télécharger documents');
-        }
-
-        function contactOwner() {
-            console.log('Contacter propriétaire');
-        }
-
-        function logout() {
-            console.log('Déconnexion');
-            // Implémentation déconnexion
-        }
-    </script>
-
     <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
+    <footer>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h5>PNSBIL</h5>
                     <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
                     <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                <div>
+                    <h5>Liens rapides</h5>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.5rem;"><a href="index.html">Accueil</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="properties.html">Propriétés</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="leases.html">Baux</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="taxes.html">Impôts</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                <div>
+                    <h5>Ressources</h5>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#">FAQ</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#">Guides</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#">Contact</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#">Mentions légales</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                <div>
+                    <h5>Contact</h5>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Avenue XXXXX, Ouagadougou, Burkina Faso</span>
+                        </li>
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-phone"></i>
+                            <span>+226 33 123 45 67</span>
+                        </li>
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@pnsbil.sn</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            <hr style="border: none; border-top: 1px solid #374151; margin: 2rem 0;">
+            <div style="text-align: center;">
+                <p>&copy; 2023 PNSBIL - Tous droits réservés</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script>
+        // Dashboard Locataire - JavaScript Fonctionnel
+        class TenantDashboard {
+            constructor() {
+                this.userData = null;
+                this.payments = [];
+                this.init();
+            }
+
+            init() {
+                this.loadUserData();
+                this.loadPayments();
+                this.setupEventListeners();
+                this.initializeCharts();
+            }
+
+            loadUserData() {
+                // Simulation de données utilisateur
+                this.userData = {
+                    name: "Aminata Sy",
+                    email: "aminata.sy@email.com",
+                    phone: "+226 70 123 45 67",
+                    property: {
+                        name: "Résidence Les Almadies",
+                        address: "Almadies, Ouagadougou - Appartement B12",
+                        type: "Appartement",
+                        size: "85m²",
+                        rooms: 3,
+                        bathrooms: 2,
+                        features: ["Parking", "Ascenseur", "Balcon"],
+                        owner: {
+                            name: "Agence Immobilière Premium",
+                            email: "contact@agence-premium.sn",
+                            phone: "+226 33 987 65 43"
+                        }
+                    },
+                    lease: {
+                        startDate: "2024-01-01",
+                        endDate: "2024-12-31",
+                        rent: 450000,
+                        paymentDay: 5
+                    }
+                };
+
+                this.updateUI();
+            }
+
+            loadPayments() {
+                // Simulation de données de paiement
+                this.payments = [
+                    {
+                        id: 1,
+                        month: "Mars 2024",
+                        amount: 450000,
+                        dueDate: "2024-03-31",
+                        status: "overdue",
+                        paid: false
+                    },
+                    {
+                        id: 2,
+                        month: "Avril 2024",
+                        amount: 450000,
+                        dueDate: "2024-04-30",
+                        status: "pending",
+                        paid: false
+                    },
+                    {
+                        id: 3,
+                        month: "Février 2024",
+                        amount: 450000,
+                        dueDate: "2024-02-28",
+                        status: "paid",
+                        paid: true
+                    }
+                ];
+
+                this.renderPayments();
+            }
+
+            updateUI() {
+                // Mettre à jour le nom de l'utilisateur
+                document.getElementById('userName').textContent = this.userData.name;
+
+                // Calculer les jours restants
+                const endDate = new Date(this.userData.lease.endDate);
+                const today = new Date();
+                const daysRemaining = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+                
+                // Mettre à jour les statistiques si nécessaire
+                const daysElement = document.querySelector('.stat-card:nth-child(3) .stat-value');
+                if (daysElement) {
+                    daysElement.textContent = `${daysRemaining} jours`;
+                }
+            }
+
+            renderPayments() {
+                const container = document.querySelector('.upcoming-payments');
+                if (!container) return;
+
+                // Filtrer les paiements à venir et en retard
+                const upcomingPayments = this.payments.filter(p => !p.paid);
+                
+                container.innerHTML = upcomingPayments.map(payment => `
+                    <div class="payment-item ${payment.status === 'overdue' ? 'urgent' : ''}">
+                        <div class="payment-date">
+                            <div class="date-day">${new Date(payment.dueDate).getDate()}</div>
+                            <div class="date-month">${new Date(payment.dueDate).toLocaleDateString('fr-FR', { month: 'short' }).toUpperCase()}</div>
+                        </div>
+                        <div class="payment-details">
+                            <h5>Loyer ${payment.month}</h5>
+                            <p>${this.getPaymentStatusText(payment)}</p>
+                            <span class="amount">${this.formatCurrency(payment.amount)} FCFA</span>
+                        </div>
+                        <div class="payment-status ${payment.status}">
+                            <span>${this.getStatusLabel(payment.status)}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            getPaymentStatusText(payment) {
+                const today = new Date();
+                const dueDate = new Date(payment.dueDate);
+                const diffTime = dueDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                if (payment.status === 'overdue') {
+                    return 'En retard';
+                } else if (diffDays <= 7) {
+                    return `Échéance dans ${diffDays} jours`;
+                } else {
+                    return 'Prochaine échéance';
+                }
+            }
+
+            getStatusLabel(status) {
+                const labels = {
+                    'overdue': 'En attente',
+                    'pending': 'À venir',
+                    'paid': 'Payé'
+                };
+                return labels[status] || status;
+            }
+
+            formatCurrency(amount) {
+                return new Intl.NumberFormat('fr-FR').format(amount);
+            }
+
+            setupEventListeners() {
+                // Gestion des clics sur les cartes d'action
+                document.querySelectorAll('.action-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const action = card.querySelector('h5').textContent;
+                        this.handleAction(action);
+                    });
+                });
+
+                // Gestion de la recherche
+                const searchInput = document.querySelector('.search-input');
+                if (searchInput) {
+                    searchInput.addEventListener('input', this.handleSearch.bind(this));
+                }
+            }
+
+            handleAction(action) {
+                const actions = {
+                    'Payer mon loyer': () => this.payRent(),
+                    'Signaler un problème': () => this.reportIssue(),
+                    'Mes documents': () => this.downloadDocuments(),
+                    'Contacter le propriétaire': () => this.contactOwner()
+                };
+
+                if (actions[action]) {
+                    actions[action]();
+                }
+            }
+
+            handleSearch(event) {
+                const searchTerm = event.target.value.toLowerCase();
+                if (searchTerm.length > 2) {
+                    this.filterContent(searchTerm);
+                } else {
+                    this.resetFilters();
+                }
+            }
+
+            filterContent(searchTerm) {
+                // Implémentation de la recherche
+                console.log('Recherche:', searchTerm);
+            }
+
+            resetFilters() {
+                // Réinitialiser les filtres
+            }
+
+            initializeCharts() {
+                // Initialiser les graphiques si nécessaire
+            }
+
+            // Méthodes d'actions
+            payRent() {
+                this.showLoading('Préparation du paiement...');
+                
+                setTimeout(() => {
+                    this.hideLoading();
+                    this.showNotification('Redirection vers la page de paiement...', 'info');
+                    
+                    // Simulation de redirection
+                    setTimeout(() => {
+                        window.open('paiement.html', '_blank');
+                    }, 1000);
+                }, 1500);
+            }
+
+            viewPropertyDetails() {
+                this.showNotification('Ouverture des détails du logement...', 'info');
+                // Redirection vers la page de détails
+                window.location.href = 'mon-logement.html';
+            }
+
+            viewAllPayments() {
+                this.showNotification('Ouverture de l\'historique des paiements...', 'info');
+                // Redirection vers la page des paiements
+                window.location.href = 'paiements.html';
+            }
+
+            reportIssue() {
+                this.showNotification('Ouverture du formulaire de signalement...', 'info');
+                // Redirection vers la page de maintenance
+                window.location.href = 'maintenance.html';
+            }
+
+            downloadDocuments() {
+                this.showLoading('Préparation des documents...');
+                
+                setTimeout(() => {
+                    this.hideLoading();
+                    this.showNotification('Téléchargement des documents démarré', 'success');
+                    
+                    // Simulation de téléchargement
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.download = 'documents-locataire.zip';
+                    link.click();
+                }, 2000);
+            }
+
+            contactOwner() {
+                this.showNotification('Ouverture de la messagerie...', 'info');
+                // Redirection vers la messagerie
+                window.location.href = 'communication.html';
+            }
+
+            logout() {
+                if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                    this.showLoading('Déconnexion en cours...');
+                    
+                    setTimeout(() => {
+                        this.hideLoading();
+                        this.showNotification('Déconnexion réussie', 'success');
+                        
+                        // Redirection vers la page de connexion
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 1000);
+                    }, 1500);
+                }
+            }
+
+            // Utilitaires d'interface
+            showLoading(message = 'Chargement...') {
+                let loader = document.getElementById('global-loader');
+                if (!loader) {
+                    loader = document.createElement('div');
+                    loader.id = 'global-loader';
+                    loader.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.5);
+                        backdrop-filter: blur(4px);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 10000;
+                        color: white;
+                        font-size: 1.125rem;
+                    `;
+                    loader.innerHTML = `
+                        <div style="background: white; padding: 2rem; border-radius: 12px; color: var(--text-primary); display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                            <div class="loader-spinner" style="width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                            <span>${message}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(loader);
+                }
+                loader.style.display = 'flex';
+            }
+
+            hideLoading() {
+                const loader = document.getElementById('global-loader');
+                if (loader) {
+                    loader.style.display = 'none';
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+                    border-left: 4px solid ${this.getNotificationColor(type)};
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease;
+                    z-index: 10000;
+                    max-width: 400px;
+                `;
+
+                const icons = {
+                    'success': 'check-circle',
+                    'error': 'exclamation-triangle',
+                    'warning': 'exclamation-circle',
+                    'info': 'info-circle'
+                };
+
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fas fa-${icons[type]}" style="color: ${this.getNotificationColor(type)}; font-size: 1.25rem;"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+
+                // Animation d'entrée
+                setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+
+                // Supprimer après 3 secondes
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            getNotificationColor(type) {
+                const colors = {
+                    'success': '#10b981',
+                    'error': '#ef4444',
+                    'warning': '#f59e0b',
+                    'info': '#3b82f6'
+                };
+                return colors[type] || '#3b82f6';
+            }
+        }
+
+        // Initialisation
+        const tenantDashboard = new TenantDashboard();
+
+        // Fonctions globales pour compatibilité HTML
+        function payRent() { tenantDashboard.payRent(); }
+        function viewPropertyDetails() { tenantDashboard.viewPropertyDetails(); }
+        function viewAllPayments() { tenantDashboard.viewAllPayments(); }
+        function reportIssue() { tenantDashboard.reportIssue(); }
+        function downloadDocuments() { tenantDashboard.downloadDocuments(); }
+        function contactOwner() { tenantDashboard.contactOwner(); }
+        function logout() { tenantDashboard.logout(); }
+
+        // Animation CSS pour le spinner
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>

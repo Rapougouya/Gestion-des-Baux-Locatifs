@@ -1,14 +1,892 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maintenance - PNSBIL</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --info-color: #3b82f6;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Layout principal */
+        .dashboard-page {
+            display: grid;
+            grid-template-areas: 
+                "header header"
+                "sidebar main"
+                "footer footer";
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            grid-area: header;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            font-weight: 700;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: linear-gradient(180deg, var(--surface-color) 0%, #fafbfc 100%);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 0.875rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        /* Contenu principal */
+        .main-content {
+            grid-area: main;
+            padding: 2rem;
+            background: var(--background-color);
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            gap: 1rem;
+        }
+
+        .header-actions h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        /* Boutons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* Statistiques */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .metric-icon {
+            font-size: 2rem;
+            padding: 1rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            height: 60px;
+        }
+
+        .metric-info {
+            flex: 1;
+        }
+
+        .metric-info h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-change {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .metric-change.positive {
+            color: var(--success-color);
+        }
+
+        /* Sections */
+        .maintenance-section, .history-section {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .maintenance-section h2, .history-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        /* Demandes en cours */
+        .requests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .request-card {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .request-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            transition: var(--transition);
+        }
+
+        .request-card.urgent::before {
+            background: var(--error-color);
+        }
+
+        .request-card.normal::before {
+            background: var(--warning-color);
+        }
+
+        .request-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .request-title h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .request-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .request-badge.urgent {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .request-badge.normal {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .request-id {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .request-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .request-info {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .request-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .request-description {
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        .request-status {
+            background: var(--background-color);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .status-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .status-value {
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-value.in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-value.pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-value.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .update-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Historique */
+        .history-table {
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+            background: var(--background-color);
+            padding: 1rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .table-row:hover {
+            background: var(--background-color);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .status-badge.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .close:hover {
+            color: var(--error-color);
+        }
+
+        .modal-form {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .urgency-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .urgency-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .urgency-option input[type="radio"] {
+            display: none;
+        }
+
+        .urgency-badge {
+            width: 100%;
+            padding: 1rem 0.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .urgency-badge.low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .urgency-badge.normal {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .urgency-badge.urgent {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .urgency-badge.emergency {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .urgency-option input:checked + .urgency-badge {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--background-color);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .upload-btn:hover {
+            border-color: var(--primary-color);
+            background: #f0f4ff;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            grid-area: footer;
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: auto;
+            margin-left: 280px;
+        }
+
+        footer .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        footer h5 {
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .metric-card,
+        .request-card,
+        .table-row {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-page {
+                grid-template-columns: 240px 1fr;
+            }
+            
+            .requests-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-page {
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "footer";
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .dashboard-header {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header-actions {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .table-header, .table-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            .urgency-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .request-actions, .table-actions {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .request-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .request-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="dashboard-page">
     <header class="dashboard-header">
         <div class="header-content">
             <div class="logo">
@@ -26,7 +904,6 @@
         <div class="nav-section">
             <h3>Mon Logement</h3>
             <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="recherche.html" class="nav-link">🔍 Rechercher un logement</a>
             <a href="mes-contrats.html" class="nav-link">📑 Mes contrats</a>
             <a href="paiements.html" class="nav-link">💳 Mes paiements</a>
             <a href="maintenance.html" class="nav-link active">🔧 Maintenance</a>
@@ -36,6 +913,10 @@
             <h3>Communication</h3>
             <a href="communication.html" class="nav-link">💬 Messagerie</a>
         </div>
+         <div class="nav-section">
+            <h3>Recherche</h3>
+            <a href="recherche.html" class="nav-link">🔍 Trouver un logement</a>
+        </div>
     </nav>
 
     <main class="main-content">
@@ -43,7 +924,7 @@
             <div class="header-actions">
                 <h1>Demandes de Maintenance</h1>
                 <button class="btn btn-primary" onclick="showNewRequestModal()">
-                    <i class="fas fa-plus me-2"></i> Nouvelle demande
+                    <i class="fas fa-plus"></i> Nouvelle demande
                 </button>
             </div>
             <p>Signalez et suivez vos problèmes de maintenance</p>
@@ -95,12 +976,12 @@
                             <h4>Fuite d'eau salle de bain</h4>
                             <span class="request-badge urgent">Urgent</span>
                         </div>
-                        <div class="request-id">#MT-2024-001</div>
+                        <div class="request-id"><div id="MT-2025"></div>-001</div>
                     </div>
                     <div class="request-details">
                         <div class="request-info">
-                            <span><i class="fas fa-calendar me-1"></i> Créée le 15/11/2024</span>
-                            <span><i class="fas fa-clock me-1"></i> Il y a 2 jours</span>
+                            <span><i class="fas fa-calendar"></i> Créée le 15/11/2025</span>
+                            <span><i class="fas fa-clock"></i> Il y a 2 jours</span>
                         </div>
                         <p class="request-description">
                             Fuite importante sous le lavabo de la salle de bain principale. Eau qui coule en continu.
@@ -117,10 +998,10 @@
                     </div>
                     <div class="request-actions">
                         <button class="btn btn-outline" onclick="viewRequestDetails(1)">
-                            <i class="fas fa-eye me-1"></i> Détails
+                            <i class="fas fa-eye"></i> Détails
                         </button>
                         <button class="btn btn-primary" onclick="contactTechnician(1)">
-                            <i class="fas fa-phone me-1"></i> Contacter
+                            <i class="fas fa-phone"></i> Contacter
                         </button>
                     </div>
                 </div>
@@ -131,12 +1012,12 @@
                             <h4>Prise électrique défectueuse</h4>
                             <span class="request-badge normal">Normal</span>
                         </div>
-                        <div class="request-id">#MT-2024-002</div>
+                        <div class="request-id">#MT-2025-002</div>
                     </div>
                     <div class="request-details">
                         <div class="request-info">
-                            <span><i class="fas fa-calendar me-1"></i> Créée le 18/11/2024</span>
-                            <span><i class="fas fa-clock me-1"></i> Aujourd'hui</span>
+                            <span><i class="fas fa-calendar"></i> Créée le 18/11/2025</span>
+                            <span><i class="fas fa-clock"></i> Aujourd'hui</span>
                         </div>
                         <p class="request-description">
                             Prise du salon ne fonctionne plus. Aucun appareil ne se charge lorsqu'elle est branchée.
@@ -153,10 +1034,10 @@
                     </div>
                     <div class="request-actions">
                         <button class="btn btn-outline" onclick="viewRequestDetails(2)">
-                            <i class="fas fa-eye me-1"></i> Détails
+                            <i class="fas fa-eye"></i> Détails
                         </button>
                         <button class="btn btn-warning" onclick="escalateRequest(2)">
-                            <i class="fas fa-exclamation me-1"></i> Escalader
+                            <i class="fas fa-exclamation"></i> Escalader
                         </button>
                     </div>
                 </div>
@@ -175,23 +1056,23 @@
                     <div>Actions</div>
                 </div>
                 <div class="table-row">
-                    <div>#MT-2024-045</div>
+                    <div>#MT-2025-045</div>
                     <div>Chaudière en panne</div>
-                    <div>10/11/2024</div>
+                    <div>10/11/2025</div>
                     <div><span class="status-badge completed">Résolu</span></div>
-                    <div>
-                        <button class="btn-sm btn-outline" onclick="viewRequestDetails(45)">Voir</button>
-                        <button class="btn-sm btn-primary" onclick="rateRequest(45)">Noter</button>
+                    <div class="table-actions">
+                        <button class="btn btn-sm btn-outline" onclick="viewRequestDetails(45)">Voir</button>
+                        <button class="btn btn-sm btn-primary" onclick="rateRequest(45)">Noter</button>
                     </div>
                 </div>
                 <div class="table-row">
-                    <div>#MT-2024-044</div>
+                    <div>#MT-2025-044</div>
                     <div>Fenêtre bloquée</div>
-                    <div>05/11/2024</div>
+                    <div>05/11/2025</div>
                     <div><span class="status-badge completed">Résolu</span></div>
-                    <div>
-                        <button class="btn-sm btn-outline" onclick="viewRequestDetails(44)">Voir</button>
-                        <button class="btn-sm btn-primary" onclick="rateRequest(44)">Noter</button>
+                    <div class="table-actions">
+                        <button class="btn btn-sm btn-outline" onclick="viewRequestDetails(44)">Voir</button>
+                        <button class="btn btn-sm btn-primary" onclick="rateRequest(44)">Noter</button>
                     </div>
                 </div>
             </div>
@@ -203,7 +1084,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Nouvelle Demande de Maintenance</h2>
-                <span class="close" onclick="closeNewRequestModal()">&times;</span>
+                <button class="close" onclick="closeNewRequestModal()">&times;</button>
             </div>
             <form id="newRequestForm" class="modal-form">
                 <div class="form-group">
@@ -248,7 +1129,7 @@
                     <div class="file-upload">
                         <input type="file" id="problemPhotos" accept="image/*" multiple>
                         <label for="problemPhotos" class="upload-btn">
-                            <i class="fas fa-camera me-2"></i> Ajouter des photos
+                            <i class="fas fa-camera"></i> Ajouter des photos
                         </label>
                     </div>
                 </div>
@@ -260,438 +1141,536 @@
         </div>
     </div>
 
-    <script src="../js/auth.js"></script>
-    <script>
-        if (!checkAuth('locataire')) {}
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const user = getCurrentUser();
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-            }
-
-            // Gestion du formulaire
-            document.getElementById('newRequestForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                submitMaintenanceRequest();
-            });
-        });
-
-        function showNewRequestModal() {
-            document.getElementById('newRequestModal').style.display = 'block';
-        }
-
-        function closeNewRequestModal() {
-            document.getElementById('newRequestModal').style.display = 'none';
-        }
-
-        function submitMaintenanceRequest() {
-            const problemType = document.getElementById('problemType').value;
-            const urgency = document.querySelector('input[name="urgency"]:checked').value;
-            const description = document.getElementById('problemDescription').value;
-
-            alert(`Demande soumise: ${problemType} - ${urgency}\n${description}`);
-            closeNewRequestModal();
-            
-            // Ici, envoi des données au serveur
-        }
-
-        function viewRequestDetails(id) {
-            alert(`Détails de la demande ${id}`);
-        }
-
-        function contactTechnician(id) {
-            alert(`Contacter le technicien pour la demande ${id}`);
-        }
-
-        function escalateRequest(id) {
-            alert(`Escalade de la demande ${id}`);
-        }
-
-        function rateRequest(id) {
-            alert(`Noter la demande ${id}`);
-        }
-
-        // Fermer la modal en cliquant à l'extérieur
-        window.onclick = function(event) {
-            const modal = document.getElementById('newRequestModal');
-            if (event.target === modal) {
-                closeNewRequestModal();
-            }
-        }
-    </script>
-
-    <style>
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .maintenance-section, .history-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        .requests-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .request-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .request-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .request-card.urgent {
-            border-left: 4px solid #ef4444;
-        }
-
-        .request-card.normal {
-            border-left: 4px solid #f59e0b;
-        }
-
-        .request-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .request-title h4 {
-            margin: 0 0 0.5rem 0;
-            color: #1f2937;
-        }
-
-        .request-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .request-badge.urgent {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .request-badge.normal {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .request-id {
-            font-size: 0.8rem;
-            color: #6b7280;
-        }
-
-        .request-details {
-            margin-bottom: 1rem;
-        }
-
-        .request-info {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-            color: #6b7280;
-        }
-
-        .request-description {
-            color: #4b5563;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        .request-status {
-            background: #f8fafc;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .status-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .status-label {
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .status-value {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-value.in-progress {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .status-value.pending {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .status-value.completed {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .update-text {
-            font-size: 0.9rem;
-            color: #6b7280;
-        }
-
-        .request-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .history-table {
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-
-        .table-header {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-            background: #f8fafc;
-            padding: 1rem;
-            font-weight: 600;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .table-row {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-            padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
-            align-items: center;
-        }
-
-        .table-row:last-child {
-            border-bottom: none;
-        }
-
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-badge.completed {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .btn-sm {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 0;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-form {
-            padding: 1.5rem;
-        }
-
-        .urgency-options {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .urgency-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
-
-        .urgency-badge {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .urgency-badge.low {
-            background: #dcfce7;
-            color: #166534;
-            border: 2px solid #dcfce7;
-        }
-
-        .urgency-badge.normal {
-            background: #dbeafe;
-            color: #1e40af;
-            border: 2px solid #dbeafe;
-        }
-
-        .urgency-badge.urgent {
-            background: #fef3c7;
-            color: #d97706;
-            border: 2px solid #fef3c7;
-        }
-
-        .urgency-badge.emergency {
-            background: #fee2e2;
-            color: #dc2626;
-            border: 2px solid #fee2e2;
-        }
-
-        .urgency-option input:checked + .urgency-badge {
-            border-color: #667eea;
-        }
-
-        .file-upload input[type="file"] {
-            display: none;
-        }
-
-        .upload-btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: #f8fafc;
-            border: 2px dashed #d1d5db;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .upload-btn:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            margin-top: 1.5rem;
-        }
-
-        .close {
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #64748b;
-        }
-
-        .close:hover {
-            color: #1e293b;
-        }
-
-        @media (max-width: 768px) {
-            .requests-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .table-header, .table-row {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
-            
-            .urgency-options {
-                flex-direction: column;
-            }
-        }
-    </style>
-
     <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
+    <footer>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+            <div class="footer-content">
+                <div>
+                    <h5>PNSBIL</h5>
                     <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
                     <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                <div>
+                    <h5>Liens rapides</h5>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="properties.html">Propriétés</a></li>
+                        <li><a href="leases.html">Baux</a></li>
+                        <li><a href="taxes.html">Impôts</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                <div>
+                    <h5>Ressources</h5>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Guides</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Mentions légales</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                <div>
+                    <h5>Contact</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Avenue XXXXX, Ouagadougou, Burkina Faso</li>
+                        <li><i class="fas fa-phone"></i> +226 33 123 45 67</li>
+                        <li><i class="fas fa-envelope"></i> contact@pnsbil.sn</li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 PNSBIL - Tous droits réservés</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script>
+        // Gestionnaire de Maintenance - JavaScript Fonctionnel
+        class MaintenanceManager {
+            constructor() {
+                this.requests = [];
+                this.currentRequestId = 46; // Prochain ID
+                this.init();
+            }
+
+            init() {
+                this.loadRequests();
+                this.setupEventListeners();
+                this.updateStats();
+            }
+
+            loadRequests() {
+                // Simulation de données de maintenance
+                this.requests = [
+                    {
+                        id: 1,
+                        reference: "#MT-2025-001",
+                        title: "Fuite d'eau salle de bain",
+                        description: "Fuite importante sous le lavabo de la salle de bain principale. Eau qui coule en continu.",
+                        type: "plomberie",
+                        urgency: "urgent",
+                        status: "in-progress",
+                        createdAt: "2025-11-15",
+                        updatedAt: "2025-11-17",
+                        technician: "Jean Kaboré",
+                        phone: "+226 70 123 45 67"
+                    },
+                    {
+                        id: 2,
+                        reference: "#MT-2025-002",
+                        title: "Prise électrique défectueuse",
+                        description: "Prise du salon ne fonctionne plus. Aucun appareil ne se charge lorsqu'elle est branchée.",
+                        type: "electricite",
+                        urgency: "normal",
+                        status: "pending",
+                        createdAt: "2025-11-18",
+                        updatedAt: "2025-11-18"
+                    },
+                    {
+                        id: 45,
+                        reference: "#MT-2025-045",
+                        title: "Chaudière en panne",
+                        description: "Chaudière ne s'allume plus, pas d'eau chaude.",
+                        type: "chauffage",
+                        urgency: "urgent",
+                        status: "completed",
+                        createdAt: "2025-11-10",
+                        updatedAt: "2025-11-12",
+                        rating: 4
+                    },
+                    {
+                        id: 44,
+                        reference: "#MT-2025-044",
+                        title: "Fenêtre bloquée",
+                        description: "Fenêtre de la chambre principale ne s'ouvre plus.",
+                        type: "menuiserie",
+                        urgency: "normal",
+                        status: "completed",
+                        createdAt: "2025-11-05",
+                        updatedAt: "2025-11-07",
+                        rating: 5
+                    }
+                ];
+
+                this.renderRequests();
+            }
+
+            renderRequests() {
+                // Les demandes sont déjà rendues en HTML statique
+                // Cette méthode pourrait être utilisée pour le rendu dynamique
+            }
+
+            updateStats() {
+                const activeRequests = this.requests.filter(req => 
+                    req.status === 'in-progress' || req.status === 'pending'
+                ).length;
+                
+                const completedRequests = this.requests.filter(req => 
+                    req.status === 'completed'
+                ).length;
+
+                // Mise à jour des statistiques si nécessaire
+                console.log('Statistiques mises à jour:', { activeRequests, completedRequests });
+            }
+
+            setupEventListeners() {
+                // Gestion du formulaire de nouvelle demande
+                document.getElementById('newRequestForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.submitMaintenanceRequest();
+                });
+
+                // Gestion des options d'urgence
+                document.querySelectorAll('.urgency-option input').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        this.updateUrgencySelection(e.target.value);
+                    });
+                });
+
+                // Gestion du téléchargement de photos
+                document.getElementById('problemPhotos').addEventListener('change', (e) => {
+                    this.handlePhotoUpload(e.target.files);
+                });
+            }
+
+            showNewRequestModal() {
+                document.getElementById('newRequestModal').style.display = 'flex';
+                this.resetForm();
+            }
+
+            closeNewRequestModal() {
+                document.getElementById('newRequestModal').style.display = 'none';
+                this.resetForm();
+            }
+
+            resetForm() {
+                document.getElementById('newRequestForm').reset();
+                document.querySelectorAll('.urgency-badge').forEach(badge => {
+                    badge.style.borderColor = 'transparent';
+                    badge.style.transform = 'scale(1)';
+                });
+            }
+
+            updateUrgencySelection(urgency) {
+                document.querySelectorAll('.urgency-badge').forEach(badge => {
+                    badge.style.borderColor = 'transparent';
+                    badge.style.transform = 'scale(1)';
+                });
+
+                const selectedBadge = document.querySelector(`input[value="${urgency}"]`).nextElementSibling;
+                selectedBadge.style.borderColor = 'var(--primary-color)';
+                selectedBadge.style.transform = 'scale(1.05)';
+            }
+
+            handlePhotoUpload(files) {
+                if (files.length > 0) {
+                    const uploadBtn = document.querySelector('.upload-btn');
+                    uploadBtn.innerHTML = `<i class="fas fa-check"></i> ${files.length} photo(s) sélectionnée(s)`;
+                    uploadBtn.style.borderColor = 'var(--success-color)';
+                    uploadBtn.style.background = '#f0f9ff';
+                }
+            }
+
+            submitMaintenanceRequest() {
+                const problemType = document.getElementById('problemType').value;
+                const urgency = document.querySelector('input[name="urgency"]:checked').value;
+                const description = document.getElementById('problemDescription').value;
+
+                if (!problemType || !urgency || !description) {
+                    this.showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+                    return;
+                }
+
+                this.showLoading('Création de la demande...');
+
+                // Simulation de création de demande
+                setTimeout(() => {
+                    this.hideLoading();
+
+                    const newRequest = {
+                        id: this.currentRequestId++,
+                        reference: `#MT-2025-${this.currentRequestId.toString().padStart(3, '0')}`,
+                        title: this.getProblemTitle(problemType),
+                        description: description,
+                        type: problemType,
+                        urgency: urgency,
+                        status: 'pending',
+                        createdAt: new Date().toISOString().split('T')[0],
+                        updatedAt: new Date().toISOString().split('T')[0]
+                    };
+
+                    this.requests.unshift(newRequest);
+                    this.showNotification('Demande créée avec succès !', 'success');
+                    this.closeNewRequestModal();
+                    this.updateStats();
+                    
+                    // Recharger l'affichage des demandes
+                    this.renderRequests();
+                }, 2000);
+            }
+
+            getProblemTitle(type) {
+                const titles = {
+                    'plomberie': 'Problème de plomberie',
+                    'electricite': 'Problème électrique',
+                    'chauffage': 'Problème de chauffage',
+                    'menuiserie': 'Problème de menuiserie',
+                    'peinture': 'Travaux de peinture',
+                    'autre': 'Autre problème'
+                };
+                return titles[type] || 'Nouvelle demande';
+            }
+
+            viewRequestDetails(requestId) {
+                const request = this.requests.find(req => req.id === requestId);
+                if (!request) return;
+
+                this.showRequestModal(request);
+            }
+
+            showRequestModal(request) {
+                // Création d'un modal de détails
+                const modalContent = `
+                    <div style="display: grid; gap: 1.5rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <strong>Référence:</strong> ${request.reference}
+                            </div>
+                            <div>
+                                <strong>Urgence:</strong> 
+                                <span class="urgency-badge ${request.urgency}">${this.getUrgencyLabel(request.urgency)}</span>
+                            </div>
+                            <div>
+                                <strong>Type:</strong> ${this.getTypeLabel(request.type)}
+                            </div>
+                            <div>
+                                <strong>Statut:</strong> 
+                                <span class="status-value ${request.status}">${this.getStatusLabel(request.status)}</span>
+                            </div>
+                            <div>
+                                <strong>Créée le:</strong> ${request.createdAt}
+                            </div>
+                            <div>
+                                <strong>Dernière mise à jour:</strong> ${request.updatedAt}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <strong>Description:</strong>
+                            <p style="margin: 0.5rem 0 0 0; padding: 1rem; background: var(--background-color); border-radius: var(--border-radius);">
+                                ${request.description}
+                            </p>
+                        </div>
+                        
+                        ${request.technician ? `
+                        <div>
+                            <strong>Technicien assigné:</strong>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+                                    ${request.technician.split(' ').map(n => n[0]).join('')}
+                                </div>
+                                <div>
+                                    <div>${request.technician}</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-secondary);">${request.phone}</div>
+                                </div>
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+
+                this.showCustomModal('Détails de la demande', modalContent);
+            }
+
+            contactTechnician(requestId) {
+                const request = this.requests.find(req => req.id === requestId);
+                if (!request || !request.technician) {
+                    this.showNotification('Aucun technicien assigné à cette demande', 'warning');
+                    return;
+                }
+
+                // Simulation d'appel téléphonique
+                this.showNotification(`Appel de ${request.technician} au ${request.phone}...`, 'info');
+                
+                // Dans une vraie application, on pourrait utiliser tel: lien
+                setTimeout(() => {
+                    window.open(`tel:${request.phone}`, '_self');
+                }, 1000);
+            }
+
+            escalateRequest(requestId) {
+                this.showLoading('Escalade de la demande...');
+
+                setTimeout(() => {
+                    this.hideLoading();
+                    this.showNotification('Demande escaladée au responsable maintenance', 'success');
+                }, 1500);
+            }
+
+            rateRequest(requestId) {
+                const rating = prompt('Donnez une note de 1 à 5 pour cette intervention:');
+                if (rating && rating >= 1 && rating <= 5) {
+                    this.showLoading('Enregistrement de votre note...');
+
+                    setTimeout(() => {
+                        this.hideLoading();
+                        this.showNotification(`Merci ! Note ${rating}/5 enregistrée`, 'success');
+                    }, 1000);
+                }
+            }
+
+            getUrgencyLabel(urgency) {
+                const labels = {
+                    'low': 'Faible',
+                    'normal': 'Normal',
+                    'urgent': 'Urgent',
+                    'emergency': 'Urgence'
+                };
+                return labels[urgency] || urgency;
+            }
+
+            getTypeLabel(type) {
+                const labels = {
+                    'plomberie': 'Plomberie',
+                    'electricite': 'Électricité',
+                    'chauffage': 'Chauffage',
+                    'menuiserie': 'Menuiserie',
+                    'peinture': 'Peinture',
+                    'autre': 'Autre'
+                };
+                return labels[type] || type;
+            }
+
+            getStatusLabel(status) {
+                const labels = {
+                    'pending': 'En attente',
+                    'in-progress': 'En cours',
+                    'completed': 'Résolu'
+                };
+                return labels[status] || status;
+            }
+
+            showCustomModal(title, content) {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.style.display = 'flex';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>${title}</h2>
+                            <button class="close" onclick="this.parentElement.parentElement.parentElement.remove()">&times;</button>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            ${content}
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                // Fermer en cliquant à l'extérieur
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+            }
+
+            logout() {
+                if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                    this.showLoading('Déconnexion en cours...');
+                    
+                    setTimeout(() => {
+                        this.hideLoading();
+                        this.showNotification('Déconnexion réussie', 'success');
+                        
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 1000);
+                    }, 1500);
+                }
+            }
+
+            // Utilitaires
+            showLoading(message = 'Chargement...') {
+                let loader = document.getElementById('global-loader');
+                if (!loader) {
+                    loader = document.createElement('div');
+                    loader.id = 'global-loader';
+                    loader.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.5);
+                        backdrop-filter: blur(4px);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 10000;
+                    `;
+                    document.body.appendChild(loader);
+                }
+                
+                loader.innerHTML = `
+                    <div style="background: white; padding: 2rem; border-radius: 12px; color: var(--text-primary); display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                        <div class="loader-spinner" style="width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        <span>${message}</span>
+                    </div>
+                `;
+                loader.style.display = 'flex';
+            }
+
+            hideLoading() {
+                const loader = document.getElementById('global-loader');
+                if (loader) {
+                    loader.style.display = 'none';
+                loader.remove();
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+                    border-left: 4px solid ${this.getNotificationColor(type)};
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease;
+                    z-index: 10000;
+                    max-width: 400px;
+                `;
+
+                const icons = {
+                    'success': 'check-circle',
+                    'error': 'exclamation-triangle',
+                    'warning': 'exclamation-circle',
+                    'info': 'info-circle'
+                };
+
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fas fa-${icons[type]}" style="color: ${this.getNotificationColor(type)}; font-size: 1.25rem;"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+
+                // Animation d'entrée
+                setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+
+                // Supprimer après 4 secondes
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }, 4000);
+            }
+
+            getNotificationColor(type) {
+                const colors = {
+                    'success': '#10b981',
+                    'error': '#ef4444',
+                    'warning': '#f59e0b',
+                    'info': '#3b82f6'
+                };
+                return colors[type] || '#3b82f6';
+            }
+        }
+
+        // Initialisation
+        const maintenanceManager = new MaintenanceManager();
+
+        // Fonctions globales pour compatibilité HTML
+        function showNewRequestModal() { maintenanceManager.showNewRequestModal(); }
+        function closeNewRequestModal() { maintenanceManager.closeNewRequestModal(); }
+        function viewRequestDetails(id) { maintenanceManager.viewRequestDetails(id); }
+        function contactTechnician(id) { maintenanceManager.contactTechnician(id); }
+        function escalateRequest(id) { maintenanceManager.escalateRequest(id); }
+        function rateRequest(id) { maintenanceManager.rateRequest(id); }
+        function logout() { maintenanceManager.logout(); }
+
+        // Animation CSS pour le spinner
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Fermer le modal en cliquant à l'extérieur
+        document.getElementById('newRequestModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                maintenanceManager.closeNewRequestModal();
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* Styles pour la validation cadastrale */
+﻿/* Styles pour la validation cadastrale */
 .validation-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

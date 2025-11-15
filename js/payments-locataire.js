@@ -1,4 +1,4 @@
-// Script spécifique pour les paiements locataires
+﻿// Script spécifique pour les paiements locataires
 
 class PaymentsLocataire {
     constructor() {

@@ -1,13 +1,849 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rapports Système - Administration | PNSBIL</title>
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../../css/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--gray-800);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--gray-800);
+        }
+
+        .btn-warning:hover {
+            background-color: #ffc53d;
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: var(--gray-600);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background-color: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        /* Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 1.5rem 0;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            padding: 0 1.5rem;
+        }
+
+        .nav-section h3 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.25rem;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-actions h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        /* Metrics Grid */
+        .system-metrics {
+            margin-bottom: 2rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            opacity: 0.8;
+        }
+
+        .metric-content {
+            flex: 1;
+        }
+
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .metric-trend.positive {
+            color: var(--success);
+        }
+
+        .metric-trend.warning {
+            color: var(--warning);
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* Performance Dashboard */
+        .performance-reports {
+            margin-bottom: 2rem;
+        }
+
+        .performance-dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .performance-dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .dashboard-widget {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .dashboard-widget:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .dashboard-widget.large {
+            grid-column: 1;
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .widget-header h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .widget-content {
+            padding: 1.5rem;
+        }
+
+        .chart-container {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-100);
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-placeholder {
+            text-align: center;
+            color: var(--gray-500);
+        }
+
+        .chart-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .activity-stats {
+            border-top: 1px solid var(--gray-200);
+            padding-top: 1.5rem;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .api-metrics, .security-metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .api-metric, .security-metric {
+            text-align: center;
+        }
+
+        .api-metric .metric-value, .security-metric .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .api-metric .metric-label, .security-metric .metric-label {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .api-health, .security-alerts {
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .health-status, .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+        }
+
+        .health-status.healthy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .alert-item.info {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        /* User Analytics */
+        .user-analytics {
+            margin-bottom: 2rem;
+        }
+
+        .user-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .user-stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .user-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .user-stat-card h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--gray-900);
+        }
+
+        .device-item, .region-item, .peak-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .device-item:last-child, .region-item:last-child, .peak-item:last-child {
+            border-bottom: none;
+        }
+
+        .device-usage {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 60%;
+        }
+
+        .usage-bar {
+            flex: 1;
+            height: 8px;
+            background-color: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .usage-percent {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .region-users {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .peak-intensity {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .peak-intensity.high {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .peak-intensity.medium {
+            background-color: rgba(255, 209, 102, 0.2);
+            color: #b38f00;
+        }
+
+        /* Backup Reports */
+        .backup-reports {
+            margin-bottom: 2rem;
+        }
+
+        .backup-status {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .backup-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .backup-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .backup-item.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .backup-item.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .backup-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .backup-icon {
+            font-size: 1.5rem;
+        }
+
+        .backup-item.success .backup-icon {
+            color: var(--success);
+        }
+
+        .backup-item.warning .backup-icon {
+            color: var(--warning);
+        }
+
+        .backup-details h6 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--gray-900);
+        }
+
+        .backup-details p {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            margin-bottom: 0.25rem;
+        }
+
+        .backup-details small {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .backup-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            margin-top: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -1rem;
+        }
+
+        .col-lg-4, .col-lg-2, .col-md-4 {
+            padding: 0 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .col-lg-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .col-lg-2 {
+            flex: 0 0 16.666667%;
+            max-width: 16.666667%;
+        }
+
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        footer h5 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        footer p, footer ul li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+            margin: 1.5rem 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Form Elements */
+        select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            background-color: white;
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+            }
+
+            .header-content, .header-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .col-lg-4, .col-lg-2, .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--primary);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--primary);
+        }
+
+        .toast-content h6 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-content p {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <header class="dashboard-header">
@@ -23,383 +859,362 @@
         </div>
     </header>
 
-    <nav class="sidebar">
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
         <div class="nav-section">
-            <h3>Administration</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="utilisateurs.html" class="nav-link">👥 Utilisateurs</a>
-            <a href="configurations.html" class="nav-link">⚙️ Configuration</a>
-            <a href="audit.html" class="nav-link">📋 Journal d'audit</a>
-            <a href="rapports.html" class="nav-link active">📈 Rapports</a>
+            <div class="nav-title">Administration</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="utilisateurs.html" class="nav-link">
+                <span class="nav-icon">👥</span>
+                <span>Gestion utilisateurs</span>
+            </a>
+            <a href="audit.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span>Journal d'audit</span>
+            </a>
+            <a href="configurations.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span>Configurations</span>
+            </a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Communication</div>
+            <a href="communication.html" class="nav-link">
+                <span class="nav-icon">💬</span>
+                <span>Messagerie</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Support</div>
+            <a href="support.html" class="nav-link">
+                <span class="nav-icon">🛟</span>
+                <span>Centre d'aide</span>
+            </a>
+            <a href="rapports.html" class="nav-link active">
+                <span class="nav-icon">📈</span>
+                <span>Rapports</span>
+            </a>
         </div>
     </nav>
 
-    <main class="main-content">
-        <div class="page-header">
-            <div class="header-actions">
-                <h1>Rapports et Analytics Système</h1>
-                <div class="header-buttons">
-                    <button class="btn btn-outline" onclick="exportSystemData()">
-                        <i class="fas fa-database me-2"></i>Export données
-                    </button>
-                    <button class="btn btn-primary" onclick="generateSystemReport()">
-                        <i class="fas fa-server me-2"></i>Rapport système
-                    </button>
-                </div>
-            </div>
-            <p>Surveillance et analyse des performances de la plateforme</p>
-        </div>
-
-        <!-- Métriques Système -->
-        <div class="system-metrics">
-            <div class="metrics-grid">
-                <div class="metric-card performance">
-                    <div class="metric-icon">⚡</div>
-                    <div class="metric-content">
-                        <div class="metric-value">99.8%</div>
-                        <div class="metric-label">Disponibilité</div>
-                        <div class="metric-trend positive">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Stable</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="metric-card users">
-                    <div class="metric-icon">👥</div>
-                    <div class="metric-content">
-                        <div class="metric-value">2,847</div>
-                        <div class="metric-label">Utilisateurs actifs</div>
-                        <div class="metric-trend positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+12% ce mois</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="metric-card transactions">
-                    <div class="metric-icon">🔄</div>
-                    <div class="metric-content">
-                        <div class="metric-value">15,842</div>
-                        <div class="metric-label">Transactions/jour</div>
-                        <div class="metric-trend positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+8%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="metric-card storage">
-                    <div class="metric-icon">💾</div>
-                    <div class="metric-content">
-                        <div class="metric-value">68%</div>
-                        <div class="metric-label">Utilisation stockage</div>
-                        <div class="metric-trend warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span>Surveillance requise</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rapports de Performance -->
-        <div class="performance-reports">
-            <div class="section-header">
-                <h3>📊 Performance de la Plateforme</h3>
-                <div class="time-range">
-                    <select id="timeRange" onchange="updatePerformanceReports()">
-                        <option value="24h">24 heures</option>
-                        <option value="7d" selected>7 jours</option>
-                        <option value="30d">30 jours</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="performance-dashboard">
-                <div class="dashboard-widget large">
-                    <div class="widget-header">
-                        <h5>📈 Activité des Utilisateurs</h5>
-                        <button class="btn-icon" onclick="downloadActivityReport()">
-                            <i class="fas fa-download"></i>
+        <main class="main-content">
+            <div class="page-header">
+                <div class="header-actions">
+                    <h1>Rapports et Analytics Système</h1>
+                    <div class="header-buttons">
+                        <button class="btn btn-outline" onclick="exportSystemData()">
+                            <i class="fas fa-database me-2"></i>Export données
+                        </button>
+                        <button class="btn btn-primary" onclick="generateSystemReport()">
+                            <i class="fas fa-server me-2"></i>Rapport système
                         </button>
                     </div>
-                    <div class="widget-content">
-                        <div class="activity-chart">
-                            <div class="chart-container">
-                                <div class="chart-placeholder">
-                                    <i class="fas fa-chart-bar"></i>
-                                    <p>Graphique d'activité utilisateurs par type</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="activity-stats">
-                            <div class="stat-row">
-                                <div class="stat-item">
-                                    <span class="stat-label">Propriétaires</span>
-                                    <span class="stat-value">1,245</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Locataires</span>
-                                    <span class="stat-value">892</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Agents</span>
-                                    <span class="stat-value">156</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+                <p>Surveillance et analyse des performances de la plateforme</p>
+            </div>
 
-                <div class="dashboard-widget">
-                    <div class="widget-header">
-                        <h5>⚡ Performance API</h5>
-                        <button class="btn-icon" onclick="downloadAPIReport()">
-                            <i class="fas fa-download"></i>
-                        </button>
-                    </div>
-                    <div class="widget-content">
-                        <div class="api-metrics">
-                            <div class="api-metric">
-                                <div class="metric-value">142ms</div>
-                                <div class="metric-label">Temps réponse moyen</div>
-                            </div>
-                            <div class="api-metric">
-                                <div class="metric-value">99.95%</div>
-                                <div class="metric-label">Taux de réussite</div>
-                            </div>
-                            <div class="api-metric">
-                                <div class="metric-value">2.4M</div>
-                                <div class="metric-label">Requêtes/jour</div>
-                            </div>
-                        </div>
-                        <div class="api-health">
-                            <div class="health-status healthy">
+            <!-- Métriques Système -->
+            <div class="system-metrics">
+                <div class="metrics-grid">
+                    <div class="metric-card performance fade-in">
+                        <div class="metric-icon">⚡</div>
+                        <div class="metric-content">
+                            <div class="metric-value">99.8%</div>
+                            <div class="metric-label">Disponibilité</div>
+                            <div class="metric-trend positive">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Tous les services opérationnels</span>
+                                <span>Stable</span>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="dashboard-widget">
-                    <div class="widget-header">
-                        <h5>🔒 Sécurité</h5>
-                        <button class="btn-icon" onclick="downloadSecurityReport()">
-                            <i class="fas fa-download"></i>
-                        </button>
-                    </div>
-                    <div class="widget-content">
-                        <div class="security-metrics">
-                            <div class="security-metric">
-                                <div class="metric-value">0</div>
-                                <div class="metric-label">Incidents sécurité</div>
-                            </div>
-                            <div class="security-metric">
-                                <div class="metric-value">98%</div>
-                                <div class="metric-label">Authentifications 2FA</div>
-                            </div>
-                            <div class="security-metric">
-                                <div class="metric-value">42</div>
-                                <div class="metric-label">Tentatives bloquées</div>
+                    <div class="metric-card users fade-in delay-1">
+                        <div class="metric-icon">👥</div>
+                        <div class="metric-content">
+                            <div class="metric-value">2,847</div>
+                            <div class="metric-label">Utilisateurs actifs</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12% ce mois</span>
                             </div>
                         </div>
-                        <div class="security-alerts">
-                            <div class="alert-item info">
-                                <i class="fas fa-info-circle"></i>
-                                <span>Scan de sécurité programmé</span>
+                    </div>
+                    <div class="metric-card transactions fade-in delay-2">
+                        <div class="metric-icon">🔄</div>
+                        <div class="metric-content">
+                            <div class="metric-value">15,842</div>
+                            <div class="metric-label">Transactions/jour</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card storage fade-in delay-3">
+                        <div class="metric-icon">💾</div>
+                        <div class="metric-content">
+                            <div class="metric-value">68%</div>
+                            <div class="metric-label">Utilisation stockage</div>
+                            <div class="metric-trend warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Surveillance requise</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Analytics Utilisateurs -->
-        <div class="user-analytics">
-            <div class="section-header">
-                <h3>👥 Analytics Utilisateurs</h3>
-                <button class="btn btn-outline" onclick="openUserInsights()">
-                    <i class="fas fa-chart-network me-2"></i>Insights détaillés
-                </button>
-            </div>
+            <!-- Rapports de Performance -->
+            <div class="performance-reports">
+                <div class="section-header">
+                    <h3>📊 Performance de la Plateforme</h3>
+                    <div class="time-range">
+                        <select id="timeRange" onchange="updatePerformanceReports()">
+                            <option value="24h">24 heures</option>
+                            <option value="7d" selected>7 jours</option>
+                            <option value="30d">30 jours</option>
+                        </select>
+                    </div>
+                </div>
 
-            <div class="user-stats-grid">
-                <div class="user-stat-card">
-                    <h5>📱 Appareils et Navigateurs</h5>
-                    <div class="device-stats">
-                        <div class="device-item">
-                            <span class="device-name">Mobile</span>
-                            <div class="device-usage">
-                                <div class="usage-bar">
-                                    <div class="bar-fill" style="width: 65%"></div>
+                <div class="performance-dashboard">
+                    <div class="dashboard-widget large">
+                        <div class="widget-header">
+                            <h5>📈 Activité des Utilisateurs</h5>
+                            <button class="btn-icon" onclick="downloadActivityReport()">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <div class="widget-content">
+                            <div class="activity-chart">
+                                <div class="chart-container">
+                                    <div class="chart-placeholder">
+                                        <i class="fas fa-chart-bar"></i>
+                                        <p>Graphique d'activité utilisateurs par type</p>
+                                    </div>
                                 </div>
-                                <span class="usage-percent">65%</span>
                             </div>
-                        </div>
-                        <div class="device-item">
-                            <span class="device-name">Desktop</span>
-                            <div class="device-usage">
-                                <div class="usage-bar">
-                                    <div class="bar-fill" style="width: 30%"></div>
+                            <div class="activity-stats">
+                                <div class="stat-row">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Propriétaires</span>
+                                        <span class="stat-value">1,245</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Locataires</span>
+                                        <span class="stat-value">892</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Agents</span>
+                                        <span class="stat-value">156</span>
+                                    </div>
                                 </div>
-                                <span class="usage-percent">30%</span>
                             </div>
                         </div>
-                        <div class="device-item">
-                            <span class="device-name">Tablette</span>
-                            <div class="device-usage">
-                                <div class="usage-bar">
-                                    <div class="bar-fill" style="width: 5%"></div>
+                    </div>
+
+                    <div class="dashboard-widget">
+                        <div class="widget-header">
+                            <h5>⚡ Performance API</h5>
+                            <button class="btn-icon" onclick="downloadAPIReport()">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <div class="widget-content">
+                            <div class="api-metrics">
+                                <div class="api-metric">
+                                    <div class="metric-value">142ms</div>
+                                    <div class="metric-label">Temps réponse moyen</div>
                                 </div>
-                                <span class="usage-percent">5%</span>
+                                <div class="api-metric">
+                                    <div class="metric-value">99.95%</div>
+                                    <div class="metric-label">Taux de réussite</div>
+                                </div>
+                                <div class="api-metric">
+                                    <div class="metric-value">2.4M</div>
+                                    <div class="metric-label">Requêtes/jour</div>
+                                </div>
+                            </div>
+                            <div class="api-health">
+                                <div class="health-status healthy">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Tous les services opérationnels</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-widget">
+                        <div class="widget-header">
+                            <h5>🔒 Sécurité</h5>
+                            <button class="btn-icon" onclick="downloadSecurityReport()">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <div class="widget-content">
+                            <div class="security-metrics">
+                                <div class="security-metric">
+                                    <div class="metric-value">0</div>
+                                    <div class="metric-label">Incidents sécurité</div>
+                                </div>
+                                <div class="security-metric">
+                                    <div class="metric-value">98%</div>
+                                    <div class="metric-label">Authentifications 2FA</div>
+                                </div>
+                                <div class="security-metric">
+                                    <div class="metric-value">42</div>
+                                    <div class="metric-label">Tentatives bloquées</div>
+                                </div>
+                            </div>
+                            <div class="security-alerts">
+                                <div class="alert-item info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Scan de sécurité programmé</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="user-stat-card">
-                    <h5>🌍 Répartition Géographique</h5>
-                    <div class="geo-stats">
-                        <div class="region-item">
-                            <span class="region-name">Dakar</span>
-                            <span class="region-users">1,842</span>
-                        </div>
-                        <div class="region-item">
-                            <span class="region-name">Thiès</span>
-                            <span class="region-users">458</span>
-                        </div>
-                        <div class="region-item">
-                            <span class="region-name">Saint-Louis</span>
-                            <span class="region-users">287</span>
-                        </div>
-                        <div class="region-item">
-                            <span class="region-name">Autres</span>
-                            <span class="region-users">260</span>
-                        </div>
-                    </div>
+            <!-- Analytics Utilisateurs -->
+            <div class="user-analytics">
+                <div class="section-header">
+                    <h3>👥 Analytics Utilisateurs</h3>
+                    <button class="btn btn-outline" onclick="openUserInsights()">
+                        <i class="fas fa-chart-network me-2"></i>Insights détaillés
+                    </button>
                 </div>
 
-                <div class="user-stat-card">
-                    <h5>⏰ Heures de Pointe</h5>
-                    <div class="peak-hours">
-                        <div class="peak-item">
-                            <span class="time-slot">08:00 - 10:00</span>
-                            <span class="peak-intensity high">Élevé</span>
+                <div class="user-stats-grid">
+                    <div class="user-stat-card">
+                        <h5>📱 Appareils et Navigateurs</h5>
+                        <div class="device-stats">
+                            <div class="device-item">
+                                <span class="device-name">Mobile</span>
+                                <div class="device-usage">
+                                    <div class="usage-bar">
+                                        <div class="bar-fill" style="width: 65%"></div>
+                                    </div>
+                                    <span class="usage-percent">65%</span>
+                                </div>
+                            </div>
+                            <div class="device-item">
+                                <span class="device-name">Desktop</span>
+                                <div class="device-usage">
+                                    <div class="usage-bar">
+                                        <div class="bar-fill" style="width: 30%"></div>
+                                    </div>
+                                    <span class="usage-percent">30%</span>
+                                </div>
+                            </div>
+                            <div class="device-item">
+                                <span class="device-name">Tablette</span>
+                                <div class="device-usage">
+                                    <div class="usage-bar">
+                                        <div class="bar-fill" style="width: 5%"></div>
+                                    </div>
+                                    <span class="usage-percent">5%</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="peak-item">
-                            <span class="time-slot">12:00 - 14:00</span>
-                            <span class="peak-intensity medium">Moyen</span>
+                    </div>
+
+                    <div class="user-stat-card">
+                        <h5>🌍 Répartition Géographique</h5>
+                        <div class="geo-stats">
+                            <div class="region-item">
+                                <span class="region-name">Ouagadougou</span>
+                                <span class="region-users">1,842</span>
+                            </div>
+                            <div class="region-item">
+                                <span class="region-name">Thiès</span>
+                                <span class="region-users">458</span>
+                            </div>
+                            <div class="region-item">
+                                <span class="region-name">Saint-Louis</span>
+                                <span class="region-users">287</span>
+                            </div>
+                            <div class="region-item">
+                                <span class="region-name">Autres</span>
+                                <span class="region-users">260</span>
+                            </div>
                         </div>
-                        <div class="peak-item">
-                            <span class="time-slot">18:00 - 20:00</span>
-                            <span class="peak-intensity high">Élevé</span>
+                    </div>
+
+                    <div class="user-stat-card">
+                        <h5>⏰ Heures de Pointe</h5>
+                        <div class="peak-hours">
+                            <div class="peak-item">
+                                <span class="time-slot">08:00 - 10:00</span>
+                                <span class="peak-intensity high">Élevé</span>
+                            </div>
+                            <div class="peak-item">
+                                <span class="time-slot">12:00 - 14:00</span>
+                                <span class="peak-intensity medium">Moyen</span>
+                            </div>
+                            <div class="peak-item">
+                                <span class="time-slot">18:00 - 20:00</span>
+                                <span class="peak-intensity high">Élevé</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Rapports de Sauvegarde -->
-        <div class="backup-reports">
-            <div class="section-header">
-                <h3>💾 Rapports de Sauvegarde</h3>
-                <button class="btn btn-outline" onclick="runBackupNow()">
-                    <i class="fas fa-play me-2"></i>Lancer sauvegarde
-                </button>
-            </div>
-
-            <div class="backup-status">
-                <div class="backup-item success">
-                    <div class="backup-info">
-                        <div class="backup-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="backup-details">
-                            <h6>Sauvegarde Quotidienne</h6>
-                            <p>Complétée aujourd'hui à 02:00</p>
-                            <small>Taille: 4.2 GB • Durée: 45 min</small>
-                        </div>
-                    </div>
-                    <div class="backup-actions">
-                        <button class="btn btn-sm btn-outline" onclick="verifyBackup(1)">
-                            Vérifier
-                        </button>
-                    </div>
+            <!-- Rapports de Sauvegarde -->
+            <div class="backup-reports">
+                <div class="section-header">
+                    <h3>💾 Rapports de Sauvegarde</h3>
+                    <button class="btn btn-outline" onclick="runBackupNow()">
+                        <i class="fas fa-play me-2"></i>Lancer sauvegarde
+                    </button>
                 </div>
 
-                <div class="backup-item warning">
-                    <div class="backup-info">
-                        <div class="backup-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
+                <div class="backup-status">
+                    <div class="backup-item success">
+                        <div class="backup-info">
+                            <div class="backup-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="backup-details">
+                                <h6>Sauvegarde Quotidienne</h6>
+                                <p>Complétée aujourd'hui à 02:00</p>
+                                <small>Taille: 4.2 GB • Durée: 45 min</small>
+                            </div>
                         </div>
-                        <div class="backup-details">
-                            <h6>Sauvegarde Hebdomadaire</h6>
-                            <p>Échouée - Espace insuffisant</p>
-                            <small>Dernière tentative: Dimanche 02:00</small>
+                        <div class="backup-actions">
+                            <button class="btn btn-sm btn-outline" onclick="verifyBackup(1)">
+                                Vérifier
+                            </button>
                         </div>
                     </div>
-                    <div class="backup-actions">
-                        <button class="btn btn-sm btn-warning" onclick="retryBackup(2)">
-                            Réessayer
-                        </button>
+
+                    <div class="backup-item warning">
+                        <div class="backup-info">
+                            <div class="backup-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="backup-details">
+                                <h6>Sauvegarde Hebdomadaire</h6>
+                                <p>Échouée - Espace insuffisant</p>
+                                <small>Dernière tentative: Dimanche 02:00</small>
+                            </div>
+                        </div>
+                        <div class="backup-actions">
+                            <button class="btn btn-sm btn-warning" onclick="retryBackup(2)">
+                                Réessayer
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
-
-    <script src="../../js/dashboard.js"></script>
-    <script>
-        function updatePerformanceReports() {
-            const range = document.getElementById('timeRange').value;
-            console.log(`Mise à jour rapports performance pour: ${range}`);
-            // Actualiser les données
-        }
-
-        function downloadActivityReport() {
-            console.log("Téléchargement rapport activité");
-            // Implémentation téléchargement
-        }
-
-        function downloadAPIReport() {
-            console.log("Téléchargement rapport API");
-            // Implémentation téléchargement
-        }
-
-        function downloadSecurityReport() {
-            console.log("Téléchargement rapport sécurité");
-            // Implémentation téléchargement
-        }
-
-        function openUserInsights() {
-            console.log("Ouverture insights utilisateurs");
-            // Ouvrir analytics détaillés
-        }
-
-        function verifyBackup(backupId) {
-            console.log(`Vérification sauvegarde: ${backupId}`);
-            // Vérifier intégrité sauvegarde
-        }
-
-        function retryBackup(backupId) {
-            console.log(`Nouvelle tentative sauvegarde: ${backupId}`);
-            // Relancer sauvegarde
-        }
-
-        function runBackupNow() {
-            console.log("Lancement sauvegarde manuelle");
-            // Démarrer sauvegarde
-        }
-
-        function exportSystemData() {
-            console.log("Export données système");
-            // Implémentation export
-        }
-
-        function generateSystemReport() {
-            console.log("Génération rapport système");
-            // Génération rapport complet
-        }
-    </script>
+        </main>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-3">
@@ -431,8 +1246,8 @@
                 <div class="col-lg-4 col-md-4 mb-4">
                     <h5 class="fw-bold mb-3">Contact</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Ouagadougou, Burkina Faso</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +226 33 123 45 67</li>
                         <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
                     </ul>
                 </div>
@@ -444,7 +1259,157 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <script>
+        // Fonctions pour les interactions utilisateur
+        function updatePerformanceReports() {
+            const range = document.getElementById('timeRange').value;
+            console.log(`Mise à jour rapports performance pour: ${range}`);
+            showToast(`Rapports mis à jour pour ${getTimeRangeText(range)}`, 'info');
+            // Actualiser les données
+        }
+
+        function downloadActivityReport() {
+            console.log("Téléchargement rapport activité");
+            showToast("Rapport d'activité téléchargé", 'success');
+            // Implémentation téléchargement
+        }
+
+        function downloadAPIReport() {
+            console.log("Téléchargement rapport API");
+            showToast("Rapport API téléchargé", 'success');
+            // Implémentation téléchargement
+        }
+
+        function downloadSecurityReport() {
+            console.log("Téléchargement rapport sécurité");
+            showToast("Rapport de sécurité téléchargé", 'success');
+            // Implémentation téléchargement
+        }
+
+        function openUserInsights() {
+            console.log("Ouverture insights utilisateurs");
+            showToast("Ouverture des insights utilisateurs", 'info');
+            // Ouvrir analytics détaillés
+        }
+
+        function verifyBackup(backupId) {
+            console.log(`Vérification sauvegarde: ${backupId}`);
+            showToast("Vérification de la sauvegarde en cours...", 'info');
+            // Vérifier intégrité sauvegarde
+            setTimeout(() => {
+                showToast("Sauvegarde vérifiée avec succès", 'success');
+            }, 1500);
+        }
+
+        function retryBackup(backupId) {
+            console.log(`Nouvelle tentative sauvegarde: ${backupId}`);
+            showToast("Nouvelle tentative de sauvegarde...", 'info');
+            // Relancer sauvegarde
+            setTimeout(() => {
+                showToast("Sauvegarde complétée avec succès", 'success');
+            }, 2000);
+        }
+
+        function runBackupNow() {
+            console.log("Lancement sauvegarde manuelle");
+            showToast("Lancement de la sauvegarde...", 'info');
+            // Démarrer sauvegarde
+            setTimeout(() => {
+                showToast("Sauvegarde complétée avec succès", 'success');
+            }, 3000);
+        }
+
+        function exportSystemData() {
+            console.log("Export données système");
+            showToast("Export des données système en cours...", 'info');
+            // Implémentation export
+            setTimeout(() => {
+                showToast("Données exportées avec succès", 'success');
+            }, 2000);
+        }
+
+        function generateSystemReport() {
+            console.log("Génération rapport système");
+            showToast("Génération du rapport système...", 'info');
+            // Génération rapport complet
+            setTimeout(() => {
+                showToast("Rapport système généré avec succès", 'success');
+            }, 2500);
+        }
+
+        function logout() {
+            console.log("Déconnexion");
+            showToast("Déconnexion en cours...", 'info');
+            setTimeout(() => {
+                window.location.href = "../login.html";
+            }, 1500);
+        }
+
+        // Fonction utilitaire pour obtenir le texte de la plage de temps
+        function getTimeRangeText(range) {
+            switch(range) {
+                case '24h': return '24 heures';
+                case '7d': return '7 jours';
+                case '30d': return '30 jours';
+                default: return range;
+            }
+        }
+
+        // Système de notifications toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.id = toastId;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="toast-content">
+                    <h6>${type === 'success' ? 'Succès' : type === 'warning' ? 'Attention' : 'Information'}</h6>
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Afficher le toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Masquer et supprimer le toast après 4 secondes
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Animation des barres de progression au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const bars = document.querySelectorAll('.bar-fill');
+            bars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        });
+    </script>
 </body>
 </html>

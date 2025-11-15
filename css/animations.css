@@ -1,6 +1,7 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    ANIMATIONS ET TRANSITIONS - PNSBIL
    Styles pour les animations et améliorations interactives
+   Version OPTIMISÉE - Performance améliorée
    ========================================================================== */
 
 /* Animations au scroll */
@@ -9,11 +10,13 @@
     transform: translateY(30px);
     transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
                 transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
 }
 
 .fade-in-up.is-visible {
     opacity: 1;
     transform: translateY(0);
+    will-change: auto;
 }
 
 /* Barre de progression au scroll */
@@ -22,11 +25,12 @@
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+    background: var(--color-primary-gradient);
     z-index: var(--z-tooltip);
     transform-origin: left;
     transition: width 0.1s ease;
     box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+    will-change: width;
 }
 
 /* Styles pour le formulaire de contact */
@@ -78,7 +82,7 @@
     font-weight: var(--font-weight-medium);
     opacity: 0;
     transform: translateY(-10px);
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
 }
 
 .form-message.is-visible {
@@ -129,6 +133,7 @@
 .feature-icon,
 .actor-icon {
     transition: transform var(--transition-base);
+    will-change: transform;
 }
 
 .benefit-item:hover .benefit-icon,
@@ -151,7 +156,7 @@
     }
 }
 
-/* Animation pour les cartes au survol */
+/* Animation pour les cartes au survol - Effet shimmer optimisé */
 .showcase-card,
 .feature-card,
 .actor-card {
@@ -175,6 +180,7 @@
         transparent
     );
     transition: left 0.5s ease;
+    will-change: left;
 }
 
 .showcase-card:hover::before,
@@ -233,6 +239,111 @@
     transform: scaleY(1);
 }
 
+/* Animation de loading */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--color-bg-secondary);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* Animation de fade pour les modales */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.modal-backdrop {
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-backdrop.closing {
+    animation: fadeOut 0.3s ease;
+}
+
+/* Animation de slide pour les éléments */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInFromLeft 0.6s ease;
+}
+
+.slide-in-right {
+    animation: slideInFromRight 0.6s ease;
+}
+
+/* Animation de bounce subtile */
+@keyframes subtleBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.bounce-on-hover:hover {
+    animation: subtleBounce 0.6s ease;
+}
+
+/* Animation de shake pour les erreurs */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+.shake-animation {
+    animation: shake 0.5s ease;
+}
+
 /* Responsive - Désactiver certaines animations sur mobile */
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -241,10 +352,19 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .fade-in-up,
+    .slide-in-left,
+    .slide-in-right {
+        opacity: 1;
+        transform: none;
     }
 }
 
 @media (max-width: 768px) {
+    /* Simplifier les animations sur mobile pour meilleures performances */
     .fade-in-up {
         opacity: 1;
         transform: translateY(0);
@@ -253,5 +373,69 @@
     .scroll-progress {
         height: 2px;
     }
+    
+    /* Désactiver les animations complexes */
+    .showcase-card::before,
+    .feature-card::before,
+    .actor-card::before {
+        display: none;
+    }
+    
+    /* Simplifier les transitions */
+    .benefit-item:hover .benefit-icon,
+    .feature-card:hover .feature-icon,
+    .actor-card:hover .actor-icon {
+        transform: scale(1.05);
+    }
 }
 
+/* Utilities pour animations */
+.animate-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.animate-delay-2 {
+    animation-delay: 0.2s;
+}
+
+.animate-delay-3 {
+    animation-delay: 0.3s;
+}
+
+.animate-delay-4 {
+    animation-delay: 0.4s;
+}
+
+.animate-delay-5 {
+    animation-delay: 0.5s;
+}
+
+/* Animation de pulse pour attirer l'attention */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(0.95);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Animation de glow */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
+    }
+}
+
+.glow-animation {
+    animation: glow 2s ease-in-out infinite;
+}

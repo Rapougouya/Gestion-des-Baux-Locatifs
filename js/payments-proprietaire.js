@@ -1,4 +1,4 @@
-// Script spécifique pour les paiements propriétaires
+﻿// Script spécifique pour les paiements propriétaires
 
 class PaymentsProprietaire {
     constructor() {

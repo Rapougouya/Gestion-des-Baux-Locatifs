@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre d'Aide - Agences Immobilières | PNSBIL</title>
+    <style>
+        :root {
+            --primary: #2A4D8E;
+            --primary-dark: #1E3A6E;
+            --primary-light: #3A6BCC;
+            --secondary: #E8B339;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --danger: #E74C3C;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) translateX(-2px);
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .search-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 77, 142, 0.1);
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .category-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .faq-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: var(--background);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .faq-answer {
+            padding: 1.5rem;
+            display: none;
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .quick-links {
+            list-style: none;
+        }
+
+        .quick-links li {
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quick-links li:last-child {
+            border-bottom: none;
+        }
+
+        .quick-links a {
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: var(--primary);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 77, 142, 0.1);
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .urgent-support {
+            background: linear-gradient(135deg, var(--warning), var(--danger));
+            color: white;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin-bottom: 1rem;
+                align-self: flex-start;
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            .header {
+                padding: 1.5rem 0;
+            }
+
+            .header-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .categories {
+                justify-content: center;
+            }
+            
+            .category-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <button class="back-btn" onclick="goBackToDashboard()">
+                ← Retour au tableau de bord
+            </button>
+            <div class="header-content">
+                <h1>Centre d'Aide - Agences Immobilières</h1>
+                <p>Support dédié pour les partenaires agréés PNSBIL</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" style="margin: 2rem auto;">
+        <div class="hero">
+            <h2>Comment pouvons-nous vous aider ?</h2>
+            <p>Solutions dédiées pour la gestion de votre portefeuille immobilier</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Rechercher dans l'aide...">
+                <button class="btn btn-primary">Rechercher</button>
+            </div>
+            <div class="categories">
+                <button class="category-btn active">Toutes les catégories</button>
+                <button class="category-btn">Gestion des biens</button>
+                <button class="category-btn">Déclarations PNSBIL</button>
+                <button class="category-btn">Facturation</button>
+                <button class="category-btn">Communication</button>
+                <button class="category-btn">Rapports</button>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="faq-section">
+                <h3>Questions Fréquentes - Agences Immobilières</h3>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment déclarer un nouveau bien immobilier ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Pour déclarer un nouveau bien :</p>
+                        <ol>
+                            <li>Allez dans "Mes biens" → "Nouveau bien"</li>
+                            <li>Renseignez les informations cadastrales</li>
+                            <li>Uploader les documents justificatifs</li>
+                            <li>Validez la déclaration PNSBIL</li>
+                        </ol>
+                        <p><strong>Délai :</strong> Validation sous 48h ouvrables</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment gérer les déclarations de loyer pour plusieurs propriétaires ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Notre système multi-mandat vous permet de :</p>
+                        <ul>
+                            <li>Déclarer en lot pour tous vos propriétaires</li>
+                            <li>Générer des rapports individuels</li>
+                            <li>Automatiser les rappels de déclaration</li>
+                            <li>Exporter les données fiscales</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quels sont les délais pour la validation PNSBIL ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Déclarations standard :</strong> 24-48h</p>
+                        <p><strong>Nouveaux biens :</strong> 48-72h</p>
+                        <p><strong>Modifications :</strong> 24h</p>
+                        <p><strong>Urgent :</strong> Contactez le support dédié</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment fonctionne le calcul automatique des impôts locatifs ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Le système calcule automatiquement :</p>
+                        <ul>
+                            <li>Impôt locatif : 10% du loyer annuel</li>
+                            <li>Taxe foncière : selon valeur cadastrale</li>
+                            <li>Pénalités de retard : 10% du montant dû</li>
+                        </ul>
+                        <p>Les calculs sont mis à jour en temps réel.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment exporter mes rapports fiscaux ?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Dans "Rapports" → "Exports" :</p>
+                        <ul>
+                            <li>Format PDF pour impression</li>
+                            <li>Format Excel pour analyses</li>
+                            <li>Format PNSBIL pour déclaration</li>
+                            <li>Historique complet disponible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card">
+                    <h4>📞 Support Agences</h4>
+                    <p><strong>Lun-Ven:</strong> 8h-18h</p>
+                    <p><strong>Sam:</strong> 9h-13h</p>
+                    <p><strong>Email dédié:</strong> agences@pnsbil.bf</p>
+                    <p><strong>Réponse garantie sous 4h</strong></p>
+                </div>
+
+                <div class="card">
+                    <h4>🔗 Liens Rapides</h4>
+                    <ul class="quick-links">
+                        <li><a href="#">📋 Guide des déclarations</a></li>
+                        <li><a href="#">🏠 Gestion multi-biens</a></li>
+                        <li><a href="#">💰 Calcul des impôts</a></li>
+                        <li><a href="#">📊 Rapports automatiques</a></li>
+                        <li><a href="#">🔐 Sécurité des données</a></li>
+                    </ul>
+                </div>
+
+                <div class="card urgent-support">
+                    <h4>🚨 Support Urgent</h4>
+                    <p>Problème critique ?</p>
+                    <p><strong>+226 25 45 67 89</strong></p>
+                    <p>Disponible 24h/24 pour les urgences</p>
+                </div>
+
+                <div class="card">
+                    <h4>✉️ Contactez-nous</h4>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label>Sujet</label>
+                            <select class="form-control">
+                                <option>Déclaration PNSBIL</option>
+                                <option>Problème technique</option>
+                                <option>Facturation</option>
+                                <option>Formation</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea class="form-control" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+
+        function goBackToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

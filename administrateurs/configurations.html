@@ -1,13 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuration Système - Administration | PNSBIL</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/config.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="dashboard-header">
@@ -23,228 +21,489 @@
         </div>
     </header>
 
-    <nav class="sidebar">
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
         <div class="nav-section">
-            <h3>Administration</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="utilisateurs.html" class="nav-link">👥 Utilisateurs</a>
-            <a href="configurations.html" class="nav-link active">⚙️ Configuration</a>
-            <a href="audit.html" class="nav-link">📋 Journal d'audit</a>
-            <a href="rapports.html" class="nav-link">📈 Rapports</a>
+            <div class="nav-title">Administration</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="utilisateurs.html" class="nav-link">
+                <span class="nav-icon">👥</span>
+                <span>Gestion utilisateurs</span>
+            </a>
+            <a href="audit.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span>Journal d'audit</span>
+            </a>
+            <a href="configurations.html" class="nav-link active">
+                <span class="nav-icon">⚙️</span>
+                <span>Configurations</span>
+            </a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Communication</div>
+            <a href="communication.html" class="nav-link">
+                <span class="nav-icon">💬</span>
+                <span>Messagerie</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Support</div>
+            <a href="support.html" class="nav-link">
+                <span class="nav-icon">🛟</span>
+                <span>Centre d'aide</span>
+            </a>
+            <a href="rapports.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span>Rapports</span>
+            </a>
         </div>
     </nav>
 
-    <main class="main-content">
-        <div class="page-header">
-            <div class="header-actions">
-                <h1>Configuration du Système</h1>
-                <button class="btn btn-success" onclick="saveConfigurations()">
-                    <i class="fas fa-save me-2"></i> Enregistrer
+        <main class="main-content">
+            <div class="page-header">
+                <div class="header-actions">
+                    <h1>Configuration du Système</h1>
+                    <div class="header-buttons">
+                        <button class="btn btn-outline" onclick="resetToDefaults()">
+                            <i class="fas fa-undo me-2"></i> Valeurs par défaut
+                        </button>
+                        <button class="btn btn-success" onclick="saveConfigurations()">
+                            <i class="fas fa-save me-2"></i> Enregistrer
+                        </button>
+                    </div>
+                </div>
+                <p>Paramètres généraux et configuration de la plateforme</p>
+            </div>
+
+            <!-- Navigation par onglets -->
+            <div class="config-tabs">
+                <button class="tab-btn active" data-tab="general">
+                    <i class="fas fa-cog me-2"></i> Général
+                </button>
+                <button class="tab-btn" data-tab="fiscal">
+                    <i class="fas fa-chart-line me-2"></i> Fiscal
+                </button>
+                <button class="tab-btn" data-tab="security">
+                    <i class="fas fa-shield-alt me-2"></i> Sécurité
+                </button>
+                <button class="tab-btn" data-tab="notifications">
+                    <i class="fas fa-bell me-2"></i> Notifications
+                </button>
+                <button class="tab-btn" data-tab="advanced">
+                    <i class="fas fa-sliders-h me-2"></i> Avancé
                 </button>
             </div>
-            <p>Paramètres généraux et configuration de la plateforme</p>
-        </div>
 
-        <div class="config-sections">
-            <!-- Paramètres Généraux -->
-            <div class="config-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-cog me-2"></i>Paramètres Généraux</h3>
-                </div>
-                <div class="config-grid">
-                    <div class="config-item">
-                        <label class="form-label">Nom de la Plateforme</label>
-                        <input type="text" class="form-control" value="PNSBIL - Plateforme Nationale" id="platformName">
+            <div class="config-sections">
+                <!-- Paramètres Généraux -->
+                <div class="config-section active" id="general-tab">
+                    <div class="section-header">
+                        <h3><i class="fas fa-cog me-2"></i>Paramètres Généraux</h3>
+                        <span class="section-badge">5 paramètres</span>
                     </div>
-                    <div class="config-item">
-                        <label class="form-label">Devise par défaut</label>
-                        <select class="form-control" id="defaultCurrency">
-                            <option value="FCFA" selected>Franc CFA (FCFA)</option>
-                            <option value="EUR">Euro (€)</option>
-                            <option value="USD">Dollar US ($)</option>
-                        </select>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Langue par défaut</label>
-                        <select class="form-control" id="defaultLanguage">
-                            <option value="fr" selected>Français</option>
-                            <option value="en">English</option>
-                            <option value="wo">Wolof</option>
-                        </select>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Fuseau horaire</label>
-                        <select class="form-control" id="timezone">
-                            <option value="Africa/Dakar" selected>Afrique/Dakar (UTC+0)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Paramètres Fiscaux -->
-            <div class="config-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-chart-line me-2"></i>Paramètres Fiscaux</h3>
-                </div>
-                <div class="config-grid">
-                    <div class="config-item">
-                        <label class="form-label">Taux d'imposition locatif</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" value="10" id="taxRate">
-                            <span class="input-group-text">%</span>
+                    <div class="config-grid">
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-signature"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Nom de la Plateforme</label>
+                                <input type="text" class="form-control" value="PNSBIL - Plateforme Nationale" id="platformName">
+                                <small class="form-text">Nom affiché aux utilisateurs</small>
+                            </div>
                         </div>
-                        <small class="form-text">Pourcentage appliqué sur le loyer annuel</small>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Période de déclaration</label>
-                        <select class="form-control" id="declarationPeriod">
-                            <option value="monthly">Mensuelle</option>
-                            <option value="quarterly" selected>Trimestrielle</option>
-                            <option value="yearly">Annuelle</option>
-                        </select>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Seuil d'exonération (FCFA)</label>
-                        <input type="number" class="form-control" value="500000" id="taxThreshold">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Paramètres de Sécurité -->
-            <div class="config-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-shield-alt me-2"></i>Sécurité</h3>
-                </div>
-                <div class="config-grid">
-                    <div class="config-item">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" id="twoFactorAuth" checked>
-                            <span class="form-check-label">Authentification à deux facteurs</span>
-                        </label>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" id="sessionTimeout" checked>
-                            <span class="form-check-label">Déconnexion automatique</span>
-                        </label>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Durée de session (minutes)</label>
-                        <input type="number" class="form-control" value="30" id="sessionDuration">
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Complexité des mots de passe</label>
-                        <select class="form-control" id="passwordPolicy">
-                            <option value="low">Faible</option>
-                            <option value="medium" selected>Moyenne</option>
-                            <option value="high">Élevée</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Paramètres de Notification -->
-            <div class="config-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-bell me-2"></i>Notifications</h3>
-                </div>
-                <div class="config-grid">
-                    <div class="config-item">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" id="emailNotifications" checked>
-                            <span class="form-check-label">Notifications par email</span>
-                        </label>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" id="smsNotifications">
-                            <span class="form-check-label">Notifications SMS</span>
-                        </label>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" id="pushNotifications" checked>
-                            <span class="form-check-label">Notifications push</span>
-                        </label>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Email d'administration</label>
-                        <input type="email" class="form-control" value="admin@pnsbil.sn" id="adminEmail">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Paramètres Avancés -->
-            <div class="config-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-sliders-h me-2"></i>Paramètres Avancés</h3>
-                </div>
-                <div class="config-grid">
-                    <div class="config-item">
-                        <label class="form-label">Intervalle de sauvegarde</label>
-                        <select class="form-control" id="backupInterval">
-                            <option value="daily">Quotidienne</option>
-                            <option value="weekly" selected>Hebdomadaire</option>
-                            <option value="monthly">Mensuelle</option>
-                        </select>
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Limite de connexions échouées</label>
-                        <input type="number" class="form-control" value="5" id="failedLoginLimit">
-                    </div>
-                    <div class="config-item">
-                        <label class="form-label">Mode maintenance</label>
-                        <div class="form-switch">
-                            <input type="checkbox" class="form-check-input" id="maintenanceMode">
-                            <label class="form-check-label" for="maintenanceMode">Activer le mode maintenance</label>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Devise par défaut</label>
+                                <select class="form-control" id="defaultCurrency">
+                                    <option value="FCFA" selected>Franc CFA (FCFA)</option>
+                                    <option value="EUR">Euro (€)</option>
+                                    <option value="USD">Dollar US ($)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Langue par défaut</label>
+                                <select class="form-control" id="defaultLanguage">
+                                    <option value="fr" selected>Français</option>
+                                    <option value="en">English</option>
+                                    <option value="wo">Wolof</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Fuseau horaire</label>
+                                <select class="form-control" id="timezone">
+                                    <option value="Africa/Ouagadougou" selected>Afrique/Ouagadougou (UTC+0)</option>
+                                    <option value="Africa/Dakar">Afrique/Dakar (UTC+0)</option>
+                                    <option value="Europe/Paris">Europe/Paris (UTC+1)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Format de date</label>
+                                <select class="form-control" id="dateFormat">
+                                    <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Paramètres Fiscaux -->
+                <div class="config-section" id="fiscal-tab">
+                    <div class="section-header">
+                        <h3><i class="fas fa-chart-line me-2"></i>Paramètres Fiscaux</h3>
+                        <span class="section-badge">4 paramètres</span>
+                    </div>
+                    <div class="config-grid">
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Taux d'imposition locatif</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" value="10" id="taxRate" min="0" max="100" step="0.1">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <small class="form-text">Pourcentage appliqué sur le loyer annuel</small>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-calendar-week"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Période de déclaration</label>
+                                <select class="form-control" id="declarationPeriod">
+                                    <option value="monthly">Mensuelle</option>
+                                    <option value="quarterly" selected>Trimestrielle</option>
+                                    <option value="yearly">Annuelle</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Seuil d'exonération (FCFA)</label>
+                                <input type="number" class="form-control" value="500000" id="taxThreshold" min="0">
+                                <small class="form-text">Montant annuel en dessous duquel aucun impôt n'est dû</small>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Pénalités de retard (%)</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" value="5" id="latePenalty" min="0" max="50" step="0.1">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <small class="form-text">Pourcentage appliqué en cas de paiement tardif</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paramètres de Sécurité -->
+                <div class="config-section" id="security-tab">
+                    <div class="section-header">
+                        <h3><i class="fas fa-shield-alt me-2"></i>Sécurité</h3>
+                        <span class="section-badge">6 paramètres</span>
+                    </div>
+                    <div class="config-grid">
+                        <div class="config-card toggle-card">
+                            <div class="config-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="config-content">
+                                <div class="toggle-group">
+                                    <label class="toggle-label">Authentification à deux facteurs</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="form-check-input" id="twoFactorAuth" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <small class="form-text">Recommandé pour une sécurité renforcée</small>
+                            </div>
+                        </div>
+                        <div class="config-card toggle-card">
+                            <div class="config-icon">
+                                <i class="fas fa-hourglass-end"></i>
+                            </div>
+                            <div class="config-content">
+                                <div class="toggle-group">
+                                    <label class="toggle-label">Déconnexion automatique</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="form-check-input" id="sessionTimeout" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Durée de session (minutes)</label>
+                                <input type="number" class="form-control" value="30" id="sessionDuration" min="5" max="480">
+                                <small class="form-text">Durée d'inactivité avant déconnexion automatique</small>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Complexité des mots de passe</label>
+                                <select class="form-control" id="passwordPolicy">
+                                    <option value="low">Faible (6 caractères minimum)</option>
+                                    <option value="medium" selected>Moyenne (8 caractères, chiffres requis)</option>
+                                    <option value="high">Élevée (12 caractères, chiffres, majuscules et symboles)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Limite de tentatives de connexion</label>
+                                <input type="number" class="form-control" value="5" id="failedLoginLimit" min="1" max="10">
+                                <small class="form-text">Nombre d'échecs avant blocage temporaire</small>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Durée de blocage (minutes)</label>
+                                <input type="number" class="form-control" value="30" id="lockoutDuration" min="1" max="1440">
+                                <small class="form-text">Durée du blocage après dépassement de la limite</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paramètres de Notification -->
+                <div class="config-section" id="notifications-tab">
+                    <div class="section-header">
+                        <h3><i class="fas fa-bell me-2"></i>Notifications</h3>
+                        <span class="section-badge">5 paramètres</span>
+                    </div>
+                    <div class="config-grid">
+                        <div class="config-card toggle-card">
+                            <div class="config-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="config-content">
+                                <div class="toggle-group">
+                                    <label class="toggle-label">Notifications par email</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="form-check-input" id="emailNotifications" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="config-card toggle-card">
+                            <div class="config-icon">
+                                <i class="fas fa-sms"></i>
+                            </div>
+                            <div class="config-content">
+                                <div class="toggle-group">
+                                    <label class="toggle-label">Notifications SMS</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="form-check-input" id="smsNotifications">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="config-card toggle-card">
+                            <div class="config-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="config-content">
+                                <div class="toggle-group">
+                                    <label class="toggle-label">Notifications push</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="form-check-input" id="pushNotifications" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-at"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Email d'administration</label>
+                                <input type="email" class="form-control" value="admin@pnsbil.sn" id="adminEmail">
+                                <small class="form-text">Email pour les alertes système</small>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Numéro d'urgence</label>
+                                <input type="tel" class="form-control" value="+226 33 123 45 67" id="emergencyPhone">
+                                <small class="form-text">Contact pour les urgences système</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paramètres Avancés -->
+                <div class="config-section" id="advanced-tab">
+                    <div class="section-header">
+                        <h3><i class="fas fa-sliders-h me-2"></i>Paramètres Avancés</h3>
+                        <span class="section-badge">4 paramètres</span>
+                    </div>
+                    <div class="config-grid">
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Intervalle de sauvegarde</label>
+                                <select class="form-control" id="backupInterval">
+                                    <option value="daily">Quotidienne</option>
+                                    <option value="weekly" selected>Hebdomadaire</option>
+                                    <option value="monthly">Mensuelle</option>
+                                </select>
+                                <small class="form-text">Fréquence des sauvegardes automatiques</small>
+                            </div>
+                        </div>
+                        <div class="config-card toggle-card">
+                            <div class="config-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="config-content">
+                                <div class="toggle-group">
+                                    <label class="toggle-label">Mode maintenance</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="form-check-input" id="maintenanceMode">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <small class="form-text">Bloque l'accès aux utilisateurs normaux</small>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Niveau de log</label>
+                                <select class="form-control" id="logLevel">
+                                    <option value="error">Erreurs seulement</option>
+                                    <option value="warn" selected>Avertissements</option>
+                                    <option value="info">Informations</option>
+                                    <option value="debug">Débogage</option>
+                                </select>
+                                <small class="form-text">Niveau de détail des journaux système</small>
+                            </div>
+                        </div>
+                        <div class="config-card">
+                            <div class="config-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="config-content">
+                                <label class="form-label">Sauvegarde cloud</label>
+                                <select class="form-control" id="cloudBackup">
+                                    <option value="none">Désactivée</option>
+                                    <option value="aws" selected>Amazon S3</option>
+                                    <option value="azure">Azure Blob</option>
+                                    <option value="google">Google Cloud</option>
+                                </select>
+                                <small class="form-text">Service de sauvegarde externe</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <!-- Actions Système -->
-        <div class="system-actions">
-            <h3>Actions Système</h3>
-            <div class="action-buttons">
-                <button class="btn btn-warning" onclick="clearCache()">
-                    <i class="fas fa-broom me-2"></i> Vider le cache
-                </button>
-                <button class="btn btn-info" onclick="runBackup()">
-                    <i class="fas fa-download me-2"></i> Sauvegarde manuelle
-                </button>
-                <button class="btn btn-danger" onclick="showSystemLogs()">
-                    <i class="fas fa-file-alt me-2"></i> Journaux système
-                </button>
+            <!-- Actions Système -->
+            <div class="system-actions">
+                <div class="section-header">
+                    <h3><i class="fas fa-rocket me-2"></i>Actions Système</h3>
+                </div>
+                <div class="action-grid">
+                    <div class="action-card" onclick="clearCache()">
+                        <div class="action-icon warning">
+                            <i class="fas fa-broom"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>Vider le cache</h4>
+                            <p>Supprime les données temporaires du système</p>
+                        </div>
+                    </div>
+                    <div class="action-card" onclick="runBackup()">
+                        <div class="action-icon info">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>Sauvegarde manuelle</h4>
+                            <p>Lance une sauvegarde immédiate des données</p>
+                        </div>
+                    </div>
+                    <div class="action-card" onclick="showSystemLogs()">
+                        <div class="action-icon primary">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>Journaux système</h4>
+                            <p>Consultez les logs et erreurs du système</p>
+                        </div>
+                    </div>
+                    <div class="action-card" onclick="testEmailConfig()">
+                        <div class="action-icon success">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>Tester emails</h4>
+                            <p>Vérifie la configuration des emails</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
-    <script src="../../js/dashboard.js"></script>
-    <script>
-        function saveConfigurations() {
-            // Implémentation de la sauvegarde des configurations
-            console.log('Sauvegarde des configurations...');
-            alert('Configurations sauvegardées avec succès!');
-        }
-
-        function clearCache() {
-            if(confirm('Voulez-vous vraiment vider le cache système ?')) {
-                console.log('Cache vidé');
-                alert('Cache système vidé avec succès!');
-            }
-        }
-
-        function runBackup() {
-            console.log('Lancement de la sauvegarde...');
-            alert('Sauvegarde manuelle lancée!');
-        }
-
-        function showSystemLogs() {
-            console.log('Affichage des journaux système...');
-            // Implémentation de l'affichage des logs
-        }
-    </script>
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
 
     <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-3">
@@ -276,8 +535,8 @@
                 <div class="col-lg-4 col-md-4 mb-4">
                     <h5 class="fw-bold mb-3">Contact</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Ouagadougou, Burkina Faso</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +226 33 123 45 67</li>
                         <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
                     </ul>
                 </div>
@@ -289,7 +548,927 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --info: #118ab2;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--gray-800);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #05b388;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 1.5rem 0;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .nav-section h3 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.25rem;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-actions h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        /* Configuration Tabs */
+        .config-tabs {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--gray-600);
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .tab-btn:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        /* Configuration Sections */
+        .config-sections {
+            margin-bottom: 2rem;
+        }
+
+        .config-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .config-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-badge {
+            background: var(--gray-100);
+            color: var(--gray-600);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Configuration Grid */
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .config-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .config-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .config-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .config-content {
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .form-text {
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--gray-500);
+            font-size: 0.75rem;
+        }
+
+        .input-group {
+            display: flex;
+        }
+
+        .input-group .form-control {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .input-group-text {
+            padding: 0.75rem;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-left: none;
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        /* Toggle Cards */
+        .toggle-card {
+            align-items: center;
+        }
+
+        .toggle-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray-300);
+            transition: var(--transition);
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* System Actions */
+        .system-actions {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--gray-300);
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .action-icon.primary { background: var(--primary); }
+        .action-icon.success { background: var(--success); }
+        .action-icon.warning { background: var(--warning); color: var(--gray-800); }
+        .action-icon.info { background: var(--info); }
+        .action-icon.danger { background: var(--danger); }
+
+        .action-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .action-content p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            margin-top: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -1rem;
+        }
+
+        .col-lg-4, .col-lg-2, .col-md-4 {
+            padding: 0 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .col-lg-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .col-lg-2 {
+            flex: 0 0 16.666667%;
+            max-width: 16.666667%;
+        }
+
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        footer h5 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        footer p, footer ul li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+            margin: 1.5rem 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--info);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--info);
+        }
+
+        .toast-content h6 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-content p {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+            }
+
+            .header-content, .header-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .config-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .col-lg-4, .col-lg-2, .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+        // Gestion des onglets
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialisation des onglets
+            initTabs();
+            
+            // Validation des formulaires
+            initFormValidation();
+            
+            // Chargement des configurations sauvegardées
+            loadSavedConfig();
+        });
+
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const configSections = document.querySelectorAll('.config-section');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+                    
+                    // Mettre à jour les boutons d'onglet
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Afficher la section correspondante
+                    configSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === `${targetTab}-tab`) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        function initFormValidation() {
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+            
+            numberInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const min = parseFloat(this.min);
+                    const max = parseFloat(this.max);
+                    const value = parseFloat(this.value);
+                    
+                    if (value < min) {
+                        this.value = min;
+                        showToast(`La valeur ne peut pas être inférieure à ${min}`, 'warning');
+                    } else if (value > max) {
+                        this.value = max;
+                        showToast(`La valeur ne peut pas être supérieure à ${max}`, 'warning');
+                    }
+                });
+            });
+
+            // Validation des emails
+            const emailInput = document.getElementById('adminEmail');
+            if (emailInput) {
+                emailInput.addEventListener('blur', function() {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(this.value)) {
+                        this.style.borderColor = 'var(--danger)';
+                        showToast('Veuillez entrer une adresse email valide', 'warning');
+                    } else {
+                        this.style.borderColor = 'var(--gray-300)';
+                    }
+                });
+            }
+        }
+
+        function loadSavedConfig() {
+            // Simulation du chargement des configurations sauvegardées
+            const savedConfig = localStorage.getItem('pnsbil-config');
+            if (savedConfig) {
+                const config = JSON.parse(savedConfig);
+                Object.keys(config).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = config[key];
+                        } else {
+                            element.value = config[key];
+                        }
+                    }
+                });
+                showToast('Configurations chargées depuis la sauvegarde', 'success');
+            }
+        }
+
+        function saveConfigurations() {
+            const config = {
+                platformName: document.getElementById('platformName').value,
+                defaultCurrency: document.getElementById('defaultCurrency').value,
+                defaultLanguage: document.getElementById('defaultLanguage').value,
+                timezone: document.getElementById('timezone').value,
+                dateFormat: document.getElementById('dateFormat').value,
+                taxRate: document.getElementById('taxRate').value,
+                declarationPeriod: document.getElementById('declarationPeriod').value,
+                taxThreshold: document.getElementById('taxThreshold').value,
+                latePenalty: document.getElementById('latePenalty').value,
+                twoFactorAuth: document.getElementById('twoFactorAuth').checked,
+                sessionTimeout: document.getElementById('sessionTimeout').checked,
+                sessionDuration: document.getElementById('sessionDuration').value,
+                passwordPolicy: document.getElementById('passwordPolicy').value,
+                failedLoginLimit: document.getElementById('failedLoginLimit').value,
+                lockoutDuration: document.getElementById('lockoutDuration').value,
+                emailNotifications: document.getElementById('emailNotifications').checked,
+                smsNotifications: document.getElementById('smsNotifications').checked,
+                pushNotifications: document.getElementById('pushNotifications').checked,
+                adminEmail: document.getElementById('adminEmail').value,
+                emergencyPhone: document.getElementById('emergencyPhone').value,
+                backupInterval: document.getElementById('backupInterval').value,
+                maintenanceMode: document.getElementById('maintenanceMode').checked,
+                logLevel: document.getElementById('logLevel').value,
+                cloudBackup: document.getElementById('cloudBackup').value
+            };
+
+            // Sauvegarde dans le localStorage (simulation)
+            localStorage.setItem('pnsbil-config', JSON.stringify(config));
+            
+            // Simulation de sauvegarde serveur
+            setTimeout(() => {
+                showToast('Configurations sauvegardées avec succès!', 'success');
+            }, 1000);
+        }
+
+        function resetToDefaults() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les configurations aux valeurs par défaut ?')) {
+                localStorage.removeItem('pnsbil-config');
+                document.querySelectorAll('input, select').forEach(element => {
+                    if (element.type === 'checkbox') {
+                        element.checked = element.defaultChecked;
+                    } else {
+                        element.value = element.defaultValue;
+                    }
+                });
+                showToast('Configurations réinitialisées aux valeurs par défaut', 'info');
+            }
+        }
+
+        function clearCache() {
+            if (confirm('Voulez-vous vraiment vider le cache système ?')) {
+                // Simulation de vidage du cache
+                setTimeout(() => {
+                    showToast('Cache système vidé avec succès!', 'success');
+                }, 1500);
+            }
+        }
+
+        function runBackup() {
+            showToast('Lancement de la sauvegarde manuelle...', 'info');
+            // Simulation de sauvegarde
+            setTimeout(() => {
+                showToast('Sauvegarde manuelle terminée avec succès!', 'success');
+            }, 3000);
+        }
+
+        function showSystemLogs() {
+            showToast('Ouverture des journaux système...', 'info');
+            // Implémentation de l'affichage des logs
+        }
+
+        function testEmailConfig() {
+            showToast('Test de la configuration email en cours...', 'info');
+            // Simulation de test email
+            setTimeout(() => {
+                showToast('Test email réussi! Configuration correcte.', 'success');
+            }, 2000);
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                showToast('Déconnexion en cours...', 'info');
+                setTimeout(() => {
+                    window.location.href = '../login.html';
+                }, 1500);
+            }
+        }
+
+        // Système de notifications toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.id = toastId;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="toast-content">
+                    <h6>${type === 'success' ? 'Succès' : type === 'warning' ? 'Attention' : 'Information'}</h6>
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Afficher le toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Masquer et supprimer le toast après 4 secondes
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 4000);
+        }
+    </script>
 </body>
 </html>

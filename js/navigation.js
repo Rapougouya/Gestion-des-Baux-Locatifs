@@ -1,4 +1,4 @@
-// Navigation et routing pour PNSBIL
+﻿// Navigation et routing pour PNSBIL
 
 class NavigationManager {
     constructor() {
@@ -72,7 +72,7 @@ const navigation = new NavigationManager();
 const mockData = {
     proprietaires: {
         properties: [
-            { id: 1, name: 'Appartement B12', type: 'Appartement', location: 'Dakar', loyer: 450000, status: 'Occupé' },
+            { id: 1, name: 'Appartement B12', type: 'Appartement', location: 'Ouagadougou', loyer: 450000, status: 'Occupé' },
             { id: 2, name: 'Villa 45', type: 'Villa', location: 'Almadies', loyer: 1200000, status: 'Occupé' },
             { id: 3, name: 'Studio C5', type: 'Studio', location: 'Point E', loyer: 250000, status: 'Vacant' }
         ],

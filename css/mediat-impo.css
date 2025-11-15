@@ -1,4 +1,4 @@
-/* Styles pour la médiation */
+﻿/* Styles pour la médiation */
 .mediation-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -302,19 +302,26 @@
     color: #495057;
 }
 
-/* Styles pour le calcul d'impôts */
+/* Styles pour le calcul d'impôts - Amélioré */
 .tax-calculator-section {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: var(--fiscal-surface, #ffffff);
+    border-radius: var(--fiscal-radius-lg, 16px);
+    padding: var(--fiscal-spacing-lg, 1.5rem);
+    margin-bottom: var(--fiscal-spacing-lg, 1.5rem);
+    box-shadow: var(--fiscal-shadow, 0 4px 6px -1px rgba(37, 99, 235, 0.1));
+    border: 1px solid var(--fiscal-border, #BFDBFE);
 }
 
 .calculator-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: var(--fiscal-spacing-xl, 2rem);
+}
+
+@media (max-width: 768px) {
+    .calculator-card {
+        grid-template-columns: 1fr;
+    }
 }
 
 .calculator-form {
@@ -744,23 +751,31 @@
 
 /* Calculs en attente */
 .pending-calculations {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: var(--fiscal-surface, #ffffff);
+    border-radius: var(--fiscal-radius-lg, 16px);
+    padding: var(--fiscal-spacing-lg, 1.5rem);
+    margin-bottom: var(--fiscal-spacing-lg, 1.5rem);
+    box-shadow: var(--fiscal-shadow, 0 4px 6px -1px rgba(37, 99, 235, 0.1));
+    border: 1px solid var(--fiscal-border, #BFDBFE);
 }
 
 .calculations-list {
-    margin-top: 1rem;
+    margin-top: var(--fiscal-spacing-md, 1rem);
 }
 
 .calculation-item {
-    border: 2px solid #e9ecef;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    background: #fafbfc;
+    border: 2px solid var(--fiscal-border, #FECACA);
+    border-radius: var(--fiscal-radius, 12px);
+    padding: var(--fiscal-spacing-lg, 1.5rem);
+    margin-bottom: var(--fiscal-spacing-md, 1rem);
+    background: var(--fiscal-bg-light, #FFF5F5);
+    transition: var(--fiscal-transition, all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.calculation-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--fiscal-shadow-md, 0 10px 15px -3px rgba(37, 99, 235, 0.1));
+    border-color: var(--fiscal-primary, #2563EB);
 }
 
 .calc-header {

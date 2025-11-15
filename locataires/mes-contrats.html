@@ -1,14 +1,687 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Contrats - PNSBIL</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --info-color: #3b82f6;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Layout principal */
+        .dashboard-page {
+            display: grid;
+            grid-template-areas: 
+                "header header"
+                "sidebar main"
+                "footer footer";
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            grid-area: header;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            font-weight: 700;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: linear-gradient(180deg, var(--surface-color) 0%, #fafbfc 100%);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 0.875rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        /* Contenu principal */
+        .main-content {
+            grid-area: main;
+            padding: 2rem;
+            background: var(--background-color);
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        /* Sections */
+        .current-contract, 
+        .previous-contracts, 
+        .renewal-section {
+            margin-bottom: 3rem;
+        }
+
+        .current-contract h2,
+        .previous-contracts h2,
+        .renewal-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        /* Cartes de contrat */
+        .contract-card {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contract-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            transition: var(--transition);
+        }
+
+        .contract-card.active {
+            border-color: var(--success-color);
+        }
+
+        .contract-card.active::before {
+            background: var(--success-color);
+        }
+
+        .contract-card.archived {
+            border-color: var(--secondary-color);
+            opacity: 0.8;
+        }
+
+        .contract-card.archived::before {
+            background: var(--secondary-color);
+        }
+
+        .contract-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contract-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .contract-info h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contract-dates {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .contract-status {
+            padding: 0.375rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .contract-status.active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .contract-status.completed {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .contract-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Boutons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        /* Détails du contrat */
+        .contract-details {
+            margin: 1.5rem 0;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .detail-item label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.125rem;
+        }
+
+        /* Barre de progression */
+        .contract-progress {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Liste des contrats */
+        .contracts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Section renouvellement */
+        .renewal-card {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid var(--primary-color);
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        }
+
+        .renewal-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+
+        .renewal-info {
+            flex: 1;
+        }
+
+        .renewal-info h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .renewal-info p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .renewal-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .renewal-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .renewal-option:hover {
+            border-color: var(--primary-color);
+            transform: translateX(4px);
+        }
+
+        .renewal-option input[type="radio"] {
+            margin: 0;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        .renewal-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .renewal-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-width: 200px;
+        }
+
+        /* Footer */
+        footer {
+            grid-area: footer;
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: auto;
+            margin-left: 280px;
+        }
+
+        footer .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        footer h5 {
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--error-color);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contract-card,
+        .renewal-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-page {
+                grid-template-columns: 240px 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-page {
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "footer";
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .dashboard-header {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .contract-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .contract-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .renewal-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .renewal-actions {
+                width: 100%;
+            }
+            
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contract-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="dashboard-page">
     <header class="dashboard-header">
         <div class="header-content">
             <div class="logo">
@@ -24,17 +697,19 @@
 
     <nav class="sidebar">
         <div class="nav-section">
-            <h3>Mon Logement</h3>
+            <h3>Mon Espace</h3>
             <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="recherche.html" class="nav-link">🔍 Rechercher un logement</a>
             <a href="mes-contrats.html" class="nav-link active">📑 Mes contrats</a>
-            <a href="paiements.html" class="nav-link">💳 Mes paiements</a>
+            <a href="paiements.html" class="nav-link">💳 Paiements</a>
             <a href="maintenance.html" class="nav-link">🔧 Maintenance</a>
         </div>
-        
         <div class="nav-section">
             <h3>Communication</h3>
             <a href="communication.html" class="nav-link">💬 Messagerie</a>
+        </div>
+        <div class="nav-section">
+            <h3>Recherche</h3>
+            <a href="recherche.html" class="nav-link">🔍 Trouver un logement</a>
         </div>
     </nav>
 
@@ -50,7 +725,7 @@
             <div class="contract-card active">
                 <div class="contract-header">
                     <div class="contract-info">
-                        <h3>Appartement B12 - Dakar Plateau</h3>
+                        <h3>Appartement B12 - Ouagadougou Plateau</h3>
                         <div class="contract-dates">
                             <span>Du 01/01/2024 au 31/12/2024</span>
                             <span class="contract-status active">En cours</span>
@@ -58,10 +733,10 @@
                     </div>
                     <div class="contract-actions">
                         <button class="btn btn-outline" onclick="viewContract(1)">
-                            <i class="fas fa-eye me-1"></i> Voir le contrat
+                            <i class="fas fa-eye"></i> Voir le contrat
                         </button>
                         <button class="btn btn-primary" onclick="downloadContract(1)">
-                            <i class="fas fa-download me-1"></i> Télécharger
+                            <i class="fas fa-download"></i> Télécharger
                         </button>
                     </div>
                 </div>
@@ -81,13 +756,13 @@
                         </div>
                         <div class="detail-item">
                             <label>Jours restants</label>
-                            <div class="detail-value">45 jours</div>
+                            <div class="detail-value" id="daysRemaining">45 jours</div>
                         </div>
                     </div>
                 </div>
                 <div class="contract-progress">
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 85%"></div>
+                        <div class="progress-fill" id="contractProgress" style="width: 85%"></div>
                     </div>
                     <div class="progress-text">85% du contrat écoulé</div>
                 </div>
@@ -101,7 +776,7 @@
                 <div class="contract-card archived">
                     <div class="contract-header">
                         <div class="contract-info">
-                            <h3>Studio Mermoz - Dakar</h3>
+                            <h3>Studio Mermoz - Ouagadougou</h3>
                             <div class="contract-dates">
                                 <span>Du 01/06/2022 au 31/05/2023</span>
                                 <span class="contract-status completed">Terminé</span>
@@ -109,7 +784,7 @@
                         </div>
                         <div class="contract-actions">
                             <button class="btn btn-outline" onclick="viewContract(2)">
-                                <i class="fas fa-eye me-1"></i> Voir
+                                <i class="fas fa-eye"></i> Voir
                             </button>
                         </div>
                     </div>
@@ -118,7 +793,7 @@
                 <div class="contract-card archived">
                     <div class="contract-header">
                         <div class="contract-info">
-                            <h3>Appartement Fann - Dakar</h3>
+                            <h3>Appartement Fann - Ouagadougou</h3>
                             <div class="contract-dates">
                                 <span>Du 01/03/2021 au 28/02/2022</span>
                                 <span class="contract-status completed">Terminé</span>
@@ -126,7 +801,7 @@
                         </div>
                         <div class="contract-actions">
                             <button class="btn btn-outline" onclick="viewContract(3)">
-                                <i class="fas fa-eye me-1"></i> Voir
+                                <i class="fas fa-eye"></i> Voir
                             </button>
                         </div>
                     </div>
@@ -158,8 +833,11 @@
                         </div>
                     </div>
                     <div class="renewal-actions">
-                        <button class="btn btn-primary" onclick="submitRenewal()">
-                            <i class="fas fa-check me-1"></i> Soumettre ma décision
+                        <button class="btn btn-success" onclick="submitRenewal()">
+                            <i class="fas fa-check"></i> Soumettre ma décision
+                        </button>
+                        <button class="btn btn-outline" onclick="showRenewalInfo()">
+                            <i class="fas fa-info-circle"></i> Plus d'infos
                         </button>
                     </div>
                 </div>
@@ -167,273 +845,446 @@
         </div>
     </main>
 
-    <script src="../js/auth.js"></script>
-    <script>
-        if (!checkAuth('locataire')) {}
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const user = getCurrentUser();
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-            }
-        });
-
-        function viewContract(id) {
-            alert(`Voir le contrat ${id}`);
-            // Ouverture du modal ou redirection
-        }
-
-        function downloadContract(id) {
-            alert(`Télécharger le contrat ${id}`);
-            // Génération du PDF
-        }
-
-        function submitRenewal() {
-            const selectedOption = document.querySelector('input[name="renewal"]:checked');
-            if (!selectedOption) {
-                alert('Veuillez sélectionner une option');
-                return;
-            }
-            
-            alert(`Renouvellement soumis: Option ${selectedOption.value}`);
-            // Envoi des données au serveur
-        }
-    </script>
-
-    <style>
-        .current-contract, .previous-contracts, .renewal-section {
-            margin-bottom: 2rem;
-        }
-
-        .contract-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border-left: 4px solid #667eea;
-        }
-
-        .contract-card.active {
-            border-left-color: #10b981;
-        }
-
-        .contract-card.archived {
-            border-left-color: #6b7280;
-            opacity: 0.8;
-        }
-
-        .contract-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .contract-info h3 {
-            margin: 0 0 0.5rem 0;
-            color: #1f2937;
-        }
-
-        .contract-dates {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
-
-        .contract-status {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .contract-status.active {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .contract-status.completed {
-            background: #f3f4f6;
-            color: #6b7280;
-        }
-
-        .contract-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .contract-details {
-            margin: 1.5rem 0;
-        }
-
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .detail-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .detail-item label {
-            font-size: 0.8rem;
-            color: #6b7280;
-            margin-bottom: 0.25rem;
-        }
-
-        .detail-value {
-            font-weight: 600;
-            color: #1f2937;
-        }
-
-        .contract-progress {
-            margin-top: 1rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #10b981;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            font-size: 0.8rem;
-            color: #6b7280;
-            text-align: center;
-        }
-
-        .contracts-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .renewal-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border: 2px solid #667eea;
-        }
-
-        .renewal-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .renewal-info h4 {
-            margin: 0 0 0.5rem 0;
-            color: #1f2937;
-        }
-
-        .renewal-info p {
-            margin: 0 0 1rem 0;
-            color: #6b7280;
-        }
-
-        .renewal-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .renewal-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .renewal-option input[type="radio"] {
-            margin: 0;
-        }
-
-        .renewal-option label {
-            margin: 0;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            .contract-header {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .contract-actions {
-                width: 100%;
-                justify-content: flex-start;
-            }
-            
-            .renewal-content {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .detail-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <!-- Modal pour voir le contrat -->
+    <div id="contractModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Détails du Contrat</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalContent">
+                <!-- Contenu dynamique -->
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
+    <footer>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+            <div class="footer-content">
+                <div>
+                    <h5>PNSBIL</h5>
                     <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
                     <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                <div>
+                    <h5>Liens rapides</h5>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="properties.html">Propriétés</a></li>
+                        <li><a href="leases.html">Baux</a></li>
+                        <li><a href="taxes.html">Impôts</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                <div>
+                    <h5>Ressources</h5>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Guides</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Mentions légales</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                <div>
+                    <h5>Contact</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Avenue XXXXX, Ouagadougou, Burkina Faso</li>
+                        <li><i class="fas fa-phone"></i> +226 33 123 45 67</li>
+                        <li><i class="fas fa-envelope"></i> contact@pnsbil.sn</li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 PNSBIL - Tous droits réservés</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script>
+        // Gestionnaire de Contrats - JavaScript Fonctionnel
+        class ContractManager {
+            constructor() {
+                this.contracts = [];
+                this.currentContract = null;
+                this.init();
+            }
+
+            init() {
+                this.loadContracts();
+                this.setupEventListeners();
+                this.calculateContractProgress();
+            }
+
+            loadContracts() {
+                // Simulation de données des contrats
+                this.contracts = [
+                    {
+                        id: 1,
+                        title: "Appartement B12 - Ouagadougou Plateau",
+                        startDate: "2024-01-01",
+                        endDate: "2024-12-31",
+                        status: "active",
+                        rent: 450000,
+                        deposit: 900000,
+                        owner: "Mohamed Diallo",
+                        type: "Appartement",
+                        address: "Plateau, Ouagadougou",
+                        features: ["85m²", "3 pièces", "2 sdb", "Parking"]
+                    },
+                    {
+                        id: 2,
+                        title: "Studio Mermoz - Ouagadougou",
+                        startDate: "2022-06-01",
+                        endDate: "2023-05-31",
+                        status: "completed",
+                        rent: 280000,
+                        deposit: 560000,
+                        owner: "Fatou Ndiaye",
+                        type: "Studio",
+                        address: "Mermoz, Ouagadougou",
+                        features: ["35m²", "1 pièce", "1 sdb"]
+                    },
+                    {
+                        id: 3,
+                        title: "Appartement Fann - Ouagadougou",
+                        startDate: "2021-03-01",
+                        endDate: "2022-02-28",
+                        status: "completed",
+                        rent: 380000,
+                        deposit: 760000,
+                        owner: "Jean Dupont",
+                        type: "Appartement",
+                        address: "Fann, Ouagadougou",
+                        features: ["65m²", "2 pièces", "1 sdb", "Balcon"]
+                    }
+                ];
+
+                this.currentContract = this.contracts.find(contract => contract.status === 'active');
+                this.renderContracts();
+            }
+
+            renderContracts() {
+                // Mise à jour des données dynamiques
+                if (this.currentContract) {
+                    this.updateCurrentContractUI();
+                }
+            }
+
+            updateCurrentContractUI() {
+                const contract = this.currentContract;
+                const endDate = new Date(contract.endDate);
+                const today = new Date();
+                const totalDays = Math.ceil((endDate - new Date(contract.startDate)) / (1000 * 60 * 60 * 24));
+                const daysPassed = Math.ceil((today - new Date(contract.startDate)) / (1000 * 60 * 60 * 24));
+                const daysRemaining = totalDays - daysPassed;
+                const progress = (daysPassed / totalDays) * 100;
+
+                // Mise à jour de l'interface
+                const daysElement = document.getElementById('daysRemaining');
+                const progressElement = document.getElementById('contractProgress');
+                
+                if (daysElement) {
+                    daysElement.textContent = `${daysRemaining} jours`;
+                }
+                if (progressElement) {
+                    progressElement.style.width = `${Math.min(progress, 100)}%`;
+                }
+            }
+
+            calculateContractProgress() {
+                // Recalcul périodique de la progression
+                setInterval(() => {
+                    this.updateCurrentContractUI();
+                }, 24 * 60 * 60 * 1000); // Toutes les 24 heures
+            }
+
+            setupEventListeners() {
+                // Gestion des options de renouvellement
+                document.querySelectorAll('.renewal-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        const radio = option.querySelector('input[type="radio"]');
+                        radio.checked = true;
+                        
+                        // Feedback visuel
+                        document.querySelectorAll('.renewal-option').forEach(opt => {
+                            opt.style.borderColor = 'var(--border-color)';
+                        });
+                        option.style.borderColor = 'var(--primary-color)';
+                    });
+                });
+            }
+
+            viewContract(contractId) {
+                const contract = this.contracts.find(c => c.id === contractId);
+                if (!contract) return;
+
+                this.showContractModal(contract);
+            }
+
+            showContractModal(contract) {
+                const modal = document.getElementById('contractModal');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalContent = document.getElementById('modalContent');
+
+                modalTitle.textContent = contract.title;
+                
+                modalContent.innerHTML = `
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <strong>Type:</strong> ${contract.type}
+                            </div>
+                            <div>
+                                <strong>Adresse:</strong> ${contract.address}
+                            </div>
+                            <div>
+                                <strong>Propriétaire:</strong> ${contract.owner}
+                            </div>
+                            <div>
+                                <strong>Loyer:</strong> ${this.formatCurrency(contract.rent)} FCFA/mois
+                            </div>
+                            <div>
+                                <strong>Caution:</strong> ${this.formatCurrency(contract.deposit)} FCFA
+                            </div>
+                            <div>
+                                <strong>Période:</strong> ${this.formatDate(contract.startDate)} - ${this.formatDate(contract.endDate)}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <strong>Caractéristiques:</strong>
+                            <ul style="margin: 0.5rem 0 0 1rem;">
+                                ${contract.features.map(feature => `<li>${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div style="margin-top: 1rem; padding: 1rem; background: var(--background-color); border-radius: var(--border-radius);">
+                            <strong>Statut:</strong> 
+                            <span class="contract-status ${contract.status}">
+                                ${contract.status === 'active' ? 'En cours' : 'Terminé'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                modal.style.display = 'flex';
+            }
+
+            closeModal() {
+                document.getElementById('contractModal').style.display = 'none';
+            }
+
+            downloadContract(contractId) {
+                this.showLoading('Préparation du téléchargement...');
+                
+                setTimeout(() => {
+                    this.hideLoading();
+                    
+                    const contract = this.contracts.find(c => c.id === contractId);
+                    if (contract) {
+                        this.showNotification(`Contrat "${contract.title}" téléchargé`, 'success');
+                        
+                        // Simulation de téléchargement
+                        const link = document.createElement('a');
+                        link.href = '#';
+                        link.download = `contrat-${contract.title.replace(/\s+/g, '-').toLowerCase()}.pdf`;
+                        link.click();
+                    }
+                }, 2000);
+            }
+
+            submitRenewal() {
+                const selectedOption = document.querySelector('input[name="renewal"]:checked');
+                if (!selectedOption) {
+                    this.showNotification('Veuillez sélectionner une option de renouvellement', 'error');
+                    return;
+                }
+
+                this.showLoading('Envoi de votre décision...');
+
+                setTimeout(() => {
+                    this.hideLoading();
+                    
+                    const optionValue = selectedOption.value;
+                    let message = '';
+                    
+                    switch(optionValue) {
+                        case '1':
+                            message = 'Renouvellement d\'un an demandé';
+                            break;
+                        case '2':
+                            message = 'Renouvellement de deux ans demandé';
+                            break;
+                        case '0':
+                            message = 'Non-renouvellement confirmé';
+                            break;
+                    }
+                    
+                    this.showNotification(message, 'success');
+                    
+                    // Réinitialiser le formulaire
+                    document.querySelectorAll('input[name="renewal"]').forEach(radio => {
+                        radio.checked = false;
+                    });
+                    
+                    document.querySelectorAll('.renewal-option').forEach(opt => {
+                        opt.style.borderColor = 'var(--border-color)';
+                    });
+                }, 1500);
+            }
+
+            showRenewalInfo() {
+                this.showNotification(
+                    'Le renouvellement de 2 ans offre une réduction de 15,000 FCFA/mois. Votre propriétaire sera notifié de votre décision.',
+                    'info'
+                );
+            }
+
+            logout() {
+                if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                    this.showLoading('Déconnexion en cours...');
+                    
+                    setTimeout(() => {
+                        this.hideLoading();
+                        this.showNotification('Déconnexion réussie', 'success');
+                        
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 1000);
+                    }, 1500);
+                }
+            }
+
+            // Utilitaires
+            formatCurrency(amount) {
+                return new Intl.NumberFormat('fr-FR').format(amount);
+            }
+
+            formatDate(dateString) {
+                return new Date(dateString).toLocaleDateString('fr-FR');
+            }
+
+            showLoading(message = 'Chargement...') {
+                let loader = document.getElementById('global-loader');
+                if (!loader) {
+                    loader = document.createElement('div');
+                    loader.id = 'global-loader';
+                    loader.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.5);
+                        backdrop-filter: blur(4px);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 10000;
+                        color: white;
+                        font-size: 1.125rem;
+                    `;
+                    document.body.appendChild(loader);
+                }
+                
+                loader.innerHTML = `
+                    <div style="background: white; padding: 2rem; border-radius: 12px; color: var(--text-primary); display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                        <div class="loader-spinner" style="width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        <span>${message}</span>
+                    </div>
+                `;
+                loader.style.display = 'flex';
+            }
+
+            hideLoading() {
+                const loader = document.getElementById('global-loader');
+                if (loader) {
+                    loader.style.display = 'none';
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+                    border-left: 4px solid ${this.getNotificationColor(type)};
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease;
+                    z-index: 10000;
+                    max-width: 400px;
+                `;
+
+                const icons = {
+                    'success': 'check-circle',
+                    'error': 'exclamation-triangle',
+                    'warning': 'exclamation-circle',
+                    'info': 'info-circle'
+                };
+
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fas fa-${icons[type]}" style="color: ${this.getNotificationColor(type)}; font-size: 1.25rem;"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+
+                // Animation d'entrée
+                setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+
+                // Supprimer après 4 secondes
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }, 4000);
+            }
+
+            getNotificationColor(type) {
+                const colors = {
+                    'success': '#10b981',
+                    'error': '#ef4444',
+                    'warning': '#f59e0b',
+                    'info': '#3b82f6'
+                };
+                return colors[type] || '#3b82f6';
+            }
+        }
+
+        // Initialisation
+        const contractManager = new ContractManager();
+
+        // Fonctions globales pour compatibilité HTML
+        function viewContract(id) { contractManager.viewContract(id); }
+        function downloadContract(id) { contractManager.downloadContract(id); }
+        function submitRenewal() { contractManager.submitRenewal(); }
+        function showRenewalInfo() { contractManager.showRenewalInfo(); }
+        function closeModal() { contractManager.closeModal(); }
+        function logout() { contractManager.logout(); }
+
+        // Animation CSS pour le spinner
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Fermer le modal en cliquant à l'extérieur
+        document.getElementById('contractModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                contractManager.closeModal();
+            }
+        });
+    </script>
 </body>
 </html>

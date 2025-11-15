@@ -1,9 +1,10 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    AMÉLIORATIONS DU FOOTER
+   Version CORRIGÉE - Encodage et styles optimisés
    ========================================================================== */
 
 .footer-modern {
-    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    background: linear-gradient(135deg, var(--color-secondary-dark) 0%, var(--color-secondary-light) 100%);
     color: white;
     padding: 4rem 0 2rem;
     margin-top: 4rem;
@@ -18,7 +19,7 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #64748b, transparent);
+    background: linear-gradient(90deg, transparent, var(--color-text-secondary), transparent);
 }
 
 .footer-content {
@@ -41,6 +42,12 @@
     font-size: 1.5rem;
     font-weight: 800;
     color: white;
+    text-decoration: none;
+    transition: opacity var(--transition-base);
+}
+
+.footer-logo:hover {
+    opacity: 0.8;
 }
 
 .footer-logo span:first-child {
@@ -69,12 +76,12 @@
     justify-content: center;
     color: #cbd5e1;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
     backdrop-filter: blur(10px);
 }
 
 .social-link:hover {
-    background: #667eea;
+    background: var(--color-primary);
     color: white;
     transform: translateY(-3px);
 }
@@ -97,7 +104,7 @@
     left: 0;
     width: 40px;
     height: 2px;
-    background: #667eea;
+    background: var(--color-primary);
     border-radius: 2px;
 }
 
@@ -114,7 +121,7 @@
 .footer-links a {
     color: #cbd5e1;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -123,9 +130,9 @@
 
 .footer-links a::before {
     content: '▸';
-    color: #667eea;
+    color: var(--color-primary);
     font-size: 0.8rem;
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-base);
 }
 
 .footer-links a:hover {
@@ -154,7 +161,7 @@
 }
 
 .contact-info li i {
-    color: #667eea;
+    color: var(--color-primary);
     font-size: 1.1rem;
     margin-top: 0.125rem;
     flex-shrink: 0;
@@ -163,11 +170,11 @@
 .contact-info a {
     color: #cbd5e1;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--transition-base);
 }
 
 .contact-info a:hover {
-    color: #667eea;
+    color: var(--color-primary);
 }
 
 .footer-bottom {
@@ -188,11 +195,157 @@
 .footer-legal a {
     color: #9ca3af;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--transition-base);
 }
 
 .footer-legal a:hover {
     color: #cbd5e1;
+}
+
+/* Styles pour la Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: var(--z-modal-backdrop);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--border-radius-xl);
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content.large {
+    max-width: 900px;
+    margin: 2rem;
+}
+
+.modal-header {
+    padding: 2.5rem 2rem;
+    background: var(--color-primary-gradient);
+    color: white;
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+    position: relative;
+}
+
+.modal-header h2 {
+    font-size: 1.75rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+}
+
+.close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.event-details {
+    padding: 2rem;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.detail-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--color-bg-secondary);
+    border-radius: var(--border-radius-lg);
+}
+
+.detail-section h3 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.detail-item {
+    padding: 1rem;
+    background: white;
+    border-radius: var(--border-radius-md);
+    border-left: 3px solid var(--color-primary);
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.json-data {
+    background: var(--color-secondary-dark);
+    color: #e2e8f0;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-md);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.modal-footer {
+    padding: 1.5rem 2rem;
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
 }
 
 /* Responsive Design pour la Modal et Footer */
@@ -322,4 +475,66 @@
 
 .event-details::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
+}
+
+/* Newsletter Section dans le footer */
+.footer-newsletter {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 2rem;
+}
+
+.footer-newsletter h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.footer-newsletter p {
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-md);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 0.9rem;
+    transition: all var(--transition-base);
+}
+
+.newsletter-form input::placeholder {
+    color: #cbd5e1;
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.newsletter-form button {
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.newsletter-form button:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
 }

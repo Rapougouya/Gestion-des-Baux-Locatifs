@@ -1,53 +1,1215 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Portefeuille - Agence | PNSBIL</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/portefe-dashbord-locat.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* =============================================
+           VARIABLES ET RESET
+        ============================================= */
+        :root {
+            /* Couleurs */
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #dbeafe;
+            --secondary: #64748b;
+            --success: #059669;
+            --warning: #d97706;
+            --error: #dc2626;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            
+            /* Espacements */
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            
+            /* Bordures */
+            --radius: 0.5rem;
+            --radius-lg: 0.75rem;
+            
+            /* Ombres */
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            
+            /* Typographie */
+            --font-sm: 0.875rem;
+            --font-base: 1rem;
+            --font-lg: 1.125rem;
+            --font-xl: 1.25rem;
+            --font-2xl: 1.5rem;
+            --font-3xl: 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* =============================================
+           LAYOUT PRINCIPAL
+        ============================================= */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: 70px 1fr auto;
+            grid-template-areas: 
+                "sidebar header"
+                "sidebar main"
+                "sidebar footer";
+            min-height: 100vh;
+        }
+
+        /* =============================================
+           HEADER
+        ============================================= */
+        .dashboard-header {
+            grid-area: header;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 var(--space-xl);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: var(--font-lg);
+            color: var(--primary);
+        }
+
+        .logo-subtitle {
+            font-size: var(--font-sm);
+            color: var(--text-light);
+            margin-left: var(--space-md);
+            padding-left: var(--space-md);
+            border-left: 1px solid var(--border);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .user-role {
+            font-size: var(--font-sm);
+            color: var(--text-light);
+        }
+
+        /* =============================================
+           SIDEBAR
+        ============================================= */
+        .sidebar {
+            grid-area: sidebar;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: var(--space-xl) 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 280px;
+            overflow-y: auto;
+            z-index: 200;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-2xl);
+            padding: 0 var(--space-lg);
+        }
+
+        .nav-title {
+            font-size: var(--font-sm);
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--space-md);
+            padding-left: var(--space-sm);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* =============================================
+           CONTENU PRINCIPAL
+        ============================================= */
+        .main-content {
+            grid-area: main;
+            padding: var(--space-xl);
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+
+        .page-title {
+            font-size: var(--font-3xl);
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .page-subtitle {
+            font-size: var(--font-lg);
+            color: var(--text-light);
+        }
+
+        /* =============================================
+           VUE D'ENSEMBLE DU PORTEFEUILLE
+        ============================================= */
+        .portfolio-overview {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: var(--font-2xl);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: var(--space-xs);
+        }
+
+        .stat-label {
+            font-size: var(--font-sm);
+            color: var(--text-light);
+            margin-bottom: var(--space-xs);
+        }
+
+        .stat-change {
+            font-size: var(--font-sm);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        /* =============================================
+           FILTRES ET RECHERCHE
+        ============================================= */
+        .portfolio-filters {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: var(--space-xl);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: var(--space-lg);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: var(--space-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: var(--space-md) var(--space-md) var(--space-md) 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: var(--font-base);
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .filter-group select {
+            padding: var(--space-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: var(--font-base);
+            background: white;
+            min-width: 150px;
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* =============================================
+           ACTIONS GROUPÉES
+        ============================================= */
+        .bulk-actions {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: var(--space-xl);
+        }
+
+        .bulk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bulk-header h4 {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .bulk-buttons {
+            display: flex;
+            gap: var(--space-md);
+        }
+
+        /* =============================================
+           GRILLE DE BIENS
+        ============================================= */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-xl);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .property-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-md) var(--space-lg);
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .property-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: var(--font-sm);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .property-badge.occupied {
+            background: var(--success);
+            color: white;
+        }
+
+        .property-badge.vacant {
+            background: var(--warning);
+            color: white;
+        }
+
+        .property-badge.maintenance {
+            background: var(--error);
+            color: white;
+        }
+
+        .property-actions {
+            display: flex;
+            gap: var(--space-xs);
+        }
+
+        .property-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+
+        .property-type {
+            position: absolute;
+            top: var(--space-md);
+            left: var(--space-md);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 12px;
+            border-radius: var(--radius);
+            font-size: var(--font-sm);
+            font-weight: 600;
+        }
+
+        .property-content {
+            padding: var(--space-lg);
+        }
+
+        .property-title {
+            font-size: var(--font-lg);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: var(--space-sm);
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--text-light);
+            margin-bottom: var(--space-md);
+            font-size: var(--font-sm);
+        }
+
+        .property-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            padding: var(--space-md) 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-align: center;
+        }
+
+        .detail i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .detail span {
+            font-size: var(--font-sm);
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .property-financial {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .rent-price {
+            font-size: var(--font-lg);
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .property-id {
+            font-size: var(--font-sm);
+            color: var(--text-light);
+        }
+
+        .property-tenant, .property-vacancy, .property-maintenance, .property-alert {
+            margin-bottom: var(--space-md);
+            padding: var(--space-md);
+            border-radius: var(--radius);
+            background: var(--background);
+        }
+
+        .tenant-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .tenant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .tenant-details {
+            flex: 1;
+        }
+
+        .tenant-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .lease-period {
+            font-size: var(--font-sm);
+            color: var(--text-light);
+        }
+
+        .vacancy-info, .maintenance-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-sm);
+        }
+
+        .maintenance-progress {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .alert-badge {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            font-size: var(--font-sm);
+            font-weight: 600;
+        }
+
+        .alert-badge.warning {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .property-footer {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .property-footer .btn {
+            flex: 1;
+        }
+
+        /* =============================================
+           PAGINATION
+        ============================================= */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: var(--space-xs);
+        }
+
+        .page-number {
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .page-number:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .page-number.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-dots {
+            padding: var(--space-sm) var(--space-xs);
+            color: var(--text-light);
+        }
+
+        /* =============================================
+           MODALS
+        ============================================= */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-xl);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h3 {
+            font-size: var(--font-xl);
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .modal-body {
+            padding: var(--space-xl);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: flex-end;
+            padding: var(--space-xl);
+            border-top: 1px solid var(--border);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: var(--space-xs);
+        }
+
+        .form-control {
+            padding: var(--space-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: var(--font-base);
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .equipment-checklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            cursor: pointer;
+        }
+
+        /* =============================================
+           BOUTONS
+        ============================================= */
+        .btn {
+            padding: var(--space-sm) var(--space-lg);
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--font-base);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: var(--space-xs) var(--space-md);
+            font-size: var(--font-sm);
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            padding: var(--space-xs);
+            border-radius: var(--radius);
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon:hover {
+            background: var(--background);
+            color: var(--primary);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* =============================================
+           FOOTER
+        ============================================= */
+        .dashboard-footer {
+            grid-area: footer;
+            background: var(--text);
+            color: white;
+            padding: var(--space-2xl) 0 var(--space-xl);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-xl);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-2xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .footer-section h5 {
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            font-size: var(--font-lg);
+        }
+
+        .footer-section p {
+            color: #cbd5e1;
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: #94a3b8;
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: var(--space-lg);
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        /* =============================================
+           MENU MOBILE
+        ============================================= */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            padding: var(--space-sm);
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+        }
+
+        /* =============================================
+           RESPONSIVE
+        ============================================= */
+        @media (max-width: 1024px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "footer";
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-overlay.active {
+                display: block;
+            }
+
+            .properties-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: var(--space-lg);
+            }
+
+            .header-actions {
+                flex-direction: column;
+                gap: var(--space-md);
+                align-items: flex-start;
+            }
+
+            .overview-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: auto;
+            }
+
+            .bulk-header {
+                flex-direction: column;
+                gap: var(--space-md);
+                align-items: flex-start;
+            }
+
+            .bulk-buttons {
+                flex-wrap: wrap;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .equipment-checklist {
+                grid-template-columns: 1fr;
+            }
+
+            .property-footer {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0 var(--space-lg);
+            }
+
+            .main-content {
+                padding: var(--space-md);
+            }
+
+            .user-info {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: var(--space-md);
+            }
+        }
+
+        /* =============================================
+           ANIMATIONS
+        ============================================= */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* =============================================
+           ACCESSIBILITÉ
+        ============================================= */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus visible pour l'accessibilité */
+        button:focus-visible, 
+        a:focus-visible, 
+        .nav-link:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
 </head>
-<body>
+<body class="dashboard-layout">
+    <!-- Header -->
     <header class="dashboard-header">
         <div class="header-content">
-            <div class="logo">
-                <span>🏠 PNSBIL</span>
-                <span>Espace Agence Immobilière</span>
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu mobile">☰</button>
+                <div class="logo">
+                    <span class="logo-icon">🏠</span>
+                    <span class="logo-text">PNSBIL</span>
+                    <span class="logo-subtitle">Espace Agence</span>
+                </div>
             </div>
+            
             <div class="user-menu">
-                <span class="user-name" id="userName">Agence Immobilière Premium</span>
-                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Agence Immobilière Premium</div>
+                    <div class="user-role">Agence Professionnelle</div>
+                </div>
+                <button class="btn btn-outline" onclick="logout()">
+                    <span>Déconnexion</span>
+                    <span>🚪</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <nav class="sidebar">
+    <!-- Overlay Mobile -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
         <div class="nav-section">
-            <h3>Gestion Professionnelle</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="portefeuille.html" class="nav-link active">🏘️ Mon portefeuille</a>
-            <a href="transactions.html" class="nav-link">🔄 Transactions</a>
-            <a href="conformite.html" class="nav-link">📋 Conformité</a>
+            <div class="nav-title">Gestion Professionnelle</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="portefeuille.html" class="nav-link active">
+                <span class="nav-icon">🏘️</span>
+                <span>Mon portefeuille</span>
+            </a>
+            <a href="transactions.html" class="nav-link">
+                <span class="nav-icon">🔄</span>
+                <span>Transactions</span>
+            </a>
+            <a href="conformite.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span>Conformité</span>
+            </a>
+            <a href="rapports-pro.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span>Rapports Pro</span>
+            </a>
         </div>
         
         <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+            <div class="nav-title">Communication</div>
+            <a href="communication.html" class="nav-link">
+                <span class="nav-icon">💬</span>
+                <span>Messagerie</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Support</div>
+            <a href="support.html" class="nav-link">
+                <span class="nav-icon">🛟</span>
+                <span>Centre d'aide</span>
+            </a>
+            <a href="parametres.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span>Paramètres</span>
+            </a>
         </div>
     </nav>
 
+    <!-- Contenu Principal -->
     <main class="main-content">
+        <!-- En-tête de page -->
         <div class="page-header">
             <div class="header-actions">
-                <h1>Mon Portefeuille Immobilier</h1>
+                <h1 class="page-title">Mon Portefeuille Immobilier</h1>
                 <button class="btn btn-primary" onclick="showAddPropertyModal()">
-                    <i class="fas fa-plus me-2"></i> Ajouter un bien
+                    <span>➕</span>
+                    <span>Ajouter un bien</span>
                 </button>
             </div>
-            <p>Gérez votre portefeuille de biens immobiliers</p>
+            <p class="page-subtitle">Gérez votre portefeuille de biens immobiliers</p>
         </div>
 
         <!-- Vue d'ensemble du portefeuille -->
@@ -92,7 +1254,7 @@
         <div class="portfolio-filters">
             <div class="filter-row">
                 <div class="search-box">
-                    <i class="fas fa-search"></i>
+                    <span>🔍</span>
                     <input type="text" placeholder="Rechercher un bien..." id="propertySearch">
                 </div>
                 <div class="filter-group">
@@ -115,9 +1277,9 @@
                 <div class="filter-group">
                     <select id="locationFilter">
                         <option value="">Toutes les localisations</option>
-                        <option value="dakar">Dakar</option>
-                        <option value="thies">Thiès</option>
-                        <option value="saint-louis">Saint-Louis</option>
+                        <option value="Ouagadougou">Ouagadougou</option>
+                        <option value="Bobo-Dioulasso">Bobo-Dioulasso</option>
+                        <option value="Koudougou">Koudougou</option>
                     </select>
                 </div>
             </div>
@@ -129,13 +1291,16 @@
                 <h4>Actions Groupées</h4>
                 <div class="bulk-buttons">
                     <button class="btn btn-outline" onclick="exportProperties()">
-                        <i class="fas fa-download me-2"></i>Exporter
+                        <span>📥</span>
+                        <span>Exporter</span>
                     </button>
                     <button class="btn btn-outline" onclick="bulkUpdateStatus()">
-                        <i class="fas fa-sync me-2"></i>Modifier statut
+                        <span>🔄</span>
+                        <span>Modifier statut</span>
                     </button>
                     <button class="btn btn-outline" onclick="generatePortfolioReport()">
-                        <i class="fas fa-chart-bar me-2"></i>Rapport portefeuille
+                        <span>📊</span>
+                        <span>Rapport portefeuille</span>
                     </button>
                 </div>
             </div>
@@ -149,34 +1314,36 @@
                     <div class="property-badge occupied">Occupé</div>
                     <div class="property-actions">
                         <button class="btn-icon" title="Modifier" onclick="editProperty(1)">
-                            <i class="fas fa-edit"></i>
+                            <span>✏️</span>
                         </button>
                         <button class="btn-icon" title="Statistiques" onclick="showPropertyStats(1)">
-                            <i class="fas fa-chart-bar"></i>
+                            <span>📈</span>
                         </button>
                     </div>
                 </div>
                 <div class="property-image">
-                    <img src="../assets/images/property1.jpg" alt="Résidence Les Almadies">
+                    <div style="background: #e2e8f0; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-light);">
+                        🏠 Image du bien
+                    </div>
                     <div class="property-type">Appartement</div>
                 </div>
                 <div class="property-content">
                     <h3 class="property-title">Résidence Les Almadies</h3>
                     <div class="property-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Almadies, Dakar
+                        <span>📍</span>
+                        <span>Almadies, Ouagadougou</span>
                     </div>
                     <div class="property-details">
                         <div class="detail">
-                            <i class="fas fa-ruler-combined"></i>
+                            <span>📐</span>
                             <span>85m²</span>
                         </div>
                         <div class="detail">
-                            <i class="fas fa-bed"></i>
+                            <span>🛏️</span>
                             <span>3 pièces</span>
                         </div>
                         <div class="detail">
-                            <i class="fas fa-bath"></i>
+                            <span>🚿</span>
                             <span>2 sdb</span>
                         </div>
                     </div>
@@ -195,10 +1362,12 @@
                     </div>
                     <div class="property-footer">
                         <button class="btn btn-outline" onclick="viewPropertyDetails(1)">
-                            <i class="fas fa-eye me-1"></i> Détails
+                            <span>👁️</span>
+                            <span>Détails</span>
                         </button>
                         <button class="btn btn-primary" onclick="contactTenant(1)">
-                            <i class="fas fa-envelope me-1"></i> Contacter
+                            <span>✉️</span>
+                            <span>Contacter</span>
                         </button>
                     </div>
                 </div>
@@ -210,34 +1379,36 @@
                     <div class="property-badge vacant">Vacant</div>
                     <div class="property-actions">
                         <button class="btn-icon" title="Modifier" onclick="editProperty(2)">
-                            <i class="fas fa-edit"></i>
+                            <span>✏️</span>
                         </button>
                         <button class="btn-icon" title="Publier" onclick="publishProperty(2)">
-                            <i class="fas fa-share"></i>
+                            <span>📤</span>
                         </button>
                     </div>
                 </div>
                 <div class="property-image">
-                    <img src="../assets/images/property2.jpg" alt="Villa Mermoz">
+                    <div style="background: #e2e8f0; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-light);">
+                        🏠 Image du bien
+                    </div>
                     <div class="property-type">Villa</div>
                 </div>
                 <div class="property-content">
                     <h3 class="property-title">Villa Mermoz</h3>
                     <div class="property-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Mermoz, Dakar
+                        <span>📍</span>
+                        <span>Mermoz, Ouagadougou</span>
                     </div>
                     <div class="property-details">
                         <div class="detail">
-                            <i class="fas fa-ruler-combined"></i>
+                            <span>📐</span>
                             <span>185m²</span>
                         </div>
                         <div class="detail">
-                            <i class="fas fa-bed"></i>
+                            <span>🛏️</span>
                             <span>5 pièces</span>
                         </div>
                         <div class="detail">
-                            <i class="fas fa-bath"></i>
+                            <span>🚿</span>
                             <span>3 sdb</span>
                         </div>
                     </div>
@@ -247,7 +1418,7 @@
                     </div>
                     <div class="property-vacancy">
                         <div class="vacancy-info">
-                            <i class="fas fa-clock"></i>
+                            <span>⏰</span>
                             <span>Disponible depuis 15 jours</span>
                         </div>
                         <div class="vacancy-actions">
@@ -258,10 +1429,12 @@
                     </div>
                     <div class="property-footer">
                         <button class="btn btn-outline" onclick="viewPropertyDetails(2)">
-                            <i class="fas fa-eye me-1"></i> Détails
+                            <span>👁️</span>
+                            <span>Détails</span>
                         </button>
                         <button class="btn btn-primary" onclick="marketingActions(2)">
-                            <i class="fas fa-bullhorn me-1"></i> Promouvoir
+                            <span>📢</span>
+                            <span>Promouvoir</span>
                         </button>
                     </div>
                 </div>
@@ -273,34 +1446,36 @@
                     <div class="property-badge maintenance">Maintenance</div>
                     <div class="property-actions">
                         <button class="btn-icon" title="Modifier" onclick="editProperty(3)">
-                            <i class="fas fa-edit"></i>
+                            <span>✏️</span>
                         </button>
                         <button class="btn-icon" title="Maintenance" onclick="showMaintenance(3)">
-                            <i class="fas fa-tools"></i>
+                            <span>🔧</span>
                         </button>
                     </div>
                 </div>
                 <div class="property-image">
-                    <img src="../assets/images/property3.jpg" alt="Appartement Fann">
+                    <div style="background: #e2e8f0; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-light);">
+                        🏠 Image du bien
+                    </div>
                     <div class="property-type">Appartement</div>
                 </div>
                 <div class="property-content">
                     <h3 class="property-title">Appartement Fann Residence</h3>
                     <div class="property-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Fann, Dakar
+                        <span>📍</span>
+                        <span>Fann, Ouagadougou</span>
                     </div>
                     <div class="property-details">
                         <div class="detail">
-                            <i class="fas fa-ruler-combined"></i>
+                            <span>📐</span>
                             <span>65m²</span>
                         </div>
                         <div class="detail">
-                            <i class="fas fa-bed"></i>
+                            <span>🛏️</span>
                             <span>2 pièces</span>
                         </div>
                         <div class="detail">
-                            <i class="fas fa-bath"></i>
+                            <span>🚿</span>
                             <span>1 sdb</span>
                         </div>
                     </div>
@@ -310,7 +1485,7 @@
                     </div>
                     <div class="property-maintenance">
                         <div class="maintenance-info">
-                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>⚠️</span>
                             <span>Rénovation en cours - Fin prévue: 15/04/2024</span>
                         </div>
                         <div class="maintenance-progress">
@@ -322,10 +1497,12 @@
                     </div>
                     <div class="property-footer">
                         <button class="btn btn-outline" onclick="viewPropertyDetails(3)">
-                            <i class="fas fa-eye me-1"></i> Détails
+                            <span>👁️</span>
+                            <span>Détails</span>
                         </button>
                         <button class="btn btn-warning" onclick="updateMaintenance(3)">
-                            <i class="fas fa-tools me-1"></i> Suivi travaux
+                            <span>🔧</span>
+                            <span>Suivi travaux</span>
                         </button>
                     </div>
                 </div>
@@ -337,34 +1514,36 @@
                     <div class="property-badge occupied">Occupé</div>
                     <div class="property-actions">
                         <button class="btn-icon" title="Modifier" onclick="editProperty(4)">
-                            <i class="fas fa-edit"></i>
+                            <span>✏️</span>
                         </button>
                         <button class="btn-icon" title="Documents" onclick="showDocuments(4)">
-                            <i class="fas fa-folder"></i>
+                            <span>📁</span>
                         </button>
                     </div>
                 </div>
                 <div class="property-image">
-                    <img src="../assets/images/property4.jpg" alt="Studio Plateau">
+                    <div style="background: #e2e8f0; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-light);">
+                        🏠 Image du bien
+                    </div>
                     <div class="property-type">Studio</div>
                 </div>
                 <div class="property-content">
                     <h3 class="property-title">Studio Plateau</h3>
                     <div class="property-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Plateau, Dakar
+                        <span>📍</span>
+                        <span>Plateau, Ouagadougou</span>
                     </div>
                     <div class="property-details">
                         <div class="detail">
-                            <i class="fas fa-ruler-combined"></i>
+                            <span>📐</span>
                             <span>35m²</span>
                         </div>
                         <div class="detail">
-                            <i class="fas fa-bed"></i>
+                            <span>🛏️</span>
                             <span>1 pièce</span>
                         </div>
                         <div class="detail">
-                            <i class="fas fa-bath"></i>
+                            <span>🚿</span>
                             <span>1 sdb</span>
                         </div>
                     </div>
@@ -383,16 +1562,18 @@
                     </div>
                     <div class="property-alert">
                         <div class="alert-badge warning">
-                            <i class="fas fa-exclamation-circle"></i>
+                            <span>⚠️</span>
                             <span>Paiement en attente</span>
                         </div>
                     </div>
                     <div class="property-footer">
                         <button class="btn btn-outline" onclick="viewPropertyDetails(4)">
-                            <i class="fas fa-eye me-1"></i> Détails
+                            <span>👁️</span>
+                            <span>Détails</span>
                         </button>
                         <button class="btn btn-danger" onclick="sendPaymentReminder(4)">
-                            <i class="fas fa-bell me-1"></i> Rappeler
+                            <span>🔔</span>
+                            <span>Rappeler</span>
                         </button>
                     </div>
                 </div>
@@ -402,7 +1583,8 @@
         <!-- Pagination -->
         <div class="pagination">
             <button class="btn btn-outline" disabled>
-                <i class="fas fa-chevron-left"></i> Précédent
+                <span>◀</span>
+                <span>Précédent</span>
             </button>
             <div class="page-numbers">
                 <span class="page-number active">1</span>
@@ -412,7 +1594,8 @@
                 <span class="page-number">12</span>
             </div>
             <button class="btn btn-outline">
-                Suivant <i class="fas fa-chevron-right"></i>
+                <span>Suivant</span>
+                <span>▶</span>
             </button>
         </div>
     </main>
@@ -423,7 +1606,7 @@
             <div class="modal-header">
                 <h3>Ajouter un nouveau bien</h3>
                 <button class="btn-icon" onclick="closeAddPropertyModal()">
-                    <i class="fas fa-times"></i>
+                    <span>✕</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -486,24 +1669,234 @@
         </div>
     </div>
 
-    <script src="../js/dashboard.js"></script>
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h5>PNSBIL</h5>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
+                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Liens rapides</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="properties.html">Propriétés</a></li>
+                        <li><a href="leases.html">Baux</a></li>
+                        <li><a href="taxes.html">Impôts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Ressources</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Guides</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Contact</h5>
+                    <ul class="footer-contact">
+                        <li>📍 Avenue de la Nation, Ouagadougou, Burkina Faso</li>
+                        <li>📞 +226 25 45 67 89</li>
+                        <li>✉️ agence@pnsbil.bf</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PNSBIL - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
     <script>
+        // =============================================
+        // GESTIONNAIRE PRINCIPAL
+        // =============================================
+        class PortfolioManager {
+            constructor() {
+                this.properties = [];
+                this.filters = {
+                    search: '',
+                    type: '',
+                    status: '',
+                    location: ''
+                };
+                this.init();
+            }
+
+            init() {
+                this.setupMobileMenu();
+                this.setupEventListeners();
+                this.loadProperties();
+            }
+
+            setupMobileMenu() {
+                const menuBtn = document.getElementById('mobileMenuBtn');
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('mobileOverlay');
+
+                if (menuBtn && sidebar && overlay) {
+                    const toggleMenu = () => {
+                        sidebar.classList.toggle('mobile-open');
+                        overlay.classList.toggle('active');
+                        document.body.style.overflow = sidebar.classList.contains('mobile-open') ? 'hidden' : '';
+                    };
+
+                    menuBtn.addEventListener('click', toggleMenu);
+                    overlay.addEventListener('click', toggleMenu);
+
+                    sidebar.addEventListener('click', (e) => {
+                        if (e.target.tagName === 'A') {
+                            toggleMenu();
+                        }
+                    });
+
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape' && sidebar.classList.contains('mobile-open')) {
+                            toggleMenu();
+                        }
+                    });
+                }
+            }
+
+            setupEventListeners() {
+                // Recherche en temps réel
+                const searchInput = document.getElementById('propertySearch');
+                if (searchInput) {
+                    searchInput.addEventListener('input', (e) => {
+                        this.filters.search = e.target.value;
+                        this.filterProperties();
+                    });
+                }
+
+                // Filtres
+                const typeFilter = document.getElementById('propertyTypeFilter');
+                const statusFilter = document.getElementById('statusFilter');
+                const locationFilter = document.getElementById('locationFilter');
+
+                [typeFilter, statusFilter, locationFilter].forEach(filter => {
+                    if (filter) {
+                        filter.addEventListener('change', (e) => {
+                            this.filters[e.target.id.replace('Filter', '')] = e.target.value;
+                            this.filterProperties();
+                        });
+                    }
+                });
+
+                // Fermer la modal en cliquant en dehors
+                window.addEventListener('click', (e) => {
+                    const modal = document.getElementById('addPropertyModal');
+                    if (e.target === modal) {
+                        this.closeAddPropertyModal();
+                    }
+                });
+
+                // Fermer la modal avec Échap
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeAddPropertyModal();
+                    }
+                });
+            }
+
+            loadProperties() {
+                // Simulation de chargement des propriétés
+                setTimeout(() => {
+                    console.log('Propriétés chargées');
+                }, 500);
+            }
+
+            filterProperties() {
+                console.log('Filtrage des propriétés:', this.filters);
+                // Implémentation du filtrage
+            }
+
+            showAddPropertyModal() {
+                document.getElementById('addPropertyModal').style.display = 'flex';
+            }
+
+            closeAddPropertyModal() {
+                document.getElementById('addPropertyModal').style.display = 'none';
+            }
+
+            saveProperty() {
+                // Implémentation de la sauvegarde
+                console.log('Sauvegarde du bien...');
+                this.closeAddPropertyModal();
+                this.showNotification('Bien ajouté avec succès', 'success');
+            }
+
+            showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: white;
+                    border-radius: 8px;
+                    box-shadow: var(--shadow-lg);
+                    z-index: 3000;
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease;
+                    max-width: 400px;
+                    border-left: 4px solid ${type === 'success' ? 'var(--success)' : 'var(--error)'};
+                `;
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md);">
+                        <span>${type === 'success' ? '✅' : '❌'}</span>
+                        <span>${message}</span>
+                        <button style="background: none; border: none; cursor: pointer; margin-left: auto;" onclick="this.parentElement.parentElement.remove()">✕</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }, 4000);
+            }
+        }
+
+        // =============================================
+        // FONCTIONS GLOBALES
+        // =============================================
+        const portfolioManager = new PortfolioManager();
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                setTimeout(() => {
+                    window.location.href = '../login.html';
+                }, 1000);
+            }
+        }
+
         function showAddPropertyModal() {
-            document.getElementById('addPropertyModal').style.display = 'block';
+            portfolioManager.showAddPropertyModal();
         }
 
         function closeAddPropertyModal() {
-            document.getElementById('addPropertyModal').style.display = 'none';
+            portfolioManager.closeAddPropertyModal();
         }
 
         function saveProperty() {
-            // Implémentation de la sauvegarde
-            console.log('Sauvegarde du bien...');
-            closeAddPropertyModal();
+            portfolioManager.saveProperty();
         }
 
         function editProperty(propertyId) {
             console.log(`Modification du bien ${propertyId}`);
+            portfolioManager.showNotification('Mode édition activé', 'info');
         }
 
         function showPropertyStats(propertyId) {
@@ -512,6 +1905,7 @@
 
         function publishProperty(propertyId) {
             console.log(`Publication du bien ${propertyId}`);
+            portfolioManager.showNotification('Bien publié avec succès', 'success');
         }
 
         function viewPropertyDetails(propertyId) {
@@ -520,6 +1914,7 @@
 
         function contactTenant(propertyId) {
             console.log(`Contacter locataire du bien ${propertyId}`);
+            portfolioManager.showNotification('Message envoyé au locataire', 'success');
         }
 
         function addProspect(propertyId) {
@@ -544,10 +1939,12 @@
 
         function sendPaymentReminder(propertyId) {
             console.log(`Rappel paiement pour bien ${propertyId}`);
+            portfolioManager.showNotification('Rappel de paiement envoyé', 'success');
         }
 
         function exportProperties() {
             console.log('Export des biens');
+            portfolioManager.showNotification('Export en cours...', 'info');
         }
 
         function bulkUpdateStatus() {
@@ -556,61 +1953,32 @@
 
         function generatePortfolioReport() {
             console.log('Génération rapport portefeuille');
+            portfolioManager.showNotification('Rapport généré avec succès', 'success');
         }
 
-        // Fermer la modal en cliquant en dehors
-        window.onclick = function(event) {
-            const modal = document.getElementById('addPropertyModal');
-            if (event.target === modal) {
-                closeAddPropertyModal();
+        function checkAuth(role) {
+            return true;
+        }
+
+        function getCurrentUser() {
+            return {
+                name: 'Agence Immobilière Premium',
+                role: 'agence'
+            };
+        }
+
+        // =============================================
+        // INITIALISATION
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mettre à jour le nom d'utilisateur
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
             }
-        }
+
+            console.log('Portefeuille Agence Immobilière initialisé avec succès');
+        });
     </script>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
-                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
 </body>
 </html>

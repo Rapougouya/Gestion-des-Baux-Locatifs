@@ -1,10 +1,950 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Communication - Espace Locataire | PNSBIL</title>
-    <link rel="stylesheet" href="../css/communication-modern.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 0; /* Suppression du padding qui causait le chevauchement */
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+
+        /* Header */
+        .comm-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .comm-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .comm-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Grid Principal */
+        .communication-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            min-height: 600px; /* Hauteur minimale pour éviter le chevauchement */
+            margin-bottom: 2rem;
+        }
+
+        /* Panneau des Contacts */
+        .contacts-panel {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .contacts-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .contacts-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .search-container {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .contacts-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 0.5rem;
+            gap: 1rem;
+        }
+
+        .contact-item:hover {
+            background: var(--background-color);
+        }
+
+        .contact-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .contact-item.active .contact-role,
+        .contact-item.active .contact-lastmsg {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+            position: relative;
+        }
+
+        .status-indicator {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--surface-color);
+        }
+
+        .status-indicator.online {
+            background: var(--success-color);
+        }
+
+        .status-indicator.offline {
+            background: var(--secondary-color);
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .contact-role {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-lastmsg {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+
+        .contact-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .unread-badge {
+            background: var(--error-color);
+            color: white;
+            border-radius: 10px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .contact-item.active .unread-badge {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Panneau de Chat */
+        .chat-panel {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .chat-header-info h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .chat-status {
+            font-size: 0.875rem;
+            color: var(--success-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .chat-context {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: var(--background-color);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.125rem;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Zone des Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .message {
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .message.received {
+            align-self: flex-start;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .message-text {
+            padding: 1rem 1.25rem;
+            border-radius: var(--border-radius);
+            line-height: 1.5;
+            font-size: 0.875rem;
+        }
+
+        .message.received .message-text {
+            background: var(--background-color);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.sent .message-text {
+            background: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.sent .message-time {
+            align-self: flex-end;
+        }
+
+        .message-status {
+            font-size: 0.75rem;
+            color: var(--success-color);
+            align-self: flex-end;
+        }
+
+        /* Actions Rapides */
+        .quick-actions-chat {
+            display: flex;
+            gap: 0.75rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            background: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Zone de Saisie */
+        .chat-input-container {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--surface-color);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .attachment-btn,
+        .emoji-btn {
+            background: var(--background-color);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.125rem;
+        }
+
+        .attachment-btn:hover,
+        .emoji-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1rem 1.25rem;
+            font-family: inherit;
+            font-size: 0.875rem;
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+            transition: var(--transition);
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .send-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Footer Modernisé - CORRIGÉ */
+        .main-footer {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            margin-top: auto; /* Positionnement automatique en bas */
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #334155, transparent);
+        }
+
+        .footer-wave {
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--primary-color));
+            opacity: 0.1;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem 2rem; /* Réduction du padding supérieur */
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section h5 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h5::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .footer-section p {
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li:hover {
+            transform: translateX(5px);
+        }
+
+        .footer-section a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .footer-section a:hover {
+            color: white;
+            transform: translateX(3px);
+        }
+
+        .footer-section a i {
+            width: 16px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--primary-color);
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .footer-contact i {
+            margin-top: 0.125rem;
+            color: var(--primary-color);
+            font-size: 1rem;
+            min-width: 16px;
+        }
+
+        .footer-contact span {
+            color: #94a3b8;
+            line-height: 1.5;
+            font-size: 0.875rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .footer-logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-logo-text .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .footer-logo-text .tagline {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem; /* Réduction du padding */
+            margin-top: 1rem; /* Réduction de la marge */
+        }
+
+        .footer-bottom-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-legal a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .footer-legal a:hover {
+            color: white;
+        }
+
+        .back-to-top {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.25rem;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
+        }
+
+        /* Badge Nouveauté */
+        .new-badge {
+            background: linear-gradient(135deg, var(--accent-color), #ea580c);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .message {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .footer-section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .footer-section:nth-child(1) { animation-delay: 0.1s; }
+        .footer-section:nth-child(2) { animation-delay: 0.2s; }
+        .footer-section:nth-child(3) { animation-delay: 0.3s; }
+        .footer-section:nth-child(4) { animation-delay: 0.4s; }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-secondary);
+            animation: pulse 1.4s ease-in-out infinite both;
+        }
+
+        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .footer-content {
+                grid-template-columns: 2fr 1fr 1fr;
+                gap: 2.5rem;
+            }
+            
+            .footer-section:last-child {
+                grid-column: 1 / -1;
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .communication-grid {
+                grid-template-columns: 300px 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .communication-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+                min-height: auto; /* Suppression de la hauteur minimale en mobile */
+            }
+            
+            .contacts-panel {
+                height: 400px;
+            }
+            
+            .chat-panel {
+                height: 500px;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+                padding: 2rem 1.5rem 1.5rem; /* Réduction supplémentaire en mobile */
+            }
+            
+            .footer-section:last-child {
+                grid-column: 1 / -1;
+            }
+            
+            .footer-bottom-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            
+            .footer-legal {
+                justify-content: center;
+            }
+            
+            .comm-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+            
+            .chat-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .chat-actions {
+                align-self: flex-end;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .quick-actions-chat {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1.5rem 1rem 1rem; /* Réduction supplémentaire en mobile */
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+            
+            .footer-logo {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .footer-legal {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .footer-bottom {
+                padding: 1rem 1rem; /* Réduction supplémentaire en mobile */
+            }
+        }
+    </style>
 </head>
 <body class="communication-modern">
     <div class="container">
@@ -99,13 +1039,19 @@
                         <div>
                             <h3>Mohamed Diallo</h3>
                             <div class="chat-status">En ligne • Votre Propriétaire</div>
-                            <div class="chat-context">Appartement B12 - Dakar Plateau</div>
+                            <div class="chat-context">Appartement B12 - Ouagadougou Plateau</div>
                         </div>
                     </div>
                     <div class="chat-actions">
-                        <button class="action-btn" title="Voir le contrat" onclick="showContract()">📑</button>
-                        <button class="action-btn" title="Signaler un problème" onclick="reportIssue()">⚠️</button>
-                        <button class="action-btn" title="Informations propriétaire">ℹ️</button>
+                        <button class="action-btn" title="Voir le contrat" onclick="showContract()">
+                            <i class="fas fa-file-contract"></i>
+                        </button>
+                        <button class="action-btn" title="Signaler un problème" onclick="reportIssue()">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </button>
+                        <button class="action-btn" title="Informations propriétaire" onclick="showContactInfo()">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
                     </div>
                 </div>
                 
@@ -126,7 +1072,9 @@
                             Bonjour, avec plaisir. Pourriez-vous m'envoyer l'attestation de loyer pour mes impôts ?
                         </div>
                         <div class="message-time">10:18</div>
-                        <div class="message-status">✓✓</div>
+                        <div class="message-status">
+                            <i class="fas fa-check-double"></i>
+                        </div>
                     </div>
                     
                     <div class="message received">
@@ -140,25 +1088,34 @@
                     </div>
 
                     <div class="quick-actions-chat">
-                        <button class="quick-btn" onclick="askForDocument()">📄 Demander un document</button>
-                        <button class="quick-btn" onclick="reportMaintenance()">🔧 Signaler une panne</button>
-                        <button class="quick-btn" onclick="askQuestion()">❓ Poser une question</button>
+                        <button class="quick-btn" onclick="askForDocument()">
+                            <i class="fas fa-file-alt"></i> Demander un document
+                        </button>
+                        <button class="quick-btn" onclick="reportMaintenance()">
+                            <i class="fas fa-tools"></i> Signaler une panne
+                        </button>
+                        <button class="quick-btn" onclick="askQuestion()">
+                            <i class="fas fa-question-circle"></i> Poser une question
+                        </button>
                     </div>
                 </div>
                 
                 <div class="chat-input-container">
                     <div class="input-actions">
-                        <button class="attachment-btn" title="Joindre une photo">📷</button>
-                        <button class="attachment-btn" title="Joindre un document">📎</button>
-                        <button class="emoji-btn" title="Insérer un emoji">😊</button>
+                        <button class="attachment-btn" title="Joindre une photo" onclick="attachPhoto()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <button class="attachment-btn" title="Joindre un document" onclick="attachDocument()">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="emoji-btn" title="Insérer un emoji" onclick="toggleEmojiPicker()">
+                            <i class="far fa-smile"></i>
+                        </button>
                     </div>
                     <div class="input-group">
                         <textarea class="message-input" placeholder="Tapez votre message à votre propriétaire..." id="messageInput" rows="1"></textarea>
                         <button class="send-btn" onclick="sendMessage()">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22,2 15,22 11,13 2,9"></polygon>
-                            </svg>
+                            <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
                 </div>
@@ -166,52 +1123,504 @@
         </div>
     </div>
 
-    <script src="../js/communication-locataire.js"></script>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
-                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+    <!-- Footer CORRIGÉ -->
+    <footer class="main-footer">
+        <div class="footer-wave"></div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">🏠</div>
+                    <div class="footer-logo-text">
+                        <div class="brand">PNSBIL</div>
+                        <div class="tagline">Location intelligente</div>
+                    </div>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
-                    </ul>
+                <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs. Modernisation et digitalisation de la gestion du marché locatif.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+
+            <div class="footer-section">
+                <h5>Liens rapides</h5>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="properties.html"><i class="fas fa-building"></i> Propriétés</a></li>
+                    <li><a href="leases.html"><i class="fas fa-file-contract"></i> Baux</a></li>
+                    <li><a href="taxes.html"><i class="fas fa-chart-line"></i> Impôts</a></li>
+                    <li><a href="#"><i class="fas fa-search"></i> Recherche <span class="new-badge">Nouveau</span></a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h5>Ressources</h5>
+                <ul>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Guides</a></li>
+                    <li><a href="#"><i class="fas fa-headset"></i> Support</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Confidentialité</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section footer-contact">
+                <h5>Contact</h5>
+                <ul>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Avenue de la Nation,<br>Ouagadougou, Burkina Faso</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone"></i>
+                        <span>+226 33 123 45 67<br>Lun - Ven: 8h - 18h</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@pnsbil.bf<br>support@pnsbil.bf</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        <span>24h/24 via l'application mobile</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="footer-copyright">
+                    &copy; 2025 PNSBIL - Tous droits réservés. Conçu avec ❤️ pour le Burkina Faso.
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Conditions d'utilisation</a>
+                    <a href="#">Cookies</a>
+                </div>
+                <button class="back-to-top" onclick="scrollToTop()" title="Retour en haut">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script>
+        // Gestionnaire de Communication - JavaScript Fonctionnel
+        class CommunicationManager {
+            constructor() {
+                this.messages = [];
+                this.currentContact = null;
+                this.isTyping = false;
+                this.init();
+            }
+
+            init() {
+                this.loadMessages();
+                this.setupEventListeners();
+                this.setupAutoResize();
+                this.setupFooterAnimations();
+            }
+
+            loadMessages() {
+                // Simulation de messages existants
+                this.messages = [
+                    {
+                        id: 1,
+                        sender: 'Mohamed Diallo',
+                        type: 'received',
+                        text: 'Bonjour, j\'ai bien reçu votre paiement de loyer pour ce mois-ci. Merci de votre ponctualité.',
+                        time: '10:15',
+                        status: 'delivered'
+                    },
+                    {
+                        id: 2,
+                        sender: 'Vous',
+                        type: 'sent',
+                        text: 'Bonjour, avec plaisir. Pourriez-vous m\'envoyer l\'attestation de loyer pour mes impôts ?',
+                        time: '10:18',
+                        status: 'read'
+                    },
+                    {
+                        id: 3,
+                        sender: 'Mohamed Diallo',
+                        type: 'received',
+                        text: 'Bien sûr, je la génère et vous l\'envoie dans l\'après-midi. Avez-vous d\'autres questions concernant l\'appartement ?',
+                        time: '10:30',
+                        status: 'delivered'
+                    }
+                ];
+
+                this.renderMessages();
+            }
+
+            renderMessages() {
+                const chatMessages = document.getElementById('chatMessages');
+                if (!chatMessages) return;
+
+                // Garder les actions rapides
+                const quickActions = chatMessages.querySelector('.quick-actions-chat');
+                
+                chatMessages.innerHTML = '';
+                
+                this.messages.forEach(message => {
+                    const messageElement = this.createMessageElement(message);
+                    chatMessages.appendChild(messageElement);
+                });
+
+                // Réajouter les actions rapides
+                if (quickActions) {
+                    chatMessages.appendChild(quickActions);
+                }
+
+                this.scrollToBottom();
+            }
+
+            createMessageElement(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${message.type}`;
+                
+                if (message.type === 'received') {
+                    messageDiv.innerHTML = `
+                        <div class="message-header">
+                            <span class="message-sender">${message.sender}</span>
+                            <span class="message-time">${message.time}</span>
+                        </div>
+                        <div class="message-text">${message.text}</div>
+                    `;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="message-text">${message.text}</div>
+                        <div class="message-time">${message.time}</div>
+                        <div class="message-status">
+                            ${message.status === 'read' ? '<i class="fas fa-check-double"></i>' : '<i class="fas fa-check"></i>'}
+                        </div>
+                    `;
+                }
+                
+                return messageDiv;
+            }
+
+            setupEventListeners() {
+                // Gestion de la saisie de message
+                const messageInput = document.getElementById('messageInput');
+                if (messageInput) {
+                    messageInput.addEventListener('input', this.handleInput.bind(this));
+                    messageInput.addEventListener('keypress', this.handleKeyPress.bind(this));
+                }
+
+                // Gestion de la recherche de contacts
+                const contactSearch = document.getElementById('contactSearch');
+                if (contactSearch) {
+                    contactSearch.addEventListener('input', this.searchContacts.bind(this));
+                }
+
+                // Gestion des clics sur les contacts
+                document.querySelectorAll('.contact-item').forEach(contact => {
+                    contact.addEventListener('click', () => {
+                        this.selectContact(contact);
+                    });
+                });
+
+                // Gestion du bouton retour en haut
+                window.addEventListener('scroll', this.handleScroll.bind(this));
+            }
+
+            setupAutoResize() {
+                const messageInput = document.getElementById('messageInput');
+                if (messageInput) {
+                    messageInput.addEventListener('input', function() {
+                        this.style.height = 'auto';
+                        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+                    });
+                }
+            }
+
+            setupFooterAnimations() {
+                document.addEventListener('DOMContentLoaded', () => {
+                    const footerSections = document.querySelectorAll('.footer-section');
+                    footerSections.forEach(section => {
+                        section.style.opacity = '0';
+                        section.style.transform = 'translateY(30px)';
+                    });
+
+                    setTimeout(() => {
+                        footerSections.forEach(section => {
+                            section.style.transition = 'all 0.6s ease-out';
+                            section.style.opacity = '1';
+                            section.style.transform = 'translateY(0)';
+                        });
+                    }, 500);
+                });
+            }
+
+            handleInput(event) {
+                if (!this.isTyping && event.target.value.length > 0) {
+                    this.showTypingIndicator();
+                } else if (this.isTyping && event.target.value.length === 0) {
+                    this.hideTypingIndicator();
+                }
+            }
+
+            handleKeyPress(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    this.sendMessage();
+                }
+            }
+
+            handleScroll() {
+                const backToTop = document.querySelector('.back-to-top');
+                if (window.scrollY > 300) {
+                    backToTop.style.opacity = '1';
+                    backToTop.style.visibility = 'visible';
+                } else {
+                    backToTop.style.opacity = '0';
+                    backToTop.style.visibility = 'hidden';
+                }
+            }
+
+            searchContacts(event) {
+                const searchTerm = event.target.value.toLowerCase();
+                const contactItems = document.querySelectorAll('.contact-item');
+                
+                contactItems.forEach(contact => {
+                    const contactName = contact.querySelector('.contact-name').textContent.toLowerCase();
+                    const contactRole = contact.querySelector('.contact-role').textContent.toLowerCase();
+                    const contactLastMsg = contact.querySelector('.contact-lastmsg').textContent.toLowerCase();
+                    
+                    const matches = contactName.includes(searchTerm) || 
+                                  contactRole.includes(searchTerm) || 
+                                  contactLastMsg.includes(searchTerm);
+                    
+                    contact.style.display = matches ? 'flex' : 'none';
+                });
+            }
+
+            selectContact(contactElement) {
+                // Retirer la classe active de tous les contacts
+                document.querySelectorAll('.contact-item').forEach(contact => {
+                    contact.classList.remove('active');
+                });
+                
+                // Ajouter la classe active au contact sélectionné
+                contactElement.classList.add('active');
+                
+                // Mettre à jour l'en-tête du chat
+                this.updateChatHeader(contactElement);
+                
+                // Charger les messages du contact
+                this.loadContactMessages(contactElement);
+            }
+
+            updateChatHeader(contactElement) {
+                const contactName = contactElement.querySelector('.contact-name').textContent;
+                const contactRole = contactElement.querySelector('.contact-role').textContent;
+                const chatHeader = document.querySelector('.chat-header-info');
+                
+                if (chatHeader) {
+                    const nameElement = chatHeader.querySelector('h3');
+                    const roleElement = chatHeader.querySelector('.chat-status');
+                    
+                    if (nameElement) nameElement.textContent = contactName;
+                    if (roleElement) roleElement.textContent = contactRole;
+                }
+            }
+
+            loadContactMessages(contactElement) {
+                // Simulation du chargement des messages d'un contact
+                console.log('Chargement des messages pour:', contactElement.querySelector('.contact-name').textContent);
+                
+                // Réinitialiser les messages
+                this.messages = [];
+                this.renderMessages();
+                
+                // Simuler un délai de chargement
+                setTimeout(() => {
+                    this.loadMessages();
+                }, 500);
+            }
+
+            sendMessage() {
+                const messageInput = document.getElementById('messageInput');
+                const text = messageInput.value.trim();
+                
+                if (!text) return;
+
+                const newMessage = {
+                    id: this.messages.length + 1,
+                    sender: 'Vous',
+                    type: 'sent',
+                    text: text,
+                    time: this.getCurrentTime(),
+                    status: 'sent'
+                };
+
+                this.messages.push(newMessage);
+                this.renderMessages();
+                
+                // Réinitialiser l'input
+                messageInput.value = '';
+                messageInput.style.height = 'auto';
+                
+                // Simuler une réponse
+                this.simulateReply();
+            }
+
+            simulateReply() {
+                this.showTypingIndicator();
+                
+                setTimeout(() => {
+                    this.hideTypingIndicator();
+                    
+                    const replies = [
+                        "Je vais regarder ça et je vous réponds rapidement.",
+                        "Merci pour l'information, je prends note.",
+                        "D'accord, je m'en occupe dès que possible.",
+                        "Je vous remercie pour votre message.",
+                        "Pouvez-vous me donner plus de détails ?"
+                    ];
+                    
+                    const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                    
+                    const replyMessage = {
+                        id: this.messages.length + 1,
+                        sender: 'Mohamed Diallo',
+                        type: 'received',
+                        text: randomReply,
+                        time: this.getCurrentTime(),
+                        status: 'delivered'
+                    };
+                    
+                    this.messages.push(replyMessage);
+                    this.renderMessages();
+                }, 2000);
+            }
+
+            showTypingIndicator() {
+                this.isTyping = true;
+                const chatMessages = document.getElementById('chatMessages');
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'typing-indicator';
+                typingIndicator.innerHTML = `
+                    <div>Mohamed Diallo écrit</div>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                `;
+                typingIndicator.id = 'typingIndicator';
+                chatMessages.appendChild(typingIndicator);
+                this.scrollToBottom();
+            }
+
+            hideTypingIndicator() {
+                this.isTyping = false;
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+
+            scrollToBottom() {
+                const chatMessages = document.getElementById('chatMessages');
+                if (chatMessages) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
+
+            getCurrentTime() {
+                const now = new Date();
+                return now.getHours().toString().padStart(2, '0') + ':' + 
+                       now.getMinutes().toString().padStart(2, '0');
+            }
+
+            // Fonctions d'actions rapides
+            askForDocument() {
+                const documents = [
+                    "Attestation de loyer",
+                    "Quittance de loyer",
+                    "Contrat de location",
+                    "État des lieux"
+                ];
+                
+                const randomDoc = documents[Math.floor(Math.random() * documents.length)];
+                this.addQuickMessage(`Bonjour, pourriez-vous m'envoyer ${randomDoc.toLowerCase()} ?`);
+            }
+
+            reportMaintenance() {
+                this.addQuickMessage("Bonjour, je souhaiterais signaler un problème de maintenance dans l'appartement.");
+            }
+
+            askQuestion() {
+                this.addQuickMessage("Bonjour, j'ai une question concernant l'appartement.");
+            }
+
+            addQuickMessage(text) {
+                const messageInput = document.getElementById('messageInput');
+                messageInput.value = text;
+                messageInput.focus();
+            }
+
+            // Fonctions utilitaires
+            showContract() {
+                alert('Ouverture des détails du contrat...');
+            }
+
+            reportIssue() {
+                alert('Ouverture du formulaire de signalement...');
+            }
+
+            showContactInfo() {
+                alert('Affichage des informations du contact...');
+            }
+
+            attachPhoto() {
+                alert('Ouverture de la galerie pour sélectionner une photo...');
+            }
+
+            attachDocument() {
+                alert('Ouverture du sélecteur de fichiers...');
+            }
+
+            toggleEmojiPicker() {
+                alert('Ouverture du sélecteur d\'émoticônes...');
+            }
+
+            scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Initialisation
+        const communicationManager = new CommunicationManager();
+
+        // Fonctions globales pour compatibilité HTML
+        function sendMessage() { communicationManager.sendMessage(); }
+        function askForDocument() { communicationManager.askForDocument(); }
+        function reportMaintenance() { communicationManager.reportMaintenance(); }
+        function askQuestion() { communicationManager.askQuestion(); }
+        function showContract() { communicationManager.showContract(); }
+        function reportIssue() { communicationManager.reportIssue(); }
+        function showContactInfo() { communicationManager.showContactInfo(); }
+        function attachPhoto() { communicationManager.attachPhoto(); }
+        function attachDocument() { communicationManager.attachDocument(); }
+        function toggleEmojiPicker() { communicationManager.toggleEmojiPicker(); }
+        function scrollToTop() { communicationManager.scrollToTop(); }
+    </script>
 </body>
 </html>

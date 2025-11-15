@@ -1,4 +1,4 @@
-// Communication System Spécialisé pour LOCATAIRES PNSBIL
+﻿// Communication System Spécialisé pour LOCATAIRES PNSBIL
 
 class CommunicationCenterLocataire {
     constructor() {
@@ -23,7 +23,7 @@ class CommunicationCenterLocataire {
                 id: 1,
                 name: "Mohamed Diallo",
                 role: "Mon Propriétaire",
-                property: "Appartement B12 - Dakar Plateau",
+                property: "Appartement B12 - Ouagadougou Plateau",
                 lastMessage: "A confirmé réception du loyer",
                 online: true,
                 unread: 2,
@@ -409,7 +409,7 @@ class CommunicationCenterLocataire {
     }
 
     showProprietaireInfo() {
-        alert('👨‍💼 Informations du propriétaire : Mohamed Diallo\nTél: +221 77 123 45 67\nEmail: m.diallo@email.com');
+        alert('👨‍💼 Informations du propriétaire : Mohamed Diallo\nTél: +226 77 123 45 67\nEmail: m.diallo@email.com');
     }
 
     getLastMessageTime() {

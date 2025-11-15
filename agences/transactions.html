@@ -1,13 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transactions - Agence Immobilière | PNSBIL</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/percept-trans.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="dashboard-header">
@@ -23,410 +21,2011 @@
         </div>
     </header>
 
-    <nav class="sidebar">
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
         <div class="nav-section">
-            <h3>Gestion Professionnelle</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="portefeuille.html" class="nav-link">🏘️ Mon portefeuille</a>
-            <a href="transactions.html" class="nav-link active">🔄 Transactions</a>
-            <a href="conformite.html" class="nav-link">📋 Conformité</a>
-            <a href="rapports-pro.html" class="nav-link">📈 Rapports Pro</a>
+            <div class="nav-title">Gestion Professionnelle</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="portefeuille.html" class="nav-link">
+                <span class="nav-icon">🏘️</span>
+                <span>Mon portefeuille</span>
+            </a>
+            <a href="transactions.html" class="nav-link active">
+                <span class="nav-icon">🔄</span>
+                <span>Transactions</span>
+            </a>
+            <a href="conformite.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span>Conformité</span>
+            </a>
+            <a href="rapports-pro.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span>Rapports Pro</span>
+            </a>
         </div>
         
         <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+            <div class="nav-title">Communication</div>
+            <a href="communication.html" class="nav-link">
+                <span class="nav-icon">💬</span>
+                <span>Messagerie</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Support</div>
+            <a href="support.html" class="nav-link">
+                <span class="nav-icon">🛟</span>
+                <span>Centre d'aide</span>
+            </a>
+            <a href="parametres.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span>Paramètres</span>
+            </a>
         </div>
     </nav>
 
-    <main class="main-content">
-        <div class="page-header">
-            <div class="header-actions">
-                <h1>Gestion des Transactions</h1>
-                <div class="header-buttons">
-                    <button class="btn btn-outline" onclick="exportTransactions()">
-                        <i class="fas fa-file-export me-2"></i>Exporter
-                    </button>
-                    <button class="btn btn-primary" onclick="newTransaction()">
-                        <i class="fas fa-plus me-2"></i>Nouvelle transaction
-                    </button>
+        <main class="main-content">
+            <div class="page-header">
+                <div class="header-actions">
+                    <h1>Gestion des Transactions</h1>
+                    <div class="header-buttons">
+                        <button class="btn btn-outline" onclick="exportTransactions()">
+                            <i class="fas fa-file-export me-2"></i>Exporter
+                        </button>
+                        <button class="btn btn-primary" onclick="showNewTransactionModal()">
+                            <i class="fas fa-plus me-2"></i>Nouvelle transaction
+                        </button>
+                    </div>
                 </div>
+                <p>Suivez et gérez toutes vos transactions immobilières</p>
             </div>
-            <p>Suivez et géz toutes vos transactions immobilières</p>
-        </div>
 
-        <!-- Statistiques des transactions -->
-        <div class="transaction-stats">
-            <div class="stat-card">
-                <div class="stat-icon">🔄</div>
-                <div class="stat-content">
-                    <div class="stat-value">48</div>
-                    <div class="stat-label">Transactions actives</div>
-                    <div class="stat-change positive">+12 ce mois</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">💰</div>
-                <div class="stat-content">
-                    <div class="stat-value">18.5M FCFA</div>
-                    <div class="stat-label">Chiffre d'affaires</div>
-                    <div class="stat-change positive">+15%</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">⏳</div>
-                <div class="stat-content">
-                    <div class="stat-value">12</div>
-                    <div class="stat-label">En négociation</div>
-                    <div class="stat-change warning">En cours</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">✅</div>
-                <div class="stat-content">
-                    <div class="stat-value">36</div>
-                    <div class="stat-label">Finalisées ce mois</div>
-                    <div class="stat-change positive">+8</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Filtres et recherche -->
-        <div class="filters-section">
-            <div class="filter-row">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Rechercher une transaction..." id="transactionSearch">
-                </div>
-                <div class="filter-group">
-                    <select id="transactionStatus">
-                        <option value="">Tous les statuts</option>
-                        <option value="negotiation">En négociation</option>
-                        <option value="contract">En contrat</option>
-                        <option value="pending">En attente</option>
-                        <option value="completed">Finalisée</option>
-                        <option value="cancelled">Annulée</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <select id="transactionType">
-                        <option value="">Tous les types</option>
-                        <option value="rental">Location</option>
-                        <option value="sale">Vente</option>
-                        <option value="management">Gestion</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <select id="agentFilter">
-                        <option value="">Tous les agents</option>
-                        <option value="agent1">M. Diallo</option>
-                        <option value="agent2">Mme Sow</option>
-                        <option value="agent3">M. Ndiaye</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pipeline des transactions -->
-        <div class="transaction-pipeline">
-            <div class="section-header">
-                <h3>📊 Pipeline des Transactions</h3>
-            </div>
-            <div class="pipeline-stages">
-                <div class="pipeline-stage">
-                    <div class="stage-header">
-                        <h5>📞 Premier contact</h5>
-                        <span class="stage-count">15</span>
-                    </div>
-                    <div class="stage-transactions">
-                        <div class="pipeline-item">
-                            <div class="item-header">
-                                <h6>TRX-2024-0158</h6>
-                                <span class="item-type rental">Location</span>
-                            </div>
-                            <div class="item-content">
-                                <p class="property">Résidence Les Almadies</p>
-                                <p class="client">Client: M. Abdoulaye Diop</p>
-                                <p class="amount">450,000 FCFA/mois</p>
-                            </div>
-                            <div class="item-actions">
-                                <button class="btn btn-sm btn-outline" onclick="viewTransaction(158)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-primary" onclick="advanceStage(158)">
-                                    <i class="fas fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- Autres transactions du stage -->
+            <!-- Statistiques des transactions -->
+            <div class="transaction-stats">
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-content">
+                        <div class="stat-value">48</div>
+                        <div class="stat-label">Transactions actives</div>
+                        <div class="stat-change positive">+12 ce mois</div>
                     </div>
                 </div>
-
-                <div class="pipeline-stage">
-                    <div class="stage-header">
-                        <h5>📝 Visite programmée</h5>
-                        <span class="stage-count">12</span>
-                    </div>
-                    <div class="stage-transactions">
-                        <!-- Transactions de ce stage -->
+                <div class="stat-card fade-in delay-1">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-value">18.5M</div>
+                        <div class="stat-label">Chiffre d'affaires</div>
+                        <div class="stat-change positive">+15%</div>
                     </div>
                 </div>
-
-                <div class="pipeline-stage">
-                    <div class="stage-header">
-                        <h5>🤝 Négociation</h5>
-                        <span class="stage-count">8</span>
-                    </div>
-                    <div class="stage-transactions">
-                        <!-- Transactions de ce stage -->
+                <div class="stat-card fade-in delay-2">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-content">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">En négociation</div>
+                        <div class="stat-change warning">En cours</div>
                     </div>
                 </div>
-
-                <div class="pipeline-stage">
-                    <div class="stage-header">
-                        <h5>📑 Signature</h5>
-                        <span class="stage-count">6</span>
-                    </div>
-                    <div class="stage-transactions">
-                        <!-- Transactions de ce stage -->
-                    </div>
-                </div>
-
-                <div class="pipeline-stage">
-                    <div class="stage-header">
-                        <h5>✅ Finalisée</h5>
-                        <span class="stage-count">7</span>
-                    </div>
-                    <div class="stage-transactions">
-                        <!-- Transactions de ce stage -->
+                <div class="stat-card fade-in delay-3">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <div class="stat-value">36</div>
+                        <div class="stat-label">Finalisées ce mois</div>
+                        <div class="stat-change positive">+8</div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Liste détaillée des transactions -->
-        <div class="transactions-list">
-            <div class="section-header">
-                <h3>📋 Toutes les Transactions</h3>
-                <button class="btn btn-outline" onclick="toggleView()">
-                    <i class="fas fa-exchange-alt me-2"></i>Changer vue
+            <!-- Navigation par onglets -->
+            <div class="transactions-tabs">
+                <button class="tab-btn active" data-tab="pipeline">
+                    <i class="fas fa-project-diagram me-2"></i> Pipeline
+                </button>
+                <button class="tab-btn" data-tab="list">
+                    <i class="fas fa-list me-2"></i> Liste complète
+                </button>
+                <button class="tab-btn" data-tab="calendar">
+                    <i class="fas fa-calendar me-2"></i> Calendrier
+                </button>
+                <button class="tab-btn" data-tab="analytics">
+                    <i class="fas fa-chart-bar me-2"></i> Analytics
                 </button>
             </div>
 
-            <div class="transactions-table">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Référence</th>
-                            <th>Type</th>
-                            <th>Bien</th>
-                            <th>Client</th>
-                            <th>Montant</th>
-                            <th>Agent</th>
-                            <th>Statut</th>
-                            <th>Début</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>TRX-2024-0158</td>
-                            <td><span class="badge badge-rental">Location</span></td>
-                            <td>Résidence Les Almadies</td>
-                            <td>M. Abdoulaye Diop</td>
-                            <td>450,000 FCFA/mois</td>
-                            <td>M. Diallo</td>
-                            <td><span class="status-badge negotiation">Négociation</span></td>
-                            <td>15/03/2024</td>
-                            <td>
-                                <div class="table-actions">
+            <!-- Pipeline des transactions -->
+            <div class="transactions-section active" id="pipeline-tab">
+                <div class="section-header">
+                    <h3><i class="fas fa-project-diagram me-2"></i>Pipeline des Transactions</h3>
+                    <div class="section-actions">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" placeholder="Rechercher..." class="search-input">
+                        </div>
+                        <button class="btn btn-outline" onclick="exportPipeline()">
+                            <i class="fas fa-download me-2"></i> Exporter
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pipeline-container">
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-info">
+                                <h5>📞 Premier contact</h5>
+                                <span class="stage-count">15 transactions</span>
+                            </div>
+                            <span class="stage-revenue">2.1M FCFA</span>
+                        </div>
+                        <div class="stage-transactions">
+                            <div class="pipeline-card" draggable="true" data-id="158">
+                                <div class="card-header">
+                                    <span class="transaction-ref">TRX-2024-0158</span>
+                                    <span class="transaction-type rental">Location</span>
+                                </div>
+                                <div class="card-content">
+                                    <h6>Résidence Les Almadies</h6>
+                                    <p class="client-info">Client: M. Abdoulaye Diop</p>
+                                    <p class="amount">450,000 FCFA/mois</p>
+                                    <div class="card-meta">
+                                        <span class="agent">M. Diallo</span>
+                                        <span class="days">Il y a 2j</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
                                     <button class="btn-icon" onclick="viewTransaction(158)">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <button class="btn-icon" onclick="editTransaction(158)">
-                                        <i class="fas fa-edit"></i>
+                                    <button class="btn-icon" onclick="contactClient(158)">
+                                        <i class="fas fa-phone"></i>
                                     </button>
-                                    <button class="btn-icon" onclick="contactParties(158)">
-                                        <i class="fas fa-comments"></i>
+                                    <button class="btn-icon primary" onclick="advanceStage(158)">
+                                        <i class="fas fa-arrow-right"></i>
                                     </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>TRX-2024-0147</td>
-                            <td><span class="badge badge-sale">Vente</span></td>
-                            <td>Villa Mermoz</td>
-                            <td>SARL Investissement Plus</td>
-                            <td>85,000,000 FCFA</td>
-                            <td>Mme Sow</td>
-                            <td><span class="status-badge contract">En contrat</span></td>
-                            <td>10/03/2024</td>
-                            <td>
-                                <div class="table-actions">
-                                    <button class="btn-icon" onclick="viewTransaction(147)">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-icon" onclick="generateContract(147)">
-                                        <i class="fas fa-file-contract"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>TRX-2024-0132</td>
-                            <td><span class="badge badge-management">Gestion</span></td>
-                            <td>Appartement Fann</td>
-                            <td>Mme Aminata Sy</td>
-                            <td>8% commission</td>
-                            <td>M. Ndiaye</td>
-                            <td><span class="status-badge completed">Finalisée</span></td>
-                            <td>01/03/2024</td>
-                            <td>
-                                <div class="table-actions">
-                                    <button class="btn-icon" onclick="viewTransaction(132)">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-icon" onclick="downloadDocuments(132)">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Calendrier des rendez-vous -->
-        <div class="appointments-calendar">
-            <div class="section-header">
-                <h3>📅 Calendrier des Rendez-vous</h3>
-                <button class="btn btn-primary" onclick="scheduleAppointment()">
-                    <i class="fas fa-plus me-2"></i>Nouveau RDV
-                </button>
-            </div>
-            <div class="calendar-view">
-                <div class="calendar-week">
-                    <div class="day-slot today">
-                        <div class="day-header">
-                            <span>Lun 25</span>
-                            <span class="day-label">Aujourd'hui</span>
-                        </div>
-                        <div class="appointments">
-                            <div class="appointment-item">
-                                <div class="appointment-time">10:00</div>
-                                <div class="appointment-details">
-                                    <strong>Visite - Résidence Almadies</strong>
-                                    <p>Client: M. Diop • Agent: M. Diallo</p>
                                 </div>
                             </div>
-                            <div class="appointment-item">
-                                <div class="appointment-time">14:30</div>
-                                <div class="appointment-details">
-                                    <strong>Signature contrat</strong>
-                                    <p>Villa Mermoz • Agent: Mme Sow</p>
+
+                            <div class="pipeline-card" draggable="true" data-id="162">
+                                <div class="card-header">
+                                    <span class="transaction-ref">TRX-2024-0162</span>
+                                    <span class="transaction-type sale">Vente</span>
+                                </div>
+                                <div class="card-content">
+                                    <h6>Appartement Plateau</h6>
+                                    <p class="client-info">Client: SARL InvestPro</p>
+                                    <p class="amount">25,000,000 FCFA</p>
+                                    <div class="card-meta">
+                                        <span class="agent">Mme Sow</span>
+                                        <span class="days urgent">Aujourd'hui</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn-icon" onclick="viewTransaction(162)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon primary" onclick="advanceStage(162)">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Autres jours -->
+
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-info">
+                                <h5>📝 Visite programmée</h5>
+                                <span class="stage-count">12 transactions</span>
+                            </div>
+                            <span class="stage-revenue">8.5M FCFA</span>
+                        </div>
+                        <div class="stage-transactions">
+                            <!-- Transactions de ce stage -->
+                        </div>
+                    </div>
+
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-info">
+                                <h5>🤝 Négociation</h5>
+                                <span class="stage-count">8 transactions</span>
+                            </div>
+                            <span class="stage-revenue">12.3M FCFA</span>
+                        </div>
+                        <div class="stage-transactions">
+                            <!-- Transactions de ce stage -->
+                        </div>
+                    </div>
+
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-info">
+                                <h5>📑 Signature</h5>
+                                <span class="stage-count">6 transactions</span>
+                            </div>
+                            <span class="stage-revenue">15.7M FCFA</span>
+                        </div>
+                        <div class="stage-transactions">
+                            <!-- Transactions de ce stage -->
+                        </div>
+                    </div>
+
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-info">
+                                <h5>✅ Finalisée</h5>
+                                <span class="stage-count">7 transactions</span>
+                            </div>
+                            <span class="stage-revenue">18.5M FCFA</span>
+                        </div>
+                        <div class="stage-transactions">
+                            <!-- Transactions de ce stage -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <script src="../../js/dashboard.js"></script>
+            <!-- Liste détaillée des transactions -->
+            <div class="transactions-section" id="list-tab">
+                <div class="section-header">
+                    <h3><i class="fas fa-list me-2"></i>Toutes les Transactions</h3>
+                    <div class="section-actions">
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="table">
+                                <i class="fas fa-table"></i>
+                            </button>
+                            <button class="view-btn" data-view="cards">
+                                <i class="fas fa-grip-vertical"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-outline" onclick="exportTransactions()">
+                            <i class="fas fa-file-export me-2"></i>Exporter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filtres avancés -->
+                <div class="filters-section">
+                    <div class="filter-row">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" placeholder="Rechercher une transaction..." id="transactionSearch">
+                        </div>
+                        <select id="transactionStatus" class="filter-select">
+                            <option value="">Tous les statuts</option>
+                            <option value="negotiation">En négociation</option>
+                            <option value="contract">En contrat</option>
+                            <option value="pending">En attente</option>
+                            <option value="completed">Finalisée</option>
+                            <option value="cancelled">Annulée</option>
+                        </select>
+                        <select id="transactionType" class="filter-select">
+                            <option value="">Tous les types</option>
+                            <option value="rental">Location</option>
+                            <option value="sale">Vente</option>
+                            <option value="management">Gestion</option>
+                        </select>
+                        <select id="agentFilter" class="filter-select">
+                            <option value="">Tous les agents</option>
+                            <option value="agent1">M. Diallo</option>
+                            <option value="agent2">Mme Sow</option>
+                            <option value="agent3">M. Ndiaye</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="transactions-view" id="transactionsView">
+                    <div class="transactions-table">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="selectAll">
+                                    </th>
+                                    <th>Référence</th>
+                                    <th>Type</th>
+                                    <th>Bien</th>
+                                    <th>Client</th>
+                                    <th>Montant</th>
+                                    <th>Agent</th>
+                                    <th>Statut</th>
+                                    <th>Début</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="transaction-row">
+                                    <td>
+                                        <input type="checkbox" class="transaction-checkbox">
+                                    </td>
+                                    <td>TRX-2024-0158</td>
+                                    <td><span class="badge badge-rental">Location</span></td>
+                                    <td>
+                                        <div class="property-info">
+                                            <strong>Résidence Les Almadies</strong>
+                                            <small>Dakar, Almadies</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="client-info">
+                                            <strong>M. Abdoulaye Diop</strong>
+                                            <small>abdoulaye.diop@email.com</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="amount-info">
+                                            <strong>450,000 FCFA</strong>
+                                            <small>par mois</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="agent-info">
+                                            <div class="agent-avatar">MD</div>
+                                            <span>M. Diallo</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="status-badge negotiation">Négociation</span></td>
+                                    <td>
+                                        <div class="date-info">
+                                            <strong>15/03/2024</strong>
+                                            <small>Il y a 10j</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="btn-icon" onclick="viewTransaction(158)">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon" onclick="editTransaction(158)">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon" onclick="contactParties(158)">
+                                                <i class="fas fa-comments"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="transaction-row">
+                                    <td>
+                                        <input type="checkbox" class="transaction-checkbox">
+                                    </td>
+                                    <td>TRX-2024-0147</td>
+                                    <td><span class="badge badge-sale">Vente</span></td>
+                                    <td>
+                                        <div class="property-info">
+                                            <strong>Villa Mermoz</strong>
+                                            <small>Dakar, Mermoz</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="client-info">
+                                            <strong>SARL Investissement Plus</strong>
+                                            <small>contact@investplus.sn</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="amount-info">
+                                            <strong>85,000,000 FCFA</strong>
+                                            <small>Transaction</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="agent-info">
+                                            <div class="agent-avatar">MS</div>
+                                            <span>Mme Sow</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="status-badge contract">En contrat</span></td>
+                                    <td>
+                                        <div class="date-info">
+                                            <strong>10/03/2024</strong>
+                                            <small>Il y a 15j</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="btn-icon" onclick="viewTransaction(147)">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon" onclick="generateContract(147)">
+                                                <i class="fas fa-file-contract"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <div class="pagination-info">
+                        Affichage 1-20 sur 48 transactions
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="page-btn disabled">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendrier des rendez-vous -->
+            <div class="transactions-section" id="calendar-tab">
+                <div class="section-header">
+                    <h3><i class="fas fa-calendar me-2"></i>Calendrier des Rendez-vous</h3>
+                    <button class="btn btn-primary" onclick="showScheduleModal()">
+                        <i class="fas fa-plus me-2"></i>Nouveau RDV
+                    </button>
+                </div>
+
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h4>Mars 2024</h4>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-week">
+                        <div class="day-slot today">
+                            <div class="day-header">
+                                <span class="day-name">Lun</span>
+                                <span class="day-number">25</span>
+                                <span class="day-label">Aujourd'hui</span>
+                            </div>
+                            <div class="appointments">
+                                <div class="appointment-item">
+                                    <div class="appointment-time">10:00</div>
+                                    <div class="appointment-details">
+                                        <strong>Visite - Résidence Almadies</strong>
+                                        <p>Client: M. Diop • Agent: M. Diallo</p>
+                                        <span class="appointment-type visit">Visite</span>
+                                    </div>
+                                </div>
+                                <div class="appointment-item">
+                                    <div class="appointment-time">14:30</div>
+                                    <div class="appointment-details">
+                                        <strong>Signature contrat</strong>
+                                        <p>Villa Mermoz • Agent: Mme Sow</p>
+                                        <span class="appointment-type signing">Signature</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Autres jours de la semaine -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="transactions-section" id="analytics-tab">
+                <div class="section-header">
+                    <h3><i class="fas fa-chart-bar me-2"></i>Analytics des Transactions</h3>
+                    <select class="filter-select">
+                        <option value="month">Ce mois</option>
+                        <option value="quarter">Ce trimestre</option>
+                        <option value="year">Cette année</option>
+                    </select>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h5>Performance par type</h5>
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-pie"></i>
+                            <p>Graphique de répartition par type de transaction</p>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h5>Évolution du chiffre d'affaires</h5>
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Graphique d'évolution du CA sur 6 mois</p>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h5>Performance des agents</h5>
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-bar"></i>
+                            <p>Classement des agents par performance</p>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h5>Taux de conversion</h5>
+                        <div class="chart-placeholder">
+                            <i class="fas fa-percentage"></i>
+                            <p>Analyse des taux de conversion par étape</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Nouvelle Transaction -->
+    <div id="newTransactionModal" class="modal">
+        <div class="modal-overlay" onclick="closeNewTransactionModal()"></div>
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus me-2"></i>Nouvelle Transaction</h2>
+                <button class="close" onclick="closeNewTransactionModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="modal-form" id="newTransactionForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type de transaction</label>
+                        <select class="form-control" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="rental">Location</option>
+                            <option value="sale">Vente</option>
+                            <option value="management">Gestion</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Agent responsable</label>
+                        <select class="form-control" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="agent1">M. Diallo</option>
+                            <option value="agent2">Mme Sow</option>
+                            <option value="agent3">M. Ndiaye</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Bien immobilier</label>
+                    <select class="form-control" required>
+                        <option value="">Sélectionnez un bien...</option>
+                        <option value="property1">Résidence Les Almadies</option>
+                        <option value="property2">Villa Mermoz</option>
+                        <option value="property3">Appartement Fann</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Client</label>
+                    <select class="form-control" required>
+                        <option value="">Sélectionnez un client...</option>
+                        <option value="client1">M. Abdoulaye Diop</option>
+                        <option value="client2">SARL Investissement Plus</option>
+                        <option value="client3">Mme Aminata Sy</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Montant</label>
+                        <input type="number" class="form-control" placeholder="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Devise</label>
+                        <select class="form-control" required>
+                            <option value="FCFA" selected>FCFA</option>
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes supplémentaires</label>
+                    <textarea class="form-control" rows="3" placeholder="Informations complémentaires..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeNewTransactionModal()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i> Créer la transaction
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --info: #118ab2;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--gray-800);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--gray-600);
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background: var(--gray-100);
+            color: var(--gray-800);
+        }
+
+        .btn-icon.primary:hover {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        /* Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 1.5rem 0;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .nav-section h3 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.25rem;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-actions h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        /* Statistics */
+        .transaction-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            opacity: 0.8;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-change {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.warning {
+            color: var(--warning);
+        }
+
+        /* Tabs */
+        .transactions-tabs {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--gray-600);
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            white-space: nowrap;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .tab-btn:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        /* Sections */
+        .transactions-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .transactions-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .view-toggle {
+            display: flex;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 0.5rem;
+            border: none;
+            background: white;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            width: 250px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            background: white;
+        }
+
+        /* Pipeline */
+        .pipeline-container {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
+
+        .pipeline-stage {
+            min-width: 320px;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .stage-info h5 {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.25rem;
+        }
+
+        .stage-count {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .stage-revenue {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .stage-transactions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            min-height: 200px;
+        }
+
+        .pipeline-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            cursor: move;
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+        }
+
+        .pipeline-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pipeline-card.dragging {
+            opacity: 0.5;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .transaction-ref {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .transaction-type {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .transaction-type.rental {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .transaction-type.sale {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .transaction-type.management {
+            background: rgba(255, 209, 102, 0.2);
+            color: #b38f00;
+        }
+
+        .card-content h6 {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .client-info, .amount {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .agent {
+            color: var(--gray-500);
+        }
+
+        .days {
+            color: var(--gray-500);
+        }
+
+        .days.urgent {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.25rem;
+            margin-top: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        /* Table View */
+        .filters-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .transactions-view {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .transactions-table {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .data-table th {
+            background: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .transaction-row:hover {
+            background-color: var(--gray-50);
+        }
+
+        .property-info, .client-info, .amount-info, .date-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .property-info strong, .client-info strong, .amount-info strong, .date-info strong {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .property-info small, .client-info small, .amount-info small, .date-info small {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .agent-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .agent-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-rental {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-sale {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-management {
+            background: rgba(255, 209, 102, 0.2);
+            color: #b38f00;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.negotiation {
+            background: rgba(255, 209, 102, 0.2);
+            color: #b38f00;
+        }
+
+        .status-badge.contract {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .status-badge.completed {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        /* Calendar */
+        .calendar-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-header h4 {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .calendar-week {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .day-slot {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+        }
+
+        .day-slot.today {
+            background: rgba(67, 97, 238, 0.05);
+            border: 1px solid var(--primary);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .day-name {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .day-number {
+            color: var(--gray-600);
+        }
+
+        .day-label {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .appointments {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .appointment-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 0.75rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .appointment-time {
+            font-weight: 600;
+            color: var(--gray-900);
+            min-width: 50px;
+        }
+
+        .appointment-details {
+            flex: 1;
+        }
+
+        .appointment-details strong {
+            display: block;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .appointment-details p {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .appointment-type {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .appointment-type.visit {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .appointment-type.signing {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        /* Analytics */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analytics-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .analytics-card h5 {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+        }
+
+        .chart-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .pagination-info {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-300);
+            background: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.875rem;
+        }
+
+        .page-btn:hover:not(.disabled):not(.active) {
+            background: var(--gray-100);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 1001;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal-content.large {
+            max-width: 800px;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .modal-header .close {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-header .close:hover {
+            color: var(--gray-700);
+        }
+
+        .modal-form {
+            padding: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--info);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--info);
+        }
+
+        .toast-content h6 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-content p {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .pipeline-container {
+                flex-direction: column;
+            }
+            
+            .pipeline-stage {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+            }
+
+            .header-content, .header-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .transaction-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .transactions-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .section-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .calendar-week {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .pagination {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+
     <script>
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            initTabs();
+            initDragAndDrop();
+            initViewToggle();
+            initFormValidation();
+        });
+
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const sections = document.querySelectorAll('.transactions-section');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+                    
+                    // Mettre à jour les boutons d'onglet
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Afficher la section correspondante
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === `${targetTab}-tab`) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        function initDragAndDrop() {
+            const cards = document.querySelectorAll('.pipeline-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('dragstart', function(e) {
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.dataset.id);
+                });
+                
+                card.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                });
+            });
+
+            const stages = document.querySelectorAll('.pipeline-stage');
+            
+            stages.forEach(stage => {
+                stage.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.backgroundColor = 'rgba(67, 97, 238, 0.05)';
+                });
+                
+                stage.addEventListener('dragleave', function() {
+                    this.style.backgroundColor = '';
+                });
+                
+                stage.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.backgroundColor = '';
+                    const transactionId = e.dataTransfer.getData('text/plain');
+                    const card = document.querySelector(`[data-id="${transactionId}"]`);
+                    const stageTransactions = this.querySelector('.stage-transactions');
+                    
+                    if (card && stageTransactions) {
+                        stageTransactions.appendChild(card);
+                        showToast(`Transaction déplacée avec succès`, 'success');
+                    }
+                });
+            });
+        }
+
+        function initViewToggle() {
+            const viewBtns = document.querySelectorAll('.view-btn');
+            
+            viewBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const view = this.dataset.view;
+                    
+                    viewBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Implémentation du changement de vue
+                    if (view === 'cards') {
+                        showToast('Affichage en mode cartes', 'info');
+                    } else {
+                        showToast('Affichage en mode tableau', 'info');
+                    }
+                });
+            });
+        }
+
+        function initFormValidation() {
+            const newTransactionForm = document.getElementById('newTransactionForm');
+            if (newTransactionForm) {
+                newTransactionForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    createNewTransaction();
+                });
+            }
+        }
+
+        function showNewTransactionModal() {
+            document.getElementById('newTransactionModal').classList.add('active');
+        }
+
+        function closeNewTransactionModal() {
+            document.getElementById('newTransactionModal').classList.remove('active');
+        }
+
+        function createNewTransaction() {
+            showToast('Nouvelle transaction créée avec succès', 'success');
+            closeNewTransactionModal();
+            document.getElementById('newTransactionForm').reset();
+        }
+
+        function showScheduleModal() {
+            showToast('Ouverture du formulaire de rendez-vous', 'info');
+        }
+
         function viewTransaction(transactionId) {
-            console.log(`Voir transaction ${transactionId}`);
-            // Navigation vers détail transaction
+            showToast(`Ouverture de la transaction ${transactionId}`, 'info');
         }
 
         function editTransaction(transactionId) {
-            console.log(`Modifier transaction ${transactionId}`);
-            // Ouvrir formulaire édition
+            showToast(`Modification de la transaction ${transactionId}`, 'info');
         }
 
         function contactParties(transactionId) {
-            console.log(`Contacter parties transaction ${transactionId}`);
-            // Ouvrir messagerie
+            showToast(`Contact des parties - Transaction ${transactionId}`, 'info');
+        }
+
+        function contactClient(transactionId) {
+            showToast(`Appel du client - Transaction ${transactionId}`, 'info');
         }
 
         function generateContract(transactionId) {
-            console.log(`Générer contrat transaction ${transactionId}`);
-            // Génération contrat
+            showToast(`Génération du contrat - Transaction ${transactionId}`, 'success');
         }
 
         function advanceStage(transactionId) {
-            console.log(`Avancer étape transaction ${transactionId}`);
-            // Logique avancement pipeline
-        }
-
-        function newTransaction() {
-            console.log("Nouvelle transaction");
-            // Ouvrir formulaire nouvelle transaction
+            showToast(`Transaction ${transactionId} avancée d'une étape`, 'success');
         }
 
         function exportTransactions() {
-            console.log("Export des transactions");
-            // Implémentation export
+            showToast('Export des transactions en cours...', 'info');
+            setTimeout(() => {
+                showToast('Export terminé avec succès', 'success');
+            }, 2000);
         }
 
-        function toggleView() {
-            console.log("Changer vue");
-            // Basculer entre vue tableau et vue carte
+        function exportPipeline() {
+            showToast('Export du pipeline en cours...', 'info');
+            setTimeout(() => {
+                showToast('Export du pipeline terminé', 'success');
+            }, 2000);
         }
 
-        function scheduleAppointment() {
-            console.log("Programmer rendez-vous");
-            // Ouvrir formulaire RDV
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                showToast('Déconnexion en cours...', 'info');
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 1500);
+            }
+        }
+
+        // Système de notifications toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.id = toastId;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="toast-content">
+                    <h6>${type === 'success' ? 'Succès' : type === 'warning' ? 'Attention' : 'Information'}</h6>
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Afficher le toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Masquer et supprimer le toast après 4 secondes
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 4000);
         }
     </script>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
-                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
 </body>
 </html>

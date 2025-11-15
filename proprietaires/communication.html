@@ -1,239 +1,1595 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Communication - Espace Propriétaire | PNSBIL</title>
-    <link rel="stylesheet" href="../css/communication-modern.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="communication-modern">
-    <div class="container">
-        <header class="comm-header">
-            <div class="container">
-                <h1>💬 Centre de Communication</h1>
-                <p class="comm-subtitle">Gérez vos communications avec locataires et services</p>
-                <nav class="breadcrumb">
-                    <a href="dashboard.html">Tableau de bord Propriétaire</a> > Communication
-                </nav>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span>Espace Propriétaire</span>
             </div>
-        </header>
-
-        <div class="communication-grid">
-            <!-- Panneau des contacts SPÉCIFIQUE PROPRIÉTAIRE -->
-            <div class="contacts-panel">
-                <div class="contacts-header">
-                    <h3>Mes Locataires & Services</h3>
-                </div>
-                
-                <div class="search-container">
-                    <div class="search-box">
-                        <input type="text" placeholder="Rechercher un locataire ou service..." id="contactSearch">
-                    </div>
-                </div>
-                
-                <div class="contacts-list">
-                    <!-- Groupe : Locataires actuels -->
-                    <div class="contact-group">
-                        <div class="group-header">Locataires Actuels</div>
-                        
-                        <div class="contact-item active">
-                            <div class="contact-avatar">AS</div>
-                            <div class="status-indicator online"></div>
-                            <div class="contact-info">
-                                <div class="contact-name">Aminata Sy</div>
-                                <div class="contact-role">Locataire - Appartement B12</div>
-                                <div class="contact-lastmsg">Demande attestation de loyer</div>
-                            </div>
-                            <div class="contact-meta">
-                                <div class="contact-time">10:30</div>
-                                <div class="unread-badge">3</div>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-avatar">JD</div>
-                            <div class="status-indicator offline"></div>
-                            <div class="contact-info">
-                                <div class="contact-name">Jean Dupont</div>
-                                <div class="contact-role">Locataire - Villa 45</div>
-                                <div class="contact-lastmsg">Paiement reçu</div>
-                            </div>
-                            <div class="contact-meta">
-                                <div class="contact-time">Hier</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Groupe : Services -->
-                    <div class="contact-group">
-                        <div class="group-header">Services</div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-avatar">💰</div>
-                            <div class="status-indicator online"></div>
-                            <div class="contact-info">
-                                <div class="contact-name">Service Fiscal</div>
-                                <div class="contact-role">Déclaration impôts</div>
-                                <div class="contact-lastmsg">Échéance déclaration 31/12</div>
-                            </div>
-                            <div class="contact-meta">
-                                <div class="contact-time">09:15</div>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-avatar">⚙️</div>
-                            <div class="status-indicator online"></div>
-                            <div class="contact-info">
-                                <div class="contact-name">Service Maintenance</div>
-                                <div class="contact-role">Interventions</div>
-                                <div class="contact-lastmsg">Rapport d'intervention disponible</div>
-                            </div>
-                            <div class="contact-meta">
-                                <div class="contact-time">23/11</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Groupe : Anciens locataires -->
-                    <div class="contact-group">
-                        <div class="group-header">Anciens Locataires</div>
-                        <div class="contact-item">
-                            <div class="contact-avatar">MS</div>
-                            <div class="status-indicator offline"></div>
-                            <div class="contact-info">
-                                <div class="contact-name">Mariam Sow</div>
-                                <div class="contact-role">Ancienne locataire - Studio C5</div>
-                                <div class="contact-lastmsg">Solde tout réglé</div>
-                            </div>
-                            <div class="contact-meta">
-                                <div class="contact-time">15/10</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">M. Mohamed Diallo</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
             </div>
+        </div>
+    </header>
 
-            <!-- Panneau de chat AVEC CONTEXTE PROPRIÉTAIRE -->
-            <div class="chat-panel">
-                <div class="chat-header">
-                    <div class="chat-header-info">
-                        <div class="chat-avatar">AS</div>
-                        <div>
-                            <h3>Aminata Sy</h3>
-                            <div class="chat-status">En ligne • Locataire</div>
-                            <div class="chat-context">Appartement B12 - Loyer: ₣ 450,000/mois</div>
-                        </div>
-                    </div>
-                    <div class="chat-actions">
-                        <button class="action-btn" title="Voir le contrat" onclick="showContract()">📑</button>
-                        <button class="action-btn" title="Historique paiements" onclick="showPayments()">💰</button>
-                        <button class="action-btn" title="Fiche locataire">📋</button>
-                    </div>
+    <!-- Navigation -->
+    <nav class="sidebar">
+        <div class="nav-section">
+            <h3>Gestion Immobilière</h3>
+            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
+            <a href="proprietes.html" class="nav-link">🏠 Mes propriétés</a>
+            <a href="baux.html" class="nav-link">📑 Baux locatifs</a>
+            <a href="paiements.html" class="nav-link">💳 Paiements</a>
+            <a href="impots.html" class="nav-link">💰 Impôts locatifs</a>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Communication</h3>
+            <a href="communication.html" class="nav-link active">💬 Messagerie</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content communication-modern">
+        <div class="container">
+            <header class="comm-header">
+                <div class="container">
+                    <h1>💬 Centre de Communication</h1>
+                    <p class="comm-subtitle">Gérez vos communications avec locataires et services</p>
+                    <nav class="breadcrumb">
+                        <a href="dashboard.html">Tableau de bord Propriétaire</a> > Communication
+                    </nav>
                 </div>
-                
-                <div class="chat-messages" id="chatMessages">
-                    <div class="message received">
-                        <div class="message-header">
-                            <span class="message-sender">Aminata Sy</span>
-                            <span class="message-time">10:15</span>
-                        </div>
-                        <div class="message-text">
-                            Bonjour Monsieur Diallo, pourriez-vous m'envoyer l'attestation de loyer pour mes impôts s'il vous plaît ?
-                        </div>
-                    </div>
-                    
-                    <div class="message sent">
-                        <div class="message-text">
-                            Bonjour Aminata, bien sûr. Je la génère et vous l'envoie dans l'après-midi.
-                        </div>
-                        <div class="message-time">10:18</div>
-                        <div class="message-status">✓✓</div>
-                    </div>
-                    
-                    <div class="message received">
-                        <div class="message-header">
-                            <span class="message-sender">Aminata Sy</span>
-                            <span class="message-time">10:30</span>
-                        </div>
-                        <div class="message-text">
-                            Merci beaucoup ! Aussi, la chaudière fait un bruit étrange depuis ce matin.
-                        </div>
+            </header>
+
+            <div class="communication-grid">
+                <!-- Panneau des contacts SPÉCIFIQUE PROPRIÉTAIRE -->
+                <div class="contacts-panel">
+                    <div class="contacts-header">
+                        <h3>Mes Locataires & Services</h3>
                     </div>
 
-                    <div class="quick-actions-chat">
-                        <button class="quick-btn" onclick="sendRentReceipt()">🧾 Envoyer quittance</button>
-                        <button class="quick-btn" onclick="sendTaxCertificate()">📄 Envoyer attestation fiscale</button>
-                        <button class="quick-btn" onclick="scheduleVisit()">📅 Planifier une visite</button>
+                    <div class="search-container">
+                        <div class="search-box">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" placeholder="Rechercher un locataire ou service..." id="contactSearch">
+                        </div>
+                    </div>
+
+                    <div class="contacts-list">
+                        <!-- Groupe : Locataires actuels -->
+                        <div class="contact-group">
+                            <div class="group-header">Locataires Actuels</div>
+
+                            <div class="contact-item active">
+                                <div class="contact-avatar">AS</div>
+                                <div class="status-indicator online"></div>
+                                <div class="contact-info">
+                                    <div class="contact-name">Aminata Sy</div>
+                                    <div class="contact-role">Locataire - Appartement B12</div>
+                                    <div class="contact-lastmsg">Demande attestation de loyer</div>
+                                </div>
+                                <div class="contact-meta">
+                                    <div class="contact-time">10:30</div>
+                                    <div class="unread-badge">3</div>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-avatar">JD</div>
+                                <div class="status-indicator offline"></div>
+                                <div class="contact-info">
+                                    <div class="contact-name">Jean Dupont</div>
+                                    <div class="contact-role">Locataire - Villa 45</div>
+                                    <div class="contact-lastmsg">Paiement reçu</div>
+                                </div>
+                                <div class="contact-meta">
+                                    <div class="contact-time">Hier</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Groupe : Services -->
+                        <div class="contact-group">
+                            <div class="group-header">Services</div>
+
+                            <div class="contact-item">
+                                <div class="contact-avatar">💰</div>
+                                <div class="status-indicator online"></div>
+                                <div class="contact-info">
+                                    <div class="contact-name">Service Fiscal</div>
+                                    <div class="contact-role">Déclaration impôts</div>
+                                    <div class="contact-lastmsg">Échéance déclaration 31/12</div>
+                                </div>
+                                <div class="contact-meta">
+                                    <div class="contact-time">09:15</div>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-avatar">⚙️</div>
+                                <div class="status-indicator online"></div>
+                                <div class="contact-info">
+                                    <div class="contact-name">Service Maintenance</div>
+                                    <div class="contact-role">Interventions</div>
+                                    <div class="contact-lastmsg">Rapport d'intervention disponible</div>
+                                </div>
+                                <div class="contact-meta">
+                                    <div class="contact-time">23/11</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Groupe : Anciens locataires -->
+                        <div class="contact-group">
+                            <div class="group-header">Anciens Locataires</div>
+                            <div class="contact-item">
+                                <div class="contact-avatar">MS</div>
+                                <div class="status-indicator offline"></div>
+                                <div class="contact-info">
+                                    <div class="contact-name">Mariam Sow</div>
+                                    <div class="contact-role">Ancienne locataire - Studio C5</div>
+                                    <div class="contact-lastmsg">Solde tout réglé</div>
+                                </div>
+                                <div class="contact-meta">
+                                    <div class="contact-time">15/10</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="chat-input-container">
-                    <div class="input-actions">
-                        <button class="attachment-btn" title="Joindre un document">📎</button>
-                        <button class="attachment-btn" title="Envoyer un modèle">📋</button>
-                        <button class="emoji-btn" title="Insérer un emoji">😊</button>
+
+                <!-- Panneau de chat AVEC CONTEXTE PROPRIÉTAIRE -->
+                <div class="chat-panel">
+                    <div class="chat-header">
+                        <div class="chat-header-info">
+                            <div class="chat-avatar">AS</div>
+                            <div>
+                                <h3>Aminata Sy</h3>
+                                <div class="chat-status">En ligne • Locataire</div>
+                                <div class="chat-context">Appartement B12 - Loyer: 450,000 FCFA/mois</div>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="action-btn" title="Voir le contrat" onclick="showContract()">📑</button>
+                            <button class="action-btn" title="Historique paiements" onclick="showPayments()">💰</button>
+                            <button class="action-btn" title="Fiche locataire" onclick="showTenantProfile()">📋</button>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <textarea class="message-input" placeholder="Tapez votre message à votre locataire..." id="messageInput" rows="1"></textarea>
-                        <button class="send-btn" onclick="sendMessage()">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22,2 15,22 11,13 2,9"></polygon>
-                            </svg>
-                        </button>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message received">
+                            <div class="message-header">
+                                <span class="message-sender">Aminata Sy</span>
+                                <span class="message-time">10:15</span>
+                            </div>
+                            <div class="message-text">
+                                Bonjour Monsieur Diallo, pourriez-vous m'envoyer l'attestation de loyer pour mes impôts s'il vous plaît ?
+                            </div>
+                        </div>
+
+                        <div class="message sent">
+                            <div class="message-text">
+                                Bonjour Aminata, bien sûr. Je la génère et vous l'envoie dans l'après-midi.
+                            </div>
+                            <div class="message-time">10:18</div>
+                            <div class="message-status">✓✓</div>
+                        </div>
+
+                        <div class="message received">
+                            <div class="message-header">
+                                <span class="message-sender">Aminata Sy</span>
+                                <span class="message-time">10:30</span>
+                            </div>
+                            <div class="message-text">
+                                Merci beaucoup ! Aussi, la chaudière fait un bruit étrange depuis ce matin.
+                            </div>
+                        </div>
+
+                        <div class="quick-actions-chat">
+                            <button class="quick-btn" onclick="sendRentReceipt()">🧾 Envoyer quittance</button>
+                            <button class="quick-btn" onclick="sendTaxCertificate()">📄 Envoyer attestation fiscale</button>
+                            <button class="quick-btn" onclick="scheduleVisit()">📅 Planifier une visite</button>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <div class="input-actions">
+                            <button class="attachment-btn" title="Joindre un document" onclick="attachDocument()">📎</button>
+                            <button class="attachment-btn" title="Envoyer un modèle" onclick="showTemplates()">📋</button>
+                            <button class="emoji-btn" title="Insérer un emoji" onclick="toggleEmojiPicker()">😊</button>
+                        </div>
+                        <div class="input-group">
+                            <textarea class="message-input" placeholder="Tapez votre message à votre locataire..." id="messageInput" rows="1"></textarea>
+                            <button class="send-btn" onclick="sendMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <script src="../js/communication-proprietaire.js"></script>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+    <!-- Footer Moderne FIXE -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>PNSBIL</h5>
                     <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
                     <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+
+                <div class="footer-section">
+                    <h5>Liens rapides</h5>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="properties.html"><i class="fas fa-chevron-right"></i> Propriétés</a></li>
+                        <li><a href="leases.html"><i class="fas fa-chevron-right"></i> Baux</a></li>
+                        <li><a href="taxes.html"><i class="fas fa-chevron-right"></i> Impôts</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+
+                <div class="footer-section">
+                    <h5>Ressources</h5>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guides</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mentions légales</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+
+                <div class="footer-section">
+                    <h5>Contact</h5>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Avenue XXXXX, Ouagadougou, Burkina Faso</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+226 33 123 45 67</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@pnsbil.sn</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Lun - Ven: 8h00 - 18h00</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 <span>PNSBIL</span> - Tous droits réservés</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth.js"></script>
     
+    <script>
+        // Gestionnaire de communication pour propriétaire
+        class CommunicationManager {
+            constructor() {
+                this.currentChat = null;
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.initializeChat();
+            }
+
+            bindEvents() {
+                // Recherche de contacts
+                const searchInput = document.getElementById('contactSearch');
+                if (searchInput) {
+                    searchInput.addEventListener('input', this.handleSearch.bind(this));
+                }
+
+                // Sélection de contact
+                document.querySelectorAll('.contact-item').forEach(item => {
+                    item.addEventListener('click', this.selectContact.bind(this));
+                });
+
+                // Gestion de la zone de texte
+                const messageInput = document.getElementById('messageInput');
+                if (messageInput) {
+                    messageInput.addEventListener('input', this.autoResizeTextarea.bind(this));
+                    messageInput.addEventListener('keypress', this.handleKeyPress.bind(this));
+                }
+            }
+
+            handleSearch(event) {
+                const searchTerm = event.target.value.toLowerCase();
+                const contactItems = document.querySelectorAll('.contact-item');
+                
+                contactItems.forEach(item => {
+                    const contactName = item.querySelector('.contact-name').textContent.toLowerCase();
+                    const contactRole = item.querySelector('.contact-role').textContent.toLowerCase();
+                    
+                    if (contactName.includes(searchTerm) || contactRole.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+
+            selectContact(event) {
+                // Retirer la classe active de tous les contacts
+                document.querySelectorAll('.contact-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // Ajouter la classe active au contact sélectionné
+                const contactItem = event.currentTarget;
+                contactItem.classList.add('active');
+
+                // Mettre à jour le chat
+                this.updateChat(contactItem);
+            }
+
+            updateChat(contactItem) {
+                const contactName = contactItem.querySelector('.contact-name').textContent;
+                const contactRole = contactItem.querySelector('.contact-role').textContent;
+                const avatar = contactItem.querySelector('.contact-avatar').textContent;
+
+                // Mettre à jour l'en-tête du chat
+                document.querySelector('.chat-avatar').textContent = avatar;
+                document.querySelector('.chat-header h3').textContent = contactName;
+                document.querySelector('.chat-status').textContent = contactRole;
+
+                // Simuler le chargement des messages
+                this.loadChatMessages(contactName);
+            }
+
+            loadChatMessages(contactName) {
+                const chatMessages = document.getElementById('chatMessages');
+                
+                // Message de bienvenue
+                const welcomeMessage = `
+                    <div class="system-message">
+                        <div class="system-text">
+                            Conversation avec ${contactName} - Vous pouvez envoyer des documents et modèles prédéfinis
+                        </div>
+                    </div>
+                `;
+                
+                chatMessages.innerHTML = welcomeMessage;
+            }
+
+            autoResizeTextarea() {
+                const textarea = document.getElementById('messageInput');
+                textarea.style.height = 'auto';
+                textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+            }
+
+            handleKeyPress(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    this.sendMessage();
+                }
+            }
+
+            sendMessage() {
+                const messageInput = document.getElementById('messageInput');
+                const message = messageInput.value.trim();
+
+                if (message) {
+                    this.addMessageToChat(message, 'sent');
+                    messageInput.value = '';
+                    this.autoResizeTextarea();
+
+                    // Simuler une réponse automatique
+                    setTimeout(() => {
+                        this.simulateResponse();
+                    }, 1000);
+                }
+            }
+
+            addMessageToChat(message, type) {
+                const chatMessages = document.getElementById('chatMessages');
+                const timestamp = new Date().toLocaleTimeString('fr-FR', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${type}`;
+                
+                if (type === 'sent') {
+                    messageElement.innerHTML = `
+                        <div class="message-text">${this.escapeHtml(message)}</div>
+                        <div class="message-time">${timestamp}</div>
+                        <div class="message-status">✓✓</div>
+                    `;
+                } else {
+                    messageElement.innerHTML = `
+                        <div class="message-header">
+                            <span class="message-sender">${this.currentChat || 'Locataire'}</span>
+                            <span class="message-time">${timestamp}</span>
+                        </div>
+                        <div class="message-text">${this.escapeHtml(message)}</div>
+                    `;
+                }
+
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            simulateResponse() {
+                const responses = [
+                    "Merci pour votre message, je prends note.",
+                    "Je vous remercie, c'est noté.",
+                    "D'accord, je vais m'en occuper.",
+                    "Merci de l'information, je reviens vers vous rapidement."
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                this.addMessageToChat(randomResponse, 'received');
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // Fonctions spécifiques propriétaire
+            sendRentReceipt() {
+                this.addMessageToChat("🧾 Quittance de loyer envoyée. Le document est disponible dans vos documents.", 'sent');
+                this.showNotification("Quittance de loyer envoyée avec succès");
+            }
+
+            sendTaxCertificate() {
+                this.addMessageToChat("📄 Attestation fiscale envoyée. Le document est disponible dans vos documents.", 'sent');
+                this.showNotification("Attestation fiscale envoyée avec succès");
+            }
+
+            scheduleVisit() {
+                this.addMessageToChat("📅 Proposition de visite : seriez-vous disponible mercredi prochain à 14h ?", 'sent');
+            }
+
+            showContract() {
+                this.showNotification("Ouverture du contrat en cours...");
+            }
+
+            showPayments() {
+                this.showNotification("Consultation de l'historique des paiements...");
+            }
+
+            showTenantProfile() {
+                this.showNotification("Ouverture de la fiche locataire...");
+            }
+
+            attachDocument() {
+                this.showNotification("Sélectionnez un document à joindre");
+            }
+
+            showTemplates() {
+                this.showNotification("Modèles de messages disponibles");
+            }
+
+            toggleEmojiPicker() {
+                this.showNotification("Sélecteur d'émojis");
+            }
+
+            showNotification(message) {
+                // Créer une notification temporaire
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <i class="fas fa-info-circle"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        // Initialisation globale
+        let communicationManager;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Vérification de l'authentification
+            if (typeof checkAuth === 'function' && !checkAuth('proprietaire')) {
+                return;
+            }
+            
+            // Affichage du nom d'utilisateur
+            if (typeof getCurrentUser === 'function') {
+                const user = getCurrentUser();
+                if (user) {
+                    document.getElementById('userName').textContent = user.name;
+                }
+            }
+            
+            // Initialisation du gestionnaire de communication
+            communicationManager = new CommunicationManager();
+        });
+
+        // Fonctions globales
+        function sendMessage() {
+            communicationManager.sendMessage();
+        }
+
+        function sendRentReceipt() {
+            communicationManager.sendRentReceipt();
+        }
+
+        function sendTaxCertificate() {
+            communicationManager.sendTaxCertificate();
+        }
+
+        function scheduleVisit() {
+            communicationManager.scheduleVisit();
+        }
+
+        function showContract() {
+            communicationManager.showContract();
+        }
+
+        function showPayments() {
+            communicationManager.showPayments();
+        }
+
+        function showTenantProfile() {
+            communicationManager.showTenantProfile();
+        }
+
+        function attachDocument() {
+            communicationManager.attachDocument();
+        }
+
+        function showTemplates() {
+            communicationManager.showTemplates();
+        }
+
+        function toggleEmojiPicker() {
+            communicationManager.toggleEmojiPicker();
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                window.location.href = '../index.html';
+            }
+        }
+    </script>
+
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd8;
+            --primary-light: #f0f4ff;
+            --secondary: #764ba2;
+            --success: #10b981;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --error: #ef4444;
+            --error-light: #fee2e2;
+            --info: #3b82f6;
+            --info-light: #dbeafe;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* CORRECTION DU FOOTER FIXE */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Contenu principal avec marge pour la sidebar */
+        .main-content {
+            margin-left: 280px; /* Compensation de la sidebar */
+            padding: 0;
+            min-height: calc(100vh - 80px - 400px); /* Hauteur viewport moins header et footer estimé */
+        }
+
+        /* Footer fixe en bas - pleine largeur */
+        .site-footer {
+            background: linear-gradient(135deg, var(--gray-900), var(--gray-800));
+            color: white;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            margin-top: 4rem; /* Espace avec le contenu */
+        }
+
+        /* Layout principal dashboard */
+        .dashboard-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.95rem;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 80px;
+            width: 280px;
+            height: calc(100vh - 80px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem 0;
+            overflow-y: auto;
+            z-index: 99;
+        }
+
+        .nav-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .nav-section h3 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            padding: 0 2rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-left-color: var(--primary-dark);
+            box-shadow: var(--shadow);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Styles spécifiques à la communication */
+        .communication-modern {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .communication-modern .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .comm-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .comm-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .comm-subtitle {
+            color: var(--gray-600);
+            font-size: 1.125rem;
+            margin: 0 0 1rem 0;
+        }
+
+        .breadcrumb {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .communication-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: calc(100vh - 200px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 0;
+        }
+
+        /* Panneau des contacts */
+        .contacts-panel {
+            border-right: 1px solid var(--gray-200);
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contacts-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .contacts-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .search-container {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .contacts-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .contact-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .group-header {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .contact-item:hover {
+            background: var(--gray-50);
+        }
+
+        .contact-item.active {
+            background: var(--primary-light);
+            border-left: 3px solid var(--primary);
+        }
+
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            left: 3.5rem;
+            top: 1rem;
+            border: 2px solid white;
+        }
+
+        .status-indicator.online {
+            background: var(--success);
+        }
+
+        .status-indicator.offline {
+            background: var(--gray-400);
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-role {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-lastmsg {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+
+        .contact-time {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+        }
+
+        .unread-badge {
+            background: var(--primary);
+            color: white;
+            border-radius: 10px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Panneau de chat */
+        .chat-panel {
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            background: white;
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .chat-header h3 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .chat-status {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+
+        .chat-context {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .action-btn:hover {
+            background: var(--gray-50);
+            border-color: var(--primary);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: var(--gray-50);
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-lg);
+            position: relative;
+        }
+
+        .message.received {
+            align-self: flex-start;
+            background: white;
+            border: 1px solid var(--gray-200);
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            background: var(--primary);
+            color: white;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .message-text {
+            line-height: 1.5;
+        }
+
+        .message-status {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 1rem;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .system-message {
+            align-self: center;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .system-text {
+            background: var(--gray-100);
+            color: var(--gray-600);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        .quick-actions-chat {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            background: white;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .chat-input-container {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            background: white;
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .attachment-btn, .emoji-btn {
+            background: none;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .attachment-btn:hover, .emoji-btn:hover {
+            background: var(--gray-50);
+            border-color: var(--primary);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            resize: none;
+            max-height: 120px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.75rem;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 1002;
+            animation: slideInRight 0.3s ease-out;
+            border-left: 4px solid var(--primary);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+        }
+
+        .notification i {
+            color: var(--primary);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Footer amélioré */
+        .site-footer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .site-footer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3.5rem 2rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-section h5 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: white;
+            position: relative;
+            display: inline-block;
+            letter-spacing: -0.025em;
+        }
+
+        .footer-section h5::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .footer-section p {
+            color: var(--gray-300);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .footer-section li:hover {
+            transform: translateX(3px);
+        }
+
+        .footer-section a {
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .footer-section a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+            transform: translateX(8px);
+        }
+
+        .footer-section a:hover::before {
+            width: 100%;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .footer-contact li:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius);
+            padding-left: 0.5rem;
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+        }
+
+        .footer-contact i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 0.1rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .footer-contact li:hover i {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .footer-contact span {
+            color: var(--gray-300);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius);
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: white;
+            transform: translateY(-3px) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .social-link:hover::before {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-bottom p {
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .footer-bottom p span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .communication-grid {
+                grid-template-columns: 300px 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+            }
+
+            .communication-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .contacts-panel {
+                display: none;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .quick-actions-chat {
+                flex-direction: column;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+
+            .site-footer {
+                margin-top: 2rem; /* Espace supplémentaire sur mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .comm-header {
+                padding: 1rem;
+            }
+
+            .comm-header h1 {
+                font-size: 2rem;
+            }
+
+            .chat-header {
+                padding: 1rem;
+            }
+
+            .chat-messages {
+                padding: 1rem;
+            }
+
+            .chat-input-container {
+                padding: 1rem;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .footer-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
 </body>
 </html>

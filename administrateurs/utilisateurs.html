@@ -1,13 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion Utilisateurs - PNSBIL</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="dashboard-header">
@@ -23,260 +21,310 @@
         </div>
     </header>
 
-    <nav class="sidebar">
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
         <div class="nav-section">
-            <h3>Administration</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="utilisateurs.html" class="nav-link active">👥 Gestion utilisateurs</a>
-            <a href="audit.html" class="nav-link">📋 Journal d'audit</a>
-            <a href="configurations.html" class="nav-link">⚙️ Configurations</a>
+            <div class="nav-title">Administration</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="utilisateurs.html" class="nav-link active">
+                <span class="nav-icon">👥</span>
+                <span>Gestion utilisateurs</span>
+            </a>
+            <a href="audit.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span>Journal d'audit</span>
+            </a>
+            <a href="configurations.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span>Configurations</span>
+            </a>
         </div>
         
         <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+            <div class="nav-title">Communication</div>
+            <a href="communication.html" class="nav-link">
+                <span class="nav-icon">💬</span>
+                <span>Messagerie</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Support</div>
+            <a href="support.html" class="nav-link">
+                <span class="nav-icon">🛟</span>
+                <span>Centre d'aide</span>
+            </a>
+            <a href="rapports.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span>Rapports</span>
+            </a>
         </div>
     </nav>
 
-    <main class="main-content">
-        <div class="page-header">
-            <div class="header-actions">
-                <h1>Gestion des Utilisateurs</h1>
-                <button class="btn btn-primary" onclick="showAddUserModal()">
-                    <i class="fas fa-user-plus me-2"></i> Nouvel utilisateur
-                </button>
-            </div>
-            <p>Gérez les comptes utilisateurs de la plateforme</p>
-        </div>
-
-        <!-- Statistiques utilisateurs -->
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-icon">👥</div>
-                <div class="metric-info">
-                    <h3>Total Utilisateurs</h3>
-                    <div class="metric-value">2,847</div>
-                    <div class="metric-change">+124 ce mois</div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">🏠</div>
-                <div class="metric-info">
-                    <h3>Propriétaires</h3>
-                    <div class="metric-value">1,245</div>
-                    <div class="metric-change positive">+8%</div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">👤</div>
-                <div class="metric-info">
-                    <h3>Locataires</h3>
-                    <div class="metric-value">1,482</div>
-                    <div class="metric-change positive">+12%</div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">⚡</div>
-                <div class="metric-info">
-                    <h3>Actifs (30j)</h3>
-                    <div class="metric-value">2,156</div>
-                    <div class="metric-change">76% d'activité</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Filtres et recherche -->
-        <div class="filters-section">
-            <div class="filter-group">
-                <input type="text" placeholder="Rechercher un utilisateur..." class="search-input">
-                <select class="filter-select">
-                    <option value="">Tous les types</option>
-                    <option value="proprietaire">Propriétaire</option>
-                    <option value="locataire">Locataire</option>
-                    <option value="admin">Administrateur</option>
-                    <option value="agent">Agent</option>
-                </select>
-                <select class="filter-select">
-                    <option value="">Tous les statuts</option>
-                    <option value="active">Actif</option>
-                    <option value="inactive">Inactif</option>
-                    <option value="suspended">Suspendu</option>
-                </select>
-                <button class="btn btn-outline">
-                    <i class="fas fa-filter me-2"></i> Filtrer
-                </button>
-            </div>
-        </div>
-
-        <!-- Tableau des utilisateurs -->
-        <div class="users-table-section">
-            <div class="table-container">
-                <table class="users-table">
-                    <thead>
-                        <tr>
-                            <th>
-                                <input type="checkbox" id="selectAll">
-                            </th>
-                            <th>Utilisateur</th>
-                            <th>Type</th>
-                            <th>Email</th>
-                            <th>Téléphone</th>
-                            <th>Inscription</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="user-checkbox">
-                            </td>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">MD</div>
-                                    <div class="user-details">
-                                        <div class="user-name">Mohamed Diallo</div>
-                                        <div class="user-id">ID: USR-001245</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="user-type proprietaire">Propriétaire</span>
-                            </td>
-                            <td>m.diallo@email.com</td>
-                            <td>+221 77 123 45 67</td>
-                            <td>15/01/2023</td>
-                            <td>
-                                <span class="status-badge active">Actif</span>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn-icon" title="Voir profil" onclick="viewUserProfile(1)">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-icon" title="Modifier" onclick="editUser(1)">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn-icon" title="Suspendre" onclick="suspendUser(1)">
-                                        <i class="fas fa-pause"></i>
-                                    </button>
-                                    <button class="btn-icon danger" title="Supprimer" onclick="deleteUser(1)">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="user-checkbox">
-                            </td>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">AS</div>
-                                    <div class="user-details">
-                                        <div class="user-name">Aminata Sy</div>
-                                        <div class="user-id">ID: USR-001863</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="user-type locataire">Locataire</span>
-                            </td>
-                            <td>a.sy@email.com</td>
-                            <td>+221 76 234 56 78</td>
-                            <td>22/03/2024</td>
-                            <td>
-                                <span class="status-badge active">Actif</span>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn-icon" title="Voir profil" onclick="viewUserProfile(2)">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-icon" title="Modifier" onclick="editUser(2)">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn-icon" title="Suspendre" onclick="suspendUser(2)">
-                                        <i class="fas fa-pause"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="user-checkbox">
-                            </td>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">AM</div>
-                                    <div class="user-details">
-                                        <div class="user-name">Agent Municipal</div>
-                                        <div class="user-id">ID: USR-000589</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="user-type agent">Agent</span>
-                            </td>
-                            <td>agent.municipal@gouv.sn</td>
-                            <td>+221 33 889 45 12</td>
-                            <td>10/06/2023</td>
-                            <td>
-                                <span class="status-badge inactive">Inactif</span>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn-icon" title="Voir profil" onclick="viewUserProfile(3)">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-icon" title="Réactiver" onclick="activateUser(3)">
-                                        <i class="fas fa-play"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Actions groupées -->
-            <div class="bulk-actions">
-                <select class="bulk-select">
-                    <option value="">Actions groupées...</option>
-                    <option value="activate">Activer</option>
-                    <option value="suspend">Suspendre</option>
-                    <option value="export">Exporter</option>
-                    <option value="delete">Supprimer</option>
-                </select>
-                <button class="btn btn-outline" onclick="applyBulkAction()">
-                    Appliquer
-                </button>
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination">
-                <span class="pagination-info">Affichage 1-20 sur 2,847 utilisateurs</span>
-                <div class="pagination-controls">
-                    <button class="page-btn disabled">
-                        <i class="fas fa-chevron-left"></i>
+        <main class="main-content">
+            <div class="page-header">
+                <div class="header-actions">
+                    <h1>Gestion des Utilisateurs</h1>
+                    <button class="btn btn-primary" onclick="showAddUserModal()">
+                        <i class="fas fa-user-plus me-2"></i> Nouvel utilisateur
                     </button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn">
-                        <i class="fas fa-chevron-right"></i>
+                </div>
+                <p>Gérez les comptes utilisateurs de la plateforme</p>
+            </div>
+
+            <!-- Statistiques utilisateurs -->
+            <div class="metrics-grid">
+                <div class="metric-card fade-in">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-info">
+                        <h3>Total Utilisateurs</h3>
+                        <div class="metric-value">2,847</div>
+                        <div class="metric-change">+124 ce mois</div>
+                    </div>
+                </div>
+                <div class="metric-card fade-in delay-1">
+                    <div class="metric-icon">🏠</div>
+                    <div class="metric-info">
+                        <h3>Propriétaires</h3>
+                        <div class="metric-value">1,245</div>
+                        <div class="metric-change positive">+8%</div>
+                    </div>
+                </div>
+                <div class="metric-card fade-in delay-2">
+                    <div class="metric-icon">👤</div>
+                    <div class="metric-info">
+                        <h3>Locataires</h3>
+                        <div class="metric-value">1,482</div>
+                        <div class="metric-change positive">+12%</div>
+                    </div>
+                </div>
+                <div class="metric-card fade-in delay-3">
+                    <div class="metric-icon">⚡</div>
+                    <div class="metric-info">
+                        <h3>Actifs (30j)</h3>
+                        <div class="metric-value">2,156</div>
+                        <div class="metric-change">76% d'activité</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtres et recherche -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Rechercher un utilisateur..." class="search-input">
+                    </div>
+                    <select class="filter-select">
+                        <option value="">Tous les types</option>
+                        <option value="proprietaire">Propriétaire</option>
+                        <option value="locataire">Locataire</option>
+                        <option value="admin">Administrateur</option>
+                        <option value="agent">Agent</option>
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Tous les statuts</option>
+                        <option value="active">Actif</option>
+                        <option value="inactive">Inactif</option>
+                        <option value="suspended">Suspendu</option>
+                    </select>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-filter me-2"></i> Filtrer
                     </button>
                 </div>
             </div>
-        </div>
-    </main>
+
+            <!-- Tableau des utilisateurs -->
+            <div class="users-table-section">
+                <div class="table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th>Utilisateur</th>
+                                <th>Type</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Inscription</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="user-row">
+                                <td>
+                                    <input type="checkbox" class="user-checkbox">
+                                </td>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar">MD</div>
+                                        <div class="user-details">
+                                            <div class="user-name">Mohamed Diallo</div>
+                                            <div class="user-id">ID: USR-001245</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="user-type proprietaire">Propriétaire</span>
+                                </td>
+                                <td>m.diallo@email.com</td>
+                                <td>+226 77 123 45 67</td>
+                                <td>
+                                    <div class="date-cell">
+                                        <div class="date">15/01/2023</div>
+                                        <div class="time">14:30</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge active">Actif</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-icon" title="Voir profil" onclick="viewUserProfile(1)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Modifier" onclick="editUser(1)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Suspendre" onclick="suspendUser(1)">
+                                            <i class="fas fa-pause"></i>
+                                        </button>
+                                        <button class="btn-icon danger" title="Supprimer" onclick="deleteUser(1)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="user-row">
+                                <td>
+                                    <input type="checkbox" class="user-checkbox">
+                                </td>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar">AS</div>
+                                        <div class="user-details">
+                                            <div class="user-name">Aminata Sy</div>
+                                            <div class="user-id">ID: USR-001863</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="user-type locataire">Locataire</span>
+                                </td>
+                                <td>a.sy@email.com</td>
+                                <td>+226 76 234 56 78</td>
+                                <td>
+                                    <div class="date-cell">
+                                        <div class="date">22/03/2024</div>
+                                        <div class="time">09:15</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge active">Actif</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-icon" title="Voir profil" onclick="viewUserProfile(2)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Modifier" onclick="editUser(2)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Suspendre" onclick="suspendUser(2)">
+                                            <i class="fas fa-pause"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="user-row">
+                                <td>
+                                    <input type="checkbox" class="user-checkbox">
+                                </td>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar">AM</div>
+                                        <div class="user-details">
+                                            <div class="user-name">Agent Municipal</div>
+                                            <div class="user-id">ID: USR-000589</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="user-type agent">Agent</span>
+                                </td>
+                                <td>agent.municipal@gouv.sn</td>
+                                <td>+226 33 889 45 12</td>
+                                <td>
+                                    <div class="date-cell">
+                                        <div class="date">10/06/2023</div>
+                                        <div class="time">16:45</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge inactive">Inactif</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-icon" title="Voir profil" onclick="viewUserProfile(3)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Réactiver" onclick="activateUser(3)">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Actions groupées -->
+                <div class="bulk-actions">
+                    <select class="bulk-select">
+                        <option value="">Actions groupées...</option>
+                        <option value="activate">Activer</option>
+                        <option value="suspend">Suspendre</option>
+                        <option value="export">Exporter</option>
+                        <option value="delete">Supprimer</option>
+                    </select>
+                    <button class="btn btn-outline" onclick="applyBulkAction()">
+                        Appliquer
+                    </button>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <span class="pagination-info">Affichage 1-20 sur 2,847 utilisateurs</span>
+                    <div class="pagination-controls">
+                        <button class="page-btn disabled">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <!-- Modal Ajout Utilisateur -->
     <div id="addUserModal" class="modal">
+        <div class="modal-overlay" onclick="closeAddUserModal()"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Ajouter un Utilisateur</h2>
-                <span class="close" onclick="closeAddUserModal()">&times;</span>
+                <h2><i class="fas fa-user-plus me-2"></i>Ajouter un Utilisateur</h2>
+                <button class="close" onclick="closeAddUserModal()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <form id="addUserForm" class="modal-form">
                 <div class="form-row">
@@ -318,7 +366,12 @@
                     </div>
                     <div class="form-group">
                         <label>Mot de passe</label>
-                        <input type="password" id="userPassword" required>
+                        <div class="password-input-container">
+                            <input type="password" id="userPassword" required>
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -326,433 +379,38 @@
                     <div class="permissions-grid">
                         <label class="permission-option">
                             <input type="checkbox" name="permissions" value="read">
-                            <span>Lecture</span>
+                            <span class="permission-checkbox"></span>
+                            <span class="permission-label">Lecture</span>
                         </label>
                         <label class="permission-option">
                             <input type="checkbox" name="permissions" value="write">
-                            <span>Écriture</span>
+                            <span class="permission-checkbox"></span>
+                            <span class="permission-label">Écriture</span>
                         </label>
                         <label class="permission-option">
                             <input type="checkbox" name="permissions" value="delete">
-                            <span>Suppression</span>
+                            <span class="permission-checkbox"></span>
+                            <span class="permission-label">Suppression</span>
                         </label>
                         <label class="permission-option">
                             <input type="checkbox" name="permissions" value="admin">
-                            <span>Administration</span>
+                            <span class="permission-checkbox"></span>
+                            <span class="permission-label">Administration</span>
                         </label>
                     </div>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-outline" onclick="closeAddUserModal()">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Créer l'utilisateur</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-2"></i> Créer l'utilisateur
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="../js/auth.js"></script>
-    <script>
-        if (!checkAuth('administrateur')) {}
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const user = getCurrentUser();
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-            }
-
-            // Gestion de la sélection globale
-            document.getElementById('selectAll').addEventListener('change', function() {
-                const checkboxes = document.querySelectorAll('.user-checkbox');
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = this.checked;
-                });
-            });
-
-            // Gestion du formulaire
-            document.getElementById('addUserForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                createUser();
-            });
-        });
-
-        function showAddUserModal() {
-            document.getElementById('addUserModal').style.display = 'block';
-        }
-
-        function closeAddUserModal() {
-            document.getElementById('addUserModal').style.display = 'none';
-        }
-
-        function createUser() {
-            alert('Utilisateur créé avec succès');
-            closeAddUserModal();
-        }
-
-        function viewUserProfile(id) {
-            alert(`Voir le profil utilisateur ${id}`);
-        }
-
-        function editUser(id) {
-            alert(`Modifier l'utilisateur ${id}`);
-        }
-
-        function suspendUser(id) {
-            if (confirm('Êtes-vous sûr de vouloir suspendre cet utilisateur ?')) {
-                alert(`Utilisateur ${id} suspendu`);
-            }
-        }
-
-        function activateUser(id) {
-            alert(`Utilisateur ${id} réactivé`);
-        }
-
-        function deleteUser(id) {
-            if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.')) {
-                alert(`Utilisateur ${id} supprimé`);
-            }
-        }
-
-        function applyBulkAction() {
-            const action = document.querySelector('.bulk-select').value;
-            if (!action) {
-                alert('Veuillez sélectionner une action');
-                return;
-            }
-            alert(`Action groupée: ${action}`);
-        }
-
-        // Fermer la modal en cliquant à l'extérieur
-        window.onclick = function(event) {
-            const modal = document.getElementById('addUserModal');
-            if (event.target === modal) {
-                closeAddUserModal();
-            }
-        }
-    </script>
-
-    <style>
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .filters-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .search-input, .filter-select {
-            padding: 0.75rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
-
-        .search-input {
-            flex: 1;
-        }
-
-        .users-table-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        .table-container {
-            overflow-x: auto;
-            margin-bottom: 1.5rem;
-        }
-
-        .users-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .users-table th,
-        .users-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .users-table th {
-            background: #f8fafc;
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #667eea;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: #1f2937;
-        }
-
-        .user-id {
-            font-size: 0.8rem;
-            color: #6b7280;
-        }
-
-        .user-type {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .user-type.proprietaire {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .user-type.locataire {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .user-type.agent {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .user-type.admin {
-            background: #f3e8ff;
-            color: #7c3aed;
-        }
-
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-badge.active {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .status-badge.inactive {
-            background: #f3f4f6;
-            color: #6b7280;
-        }
-
-        .status-badge.suspended {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        .btn-icon {
-            padding: 0.5rem;
-            border: none;
-            background: none;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #6b7280;
-            transition: all 0.3s ease;
-        }
-
-        .btn-icon:hover {
-            background: #f3f4f6;
-            color: #374151;
-        }
-
-        .btn-icon.danger:hover {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .bulk-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            padding: 1rem 0;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .bulk-select {
-            padding: 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .pagination-info {
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
-
-        .pagination-controls {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .page-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #d1d5db;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .page-btn:hover:not(.disabled) {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .page-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .page-btn.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 0;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-form {
-            padding: 1.5rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .permissions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .permission-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .permission-option:hover {
-            border-color: #667eea;
-        }
-
-        .permission-option input:checked + span {
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            margin-top: 1.5rem;
-        }
-
-        .close {
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #64748b;
-        }
-
-        .close:hover {
-            color: #1e293b;
-        }
-
-        @media (max-width: 768px) {
-            .filter-group {
-                flex-direction: column;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .pagination {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    </style>
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
 
     <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-3">
@@ -784,8 +442,8 @@
                 <div class="col-lg-4 col-md-4 mb-4">
                     <h5 class="fw-bold mb-3">Contact</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue, Ouagadougou, Burkina Faso</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +226 33 12 45 67</li>
                         <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
                     </ul>
                 </div>
@@ -797,7 +455,1098 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --info: #118ab2;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--gray-800);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo span:first-child {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo span:last-child {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 1.5rem 0;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .nav-section h3 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.25rem;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-actions h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .page-header p {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            opacity: 0.8;
+        }
+
+        .metric-info {
+            flex: 1;
+        }
+
+        .metric-info h3 {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-change {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .metric-change.positive {
+            color: var(--success);
+        }
+
+        /* Filters Section */
+        .filters-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+        }
+
+        .filter-select {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            background: white;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        /* Users Table Section */
+        .users-table-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .users-table th {
+            background: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .user-row:hover {
+            background-color: var(--gray-50);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .user-id {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        .user-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .user-type.proprietaire {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .user-type.locataire {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .user-type.agent {
+            background: rgba(255, 209, 102, 0.2);
+            color: #b38f00;
+        }
+
+        .user-type.admin {
+            background: rgba(114, 9, 183, 0.1);
+            color: var(--secondary);
+        }
+
+        .date-cell {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .date {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .time {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .status-badge.inactive {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .status-badge.suspended {
+            background: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--gray-600);
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background: var(--gray-100);
+            color: var(--gray-800);
+        }
+
+        .btn-icon.danger:hover {
+            background: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Bulk Actions */
+        .bulk-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .bulk-select {
+            padding: 0.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            background: white;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .pagination-info {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-300);
+            background: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.875rem;
+        }
+
+        .page-btn:hover:not(.disabled):not(.active) {
+            background: var(--gray-100);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 1001;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .modal-header .close {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-header .close:hover {
+            color: var(--gray-700);
+        }
+
+        .modal-form {
+            padding: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .password-input-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            cursor: pointer;
+        }
+
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .permission-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .permission-option:hover {
+            border-color: var(--primary);
+        }
+
+        .permission-option input {
+            display: none;
+        }
+
+        .permission-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--gray-400);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .permission-option input:checked + .permission-checkbox {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .permission-option input:checked + .permission-checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 0.75rem;
+        }
+
+        .permission-label {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+
+        .permission-option input:checked ~ .permission-label {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            margin-top: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -1rem;
+        }
+
+        .col-lg-4, .col-lg-2, .col-md-4 {
+            padding: 0 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .col-lg-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .col-lg-2 {
+            flex: 0 0 16.666667%;
+            max-width: 16.666667%;
+        }
+
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        footer h5 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        footer p, footer ul li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+            margin: 1.5rem 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--info);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--info);
+        }
+
+        .toast-content h6 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-content p {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+            }
+
+            .header-content, .header-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-group {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .pagination {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .col-lg-4, .col-lg-2, .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+
+    <script>
+        // Vérification d'authentification
+        function checkAuth(role) {
+            // Simulation d'authentification
+            return true;
+        }
+
+        function getCurrentUser() {
+            // Simulation d'utilisateur
+            return {
+                name: "Admin Système",
+                role: "administrateur"
+            };
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+            }
+
+            // Gestion de la sélection globale
+            document.getElementById('selectAll').addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.user-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
+
+            // Gestion du formulaire
+            document.getElementById('addUserForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                createUser();
+            });
+
+            // Animation des cartes métriques
+            animateMetrics();
+        });
+
+        function animateMetrics() {
+            const metrics = document.querySelectorAll('.metric-card');
+            metrics.forEach((metric, index) => {
+                metric.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+
+        function showAddUserModal() {
+            document.getElementById('addUserModal').classList.add('active');
+        }
+
+        function closeAddUserModal() {
+            document.getElementById('addUserModal').classList.remove('active');
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('userPassword');
+            const toggleButton = document.querySelector('.toggle-password i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.classList.remove('fa-eye');
+                toggleButton.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.classList.remove('fa-eye-slash');
+                toggleButton.classList.add('fa-eye');
+            }
+        }
+
+        function createUser() {
+            const userName = document.getElementById('userNameInput').value;
+            showToast(`Utilisateur "${userName}" créé avec succès`, 'success');
+            closeAddUserModal();
+            // Réinitialiser le formulaire
+            document.getElementById('addUserForm').reset();
+        }
+
+        function viewUserProfile(id) {
+            showToast(`Ouverture du profil utilisateur ${id}`, 'info');
+        }
+
+        function editUser(id) {
+            showToast(`Modification de l'utilisateur ${id}`, 'info');
+        }
+
+        function suspendUser(id) {
+            if (confirm('Êtes-vous sûr de vouloir suspendre cet utilisateur ?')) {
+                showToast(`Utilisateur ${id} suspendu`, 'warning');
+            }
+        }
+
+        function activateUser(id) {
+            showToast(`Utilisateur ${id} réactivé`, 'success');
+        }
+
+        function deleteUser(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.')) {
+                showToast(`Utilisateur ${id} supprimé`, 'success');
+            }
+        }
+
+        function applyBulkAction() {
+            const action = document.querySelector('.bulk-select').value;
+            if (!action) {
+                showToast('Veuillez sélectionner une action', 'warning');
+                return;
+            }
+            showToast(`Action groupée "${action}" appliquée`, 'success');
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                showToast('Déconnexion en cours...', 'info');
+                setTimeout(() => {
+                    window.location.href = '../login.html';
+                }, 1500);
+            }
+        }
+
+        // Système de notifications toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.id = toastId;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="toast-content">
+                    <h6>${type === 'success' ? 'Succès' : type === 'warning' ? 'Attention' : 'Information'}</h6>
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Afficher le toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Masquer et supprimer le toast après 4 secondes
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Fermer la modal avec ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeAddUserModal();
+            }
+        });
+    </script>
 </body>
 </html>

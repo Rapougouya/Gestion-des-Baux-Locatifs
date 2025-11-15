@@ -1,166 +1,1608 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration - PNSBIL</title>
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/dashboards.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* CSS intégré pour plus de performance */
+        :root {
+            /* Couleurs */
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #dbeafe;
+            --secondary: #64748b;
+            --success: #059669;
+            --warning: #d97706;
+            --error: #dc2626;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            
+            /* Espacements */
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            
+            /* Bordures */
+            --radius: 0.5rem;
+            --radius-lg: 0.75rem;
+            
+            /* Ombres */
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            
+            /* Typographie */
+            --font-sm: 0.875rem;
+            --font-base: 1rem;
+            --font-lg: 1.125rem;
+            --font-xl: 1.25rem;
+            --font-2xl: 1.5rem;
+            --font-3xl: 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Layout Principal */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: 70px 1fr auto;
+            grid-template-areas: 
+                "sidebar header"
+                "sidebar main"
+                "sidebar footer";
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .dashboard-header {
+            grid-area: header;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 var(--space-xl);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: var(--font-lg);
+            color: var(--primary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .user-role {
+            font-size: var(--font-sm);
+            color: var(--text-light);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: var(--space-xl) 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 280px;
+            overflow-y: auto;
+            z-index: 200;
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-2xl);
+            padding: 0 var(--space-lg);
+        }
+
+        .nav-title {
+            font-size: var(--font-sm);
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--space-md);
+            padding-left: var(--space-sm);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Contenu Principal */
+        .main-content {
+            grid-area: main;
+            padding: var(--space-xl);
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .page-title {
+            font-size: var(--font-3xl);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: var(--space-xs);
+        }
+
+        .page-subtitle {
+            font-size: var(--font-lg);
+            color: var(--text-light);
+        }
+
+        /* Grille de Métriques */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .metric-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .metric-content {
+            flex: 1;
+        }
+
+        .metric-title {
+            font-size: var(--font-sm);
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--space-xs);
+        }
+
+        .metric-value {
+            font-size: var(--font-2xl);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: var(--space-xs);
+        }
+
+        .metric-change {
+            font-size: var(--font-sm);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .metric-change.positive {
+            color: var(--success);
+        }
+
+        .metric-change.negative {
+            color: var(--error);
+        }
+
+        /* Actions Rapides */
+        .quick-actions {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .section-title {
+            font-size: var(--font-xl);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: var(--space-lg);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-xl);
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            background: var(--primary-light);
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover .action-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Footer */
+        .dashboard-footer {
+            grid-area: footer;
+            background: var(--text);
+            color: white;
+            padding: var(--space-2xl) 0 var(--space-xl);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-xl);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-2xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .footer-section h5 {
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            font-size: var(--font-lg);
+        }
+
+        .footer-section p {
+            color: #cbd5e1;
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: #94a3b8;
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: var(--space-lg);
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        /* Boutons */
+        .btn {
+            padding: var(--space-sm) var(--space-lg);
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--font-base);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Menu Mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            padding: var(--space-sm);
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+        }
+
+        /* Styles pour la section Activité Récente */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+}
+
+.btn-sm {
+    padding: var(--space-xs) var(--space-md);
+    font-size: var(--font-sm);
+}
+
+.activities-container {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activity-list {
+    padding: 0;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-item:hover {
+    background-color: var(--background);
+}
+
+.activity-item.new {
+    background-color: var(--primary-light);
+    border-left: 4px solid var(--primary);
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.activity-icon.user {
+    background-color: #dbeafe;
+    color: var(--primary);
+}
+
+.activity-icon.payment {
+    background-color: #dcfce7;
+    color: var(--success);
+}
+
+.activity-icon.alert {
+    background-color: #fef3c7;
+    color: var(--warning);
+}
+
+.activity-icon.system {
+    background-color: #e0e7ff;
+    color: #6366f1;
+}
+
+.activity-icon.security {
+    background-color: #fee2e2;
+    color: var(--error);
+}
+
+.activity-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--space-xs);
+    line-height: 1.4;
+}
+
+.activity-description {
+    color: var(--text-light);
+    font-size: var(--font-sm);
+    line-height: 1.4;
+    margin-bottom: var(--space-xs);
+}
+
+.activity-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: var(--font-sm);
+    color: var(--text-muted);
+}
+
+.activity-user {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: 500;
+}
+
+.activity-time {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.activity-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-success {
+    background-color: #dcfce7;
+    color: var(--success);
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: var(--warning);
+}
+
+.badge-error {
+    background-color: #fee2e2;
+    color: var(--error);
+}
+
+.badge-info {
+    background-color: #dbeafe;
+    color: var(--primary);
+}
+
+.activity-actions {
+    display: flex;
+    gap: var(--space-xs);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.activity-item:hover .activity-actions {
+    opacity: 1;
+}
+
+.action-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Scrollbar personnalisée */
+.activities-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.activities-container::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+.activities-container::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+.activities-container::-webkit-scrollbar-thumb:hover {
+    background: var(--text-light);
+}
+
+/* États vides */
+.empty-state {
+    text-align: center;
+    padding: var(--space-2xl);
+    color: var(--text-muted);
+}
+
+.empty-state .icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+}
+
+/* Filtres d'activité */
+.activity-filters {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: var(--space-xs) var(--space-md);
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: var(--font-sm);
+    color: var(--text-light);
+    transition: all 0.2s ease;
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.filter-btn:hover:not(.active) {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+/* Ajouter ces styles à votre CSS existant */
+
+/* États de chargement */
+.dashboard-loading {
+    cursor: wait;
+}
+
+.dashboard-loading * {
+    pointer-events: none;
+}
+
+.loading-state, .error-state, .empty-state {
+    text-align: center;
+    padding: var(--space-2xl);
+    color: var(--text-muted);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto var(--space-lg);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* En-tête des activités */
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.activity-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.activity-footer {
+    text-align: center;
+    padding: var(--space-lg);
+    border-top: 1px solid var(--border);
+}
+
+/* Indicateur de nouvelle activité */
+.activity-indicator {
+    position: absolute;
+    top: 50%;
+    left: -8px;
+    width: 8px;
+    height: 8px;
+    background: var(--error);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    animation: pulse 2s infinite;
+}
+
+/* Priorités des activités */
+.activity-item.high {
+    border-left: 4px solid var(--error);
+}
+
+.activity-item.medium {
+    border-left: 4px solid var(--warning);
+}
+
+.activity-item.low {
+    border-left: 4px solid var(--success);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-body {
+    padding: var(--space-lg);
+}
+
+.modal-footer {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: flex-end;
+    padding: var(--space-lg);
+    border-top: 1px solid var(--border);
+}
+
+/* Détails d'activité */
+.activity-detail .detail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.detail-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.detail-title {
+    flex: 1;
+}
+
+.detail-title h4 {
+    margin: 0 0 var(--space-xs) 0;
+    color: var(--text);
+}
+
+.detail-section {
+    margin-bottom: var(--space-lg);
+}
+
+.detail-section label {
+    font-weight: 600;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: var(--space-xs);
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-item label {
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: var(--font-sm);
+    margin-bottom: 2px;
+}
+
+.detail-item .amount {
+    font-weight: 700;
+    color: var(--success);
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    z-index: 3000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    max-width: 400px;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-success {
+    border-left: 4px solid var(--success);
+}
+
+.notification-warning {
+    border-left: 4px solid var(--warning);
+}
+
+.notification-error {
+    border-left: 4px solid var(--error);
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 4px;
+    margin-left: auto;
+}
+
+.global-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--error);
+    color: white;
+    z-index: 4000;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.global-notification.show {
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .activity-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .activity-actions {
+        justify-content: center;
+    }
+    
+    .modal-content {
+        margin: 20px;
+        max-height: calc(100vh - 40px);
+    }
+    
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .notification {
+        left: 20px;
+        right: 20px;
+        max-width: none;
+    }
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Mode sombre (préparation) */
+@media (prefers-color-scheme: dark) {
+    .dashboard-layout {
+        --background: #1a1a1a;
+        --surface: #2d2d2d;
+        --text: #ffffff;
+        --text-light: #a0a0a0;
+        --border: #404040;
+    }
+}
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "footer";
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-overlay.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: var(--space-lg);
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-card {
+                padding: var(--space-lg);
+            }
+
+            .page-title {
+                font-size: var(--font-2xl);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0 var(--space-lg);
+            }
+
+            .main-content {
+                padding: var(--space-md);
+            }
+
+            .user-info {
+                display: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* États de chargement */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Ajouter ces animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.activity-item.new {
+    animation: pulse 2s ease-in-out;
+}
+
+/* Styles pour les nouvelles activités en temps réel */
+.realtime-indicator {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    background: var(--error);
+    border-radius: 50%;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+    </style>
 </head>
-<body class="dashboard-page">
+<body class="dashboard-layout">
+    <!-- Header -->
     <header class="dashboard-header">
         <div class="header-content">
-            <div class="logo">
-                <span>🏠 PNSBIL</span>
-                <span>Espace Administrateur</span>
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div class="logo">
+                    <span class="logo-icon">🏠</span>
+                    <span class="logo-text">PNSBIL Admin</span>
+                </div>
             </div>
+            
             <div class="user-menu">
-                <span class="user-name" id="userName">Admin Système</span>
-                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Admin Système</div>
+                    <div class="user-role">Administrateur</div>
+                </div>
+                <button class="btn btn-outline" onclick="logout()">
+                    <span>Déconnexion</span>
+                    <span>🚪</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <nav class="sidebar">
+    <!-- Overlay Mobile -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
         <div class="nav-section">
-            <h3>Administration</h3>
-            <a href="dashboard.html" class="nav-link active">📊 Tableau de bord</a>
-            <a href="utilisateurs.html" class="nav-link">👥 Gestion utilisateurs</a>
-            <a href="audit.html" class="nav-link">📋 Journal d'audit</a>
-            <a href="configurations.html" class="nav-link">⚙️ Configurations</a>
+            <div class="nav-title">Administration</div>
+            <a href="dashboard.html" class="nav-link active">
+                <span class="nav-icon">📊</span>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="utilisateurs.html" class="nav-link">
+                <span class="nav-icon">👥</span>
+                <span>Gestion utilisateurs</span>
+            </a>
+            <a href="audit.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span>Journal d'audit</span>
+            </a>
+            <a href="configurations.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span>Configurations</span>
+            </a>
         </div>
         
         <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">💬 Messagerie</a>
+            <div class="nav-title">Communication</div>
+            <a href="communication.html" class="nav-link">
+                <span class="nav-icon">💬</span>
+                <span>Messagerie</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Support</div>
+            <a href="support.html" class="nav-link">
+                <span class="nav-icon">🛟</span>
+                <span>Centre d'aide</span>
+            </a>
+            <a href="rapports.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span>Rapports</span>
+            </a>
         </div>
     </nav>
 
+    <!-- Contenu Principal -->
     <main class="main-content">
-        <div class="page-header">
-            <h1>Tableau de Bord Administrateur</h1>
-            <p>Supervision de la plateforme PNSBIL</p>
+        <div class="page-header fade-in">
+            <h1 class="page-title">Tableau de Bord Administrateur</h1>
+            <p class="page-subtitle">Supervision de la plateforme PNSBIL</p>
         </div>
 
+        <!-- Métriques -->
         <div class="metrics-grid">
-            <div class="metric-card">
+            <div class="metric-card fade-in">
                 <div class="metric-icon">👥</div>
-                <div class="metric-info">
-                    <h3>Utilisateurs</h3>
-                    <div class="metric-value">2,847</div>
-                    <div class="metric-change">+124 ce mois</div>
+                <div class="metric-content">
+                    <div class="metric-title">Utilisateurs Actifs</div>
+                    <div class="metric-value" id="usersCount">2,847</div>
+                    <div class="metric-change positive">
+                        <span>↑</span>
+                        <span>+124 ce mois</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="metric-card">
+            <div class="metric-card fade-in">
                 <div class="metric-icon">🏠</div>
-                <div class="metric-info">
-                    <h3>Propriétés</h3>
-                    <div class="metric-value">15,623</div>
-                    <div class="metric-change">+342 cette semaine</div>
+                <div class="metric-content">
+                    <div class="metric-title">Propriétés</div>
+                    <div class="metric-value" id="propertiesCount">15,623</div>
+                    <div class="metric-change positive">
+                        <span>↑</span>
+                        <span>+342 cette semaine</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="metric-card">
+            <div class="metric-card fade-in">
                 <div class="metric-icon">📑</div>
-                <div class="metric-info">
-                    <h3>Baux Actifs</h3>
-                    <div class="metric-value">12,458</div>
-                    <div class="metric-change">92% occupation</div>
+                <div class="metric-content">
+                    <div class="metric-title">Baux Actifs</div>
+                    <div class="metric-value" id="leasesCount">12,458</div>
+                    <div class="metric-change">
+                        <span>•</span>
+                        <span>92% occupation</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="metric-card">
+            <div class="metric-card fade-in">
                 <div class="metric-icon">💰</div>
-                <div class="metric-info">
-                    <h3>Revenus Totaux</h3>
-                    <div class="metric-value">₣ 4.2B</div>
-                    <div class="metric-change positive">+8%</div>
+                <div class="metric-content">
+                    <div class="metric-title">Revenus Totaux</div>
+                    <div class="metric-value" id="revenueCount"> 4.2B FCFA</div>
+                    <div class="metric-change positive">
+                        <span>↑</span>
+                        <span>+8% vs mois dernier</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="quick-actions">
-            <h2>Actions Administratives</h2>
+        <!-- Actions Rapides -->
+        <div class="quick-actions fade-in">
+            <h2 class="section-title">Actions Administratives</h2>
             <div class="actions-grid">
-                <button class="action-btn" onclick="location.href='utilisateurs.html'">
-                    <span class="action-icon">👥</span>
+                <a href="utilisateurs.html" class="action-btn">
+                    <div class="action-icon">👥</div>
                     <span>Gérer utilisateurs</span>
-                </button>
-                <button class="action-btn" onclick="location.href='audit.html'">
-                    <span class="action-icon">📋</span>
+                </a>
+                <a href="audit.html" class="action-btn">
+                    <div class="action-icon">📋</div>
                     <span>Voir les logs</span>
-                </button>
-                <button class="action-btn" onclick="location.href='configurations.html'">
-                    <span class="action-icon">⚙️</span>
+                </a>
+                <a href="configurations.html" class="action-btn">
+                    <div class="action-icon">⚙️</div>
                     <span>Configurations</span>
-                </button>
-                <button class="action-btn" onclick="location.href='communication.html'">
-                    <span class="action-icon">💬</span>
+                </a>
+                <a href="communication.html" class="action-btn">
+                    <div class="action-icon">💬</div>
                     <span>Support utilisateurs</span>
-                </button>
+                </a>
+                <a href="rapports.html" class="action-btn">
+                    <div class="action-icon">📈</div>
+                    <span>Générer rapports</span>
+                </a>
+                <a href="backup.html" class="action-btn">
+                    <div class="action-icon">💾</div>
+                    <span>Sauvegarde</span>
+                </a>
             </div>
         </div>
+
+        <!-- Section d'activité récente -->
+        <!-- Remplacer la section existante par : -->
+<div class="quick-actions fade-in">
+    <div class="section-header">
+        <h2 class="section-title">Activité Récente</h2>
+        <button class="btn btn-outline btn-sm" onclick="refreshActivities()">
+            <span>🔄</span>
+            <span>Actualiser</span>
+        </button>
+    </div>
+    
+    <div class="activities-container" id="recentActivity">
+        <div class="activity-list">
+            <!-- Activité 1 -->
+            <div class="activity-item new high" data-activity-id="1">
+                <div class="activity-indicator"></div>
+                <div class="activity-icon user">
+                    👤
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Nouveau propriétaire inscrit</div>
+                    <div class="activity-description">Inscription validée pour M. Abdoulaye Naba - Propriétaire à Ouagadougou</div>
+                    <div class="activity-meta">
+                        <div class="activity-user">
+                            <span>👤</span>
+                            <span>Abdoulaye Naba</span>
+                        </div>
+                        <div class="activity-time">
+                            <span>🕒</span>
+                            <span>Il y a 2 min</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-badge badge-success">
+                    Nouveau
+                </div>
+                <div class="activity-actions">
+                    <button class="action-btn" onclick="activityManager.viewDetails(1)" title="Voir les détails">
+                        👁️
+                    </button>
+                    <button class="action-btn" onclick="activityManager.markAsRead(1)" title="Marquer comme lu">
+                        ✓
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activité 2 -->
+            <div class="activity-item medium" data-activity-id="2">
+                <div class="activity-icon payment">
+                    💰
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Paiement de loyer confirmé</div>
+                    <div class="activity-description">Loyer du mois de Décembre 2024 pour la villa #V-56789</div>
+                    <div class="activity-meta">
+                        <div class="activity-user">
+                            <span>👤</span>
+                            <span>Moussa Barry</span>
+                        </div>
+                        <div class="activity-time">
+                            <span>🕒</span>
+                            <span>Il y a 8 min</span>
+                        </div>
+                        <div class="activity-amount">
+                            <span>💳</span>
+                            <span>450,000 FCFA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-badge badge-success">
+                    Réussi
+                </div>
+                <div class="activity-actions">
+                    <button class="action-btn" onclick="activityManager.viewDetails(2)" title="Voir les détails">
+                        👁️
+                    </button>
+                    <button class="action-btn" onclick="activityManager.markAsRead(2)" title="Marquer comme lu">
+                        ✓
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activité 3 -->
+            <div class="activity-item high" data-activity-id="3">
+                <div class="activity-icon alert">
+                    ⚠️
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Bail expirant dans 7 jours</div>
+                    <div class="activity-description">Le bail #B-23456 pour l'appartement A4 arrive à expiration</div>
+                    <div class="activity-meta">
+                        <div class="activity-user">
+                            <span>👤</span>
+                            <span>Système Alerte</span>
+                        </div>
+                        <div class="activity-time">
+                            <span>🕒</span>
+                            <span>Il y a 15 min</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-badge badge-warning">
+                    Urgent
+                </div>
+                <div class="activity-actions">
+                    <button class="action-btn" onclick="activityManager.viewDetails(3)" title="Voir les détails">
+                        👁️
+                    </button>
+                    <button class="action-btn" onclick="activityManager.markAsRead(3)" title="Marquer comme lu">
+                        ✓
+                    </button>
+                    <button class="action-btn action-urgent" onclick="activityManager.handleUrgent(3)" title="Action urgente">
+                        🚨
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activité 4 -->
+            <div class="activity-item medium" data-activity-id="4">
+                <div class="activity-icon tax">
+                    🏛️
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Déclaration fiscale soumise</div>
+                    <div class="activity-description">Déclaration trimestrielle des revenus locatifs - Q3 2024</div>
+                    <div class="activity-meta">
+                        <div class="activity-user">
+                            <span>👤</span>
+                            <span>Service Fiscal</span>
+                        </div>
+                        <div class="activity-time">
+                            <span>🕒</span>
+                            <span>Il y a 25 min</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-badge badge-info">
+                    Fiscal
+                </div>
+                <div class="activity-actions">
+                    <button class="action-btn" onclick="activityManager.viewDetails(4)" title="Voir les détails">
+                        👁️
+                    </button>
+                    <button class="action-btn" onclick="activityManager.markAsRead(4)" title="Marquer comme lu">
+                        ✓
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activité 5 -->
+            <div class="activity-item low" data-activity-id="5">
+                <div class="activity-icon system">
+                    🔄
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Synchronisation des données</div>
+                    <div class="activity-description">Mise à jour automatique des bases de données terminée avec succès</div>
+                    <div class="activity-meta">
+                        <div class="activity-user">
+                            <span>👤</span>
+                            <span>Système</span>
+                        </div>
+                        <div class="activity-time">
+                            <span>🕒</span>
+                            <span>Il y a 1 heure</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-badge badge-info">
+                    Système
+                </div>
+                <div class="activity-actions">
+                    <button class="action-btn" onclick="activityManager.viewDetails(5)" title="Voir les détails">
+                        👁️
+                    </button>
+                    <button class="action-btn" onclick="activityManager.markAsRead(5)" title="Marquer comme lu">
+                        ✓
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activité 6 -->
+            <div class="activity-item medium" data-activity-id="6">
+                <div class="activity-icon security">
+                    🔒
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Connexion administrateur</div>
+                    <div class="activity-description">Accès administrateur détecté depuis une nouvelle adresse IP</div>
+                    <div class="activity-meta">
+                        <div class="activity-user">
+                            <span>👤</span>
+                            <span>Admin Principal</span>
+                        </div>
+                        <div class="activity-time">
+                            <span>🕒</span>
+                            <span>Il y a 2 heures</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-badge badge-info">
+                    Sécurité
+                </div>
+                <div class="activity-actions">
+                    <button class="action-btn" onclick="activityManager.viewDetails(6)" title="Voir les détails">
+                        👁️
+                    </button>
+                    <button class="action-btn" onclick="activityManager.markAsRead(6)" title="Marquer comme lu">
+                        ✓
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     </main>
 
-    <script src="../js/auth.js"></script>
-    <script>
-        if (!checkAuth('administrateur')) {}
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const user = getCurrentUser();
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-            }
-        });
-    </script>
-
     <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h5>PNSBIL</h5>
                     <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
                     <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                <div class="footer-section">
+                    <h5>Liens rapides</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="properties.html">Propriétés</a></li>
+                        <li><a href="leases.html">Baux</a></li>
+                        <li><a href="taxes.html">Impôts</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                <div class="footer-section">
+                    <h5>Ressources</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Guides</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Mentions légales</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Dakar, Sénégal</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +221 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                <div class="footer-section">
+                    <h5>Contact</h5>
+                    <ul class="footer-contact">
+                        <li>📍 Avenue Kouamé, Ouagadougou, Burkina Faso</li>
+                        <li>📞 +226 54 12 45 67</li>
+                        <li>✉️ contact@pnsbil.sn</li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PNSBIL - Tous droits réservés</p>
             </div>
         </div>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/admin.js"></script>
     
 </body>
 </html>

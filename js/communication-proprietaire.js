@@ -1,4 +1,4 @@
-// Communication System Spécialisé pour PROPRIÉTAIRES PNSBIL
+﻿// Communication System Spécialisé pour PROPRIÉTAIRES PNSBIL
 
 class CommunicationCenterProprietaire {
     constructor() {
@@ -24,7 +24,7 @@ class CommunicationCenterProprietaire {
                 id: 1,
                 name: "Aminata Sy",
                 role: "Locataire - Appartement B12",
-                property: "Loyer: ₣ 450,000/mois - Contrat jusqu'au 31/12/2024",
+                property: "Loyer:  450,000 FCFA/mois - Contrat jusqu'au 31/12/2024",
                 lastMessage: "Demande attestation de loyer",
                 online: true,
                 unread: 3,
@@ -36,7 +36,7 @@ class CommunicationCenterProprietaire {
                 id: 2,
                 name: "Jean Dupont",
                 role: "Locataire - Villa 45",
-                property: "Loyer: ₣ 1,200,000/mois - Contrat jusqu'au 31/01/2025",
+                property: "Loyer:  1,200,000 FCFA/mois - Contrat jusqu'au 31/01/2025",
                 lastMessage: "Paiement reçu",
                 online: false,
                 unread: 0,
@@ -70,7 +70,7 @@ class CommunicationCenterProprietaire {
                 id: 5,
                 name: "Mariam Sow",
                 role: "Ancienne locataire - Studio C5",
-                property: "Solde tout réglé - Dernier loyer: ₣ 250,000",
+                property: "Solde tout réglé - Dernier loyer:  250,000 FCFA",
                 lastMessage: "Solde tout réglé",
                 online: false,
                 unread: 0,

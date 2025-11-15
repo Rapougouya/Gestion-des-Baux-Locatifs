@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Agences Immobilières | PNSBIL</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2A4D8E;
+            --primary-dark: #1E3A6E;
+            --primary-light: #3A6BCC;
+            --secondary: #E8B339;
+            --secondary-dark: #D4A024;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --danger: #E74C3C;
+            --info: #3498DB;
+            --light: #F8F9FA;
+            --dark: #2C3E50;
+            --gray-100: #F8F9FA;
+            --gray-200: #E9ECEF;
+            --gray-300: #DEE2E6;
+            --gray-400: #CED4DA;
+            --gray-500: #ADB5BD;
+            --gray-600: #6C757D;
+            --gray-700: #495057;
+            --gray-800: #343A40;
+            --gray-900: #212529;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .agency-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .agency-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .agency-logo {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .agency-info h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .agency-info p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .agency-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Main Layout */
+        .agency-dashboard {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .agency-sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .agency-stats {
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-info h4 {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-change {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+        }
+
+        .stat-change.positive {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--gray-100);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-light);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        .agency-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Navigation Tabs */
+        .communication-tabs {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--gray-600);
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            white-space: nowrap;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-badge {
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            margin-left: 0.5rem;
+            font-weight: 600;
+        }
+
+        .tab-btn.active .tab-badge {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Communication Sections */
+        .communication-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .communication-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Messages Container */
+        .messages-container {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 1.5rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        .messages-list {
+            border-right: 1px solid var(--gray-200);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .message-item {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: var(--transition);
+            gap: 1rem;
+        }
+
+        .message-item:hover {
+            background: var(--gray-50);
+        }
+
+        .message-item.unread {
+            background: rgba(42, 77, 142, 0.05);
+        }
+
+        .message-item.selected {
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .message-item.selected .message-sender,
+        .message-item.selected .message-preview,
+        .message-item.selected .message-time {
+            color: white;
+        }
+
+        .message-avatar {
+            flex-shrink: 0;
+        }
+
+        .message-avatar img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            white-space: nowrap;
+        }
+
+        .message-preview {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        .message-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .message-tag {
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .message-tag.urgent {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+        }
+
+        .message-tag.property {
+            background: rgba(42, 77, 142, 0.1);
+            color: var(--primary);
+        }
+
+        .message-tag.payment {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+        }
+
+        .message-status {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .unread-indicator {
+            color: var(--primary);
+            font-size: 0.75rem;
+        }
+
+        .replied-indicator {
+            color: var(--success);
+            font-size: 0.75rem;
+        }
+
+        /* Message Details */
+        .message-details {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .message-details-placeholder {
+            text-align: center;
+            color: var(--gray-500);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message-details-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .message-details-placeholder h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-400);
+        }
+
+        .message-full {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-full-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .message-full-sender {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .message-full-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+
+        .message-full-sender-info h3 {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .message-full-sender-info p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .message-full-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .message-full-content {
+            flex: 1;
+            margin-bottom: 2rem;
+        }
+
+        .message-full-content h4 {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .message-full-content p {
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .message-full-actions {
+            display: flex;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .btn-sm {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-outline-primary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            width: 300px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 77, 142, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+        }
+
+        .filter-select {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            background: white;
+            font-size: 0.9rem;
+        }
+
+        /* Properties Grid */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .property-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .property-content {
+            padding: 1.5rem;
+        }
+
+        .property-title {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .property-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .property-rent {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .property-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 2rem 2rem 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--danger);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 77, 142, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 3000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--danger);
+        }
+
+        .toast-content h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-content p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .agency-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .agency-sidebar {
+                position: static;
+            }
+            
+            .messages-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .messages-list {
+                border-right: none;
+                border-bottom: 1px solid var(--gray-200);
+                max-height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .agency-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .communication-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .section-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .message-full-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .message-full-meta {
+                align-items: flex-start;
+            }
+
+            .message-full-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="agency-header">
+        <div class="header-container">
+            <div class="agency-brand">
+                <div class="agency-logo">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="agency-info">
+                    <h1>Agence Immobilière Excellence</h1>
+                    <p>Partenaire certifié PNSBIL • ID: AG-2024-789</p>
+                </div>
+            </div>
+            <div class="agency-actions">
+                <a href="dashboard.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i>
+                    Tableau de bord
+                </a>
+                <button class="btn btn-primary" onclick="showNewMessageModal()">
+                    <i class="fas fa-plus"></i>
+                    Nouveau message
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <div class="agency-dashboard">
+        <!-- Sidebar -->
+        <aside class="agency-sidebar">
+            <div class="agency-stats">
+                <div class="stat-item">
+                    <div class="stat-info">
+                        <h4>Biens gérés</h4>
+                        <div class="stat-value">47</div>
+                    </div>
+                    <div class="stat-change positive">+12%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-info">
+                        <h4>Loyers collectés</h4>
+                        <div class="stat-value">38</div>
+                    </div>
+                    <div class="stat-change positive">+8%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-info">
+                        <h4>Déclarations</h4>
+                        <div class="stat-value">45</div>
+                    </div>
+                    <div class="stat-change">100%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-info">
+                        <h4>Taux conformité</h4>
+                        <div class="stat-value">98%</div>
+                    </div>
+                    <div class="stat-change positive">+2%</div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="action-btn" onclick="showNewMessageModal()">
+                    <i class="fas fa-comments"></i>
+                    Nouveau message
+                </button>
+                <button class="action-btn" onclick="window.location.href='declarations.html'">
+                    <i class="fas fa-file-invoice"></i>
+                    Déclarations PNSBIL
+                </button>
+                <button class="action-btn" onclick="window.location.href='reports.html'">
+                    <i class="fas fa-chart-bar"></i>
+                    Rapports fiscaux
+                </button>
+                <button class="action-btn" onclick="window.location.href='new-property.html'">
+                    <i class="fas fa-home"></i>
+                    Nouveau bien
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="agency-main">
+            <!-- Navigation Tabs -->
+            <div class="communication-tabs">
+                <button class="tab-btn active" data-tab="messages">
+                    <i class="fas fa-envelope"></i>
+                    Messages
+                    <span class="tab-badge">12</span>
+                </button>
+                <button class="tab-btn" data-tab="properties">
+                    <i class="fas fa-home"></i>
+                    Mes biens
+                </button>
+                <button class="tab-btn" onclick="window.location.href='declarations.html'">
+                    <i class="fas fa-file-contract"></i>
+                    Déclarations
+                    <span class="tab-badge">5</span>
+                </button>
+                <button class="tab-btn" onclick="window.location.href='reports.html'">
+                    <i class="fas fa-chart-bar"></i>
+                    Rapports
+                </button>
+            </div>
+
+            <!-- Messages Section -->
+            <div class="communication-section active" id="messages-tab">
+                <div class="section-header">
+                    <h2><i class="fas fa-envelope me-2"></i>Messages des Locataires et Propriétaires</h2>
+                    <div class="section-actions">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" placeholder="Rechercher un message..." class="search-input" id="messageSearch">
+                        </div>
+                        <button class="btn btn-primary" onclick="window.location.href='declarations.html'">
+                            <i class="fas fa-file-contract me-2"></i> Déclarations
+                        </button>
+                    </div>
+                </div>
+
+                <div class="messages-container">
+                    <!-- Messages List -->
+                    <div class="messages-list">
+                        <!-- Message 1 - Urgent -->
+                        <div class="message-item unread" onclick="selectMessage(1)">
+                            <div class="message-avatar">
+                                <img src="https://ui-avatars.com/api/?name=Marie+Koné&background=4361ee&color=fff" alt="MK">
+                            </div>
+                            <div class="message-content">
+                                <div class="message-header">
+                                    <h4 class="message-sender">Marie Koné</h4>
+                                    <span class="message-time">Il y a 15 min</span>
+                                </div>
+                                <p class="message-preview">Problème urgent de fuite d'eau dans l'appartement du 3ème étage. Dégâts importants...</p>
+                                <div class="message-tags">
+                                    <span class="message-tag urgent">Urgent</span>
+                                    <span class="message-tag property">Appartement T3</span>
+                                </div>
+                            </div>
+                            <div class="message-status">
+                                <i class="fas fa-circle unread-indicator"></i>
+                            </div>
+                        </div>
+
+                        <!-- Message 2 - Paiement -->
+                        <div class="message-item unread" onclick="selectMessage(2)">
+                            <div class="message-avatar">
+                                <img src="https://ui-avatars.com/api/?name=Jean+Traoré&background=7209b7&color=fff" alt="JT">
+                            </div>
+                            <div class="message-content">
+                                <div class="message-header">
+                                    <h4 class="message-sender">Jean Traoré</h4>
+                                    <span class="message-time">Il y a 2h</span>
+                                </div>
+                                <p class="message-preview">Retard de paiement pour le mois de décembre. Problème de virement bancaire...</p>
+                                <div class="message-tags">
+                                    <span class="message-tag payment">Paiement</span>
+                                    <span class="message-tag property">Villa Cocody</span>
+                                </div>
+                            </div>
+                            <div class="message-status">
+                                <i class="fas fa-circle unread-indicator"></i>
+                            </div>
+                        </div>
+
+                        <!-- Message 3 - Question bien -->
+                        <div class="message-item" onclick="selectMessage(3)">
+                            <div class="message-avatar">
+                                <img src="https://ui-avatars.com/api/?name=Paul+Diabaté&background=06d6a0&color=fff" alt="PD">
+                            </div>
+                            <div class="message-content">
+                                <div class="message-header">
+                                    <h4 class="message-sender">Paul Diabaté</h4>
+                                    <span class="message-time">Hier, 14:30</span>
+                                </div>
+                                <p class="message-preview">Intéressé par la villa de Cocody. Disponible pour visite cette semaine ?</p>
+                                <div class="message-tags">
+                                    <span class="message-tag property">Villa Cocody</span>
+                                </div>
+                            </div>
+                            <div class="message-status">
+                                <i class="fas fa-check-circle replied-indicator"></i>
+                            </div>
+                        </div>
+
+                        <!-- Message 4 - Propriétaire -->
+                        <div class="message-item" onclick="selectMessage(4)">
+                            <div class="message-avatar">
+                                <img src="https://ui-avatars.com/api/?name=Alice+Dosso&background=e74c3c&color=fff" alt="AD">
+                            </div>
+                            <div class="message-content">
+                                <div class="message-header">
+                                    <h4 class="message-sender">Alice Dosso</h4>
+                                    <span class="message-time">Hier, 10:15</span>
+                                </div>
+                                <p class="message-preview">Reçu la déclaration PNSBIL. Tout est correct pour le trimestre.</p>
+                                <div class="message-tags">
+                                    <span class="message-tag property">Appartement Plateau</span>
+                                </div>
+                            </div>
+                            <div class="message-status">
+                                <i class="fas fa-check-circle replied-indicator"></i>
+                            </div>
+                        </div>
+
+                        <!-- Message 5 - Maintenance -->
+                        <div class="message-item unread" onclick="selectMessage(5)">
+                            <div class="message-avatar">
+                                <img src="https://ui-avatars.com/api/?name=Kofi+Annan&background=f39c12&color=fff" alt="KA">
+                            </div>
+                            <div class="message-content">
+                                <div class="message-header">
+                                    <h4 class="message-sender">Kofi Annan</h4>
+                                    <span class="message-time">05/12/2024</span>
+                                </div>
+                                <p class="message-preview">Climatisation en panne dans le bureau. Besoin d'intervention rapide.</p>
+                                <div class="message-tags">
+                                    <span class="message-tag urgent">Maintenance</span>
+                                    <span class="message-tag property">Bureau Plateau</span>
+                                </div>
+                            </div>
+                            <div class="message-status">
+                                <i class="fas fa-circle unread-indicator"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Message Details -->
+                    <div class="message-details" id="messageDetails">
+                        <div class="message-details-placeholder">
+                            <i class="fas fa-envelope-open"></i>
+                            <h3>Sélectionnez un message</h3>
+                            <p>Choisissez un message dans la liste pour afficher son contenu et y répondre</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties Section -->
+            <div class="communication-section" id="properties-tab">
+                <div class="section-header">
+                    <h2><i class="fas fa-home me-2"></i>Biens Immobiliers Gérés</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-outline-primary" onclick="window.location.href='reports.html'">
+                            <i class="fas fa-chart-bar me-2"></i> Voir rapports
+                        </button>
+                        <button class="btn btn-primary" onclick="window.location.href='new-property.html'">
+                            <i class="fas fa-plus me-2"></i> Nouveau bien
+                        </button>
+                    </div>
+                </div>
+
+                <div class="properties-grid">
+                    <!-- Property 1 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <i class="fas fa-building"></i>
+                            <span class="property-badge">Loué</span>
+                        </div>
+                        <div class="property-content">
+                            <h4 class="property-title">Appartement T3 - Plateau</h4>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Rue de la Commerce, Plateau</span>
+                            </div>
+                            <div class="property-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                    <span>85 m²</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bed"></i>
+                                    <span>3 chambres</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bath"></i>
+                                    <span>2 salles de bain</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-car"></i>
+                                    <span>1 parking</span>
+                                </div>
+                            </div>
+                            <div class="property-rent">
+                                450,000 FCFA/mois
+                            </div>
+                            <div class="property-actions">
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewPropertyDetails(1)">
+                                    <i class="fas fa-eye"></i> Voir
+                                </button>
+                                <button class="btn btn-sm btn-primary" onclick="contactTenant(1)">
+                                    <i class="fas fa-envelope"></i> Contacter
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="generateDeclaration(1)">
+                                    <i class="fas fa-file-contract"></i> Déclarer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 2 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <i class="fas fa-home"></i>
+                            <span class="property-badge">Vacant</span>
+                        </div>
+                        <div class="property-content">
+                            <h4 class="property-title">Villa 4 pièces - Cocody</h4>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Riviera Golf, Cocody</span>
+                            </div>
+                            <div class="property-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                    <span>150 m²</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bed"></i>
+                                    <span>4 chambres</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bath"></i>
+                                    <span>3 salles de bain</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tree"></i>
+                                    <span>Jardin</span>
+                                </div>
+                            </div>
+                            <div class="property-rent">
+                                800,000 FCFA/mois
+                            </div>
+                            <div class="property-actions">
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewPropertyDetails(2)">
+                                    <i class="fas fa-eye"></i> Voir
+                                </button>
+                                <button class="btn btn-sm btn-primary" onclick="publishListing(2)">
+                                    <i class="fas fa-share-alt"></i> Publier
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="editProperty(2)">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 3 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <i class="fas fa-building"></i>
+                            <span class="property-badge">Loué</span>
+                        </div>
+                        <div class="property-content">
+                            <h4 class="property-title">Bureau - Plateau</h4>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Avenue Chardy, Plateau</span>
+                            </div>
+                            <div class="property-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                    <span>60 m²</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-door-open"></i>
+                                    <span>2 bureaux</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>6 personnes</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Fibre optique</span>
+                                </div>
+                            </div>
+                            <div class="property-rent">
+                                300,000 FCFA/mois
+                            </div>
+                            <div class="property-actions">
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewPropertyDetails(3)">
+                                    <i class="fas fa-eye"></i> Voir
+                                </button>
+                                <button class="btn btn-sm btn-primary" onclick="contactTenant(3)">
+                                    <i class="fas fa-envelope"></i> Contacter
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="generateDeclaration(3)">
+                                    <i class="fas fa-file-contract"></i> Déclarer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Message Modal -->
+    <div id="newMessageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope me-2"></i>Nouveau Message</h3>
+                <button class="close-btn" onclick="closeNewMessageModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="newMessageForm">
+                    <div class="form-group">
+                        <label class="form-label">Destinataire</label>
+                        <select class="form-control" required>
+                            <option value="">Sélectionnez un destinataire</option>
+                            <option value="locataire">Locataire</option>
+                            <option value="proprietaire">Propriétaire</option>
+                            <option value="pnsbil">Support PNSBIL</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Bien concerné</label>
+                        <select class="form-control">
+                            <option value="">Sélectionnez un bien</option>
+                            <option value="1">Appartement T3 - Plateau</option>
+                            <option value="2">Villa Cocody</option>
+                            <option value="3">Bureau Plateau</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Sujet</label>
+                        <input type="text" class="form-control" placeholder="Objet du message" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-control" placeholder="Votre message..." rows="6" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="closeNewMessageModal()">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <h4>Succès</h4>
+            <p id="toastMessage">Action effectuée avec succès</p>
+        </div>
+    </div>
+
+    <script>
+        // Tab Management
+        document.addEventListener('DOMContentLoaded', function() {
+            initTabs();
+            initMessageSelection();
+            initSearchAndFilter();
+        });
+
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const sections = document.querySelectorAll('.communication-section');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+                    if (targetTab) {
+                        // Update tab buttons
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Show corresponding section
+                        sections.forEach(section => {
+                            section.classList.remove('active');
+                            if (section.id === `${targetTab}-tab`) {
+                                section.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+        }
+
+        function initMessageSelection() {
+            const messageItems = document.querySelectorAll('.message-item');
+            
+            messageItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove selection from all messages
+                    messageItems.forEach(msg => msg.classList.remove('selected'));
+                    // Add selection to clicked message
+                    this.classList.add('selected');
+                    this.classList.remove('unread');
+                    
+                    // Update read indicator
+                    const unreadIndicator = this.querySelector('.unread-indicator');
+                    if (unreadIndicator) {
+                        unreadIndicator.classList.remove('fa-circle', 'unread-indicator');
+                        unreadIndicator.classList.add('fa-check-circle', 'replied-indicator');
+                    }
+                });
+            });
+        }
+
+        function initSearchAndFilter() {
+            const searchInput = document.getElementById('messageSearch');
+            
+            searchInput.addEventListener('input', filterMessages);
+        }
+
+        function filterMessages() {
+            const searchTerm = document.getElementById('messageSearch').value.toLowerCase();
+            const messageItems = document.querySelectorAll('.message-item');
+            
+            messageItems.forEach(item => {
+                const sender = item.querySelector('.message-sender').textContent.toLowerCase();
+                const preview = item.querySelector('.message-preview').textContent.toLowerCase();
+                const tags = Array.from(item.querySelectorAll('.message-tag')).map(tag => tag.textContent.toLowerCase());
+                
+                const matchesSearch = sender.includes(searchTerm) || preview.includes(searchTerm) || tags.some(tag => tag.includes(searchTerm));
+                
+                if (matchesSearch) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function selectMessage(messageId) {
+            const messageDetails = document.getElementById('messageDetails');
+            const messages = {
+                1: {
+                    sender: "Marie Koné",
+                    email: "marie.kone@email.com",
+                    type: "Locataire",
+                    property: "Appartement T3 - Plateau",
+                    time: "Il y a 15 minutes",
+                    subject: "Problème urgent de fuite d'eau",
+                    content: `Bonjour,
+
+J'ai un problème urgent dans l'appartement du 3ème étage. Une fuite d'eau importante s'est déclarée dans la salle de bain et cause des dégâts au plafond du salon.
+
+L'eau coule depuis ce matin et la situation s'aggrave. Pouvez-vous envoyer un plombier en urgence ?
+
+Merci de votre réactivité.
+
+Cordialement,
+Marie Koné`
+                },
+                2: {
+                    sender: "Jean Traoré",
+                    email: "jean.traore@email.com", 
+                    type: "Locataire",
+                    property: "Villa Cocody",
+                    time: "Il y a 2 heures",
+                    subject: "Retard de paiement décembre",
+                    content: `Bonjour,
+
+Je vous contacte concernant le loyer du mois de décembre. Mon virement bancaire a été rejeté pour cause de provision insuffisante.
+
+Je vais régulariser la situation dans les 48 heures. Je vous prie de bien vouloir m'excuser pour ce contretemps.
+
+Pouvez-vous me confirmer que vous acceptez ce délai ?
+
+Cordialement,
+Jean Traoré`
+                }
+            };
+
+            const message = messages[messageId];
+            if (!message) return;
+
+            messageDetails.innerHTML = `
+                <div class="message-full">
+                    <div class="message-full-header">
+                        <div class="message-full-sender">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(message.sender)}&background=4361ee&color=fff" 
+                                 alt="${message.sender}" class="message-full-avatar">
+                            <div class="message-full-sender-info">
+                                <h3>${message.sender}</h3>
+                                <p>${message.email} • ${message.type}</p>
+                                <p><strong>Bien:</strong> ${message.property}</p>
+                            </div>
+                        </div>
+                        <div class="message-full-meta">
+                            <span class="message-time">${message.time}</span>
+                            <span class="message-tag urgent">Urgent</span>
+                        </div>
+                    </div>
+                    <div class="message-full-content">
+                        <h4>${message.subject}</h4>
+                        <div style="white-space: pre-line;">${message.content}</div>
+                    </div>
+                    <div class="message-full-actions">
+                        <button class="btn btn-primary" onclick="replyToMessage(${messageId})">
+                            <i class="fas fa-reply me-2"></i> Répondre
+                        </button>
+                        <button class="btn btn-outline-primary" onclick="markAsResolved(${messageId})">
+                            <i class="fas fa-check me-2"></i> Marquer résolu
+                        </button>
+                        <button class="btn btn-outline-primary" onclick="createTask(${messageId})">
+                            <i class="fas fa-tasks me-2"></i> Créer tâche
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showNewMessageModal() {
+            document.getElementById('newMessageModal').classList.add('active');
+        }
+
+        function closeNewMessageModal() {
+            document.getElementById('newMessageModal').classList.remove('active');
+        }
+
+        function replyToMessage(messageId) {
+            showToast(`Réponse au message ${messageId} préparée`, 'success');
+            showNewMessageModal();
+        }
+
+        function markAsResolved(messageId) {
+            showToast(`Message ${messageId} marqué comme résolu`, 'success');
+        }
+
+        function createTask(messageId) {
+            showToast(`Tâche créée pour le message ${messageId}`, 'success');
+        }
+
+        // Property Management Functions
+        function viewPropertyDetails(propertyId) {
+            showToast(`Détails du bien ${propertyId} affichés`, 'success');
+        }
+
+        function contactTenant(propertyId) {
+            showToast(`Communication avec le locataire du bien ${propertyId}`, 'success');
+        }
+
+        function generateDeclaration(propertyId) {
+            showToast(`Génération de la déclaration PNSBIL pour le bien ${propertyId}`, 'success');
+        }
+
+        function publishListing(propertyId) {
+            showToast(`Publication de l'annonce pour le bien ${propertyId}`, 'success');
+        }
+
+        function editProperty(propertyId) {
+            showToast(`Modification du bien ${propertyId}`, 'success');
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = toast.querySelector('.toast-icon i');
+            
+            toast.className = 'toast';
+            toast.classList.add(type);
+            toastMessage.textContent = message;
+            
+            // Update icon based on type
+            if (type === 'warning') {
+                toastIcon.className = 'fas fa-exclamation-triangle';
+            } else if (type === 'error') {
+                toastIcon.className = 'fas fa-times-circle';
+            } else {
+                toastIcon.className = 'fas fa-check-circle';
+            }
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Form Submission
+        document.getElementById('newMessageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('Message envoyé avec succès', 'success');
+            closeNewMessageModal();
+            this.reset();
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast('Bienvenue sur votre espace communication', 'success');
+        });
+    </script>
+</body>
+</html>

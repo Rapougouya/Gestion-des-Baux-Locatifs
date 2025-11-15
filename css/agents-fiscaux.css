@@ -1,0 +1,878 @@
+/* ==========================================================================
+   CSS AMÉLIORÉ POUR LES AGENTS FISCAUX
+   Styles modernes, intuitifs et cohérents
+   ========================================================================== */
+
+:root {
+    /* Couleurs spécifiques agents fiscaux - Bleu et Marron */
+    --fiscal-primary: #2563EB; /* Bleu */
+    --fiscal-primary-dark: #1E40AF; /* Bleu foncé */
+    --fiscal-primary-light: #3B82F6; /* Bleu clair */
+    --fiscal-secondary: #2e1cd1; /* Marron */
+    --fiscal-accent: #D97706; /* Marron clair */
+    --fiscal-success: #10B981;
+    --fiscal-warning: #F59E0B;
+    --fiscal-danger: #EF4444;
+    --fiscal-info: #3B82F6;
+    
+    /* Backgrounds - Tons bleus et marrons doux */
+    --fiscal-bg: #EFF6FF; /* Bleu très clair */
+    --fiscal-bg-light: #F5F9FF;
+    --fiscal-surface: #FFFFFF;
+    --fiscal-border: #BFDBFE; /* Bleu clair pour bordures */
+    
+    /* Text */
+    --fiscal-text: #0F172A;
+    --fiscal-text-secondary: #64748B;
+    --fiscal-text-light: #94A3B8;
+    
+    /* Shadows - Tons bleus */
+    --fiscal-shadow-sm: 0 1px 2px 0 rgba(37, 99, 235, 0.05);
+    --fiscal-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
+    --fiscal-shadow-md: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+    --fiscal-shadow-lg: 0 20px 25px -5px rgba(37, 99, 235, 0.1);
+    --fiscal-shadow-xl: 0 25px 50px -12px rgba(37, 99, 235, 0.25);
+    
+    /* Spacing */
+    --fiscal-spacing-xs: 0.5rem;
+    --fiscal-spacing-sm: 1rem;
+    --fiscal-spacing-md: 1.5rem;
+    --fiscal-spacing-lg: 2rem;
+    --fiscal-spacing-xl: 3rem;
+    
+    /* Border radius */
+    --fiscal-radius: 12px;
+    --fiscal-radius-md: 16px;
+    --fiscal-radius-lg: 20px;
+    --fiscal-radius-xl: 24px;
+    
+    /* Transitions */
+    --fiscal-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   LAYOUT GÉNÉRAL
+   ========================================================================== */
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--fiscal-bg);
+    color: var(--fiscal-text);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header du Dashboard */
+.dashboard-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(135deg, var(--fiscal-primary) 0%, var(--fiscal-secondary) 100%);
+    box-shadow: var(--fiscal-shadow-md);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 var(--fiscal-spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: white;
+    font-weight: 700;
+}
+
+.logo span:first-child {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo span:last-child {
+    font-size: 0.875rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--fiscal-spacing-md);
+}
+
+.user-name {
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 280px;
+    height: calc(100vh - 80px);
+    background: var(--fiscal-surface);
+    border-right: 1px solid var(--fiscal-border);
+    box-shadow: var(--fiscal-shadow);
+    z-index: 999;
+    overflow-y: auto;
+    padding: var(--fiscal-spacing-lg);
+}
+
+.nav-section {
+    margin-bottom: var(--fiscal-spacing-xl);
+}
+
+.nav-section h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--fiscal-text-secondary);
+    margin-bottom: var(--fiscal-spacing-md);
+    padding: 0 var(--fiscal-spacing-sm);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--fiscal-spacing-sm);
+    padding: var(--fiscal-spacing-sm) var(--fiscal-spacing-md);
+    border-radius: var(--fiscal-radius);
+    text-decoration: none;
+    color: var(--fiscal-text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: var(--fiscal-transition);
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: linear-gradient(180deg, var(--fiscal-primary) 0%, var(--fiscal-secondary) 100%);
+    border-radius: 0 2px 2px 0;
+    transition: height 0.3s ease;
+}
+
+.nav-link:hover {
+    background: var(--fiscal-bg-light);
+    color: var(--fiscal-primary);
+    transform: translateX(4px);
+    padding-left: calc(var(--fiscal-spacing-md) + 4px);
+}
+
+.nav-link:hover::before {
+    background: linear-gradient(180deg, var(--fiscal-primary) 0%, var(--fiscal-secondary) 100%);
+    height: 60%;
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, var(--fiscal-primary) 0%, var(--fiscal-secondary) 100%);
+    color: white;
+    box-shadow: var(--fiscal-shadow-md);
+    transform: translateX(4px);
+    padding-left: calc(var(--fiscal-spacing-md) + 4px);
+}
+
+.nav-link.active::before {
+    height: 100%;
+    background: white;
+    opacity: 0.3;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 280px;
+    margin-top: 80px;
+    padding: var(--fiscal-spacing-xl);
+    min-height: calc(100vh - 80px);
+    max-width: 1600px;
+}
+
+.page-header {
+    margin-bottom: var(--fiscal-spacing-xl);
+    padding: var(--fiscal-spacing-lg);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(146, 64, 14, 0.03) 100%);
+    border-radius: var(--fiscal-radius-lg);
+    border: 1px solid var(--fiscal-border);
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--fiscal-text);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.5px;
+}
+
+.page-header p {
+    font-size: 1rem;
+    color: var(--fiscal-text-secondary);
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.header-buttons {
+    display: flex;
+    gap: var(--fiscal-spacing-sm);
+}
+
+/* ==========================================================================
+   BOUTONS
+   ========================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--fiscal-radius);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--fiscal-transition);
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--fiscal-primary) 0%, var(--fiscal-secondary) 100%);
+    color: white;
+    box-shadow: var(--fiscal-shadow);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--fiscal-shadow-lg);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--fiscal-primary);
+    color: var(--fiscal-primary);
+}
+
+.btn-outline:hover {
+    background: var(--fiscal-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background: var(--fiscal-success);
+    color: white;
+    box-shadow: var(--fiscal-shadow);
+}
+
+.btn-success:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: var(--fiscal-shadow-lg);
+}
+
+.btn-warning {
+    background: var(--fiscal-warning);
+    color: white;
+    box-shadow: var(--fiscal-shadow);
+}
+
+.btn-warning:hover {
+    background: #D97706;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background: var(--fiscal-danger);
+    color: white;
+    box-shadow: var(--fiscal-shadow);
+}
+
+.btn-danger:hover {
+    background: #DC2626;
+    transform: translateY(-2px);
+}
+
+.btn-info {
+    background: var(--fiscal-info);
+    color: white;
+    box-shadow: var(--fiscal-shadow);
+}
+
+.btn-info:hover {
+    background: #2563EB;
+    transform: translateY(-2px);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    color: var(--fiscal-text-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--fiscal-radius);
+    transition: var(--fiscal-transition);
+}
+
+.btn-icon:hover {
+    background: var(--fiscal-bg-light);
+    color: var(--fiscal-primary);
+}
+
+/* ==========================================================================
+   STATISTIQUES ET CARDS
+   ========================================================================== */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--fiscal-spacing-lg);
+    margin-bottom: var(--fiscal-spacing-xl);
+}
+
+.stat-card {
+    background: var(--fiscal-surface);
+    border-radius: var(--fiscal-radius-lg);
+    padding: var(--fiscal-spacing-lg);
+    box-shadow: var(--fiscal-shadow);
+    border: 1px solid var(--fiscal-border);
+    transition: var(--fiscal-transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--fiscal-primary) 0%, var(--fiscal-secondary) 100%);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--fiscal-shadow-lg);
+}
+
+.stat-card:hover::before {
+    transform: scaleY(1);
+}
+
+.stat-card.fiscal {
+    border-left: 4px solid;
+    border-image: linear-gradient(180deg, var(--fiscal-primary) 0%, var(--fiscal-secondary) 100%) 1;
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--fiscal-spacing-sm);
+    display: block;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--fiscal-text);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--fiscal-text-secondary);
+    font-weight: 500;
+}
+
+.stat-change {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    display: inline-block;
+    width: fit-content;
+}
+
+.stat-change.positive {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--fiscal-success);
+}
+
+.stat-change.negative {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--fiscal-danger);
+}
+
+.stat-change.warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--fiscal-warning);
+}
+
+/* ==========================================================================
+   SECTIONS
+   ========================================================================== */
+
+.dashboard-section {
+    background: var(--fiscal-surface);
+    border-radius: var(--fiscal-radius-lg);
+    padding: var(--fiscal-spacing-lg);
+    margin-bottom: var(--fiscal-spacing-lg);
+    box-shadow: var(--fiscal-shadow);
+    border: 1px solid var(--fiscal-border);
+}
+
+.dashboard-section.full-width {
+    grid-column: 1 / -1;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--fiscal-spacing-lg);
+    padding-bottom: var(--fiscal-spacing-md);
+    border-bottom: 2px solid var(--fiscal-bg);
+}
+
+.section-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--fiscal-text);
+    margin: 0;
+}
+
+/* ==========================================================================
+   BADGES
+   ========================================================================== */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--fiscal-danger);
+}
+
+.badge-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--fiscal-warning);
+}
+
+.badge-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--fiscal-success);
+}
+
+.badge-info {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--fiscal-info);
+}
+
+/* ==========================================================================
+   FORMULAIRES
+   ========================================================================== */
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--fiscal-border);
+    border-radius: var(--fiscal-radius);
+    font-size: 0.95rem;
+    transition: var(--fiscal-transition);
+    background: var(--fiscal-surface);
+    color: var(--fiscal-text);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--fiscal-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group {
+    margin-bottom: var(--fiscal-spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--fiscal-text);
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   TABLEAUX
+   ========================================================================== */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--fiscal-surface);
+    border-radius: var(--fiscal-radius);
+    overflow: hidden;
+}
+
+.data-table thead {
+    background: var(--fiscal-bg-light);
+}
+
+.data-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--fiscal-text-secondary);
+    border-bottom: 2px solid var(--fiscal-border);
+}
+
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--fiscal-bg);
+    color: var(--fiscal-text);
+}
+
+.data-table tbody tr {
+    transition: var(--fiscal-transition);
+}
+
+.data-table tbody tr:hover {
+    background: var(--fiscal-bg-light);
+}
+
+.data-table tbody tr.high-risk {
+    background: rgba(239, 68, 68, 0.05);
+    border-left: 3px solid var(--fiscal-danger);
+}
+
+.data-table tbody tr.medium-risk {
+    background: rgba(245, 158, 11, 0.05);
+    border-left: 3px solid var(--fiscal-warning);
+}
+
+.data-table tbody tr.low-risk {
+    background: rgba(59, 130, 246, 0.05);
+    border-left: 3px solid var(--fiscal-info);
+}
+
+.risk-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.risk-badge.high {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--fiscal-danger);
+}
+
+.risk-badge.medium {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--fiscal-warning);
+}
+
+.risk-badge.low {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--fiscal-info);
+}
+
+/* ==========================================================================
+   ALERTES
+   ========================================================================== */
+
+.alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fiscal-spacing-md);
+}
+
+.alert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--fiscal-spacing-md);
+    padding: var(--fiscal-spacing-md);
+    border-radius: var(--fiscal-radius);
+    border: 2px solid;
+    transition: var(--fiscal-transition);
+}
+
+.alert-item:hover {
+    transform: translateX(4px);
+}
+
+.alert-item.critical {
+    background: rgba(239, 68, 68, 0.05);
+    border-color: var(--fiscal-danger);
+}
+
+.alert-item.warning {
+    background: rgba(245, 158, 11, 0.05);
+    border-color: var(--fiscal-warning);
+}
+
+.alert-item.info {
+    background: rgba(59, 130, 246, 0.05);
+    border-color: var(--fiscal-info);
+}
+
+.alert-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+.alert-title {
+    font-weight: 700;
+    color: var(--fiscal-text);
+    margin-bottom: 0.25rem;
+}
+
+.alert-desc {
+    color: var(--fiscal-text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.alert-date {
+    color: var(--fiscal-text-light);
+    font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   UTILITAIRES
+   ========================================================================== */
+
+.text-danger {
+    color: var(--fiscal-danger);
+    font-weight: 600;
+}
+
+.text-warning {
+    color: var(--fiscal-warning);
+    font-weight: 600;
+}
+
+.text-info {
+    color: var(--fiscal-info);
+    font-weight: 600;
+}
+
+.text-success {
+    color: var(--fiscal-success);
+    font-weight: 600;
+}
+
+.me-1 { margin-right: 0.25rem; }
+.me-2 { margin-right: 0.5rem; }
+.mb-0 { margin-bottom: 0; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+footer,
+footer {
+    grid-area: footer;
+    background: var(--text-primary);
+    color: white;
+    padding: 3rem 0 1.5rem;
+    margin-left: 280px;
+}
+
+footer .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+footer h5 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+footer a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+footer a:hover {
+    color: white;
+}
+
+
+/* Responsive Footer */
+@media (max-width: 1024px) {
+    footer,
+    footer.bg-dark {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    footer,
+    footer.bg-dark {
+        padding: var(--fiscal-spacing-lg, 2rem) 0 var(--fiscal-spacing-md, 1.5rem) !important;
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    footer .row {
+        grid-template-columns: 1fr;
+        gap: var(--fiscal-spacing-lg, 2rem);
+    }
+    
+    footer .container {
+        padding: 0 var(--fiscal-spacing-md, 1.5rem);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: var(--fiscal-spacing-md);
+    }
+    
+    footer,
+    footer.bg-dark {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        padding: 0 var(--fiscal-spacing-md);
+    }
+    
+    .logo span:first-child {
+        font-size: 1.25rem;
+    }
+    
+    .logo span:last-child {
+        font-size: 0.75rem;
+    }
+    
+    .user-name {
+        display: none;
+    }
+    
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .header-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--fiscal-spacing-md);
+    }
+    
+    .header-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .header-buttons .btn {
+        width: 100%;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .data-table {
+        font-size: 0.875rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
