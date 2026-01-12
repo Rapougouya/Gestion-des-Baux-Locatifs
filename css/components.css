@@ -119,3 +119,79 @@
     margin: 0 auto;
     font-size: var(--font-size-lg);
 }
+ 
+/* ==========================================================================
+   UTILITAIRES GLOBAUX
+   ========================================================================== */
+/* Affichage */
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.flex-1 { flex: 1; }
+.block { display: block; }
+.hidden { display: none; }
+
+/* Espacement via gap */
+.gap-xs { gap: var(--spacing-xs); }
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+.gap-xl { gap: var(--spacing-xl); }
+
+/* Couleurs de texte utilitaires */
+.text-primary { color: var(--primary-color); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-light); }
+
+/* Largeurs en pourcentage (p = percent) */
+.w-5p { width: 5%; }
+.w-8p { width: 8%; }
+.w-10p { width: 10%; }
+.w-20p { width: 20%; }
+.w-23p { width: 23%; }
+.w-25p { width: 25%; }
+.w-30p { width: 30%; }
+.w-33p { width: 33%; }
+.w-45p { width: 45%; }
+.w-60p { width: 60%; }
+.w-65p { width: 65%; }
+.w-69p { width: 69%; }
+.w-70p { width: 70%; }
+.w-75p { width: 75%; }
+.w-78p { width: 78%; }
+.w-80p { width: 80%; }
+.w-82p { width: 82%; }
+.w-85p { width: 85%; }
+.w-88p { width: 88%; }
+.w-90p { width: 90%; }
+.w-92p { width: 92%; }
+.w-95p { width: 95%; }
+.w-98p { width: 98%; }
+.w-100p { width: 100%; }
+
+/* Hauteurs en pourcentage (pour barres/graphes) */
+.h-45p { height: 45%; }
+.h-60p { height: 60%; }
+.h-70p { height: 70%; }
+.h-80p { height: 80%; }
+
+/* Largeurs/hauteurs fixes récurrentes */
+.w-100 { width: 100%; }
+
+/* Utilitaires de marge/padding simples */
+.mb-xs { margin-bottom: var(--spacing-xs); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+
+.p-xs { padding: var(--spacing-xs); }
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+
+/* Bordures utilitaires */
+.border { border: 1px solid rgba(0,0,0,0.1); }
+.border-top { border-top: 1px solid rgba(0,0,0,0.1); }
+.border-light { border-color: rgba(0,0,0,0.08); }

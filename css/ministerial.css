@@ -1,0 +1,1062 @@
+/* ============================================
+   MINISTERIAL BRANDING & PHASE 1 STYLES
+   ============================================ */
+
+:root {
+    /* Couleurs nationales Burkina Faso */
+    --primary-dark: #007A5E;        /* Vert foncé - couleur dominante */
+    --primary-green: #228B55;       /* Vert principal */
+    --primary-accent: #CE1126;      /* Rouge - couleur secondaire */
+    --accent-yellow: #FCD116;       /* Or - couleur tertiaire */
+    --success-green: #10b981;       /* Vert validé */
+    --danger-red: #CE1126;          /* Rouge Burkina */
+    --warning-orange: #f59e0b;      /* Orange alerte */
+    --text-dark: #1a1a1a;           /* Noir profond */
+    --text-muted: #6b7280;          /* Gris */
+    --border-light: #e5e7eb;        /* Bordure légère */
+    --bg-light: #f9fafb;            /* Fond très clair */
+    --white: #ffffff;               /* Blanc */
+}
+
+/* ============================================
+   MINISTERIAL BANNER
+   ============================================ */
+
+.ministerial-banner {
+    background: linear-gradient(135deg, #007A5E 0%, #228B55 50%, #CE1126 100%);
+    border-bottom: 3px solid #FCD116;
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    box-shadow: 0 2px 8px rgba(0, 122, 94, 0.15);
+}
+
+.ministerial-banner .banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.ministerial-banner .banner-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #FCD116;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ministerial-banner .banner-left i {
+    font-size: 1.1rem;
+}
+
+.ministerial-banner .banner-security {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.ministerial-banner .banner-security i {
+    color: #FCD116;
+    font-weight: bold;
+}
+
+.ministerial-banner .separator {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    .ministerial-banner .banner-content {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .ministerial-banner .banner-security {
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================
+   ENHANCED HEADER
+   ============================================ */
+
+.header {
+    background: linear-gradient(90deg, #ffffff 0%, #f8fafc 100%);
+    border-bottom: 2px solid #228B55;
+    box-shadow: 0 4px 12px rgba(0, 122, 94, 0.08);
+    position: sticky;
+    top: 58px;
+    z-index: 98;
+}
+
+.header .container {
+    padding: 16px 20px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo-group {
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+}
+
+.banner-seal {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-seal svg {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: transform 0.3s ease;
+}
+
+.logo-link:hover {
+    transform: translateY(-2px);
+}
+
+.logo-icons {
+    display: flex;
+    gap: 6px;
+}
+
+.logo-icon-burkina,
+.logo-icon-pnsbil {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.logo-icon-burkina {
+    background: linear-gradient(135deg, #007A5E, #228B55);
+    color: #FCD116;
+    border: 2px solid #FCD116;
+}
+
+.logo-icon-burkina svg {
+    width: 100%;
+    height: 100%;
+}
+
+.logo-icon-pnsbil {
+    background: linear-gradient(135deg, #CE1126, #A00E1F);
+    color: #FCD116;
+    border: 2px solid #FCD116;
+}
+
+.logo-icon-pnsbil svg {
+    width: 100%;
+    height: 100%;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-title {
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+}
+
+.logo-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Navigation menu */
+.nav-menu {
+    display: flex;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    padding: 8px 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: rgba(0, 122, 94, 0.08);
+    color: var(--primary-dark);
+}
+
+.nav-link.active {
+    background: linear-gradient(90deg, rgba(0, 122, 94, 0.08), transparent);
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--primary-dark);
+}
+
+/* Navigation actions */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.language-selector {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.lang-btn {
+    background: var(--bg-light);
+    border: 1px solid var(--border-light);
+    color: var(--text-muted);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    border-color: var(--primary-dark);
+    color: var(--primary-dark);
+}
+
+.lang-btn.active {
+    background: var(--primary-dark);
+    color: white;
+    border-color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .logo-title {
+        display: none;
+    }
+
+    .logo-subtitle {
+        display: none;
+    }
+
+    .logo-link {
+        gap: 8px;
+    }
+}
+
+/* ============================================
+   LEGITIMACY BADGES (Hero)
+   ============================================ */
+
+.legitimacy-badges {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 6; /* keep badges above blurred shapes */
+}
+
+.badge {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(18,18,18,0.06);
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 20px rgba(6,24,64,0.06);
+    color: var(--text-dark);
+}
+
+.badge i {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.03);
+    margin-top: 0;
+}
+
+.badge strong {
+    display: block;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 0.98rem;
+}
+
+.badge span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+.badge.official {
+    border-left: 4px solid #007A5E;
+}
+
+.badge.official i {
+    color: #007A5E;
+    background: rgba(0,122,94,0.09);
+}
+
+.badge.secure {
+    border-left: 4px solid #CE1126;
+}
+
+.badge.secure i {
+    color: #CE1126;
+    background: rgba(206,17,38,0.07);
+}
+
+.badge.compliant {
+    border-left: 4px solid #FCD116;
+}
+
+.badge.compliant i {
+    color: #B8860B; /* darker gold for legibility */
+    background: rgba(252,209,22,0.07);
+}
+
+/* ============================================
+   HERO SECTION - Burkina Colors
+   ============================================ */
+
+.hero-section {
+    /* Warm Burkina gradient instead of plain white */
+    background: linear-gradient(180deg, rgba(34,139,85,0.06) 0%, rgba(252,209,22,0.02) 60%, rgba(255,255,255,0.0) 100%);
+    color: var(--text-dark);
+    position: relative;
+    overflow: visible;
+    padding: 56px 0;
+}
+
+.hero-background .hero-shapes { position: absolute; inset: 0; pointer-events: none; }
+.hero-background .hero-shapes .shape-1,
+.hero-background .hero-shapes .shape-2,
+.hero-background .hero-shapes .shape-3,
+.hero-background .hero-shapes .shape-4 {
+    position: absolute;
+    border-radius: 18px;
+    filter: blur(28px);
+    opacity: 0.9;
+}
+.hero-background .hero-shapes .shape-1 { width: 420px; height: 220px; left: -40px; top: -30px; background: linear-gradient(135deg, rgba(0,122,94,0.26), rgba(34,139,85,0.08)); }
+.hero-background .hero-shapes .shape-2 { width: 360px; height: 180px; right: -60px; top: 20px; background: linear-gradient(135deg, rgba(34,139,85,0.20), rgba(252,209,22,0.02)); }
+.hero-background .hero-shapes .shape-3 { width: 300px; height: 140px; left: 10%; bottom: -40px; background: linear-gradient(135deg, rgba(206,17,38,0.12), rgba(206,17,38,0.04)); }
+.hero-background .hero-shapes .shape-4 { width: 200px; height: 120px; right: 8%; bottom: -20px; background: linear-gradient(135deg, rgba(252,209,22,0.18), rgba(252,209,22,0.06)); }
+
+.eyebrow-text i { color: var(--primary-dark); }
+.eyebrow-text { color: var(--text-muted); font-weight:600; }
+
+.hero-title .title-line { color: var(--text-dark); }
+.hero-title .title-line.highlight { color: var(--primary-dark); position: relative; }
+.underline-accent { background: linear-gradient(90deg, var(--accent-yellow), var(--primary-accent)); height:4px; display:block; border-radius:2px; }
+
+.hero-benefits .benefit-icon i { color: var(--primary-dark); }
+.hero-benefits .benefit-item { background: rgba(34,139,85,0.045); border-radius:10px; padding:10px; }
+
+/* make hero content area slightly tinted to separate from background without pure white */
+.hero-content { background: rgba(245,253,249,0.6); padding: 18px; border-radius: 12px; }
+
+/* showcase cards: subtle green tinted background for better contrast */
+.hero-visual .showcase-card { background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(243,252,246,0.85)); border: 1px solid rgba(34,139,85,0.08); }
+.hero-visual .showcase-card .card-header .card-title { color: var(--primary-dark); }
+
+/* floating elements shadow and contrast */
+.floating-element { background: rgba(255,255,255,0.9); border-radius:8px; padding:8px 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); display:inline-flex; gap:8px; align-items:center; }
+
+/* ============================================
+    AUTH PAGES OVERRIDES
+    Applied to `login.html` and `inscription.html` to match ministerial theme
+    ============================================ */
+
+.auth-container { display:flex; flex-wrap:wrap; min-height:100vh; align-items:stretch; background: linear-gradient(180deg, rgba(34,139,85,0.04), rgba(252,209,22,0.02)); }
+.auth-illustration { flex:1 1 420px; display:flex; align-items:center; justify-content:center; padding:48px; background: linear-gradient(180deg, rgba(34,139,85,0.06), rgba(255,255,255,0)); min-width:320px; }
+.auth-form-side { flex:1 1 520px; display:flex; align-items:center; justify-content:center; padding:36px; min-width:320px; }
+.auth-form-container { width:100%; max-width:720px; background: rgba(255,255,255,0.98); border-radius:12px; box-shadow: 0 20px 50px rgba(6,24,64,0.08); padding:24px; border:1px solid rgba(34,139,85,0.06); z-index:8; }
+
+.logo-link-inline { display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text-dark); }
+.logo-icons { display:flex; gap:8px; align-items:center; }
+.logo-text-inline .logo-title { font-weight:700; font-size:1.1rem; }
+.logo-text-inline .logo-subtitle { font-size:0.8rem; color:var(--text-muted); }
+
+.auth-form-container .btn-primary { background: linear-gradient(90deg,#228B55,#007A5E); border:none; color:white; }
+.auth-form-container .btn-outline { border:1px solid rgba(34,139,85,0.14); color:var(--primary-dark); }
+
+.auth-illustration .welcome-message h1 { color: var(--primary-dark); }
+.auth-illustration .stat-card { background: rgba(255,255,255,0.95); border-radius:10px; padding:12px; box-shadow: 0 8px 20px rgba(6,24,64,0.04); margin-bottom:10px; }
+
+/* Ensure social buttons match */
+.auth-form-container .btn-social.google { background: #fff; color:#222; border:1px solid rgba(0,0,0,0.08); }
+.auth-form-container .btn-social.facebook { background: #1877f2; color:white; }
+
+/* Improve form fields readability */
+.auth-form-container label { color: var(--text-dark); font-size: 0.98rem; font-weight:600; display:block; margin-bottom:8px; }
+.auth-form-container .input-with-icon { display:flex; align-items:center; gap:10px; background: #fff; border:1px solid rgba(6,24,64,0.06); padding:8px 10px; border-radius:8px; }
+.auth-form-container .input-with-icon i { color: var(--primary-dark); font-size:1rem; }
+.auth-form-container .input-with-icon input, .auth-form-container .input-with-icon select, .auth-form-container .input-with-icon textarea { border: none; outline: none; width:100%; font-size:1rem; line-height:1.4; color:var(--text-dark); background: transparent; }
+.auth-form-container .form-group { margin-bottom:14px; }
+.auth-form-container .btn-primary.btn-block { width:100%; padding:12px 16px; font-size:1rem; }
+
+/* Responsive tweaks: stack vertically on small screens */
+@media (max-width: 880px) {
+    .auth-illustration { order: 2; padding:24px; }
+    .auth-form-side { order: 1; padding:20px; }
+    .auth-form-container { max-width: 100%; padding:20px; }
+}
+
+@media (max-width: 480px) {
+    .auth-illustration { display:none; }
+    .auth-form-side { flex:1 1 100%; }
+    .auth-form-container { margin: 12px; border-radius:10px; }
+}
+
+
+
+.cta-primary .btn-badge { background: var(--accent-yellow); color: #111; font-weight:700; border-radius:8px; padding:4px 8px; margin-left:8px; }
+
+.social-proof .avatar { width:36px; height:36px; border-radius:6px; display:inline-grid; place-items:center; color:#fff; font-weight:700; }
+.avatar--blue { background: linear-gradient(135deg,#007A5E,#228B55) !important; }
+.avatar--red { background: linear-gradient(135deg,#CE1126,#A00E1F) !important; }
+.avatar--green { background: linear-gradient(135deg,#228B55,#1b6e46) !important; }
+.avatar--gold { background: linear-gradient(135deg,#FCD116,#f7d43a) !important; color:#111 !important; }
+
+.stat-icon { width:44px; height:44px; display:grid; place-items:center; border-radius:8px; color:#fff; }
+.stat-icon--primary { background: linear-gradient(135deg,#007A5E,#228B55) !important; }
+.stat-icon--accent { background: linear-gradient(135deg,#CE1126,#A00E1F) !important; }
+
+.chart-bar { border-radius:6px 6px 0 0; position:relative; display:inline-block; width:22%; margin-right:6px; }
+.chart-bar--1 { background: linear-gradient(to top,#007A5E,#228B55) !important; }
+.chart-bar--2 { background: linear-gradient(to top,#228B55,#2ecc71) !important; }
+.chart-bar--3 { background: linear-gradient(to top,#CE1126,#c0392b) !important; }
+.chart-bar--4 { background: linear-gradient(to top,#FCD116,#f39c12) !important; }
+.bar-value { position:absolute; top:-22px; right:8px; font-size:0.8rem; color:var(--text-dark); font-weight:700; }
+
+.floating-element .element-icon i { color: var(--primary-dark); }
+
+
+/* ============================================
+   HERO ENHANCEMENTS
+   ============================================ */
+
+.eyebrow-text {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #ffc107;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    line-height: 1.2;
+    margin: 0 0 24px 0;
+    font-weight: 800;
+}
+
+.title-line {
+    display: block;
+}
+
+.title-line.highlight {
+    position: relative;
+    display: inline-block;
+}
+
+.underline-accent {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ffc107, transparent);
+    border-radius: 2px;
+}
+
+/* ============================================
+   ACTORS SECTION (Institutional)
+   ============================================ */
+
+.actors-grid.institutional {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.actor-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid var(--border-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.actor-card:hover {
+    border-color: var(--primary-dark);
+    box-shadow: 0 12px 30px rgba(0, 122, 94, 0.12);
+    transform: translateY(-4px);
+}
+
+.card-header {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.actor-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.proprietaire .actor-icon {
+    background: #d4edda;
+    color: #007A5E;
+}
+
+.locataire .actor-icon {
+    background: #e7f3ff;
+    color: #228B55;
+}
+
+.agence .actor-icon {
+    background: #fff3cd;
+    color: #CE1126;
+}
+
+.administration .actor-icon {
+    background: #f0fdf4;
+    color: #15803d;
+}
+
+.actor-badge {
+    background: var(--bg-light);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.actor-card h3 {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin: 0 0 8px 0;
+}
+
+.actor-card > p {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.obligations-section {
+    background: var(--bg-light);
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--primary-dark);
+}
+
+.obligations-title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.obligations-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.obligations-list li {
+    font-size: 0.9rem;
+    color: #4b5563;
+    padding: 6px 0;
+    line-height: 1.5;
+}
+
+.obligations-list li:before {
+    content: "•";
+    margin-right: 8px;
+    color: var(--primary-dark);
+    font-weight: 800;
+}
+
+.features-section {
+    margin-bottom: 16px;
+}
+
+.features-section strong {
+    display: block;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.features-list li {
+    font-size: 0.9rem;
+    color: #4b5563;
+    padding: 6px 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.features-list i {
+    color: var(--primary-dark);
+    font-size: 0.9rem;
+}
+
+.actor-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 16px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-accent);
+}
+
+.stat-name {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.actor-card .btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: auto;
+}
+
+/* ============================================
+   COMPLIANCE SECTION
+   ============================================ */
+
+.compliance-section {
+    background: linear-gradient(135deg, #f0f9ff, #f0fdf4);
+    padding: 80px 0;
+}
+
+.compliance-framework {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 60px;
+}
+
+.framework-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid var(--border-light);
+    transition: all 0.3s ease;
+}
+
+.framework-card:hover {
+    border-color: var(--primary-accent);
+    box-shadow: 0 12px 30px rgba(63, 111, 243, 0.1);
+}
+
+.framework-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: #f0f9ff;
+    color: #0284c7;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.framework-card h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin: 0 0 6px 0;
+}
+
+.framework-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0 0 16px 0;
+}
+
+.framework-details {
+    border-top: 1px solid var(--border-light);
+    padding-top: 12px;
+}
+
+.framework-details strong {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    text-transform: uppercase;
+}
+
+.tax-rate,
+.declaration {
+    background: #fef3c7;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 6px;
+    color: #92400e;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.declaration-process {
+    background: white;
+    border-radius: 14px;
+    padding: 40px;
+    margin-bottom: 60px;
+    border: 2px solid var(--border-light);
+}
+
+.process-title {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.steps-container {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.step-item {
+    flex: 0 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 180px;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-accent), #2563eb);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+}
+
+.step-content strong {
+    display: block;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+.step-content p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+
+.step-arrow {
+    font-size: 1.8rem;
+    color: var(--primary-accent);
+    font-weight: 700;
+}
+
+.compliance-benefits {
+    margin-bottom: 60px;
+}
+
+.benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.benefit {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-light);
+}
+
+.benefit-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: #f0fdf4;
+    color: #15803d;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    margin: 0 auto 12px;
+}
+
+.benefit h4 {
+    color: var(--text-dark);
+    margin: 0 0 8px 0;
+}
+
+.benefit p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 2.4rem;
+    }
+
+    .legitimacy-badges {
+        grid-template-columns: 1fr;
+
+    /* ============================================
+       BUTTONS - BURKINA COLORS
+       ============================================ */
+
+    .btn-primary {
+        background: linear-gradient(135deg, #007A5E, #228B55) !important;
+        color: white !important;
+        border: none !important;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #006651, #1a7348) !important;
+        box-shadow: 0 4px 12px rgba(0, 122, 94, 0.2) !important;
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #CE1126, #A00E1F) !important;
+        color: white !important;
+        border: none !important;
+    }
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, #B50D1E, #8A0C18) !important;
+        box-shadow: 0 4px 12px rgba(206, 17, 38, 0.2) !important;
+    }
+
+    .btn-outline {
+        background: transparent !important;
+        border: 2px solid var(--primary-dark) !important;
+        color: var(--primary-dark) !important;
+    }
+
+    .btn-outline:hover {
+        background: var(--primary-dark) !important;
+        color: white !important;
+    }
+    }
+}
+
+@media (max-width: 768px) {
+    .header .container {
+        padding: 12px 15px;
+    }
+
+    .navbar {
+        gap: 12px;
+    }
+
+    .logo-group {
+        min-width: auto;
+    }
+
+    .logo-icons {
+        gap: 4px;
+    }
+
+    .logo-icon-dgi,
+    .logo-icon-pnsbil {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    .logo-title {
+        font-size: 0.95rem;
+    }
+
+    .nav-actions {
+        gap: 8px;
+    }
+
+    .language-selector {
+        display: none;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .eyebrow-text {
+        font-size: 0.85rem;
+    }
+
+    .legitimacy-badges {
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .badge {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .badge strong {
+        font-size: 0.9rem;
+    }
+
+    .badge span {
+        font-size: 0.8rem;
+    }
+
+    .step-arrow {
+        display: none;
+    }
+
+    .steps-container {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .declaration-process {
+        padding: 24px;
+    }
+
+    .process-title {
+        font-size: 1.4rem;
+        margin-bottom: 24px;
+    }
+
+    .actors-grid.institutional {
+        grid-template-columns: 1fr;
+    }
+
+    .compliance-framework {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .ministerial-banner .banner-security {
+        display: none;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .legitimacy-badges {
+        grid-template-columns: 1fr;
+    }
+
+    .badge {
+        gap: 8px;
+        padding: 8px 10px;
+    }
+
+    .hero-title {
+        font-size: 1.4rem;
+    }
+
+    .compliance-framework {
+        grid-template-columns: 1fr;
+    }
+
+    .benefit-grid {
+        grid-template-columns: 1fr;
+    }
+}

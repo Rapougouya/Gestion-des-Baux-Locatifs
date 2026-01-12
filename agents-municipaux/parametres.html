@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres - Agents Municipaux | PNSBIL</title>
+    <link rel="stylesheet" href="../css/agences-ministerial.css">
+    <link rel="stylesheet" href="../css/pages/sidebar-fix.css">
+    <link rel="stylesheet" href="../css/pages/agents-municipaux-parametres.css">
+</head>
+<body>
+    <div class="ministerial-banner">
+        <div class="banner-content">
+            <div class="banner-left">
+                <i class="fas fa-shield-alt"></i>
+                <span>République du Burkina Faso</span>
+            </div>
+            <div class="banner-title">
+                <div class="title-main">MINISTÈRE DE L'HABITAT, DE L'URBANISME ET DE LA VILLE</div>
+                <div class="title-sub">Plateforme PNSBIL - Agents Municipaux</div>
+            </div>
+            <div class="banner-security">
+                <i class="fas fa-lock"></i>
+                <span>Sécurisé SSL</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏛️ PNSBIL</span>
+                <span class="logo-subtitle">Paramètres</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Agent Municipal</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">Opérations</div>
+                <a href="dashboard.html" class="nav-link"><span class="nav-icon">📊</span><span>Tableau de bord</span></a>
+                <a href="verification.html" class="nav-link"><span class="nav-icon">🔍</span><span>Vérification</span></a>
+                <a href="rapports-locaux.html" class="nav-link"><span class="nav-icon">📈</span><span>Rapports locaux</span></a>
+                <a href="parametres.html" class="nav-link active"><span class="nav-icon">⚙️</span><span>Paramètres</span></a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="settings-grid">
+                <aside class="settings-sidebar">
+                    <ul class="settings-nav">
+                        <li><a class="settings-nav-link active" onclick="showSection('profile', this)"><i class="fas fa-user"></i>Mon profil</a></li>
+                        <li><a class="settings-nav-link" onclick="showSection('team', this)"><i class="fas fa-users"></i>Equipe locale</a></li>
+                        <li><a class="settings-nav-link" onclick="showSection('notifications', this)"><i class="fas fa-bell"></i>Notifications</a></li>
+                        <li><a class="settings-nav-link" onclick="showSection('permissions', this)"><i class="fas fa-user-shield"></i>Permissions</a></li>
+                    </ul>
+                </aside>
+
+                <div class="settings-main">
+                    <!-- Profile -->
+                    <section id="profile" class="settings-section active">
+                        <h2>Profil Agent</h2>
+                        <form id="muniProfileForm" class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Nom complet</label>
+                                <input id="agentName" name="agentName" type="text" class="form-control" placeholder="Nom Prénom">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input id="agentEmail" name="agentEmail" type="email" class="form-control" placeholder="agent@commune.bf">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Téléphone</label>
+                                <input id="agentPhone" name="agentPhone" type="tel" class="form-control" placeholder="+226 ...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Commune / Unité</label>
+                                <input id="agentCommune" name="agentCommune" type="text" class="form-control" placeholder="Ex: Ouagadougou - Arr. 2">
+                            </div>
+                            <div class="form-group full-width">
+                                <button type="button" class="btn btn-primary" onclick="saveMuniProfile()">Enregistrer Profil</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Team -->
+                    <section id="team" class="settings-section">
+                        <h2>Equipe locale</h2>
+                        <div class="team-form">
+                            <input id="muniTeamName" type="text" placeholder="Nom" />
+                            <input id="muniTeamRole" type="text" placeholder="Rôle" />
+                            <button class="btn btn-primary" onclick="addMuniTeamMember()">Ajouter</button>
+                        </div>
+                        <div id="muniTeamList" class="team-list"></div>
+                    </section>
+
+                    <!-- Notifications -->
+                    <section id="notifications" class="settings-section">
+                        <h2>Notifications</h2>
+                        <div class="form-group">
+                            <label class="form-label">Email alertes terrain</label>
+                            <label class="toggle"><input id="muniNotifEmail" type="checkbox"> <span class="toggle-slider"></span></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">SMS alertes critiques</label>
+                            <label class="toggle"><input id="muniNotifSMS" type="checkbox"> <span class="toggle-slider"></span></label>
+                        </div>
+                        <div class="form-group full-width">
+                            <button class="btn btn-primary" onclick="saveMuniNotifications()">Enregistrer Notifications</button>
+                        </div>
+                    </section>
+
+                    <!-- Permissions -->
+                    <section id="permissions" class="settings-section">
+                        <h2>Permissions & Accès</h2>
+                        <p class="text-muted">Attribuez des rôles locaux aux membres de l'équipe.</p>
+                        <div class="permission-grid">
+                            <label class="permission-item"><input type="checkbox" id="perm_view"> Voir rapports</label>
+                            <label class="permission-item"><input type="checkbox" id="perm_edit"> Modifier données</label>
+                            <label class="permission-item"><input type="checkbox" id="perm_manage"> Gérer équipe</label>
+                        </div>
+                        <div class="form-group full-width">
+                            <button class="btn btn-outline" onclick="savePermissions()">Enregistrer Permissions</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Basic navigation helper (reused pattern)
+        function showSection(id, el) {
+            document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.settings-nav-link').forEach(l => l.classList.remove('active'));
+            const sec = document.getElementById(id); if (sec) sec.classList.add('active');
+            if (el) el.classList.add('active');
+        }
+
+        function logout(){ if(confirm('Déconnexion ?')) window.location.href = '../login.html'; }
+
+        // LocalStorage keys
+        const KEY_PROFILE = 'muniProfile';
+        const KEY_TEAM = 'muniTeam';
+        const KEY_NOTIF = 'muniNotifications';
+
+        // Profile
+        function saveMuniProfile(){
+            const p = {
+                name: document.getElementById('agentName').value.trim(),
+                email: document.getElementById('agentEmail').value.trim(),
+                phone: document.getElementById('agentPhone').value.trim(),
+                commune: document.getElementById('agentCommune').value.trim()
+            };
+            // basic validation
+            if(!p.name){ alert('Le nom est requis'); return; }
+            if(p.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.email)){ alert('Email invalide'); return; }
+            localStorage.setItem(KEY_PROFILE, JSON.stringify(p));
+            alert('Profil enregistré (mock).');
+        }
+
+        function loadMuniProfile(){
+            const raw = localStorage.getItem(KEY_PROFILE); if(!raw) return;
+            try{ const p = JSON.parse(raw); if(p.name) document.getElementById('agentName').value = p.name; if(p.email) document.getElementById('agentEmail').value = p.email; if(p.phone) document.getElementById('agentPhone').value = p.phone; if(p.commune) document.getElementById('agentCommune').value = p.commune; }catch(e){}
+        }
+
+        // Team management
+        function loadMuniTeam(){
+            const raw = localStorage.getItem(KEY_TEAM); let arr = [];
+            if(raw){ try{ arr = JSON.parse(raw); }catch(e){ arr = []; } }
+            if(arr.length===0){ arr = [{name:'Chef de brigade', role:'Chef'}]; localStorage.setItem(KEY_TEAM, JSON.stringify(arr)); }
+            renderMuniTeam(arr);
+        }
+
+        function renderMuniTeam(members){
+            const c = document.getElementById('muniTeamList'); c.innerHTML='';
+            members.forEach((m,i)=>{
+                const el = document.createElement('div'); el.className='team-member';
+                el.innerHTML = `<div class="member-avatar">${getInitials(m.name)}</div><div class="member-info"><div class="member-name">${escapeHtml(m.name)}</div><div class="member-role">${escapeHtml(m.role)}</div></div><div class="member-actions"><button class="btn btn-sm btn-outline" onclick="editMuniMember(${i})">Modifier</button> <button class="btn btn-sm btn-danger" onclick="removeMuniMember(${i})">Supprimer</button></div>`;
+                c.appendChild(el);
+            });
+        }
+
+        function addMuniTeamMember(){
+            const n = document.getElementById('muniTeamName').value.trim(); const r = document.getElementById('muniTeamRole').value.trim();
+            if(!n){ alert('Nom requis'); return; }
+            const raw = localStorage.getItem(KEY_TEAM); const arr = raw? JSON.parse(raw):[]; arr.push({name:n, role: r||'Membre'}); localStorage.setItem(KEY_TEAM, JSON.stringify(arr)); document.getElementById('muniTeamName').value=''; document.getElementById('muniTeamRole').value=''; renderMuniTeam(arr);
+        }
+
+        function removeMuniMember(i){ if(!confirm('Supprimer ce membre ?')) return; const raw = localStorage.getItem(KEY_TEAM); const arr = raw? JSON.parse(raw):[]; arr.splice(i,1); localStorage.setItem(KEY_TEAM, JSON.stringify(arr)); renderMuniTeam(arr); }
+
+        function editMuniMember(i){ const raw = localStorage.getItem(KEY_TEAM); const arr = raw? JSON.parse(raw):[]; const m = arr[i]; if(!m) return; const nn = prompt('Nom', m.name); if(nn===null) return; const rr = prompt('Rôle', m.role); if(rr===null) return; arr[i] = {name: nn.trim()||m.name, role: rr.trim()||m.role}; localStorage.setItem(KEY_TEAM, JSON.stringify(arr)); renderMuniTeam(arr); }
+
+        // Notifications
+        function saveMuniNotifications(){ const prefs = { email: document.getElementById('muniNotifEmail').checked, sms: document.getElementById('muniNotifSMS').checked }; localStorage.setItem(KEY_NOTIF, JSON.stringify(prefs)); alert('Préférences enregistrées (mock).'); }
+        function loadMuniNotifications(){ const raw = localStorage.getItem(KEY_NOTIF); if(!raw) return; try{ const n = JSON.parse(raw); document.getElementById('muniNotifEmail').checked = !!n.email; document.getElementById('muniNotifSMS').checked = !!n.sms;}catch(e){} }
+
+        // Permissions (simple mock)
+        function savePermissions(){ alert('Permissions enregistrées (mock).'); }
+
+        // Helpers
+        function getInitials(name){ return (name||'').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase(); }
+        function escapeHtml(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+        // Init on load
+        document.addEventListener('DOMContentLoaded', ()=>{ loadMuniProfile(); loadMuniTeam(); loadMuniNotifications(); });
+    </script>
+
+</body>
+</html>

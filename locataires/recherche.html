@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/recherche.css">
     
+    <!-- Leaflet CSS pour la carte interactive -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    
     <!-- Bibliothèques externes -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -96,35 +99,49 @@
             </button>
         </div>
 
-        <!-- Résultats de recherche -->
-        <div class="search-results">
-            <div class="results-header">
-                <h2 id="resultsCount">Chargement des logements...</h2>
-                <div class="sort-options">
-                    <select class="sort-select" id="sortSelect" name="sort">
-                        <option value="recent">Plus récents</option>
-                        <option value="price-asc">Prix croissant</option>
-                        <option value="price-desc">Prix décroissant</option>
-                        <option value="surface">Surface</option>
-                    </select>
+        <!-- Résultats de recherche avec carte -->
+        <div class="search-results-container">
+            <!-- Carte interactive -->
+            <div class="map-section">
+                <div id="propertyMap" class="property-map"></div>
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <span class="legend-marker" style="background: #667eea;"></span>
+                        <span>Propriétés disponibles</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="properties-grid" id="propertiesGrid">
-                <!-- Les propriétés seront chargées dynamiquement par JavaScript -->
-            </div>
+            <!-- Résultats -->
+            <div class="search-results">
+                <div class="results-header">
+                    <h2 id="resultsCount">Chargement des logements...</h2>
+                    <div class="sort-options">
+                        <select class="sort-select" id="sortSelect" name="sort">
+                            <option value="recent">Plus récents</option>
+                            <option value="price-asc">Prix croissant</option>
+                            <option value="price-desc">Prix décroissant</option>
+                            <option value="surface">Surface</option>
+                        </select>
+                    </div>
+                </div>
 
-            <!-- Pagination -->
-            <div class="pagination" id="pagination">
-                <button class="page-btn disabled">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+                <div class="properties-grid" id="propertiesGrid">
+                    <!-- Les propriétés seront chargées dynamiquement par JavaScript -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <button class="page-btn disabled">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </main>
@@ -204,8 +221,10 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
     <script src="../js/auth.js"></script>
     <script src="../js/recherche.js"></script>
+    <script src="../js/map-properties.js"></script>
     
     <script>
         // Script d'initialisation minimal
@@ -230,7 +249,7 @@
         function logout() {
             if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
                 // Logique de déconnexion
-                window.location.href = '../index.html';
+                window.location.href = '../login.html';
             }
         }
 

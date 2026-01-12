@@ -1,1808 +1,255 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paiements - Propriétaire | PNSBIL</title>
+    <title>Paiements - Espace Propriétaire | PNSBIL</title>
+    <!-- CSS Standardisé -->
+    <link rel="stylesheet" href="../css/agences-ministerial.css">
+    <link rel="stylesheet" href="../css/pages/proprietaires-paiements.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header class="dashboard-header">
-        <div class="header-content">
-            <div class="logo">
-                <span>🏠 PNSBIL</span>
-                <span>Espace Propriétaire</span>
+    <div class="dashboard-layout">
+        <!-- Ministerial Banner -->
+        <div class="ministerial-banner" role="banner">
+            <div class="container-fluid">
+                <div class="banner-content">
+                    <div class="banner-left">
+                        <div class="banner-seal">
+                            <svg viewBox="0 0 100 100" width="24" height="24">
+                                <circle cx="50" cy="50" r="48" fill="#FCD116" stroke="#CE1126" stroke-width="2"/>
+                                <circle cx="50" cy="50" r="40" fill="#007A5E" stroke="#FCD116" stroke-width="1"/>
+                                <text x="50" y="60" font-size="32" font-weight="bold" fill="#FCD116" text-anchor="middle">BF</text>
+                            </svg>
+                        </div>
+                        <span>République du Burkina Faso • Ministère de l'Habitat</span>
+                    </div>
+                    <div class="banner-right">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Espace Propriétaire Sécurisé</span>
+                    </div>
+                </div>
             </div>
-            <div class="user-menu">
-                <span class="user-name" id="userName">M. Mohamed Diallo</span>
-                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+        </div>
+
+        <!-- Main Header -->
+        <header class="dashboard-header">
+            <div class="header-container">
+                <div class="header-left">
+                    <div class="logo-area">
+                        <i class="fas fa-home-user"></i>
+                        <div>
+                            <span class="logo-title">PNSBIL</span>
+                            <span class="logo-subtitle">Propriétaires</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name" id="userName">M. Mohamed Diallo</span>
+                            <span class="user-role">Propriétaire</span>
+                        </div>
+                        <div class="user-avatar">MD</div>
+                        <button class="logout-btn" onclick="logout()" title="Déconnexion">
+                            <i class="fas fa-power-off"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Navigation -->
-    <nav class="sidebar">
-        <div class="nav-section">
-            <h3>Gestion Immobilière</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="proprietes.html" class="nav-link">🏠 Mes propriétés</a>
-            <a href="baux.html" class="nav-link">📑 Baux locatifs</a>
-            <a href="paiements.html" class="nav-link active">💳 Paiements</a>
-            <a href="impots.html" class="nav-link">💰 Impôts locatifs</a>
-        </div>
-        
-        <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">💬 Messagerie</a>
-        </div>
-    </nav>
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <span class="section-title">Principal</span>
+                    <a href="dashboard.html" class="menu-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                    <a href="proprietes.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>Mes propriétés</span>
+                    </a>
+                    <a href="baux.html" class="menu-item">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Mes baux</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <span class="section-title">Finance & Fiscalité</span>
+                    <a href="paiements.html" class="menu-item active">
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Paiements</span>
+                    </a>
+                    <a href="impots.html" class="menu-item">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Impôts locatifs</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <span class="section-title">Support</span>
+                    <a href="communication.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>Messagerie</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
 
-    <!-- Wrapper pour le contenu principal et footer -->
-    <div class="content-wrapper">
-        <!-- Main Content -->
+        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Page Header -->
-            <div class="page-header">
-                <div class="header-actions">
+            <div class="content-header">
+                <div class="header-text">
                     <h1>Gestion des Paiements</h1>
+                    <p>Historique des revenus et suivi des encaissements mensuels</p>
+                </div>
+                <div class="header-actions">
                     <button class="btn btn-primary" onclick="showNewPaymentModal()">
-                        <i class="fas fa-plus me-2"></i> Enregistrer paiement
+                        <i class="fas fa-plus"></i> Nouveau paiement
                     </button>
                 </div>
-                <p>Suivez et gérez tous les paiements de loyers</p>
             </div>
 
-            <!-- Statistiques Propriétaire -->
+            <!-- Statistiques -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon revenue">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
+                    <div class="stat-icon revenue" style="color: #007A5E;"><i class="fas fa-wallet"></i></div>
                     <div class="stat-info">
-                        <div class="stat-value" id="monthlyRevenue">2.35M FCFA</div>
-                        <div class="stat-label">Reçus ce mois</div>
+                        <div class="stat-value">2.35M FCFA</div>
+                        <div class="stat-label">Reçus (ce mois)</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon validated">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
+                    <div class="stat-icon validated" style="color: #10b981;"><i class="fas fa-check-double"></i></div>
                     <div class="stat-info">
-                        <div class="stat-value" id="validatedPayments">6</div>
+                        <div class="stat-value">6</div>
                         <div class="stat-label">Paiements validés</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon pending">
-                        <i class="fas fa-clock"></i>
-                    </div>
+                    <div class="stat-icon pending" style="color: #f59e0b;"><i class="fas fa-hourglass-half"></i></div>
                     <div class="stat-info">
-                        <div class="stat-value" id="pendingPayments">2</div>
+                        <div class="stat-value">2</div>
                         <div class="stat-label">En attente</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon overdue">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
+                <div class="stat-card" style="border-left-color: #CE1126;">
+                    <div class="stat-icon overdue" style="color: #CE1126;"><i class="fas fa-exclamation-circle"></i></div>
                     <div class="stat-info">
-                        <div class="stat-value" id="overduePayments">1</div>
-                        <div class="stat-label">Retards</div>
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">En retard</div>
                     </div>
                 </div>
             </div>
 
-            <!-- IA Suggestions pour Propriétaire -->
-            <div class="ai-section">
-                <div class="ai-main-card">
-                    <div class="card-header">
-                        <h3>
-                            <i class="fas fa-robot me-2"></i>
-                            Suggestions Intelligentes
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="ai-suggestion-item">
-                            <div class="ai-icon warning">
-                                <i class="fas fa-bell"></i>
-                            </div>
-                            <div class="ai-content">
-                                <strong>Rappel automatique recommandé</strong>
-                                <p>Envoyer un rappel à Mariam Sow pour le loyer de novembre</p>
-                            </div>
-                            <button class="btn btn-sm btn-warning" onclick="sendReminder(1)">Envoyer</button>
-                        </div>
-                        <div class="ai-suggestion-item">
-                            <div class="ai-icon success">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="ai-content">
-                                <strong>Tendance positive détectée</strong>
-                                <p>Vos revenus ont augmenté de 12% ce trimestre</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ai-prediction-card">
-                    <div class="card-header">
-                        <h3>Prédiction IA</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="prediction-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h4>Revenus Décembre</h4>
-                        <div class="prediction-value" id="revenuePrediction">2.65M FCFA</div>
-                        <div class="prediction-change positive">+12% vs novembre</div>
-                        <div class="confidence-badge">
-                            <span class="badge success">Confiance: 92%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Paiements en Attente - Vue Propriétaire -->
-            <div class="card pending-payments">
+            <!-- Historique des Paiements -->
+            <div class="table-card">
                 <div class="card-header">
-                    <h3>Paiements en Attente</h3>
-                </div>
-                <div class="card-body">
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Locataire</th>
-                                    <th>Propriété</th>
-                                    <th>Montant</th>
-                                    <th>Échéance</th>
-                                    <th>Jours de retard</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="user-info">
-                                            <div class="avatar bg-warning">MS</div>
-                                            <div class="user-details">
-                                                <div class="user-name">Mariam Sow</div>
-                                                <div class="user-contact">+226 77 123 45 67</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="property-info">
-                                            <div class="property-name">Studio C5</div>
-                                            <div class="property-location">Point E, Ouagadougou</div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="amount">250,000 FCFA</div>
-                                    </td>
-                                    <td>05/11/2024</td>
-                                    <td>
-                                        <span class="status-badge danger">15 jours</span>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="btn btn-sm btn-outline" onclick="sendReminder(1)">
-                                                <i class="fas fa-bell me-1"></i> Rappel
-                                            </button>
-                                            <button class="btn btn-sm btn-primary" onclick="showPaymentModal(1)">
-                                                <i class="fas fa-credit-card me-1"></i> Payer
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <h3><i class="fas fa-history"></i> Historique Récent</h3>
+                    <div class="card-actions">
+                        <input type="month" value="2024-11" class="month-selector">
                     </div>
                 </div>
-            </div>
-
-            <!-- Historique des Paiements - Vue Propriétaire -->
-            <div class="card payment-history">
-                <div class="card-header">
-                    <div class="header-content">
-                        <h3>Historique des Paiements</h3>
-                        <div class="filters">
-                            <select class="filter-select">
-                                <option>Tous les statuts</option>
-                                <option>Validés</option>
-                                <option>En attente</option>
-                                <option>Annulés</option>
-                            </select>
-                            <input type="month" class="month-filter" value="2024-11">
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Référence</th>
-                                    <th>Locataire</th>
-                                    <th>Propriété</th>
-                                    <th>Montant</th>
-                                    <th>Méthode</th>
-                                    <th>Date</th>
-                                    <th>Statut</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="payment-ref">
-                                            <div class="ref-number">PAY-2024-001</div>
-                                            <div class="ref-description">Loyer Novembre 2024</div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="user-info">
-                                            <div class="avatar bg-primary">AS</div>
-                                            <div class="user-details">
-                                                <div class="user-name">Aminata Sy</div>
-                                                <div class="user-property">Appartement B12</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="property-info">
-                                            <div class="property-name">Appartement B12</div>
-                                            <div class="property-location">Ouagadougou Plateau</div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="amount">450,000 FCFA</div>
-                                    </td>
-                                    <td>
-                                        <span class="payment-method">
-                                            <i class="fas fa-mobile-alt me-1"></i> Orange Money
-                                        </span>
-                                    </td>
-                                    <td>01/11/2024</td>
-                                    <td>
-                                        <span class="status-badge success">Validé</span>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline dropdown-toggle" onclick="toggleDropdown(this)">
-                                                Actions
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#" onclick="viewPaymentDetails(1)">
-                                                    <i class="fas fa-eye me-2"></i> Voir détails
-                                                </a>
-                                                <a class="dropdown-item" href="#" onclick="generateReceipt(1)">
-                                                    <i class="fas fa-receipt me-2"></i> Générer quittance
-                                                </a>
-                                                <a class="dropdown-item" href="#" onclick="exportPayment(1)">
-                                                    <i class="fas fa-file-export me-2"></i> Exporter
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Locataire</th>
+                                <th>Propriété</th>
+                                <th>Période</th>
+                                <th>Montant</th>
+                                <th>Méthode</th>
+                                <th>Statut</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="table-user">
+                                        <div class="table-avatar" style="background: var(--primary-dark);">AS</div>
+                                        <span>Aminata Sy</span>
+                                    </div>
+                                </td>
+                                <td>Appartement B12</td>
+                                <td>Nov 2024</td>
+                                <td class="amount">450,000 FCFA</td>
+                                <td>Orange Money</td>
+                                <td><span class="status-badge success">Validé</span></td>
+                                <td><button class="icon-btn" title="Quittance"><i class="fas fa-file-invoice"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="table-user">
+                                        <div class="table-avatar" style="background: #667eea;">JD</div>
+                                        <span>Jean Dupont</span>
+                                    </div>
+                                </td>
+                                <td>Villa 45</td>
+                                <td>Nov 2024</td>
+                                <td class="amount">1,200,000 FCFA</td>
+                                <td>Virement</td>
+                                <td><span class="status-badge success">Validé</span></td>
+                                <td><button class="icon-btn" title="Quittance"><i class="fas fa-file-invoice"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="table-user">
+                                        <div class="table-avatar" style="background: #f59e0b;">MS</div>
+                                        <span>Mariam Sow</span>
+                                    </div>
+                                </td>
+                                <td>Studio C5</td>
+                                <td>Nov 2024</td>
+                                <td class="amount">250,000 FCFA</td>
+                                <td>-</td>
+                                <td><span class="status-badge danger">Retard</span></td>
+                                <td><button class="btn btn-primary btn-sm">Relancer</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
 
-        <!-- Footer Moderne FIXE -->
-        <footer class="site-footer">
+        <!-- Footer Standardisé -->
+        <footer class="dashboard-footer">
             <div class="footer-container">
-                <div class="footer-content">
-                    <div class="footer-section">
-                        <h5>PNSBIL</h5>
-                        <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                        <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
-                        <div class="footer-social">
-                            <a href="#" class="social-link" aria-label="Facebook">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="social-link" aria-label="Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="social-link" aria-label="LinkedIn">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="#" class="social-link" aria-label="Instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <h3>PNSBIL</h3>
+                        <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs au Burkina Faso</p>
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-col">
+                            <h4>Navigation</h4>
+                            <a href="dashboard.html">Accueil</a>
+                            <a href="proprietes.html">Mes Biens</a>
+                            <a href="baux.html">Mes Baux</a>
+                        </div>
+                        <div class="footer-col">
+                            <h4>Finance</h4>
+                            <a href="paiements.html">Paiements</a>
+                            <a href="impots.html">Impôts</a>
                         </div>
                     </div>
-                    
-                    <div class="footer-section">
-                        <h5>Liens rapides</h5>
-                        <ul>
-                            <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                            <li><a href="properties.html"><i class="fas fa-chevron-right"></i> Propriétés</a></li>
-                            <li><a href="leases.html"><i class="fas fa-chevron-right"></i> Baux</a></li>
-                            <li><a href="taxes.html"><i class="fas fa-chevron-right"></i> Impôts</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h5>Ressources</h5>
-                        <ul>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Guides</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Mentions légales</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h5>Contact</h5>
-                        <ul class="footer-contact">
-                            <li>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Avenue XXXXX, Ouagadougou, Burkina Faso</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-phone"></i>
-                                <span>+226 33 123 45 67</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-envelope"></i>
-                                <span>contact@pnsbil.sn</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-clock"></i>
-                                <span>Lun - Ven: 8h00 - 18h00</span>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
-                
                 <div class="footer-bottom">
-                    <p>&copy; 2025 PNSBIL - Tous droits réservés</p>
+                    <p>&copy; 2025 République du Burkina Faso • PNSBIL • Tous droits réservés</p>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- Modals (restent identiques) -->
-    <div id="newPaymentModal" class="modal">
-        <div class="modal-overlay" onclick="closeNewPaymentModal()"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Enregistrer un Paiement Manuel</h2>
-                <button class="modal-close" onclick="closeNewPaymentModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="manualPaymentForm" class="payment-form">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Locataire</label>
-                            <select required>
-                                <option value="">Sélectionnez un locataire...</option>
-                                <option value="1">Aminata Sy - Appartement B12</option>
-                                <option value="2">Jean Dupont - Villa 45</option>
-                                <option value="3">Mariam Sow - Studio C5</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Type de paiement</label>
-                            <select required>
-                                <option value="">Sélectionnez...</option>
-                                <option value="loyer">Loyer</option>
-                                <option value="caution">Caution</option>
-                                <option value="charges">Charges</option>
-                                <option value="autre">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Montant (FCFA)</label>
-                            <input type="number" placeholder="Montant" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Méthode de paiement</label>
-                            <select required>
-                                <option value="">Sélectionnez...</option>
-                                <option value="orange_money">Orange Money</option>
-                                <option value="moov_money">Moov Money</option>
-                                <option value="virement">Virement bancaire</option>
-                                <option value="especes">Espèces</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Date du paiement</label>
-                            <input type="date" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Référence</label>
-                            <input type="text" placeholder="Référence du paiement">
-                        </div>
-                    </div>
-                    <div class="form-group full-width">
-                        <label>Notes</label>
-                        <textarea rows="3" placeholder="Notes supplémentaires"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline" onclick="closeNewPaymentModal()">Annuler</button>
-                <button type="button" class="btn btn-primary" onclick="saveManualPayment()">Enregistrer le paiement</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="paymentModal" class="modal">
-        <div class="modal-overlay" onclick="closePaymentModal()"></div>
-        <div class="modal-content payment-modal">
-            <div class="modal-header">
-                <h2>Effectuer un Paiement</h2>
-                <button class="modal-close" onclick="closePaymentModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="payment-summary">
-                    <div class="payment-details">
-                        <div class="detail-item">
-                            <span>Locataire:</span>
-                            <strong id="paymentTenant">Mariam Sow</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span>Propriété:</span>
-                            <strong id="paymentProperty">Studio C5</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span>Montant:</span>
-                            <strong class="amount" id="paymentAmount">250,000 FCFA</strong>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="payment-methods">
-                    <h4>Choisissez votre méthode de paiement</h4>
-                    <div class="methods-grid">
-                        <div class="payment-method-card" onclick="selectPaymentMethod('orange_money')">
-                            <div class="method-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div class="method-name">Orange Money</div>
-                        </div>
-                        <div class="payment-method-card" onclick="selectPaymentMethod('moov_money')">
-                            <div class="method-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div class="method-name">Moov Money</div>
-                        </div>
-                        <div class="payment-method-card" onclick="selectPaymentMethod('virement')">
-                            <div class="method-icon">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <div class="method-name">Virement</div>
-                        </div>
-                        <div class="payment-method-card" onclick="selectPaymentMethod('especes')">
-                            <div class="method-icon">
-                                <i class="fas fa-money-bill-wave"></i>
-                            </div>
-                            <div class="method-name">Espèces</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline" onclick="closePaymentModal()">Annuler</button>
-                <button type="button" class="btn btn-primary" id="confirmPaymentBtn" onclick="processPayment()" disabled>
-                    <i class="fas fa-lock me-2"></i>Confirmer le paiement
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script src="../js/auth.js"></script>
-    
+    <script src="../js/payments-proprietaire.js"></script>
     <script>
-        // Gestionnaire de paiements
-        class PaymentManager {
-            constructor() {
-                this.selectedPaymentMethod = null;
-                this.init();
-            }
-
-            init() {
-                this.bindEvents();
-                this.loadPaymentData();
-            }
-
-            bindEvents() {
-                document.addEventListener('click', (e) => {
-                    if (!e.target.closest('.dropdown')) {
-                        this.closeAllDropdowns();
-                    }
-                });
-            }
-
-            loadPaymentData() {
-                document.getElementById('monthlyRevenue').textContent = '2.35M FCFA';
-                document.getElementById('validatedPayments').textContent = '6';
-                document.getElementById('pendingPayments').textContent = '2';
-                document.getElementById('overduePayments').textContent = '1';
-                document.getElementById('revenuePrediction').textContent = '2.65M FCFA';
-            }
-
-            selectPaymentMethod(method) {
-                this.selectedPaymentMethod = method;
-                const cards = document.querySelectorAll('.payment-method-card');
-                cards.forEach(card => card.classList.remove('selected'));
-                
-                const selectedCard = document.querySelector(`[onclick="selectPaymentMethod('${method}')"]`);
-                if (selectedCard) {
-                    selectedCard.classList.add('selected');
-                }
-                
-                document.getElementById('confirmPaymentBtn').disabled = false;
-            }
-
-            processPayment() {
-                if (!this.selectedPaymentMethod) {
-                    alert('Veuillez sélectionner une méthode de paiement');
-                    return;
-                }
-
-                const amount = document.getElementById('paymentAmount').textContent;
-                const tenant = document.getElementById('paymentTenant').textContent;
-                
-                this.showLoading();
-                
-                setTimeout(() => {
-                    this.hideLoading();
-                    this.showSuccessMessage(`Paiement de ${amount} pour ${tenant} effectué avec succès!`);
-                    this.closePaymentModal();
-                }, 2000);
-            }
-
-            showLoading() {
-                const btn = document.getElementById('confirmPaymentBtn');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Traitement...';
-                btn.disabled = true;
-            }
-
-            hideLoading() {
-                const btn = document.getElementById('confirmPaymentBtn');
-                btn.innerHTML = '<i class="fas fa-lock me-2"></i>Confirmer le paiement';
-                btn.disabled = false;
-            }
-
-            showSuccessMessage(message) {
-                const notification = document.createElement('div');
-                notification.className = 'notification success';
-                notification.innerHTML = `
-                    <div class="notification-content">
-                        <i class="fas fa-check-circle"></i>
-                        <span>${message}</span>
-                    </div>
-                `;
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.remove();
-                }, 5000);
-            }
-
-            closeAllDropdowns() {
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    menu.style.display = 'none';
-                });
-            }
-
-            sendReminder(paymentId) {
-                this.showSuccessMessage(`Rappel envoyé pour le paiement ${paymentId}`);
-            }
-
-            viewPaymentDetails(paymentId) {
-                alert(`Détails du paiement ${paymentId}`);
-            }
-
-            generateReceipt(paymentId) {
-                alert(`Génération de la quittance pour le paiement ${paymentId}`);
-            }
-
-            exportPayment(paymentId) {
-                alert(`Export du paiement ${paymentId}`);
-            }
-
-            saveManualPayment() {
-                const form = document.getElementById('manualPaymentForm');
-                if (form.checkValidity()) {
-                    this.showSuccessMessage('Paiement manuel enregistré avec succès');
-                    this.closeNewPaymentModal();
-                } else {
-                    form.reportValidity();
-                }
-            }
-        }
-
-        // Initialisation globale
-        let paymentManager;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof checkAuth === 'function' && !checkAuth('proprietaire')) {
-                return;
-            }
-            
-            if (typeof getCurrentUser === 'function') {
-                const user = getCurrentUser();
-                if (user) {
-                    document.getElementById('userName').textContent = user.name;
-                }
-            }
-            
-            paymentManager = new PaymentManager();
-        });
-
-        // Fonctions globales
-        function showNewPaymentModal() {
-            document.getElementById('newPaymentModal').style.display = 'flex';
-        }
-
-        function closeNewPaymentModal() {
-            document.getElementById('newPaymentModal').style.display = 'none';
-        }
-
-        function showPaymentModal(paymentId) {
-            document.getElementById('paymentModal').style.display = 'flex';
-        }
-
-        function closePaymentModal() {
-            document.getElementById('paymentModal').style.display = 'none';
-            paymentManager.selectedPaymentMethod = null;
-            document.getElementById('confirmPaymentBtn').disabled = true;
-            document.querySelectorAll('.payment-method-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-        }
-
-        function toggleDropdown(button) {
-            const menu = button.nextElementSibling;
-            const isVisible = menu.style.display === 'block';
-            
-            paymentManager.closeAllDropdowns();
-            
-            if (!isVisible) {
-                menu.style.display = 'block';
-            }
-        }
-
-        function selectPaymentMethod(method) {
-            paymentManager.selectPaymentMethod(method);
-        }
-
-        function processPayment() {
-            paymentManager.processPayment();
-        }
-
-        function sendReminder(paymentId) {
-            paymentManager.sendReminder(paymentId);
-        }
-
-        function viewPaymentDetails(paymentId) {
-            paymentManager.viewPaymentDetails(paymentId);
-        }
-
-        function generateReceipt(paymentId) {
-            paymentManager.generateReceipt(paymentId);
-        }
-
-        function exportPayment(paymentId) {
-            paymentManager.exportPayment(paymentId);
-        }
-
-        function saveManualPayment() {
-            paymentManager.saveManualPayment();
-        }
-
-        function logout() {
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-                window.location.href = '../index.html';
-            }
-        }
-
-        // Fermer les modals en cliquant à l'extérieur
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal-overlay')) {
-                closeNewPaymentModal();
-                closePaymentModal();
-            }
-        });
+        function logout() { if (confirm('Souhaitez-vous vous déconnecter ?')) window.location.href = '../login.html'; }
+        function showNewPaymentModal() { alert('Fonctionnalité en cours de déploiement'); }
     </script>
-
-    <style>
-        /* Variables CSS */
-        :root {
-            --primary: #667eea;
-            --primary-dark: #5a6fd8;
-            --primary-light: #f0f4ff;
-            --secondary: #764ba2;
-            --success: #10b981;
-            --success-light: #dcfce7;
-            --warning: #f59e0b;
-            --warning-light: #fef3c7;
-            --error: #ef4444;
-            --error-light: #fee2e2;
-            --info: #3b82f6;
-            --info-light: #dbeafe;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --radius: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* CORRECTION DU FOOTER FIXE */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: var(--gray-900);
-            line-height: 1.6;
-        }
-
-        /* Wrapper pour le contenu et footer */
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            margin-left: 280px; /* Compensation de la sidebar */
-            min-height: 100vh;
-        }
-
-        /* Contenu principal */
-        .main-content {
-            flex: 1;
-            padding: 2rem;
-        }
-
-        /* Footer fixe en bas */
-        .site-footer {
-            background: linear-gradient(135deg, var(--gray-900), var(--gray-800));
-            color: white;
-            margin-top: auto; /* Pousse le footer vers le bas */
-            position: relative;
-            overflow: hidden;
-            flex-shrink: 0; /* Empêche le footer de rétrécir */
-        }
-
-        .site-footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        /* Reste du CSS inchangé */
-        .dashboard-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo span:first-child {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo span:last-child {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: var(--gray-700);
-            font-size: 0.95rem;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 80px;
-            width: 280px;
-            height: calc(100vh - 80px);
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 2rem 0;
-            overflow-y: auto;
-            z-index: 99;
-        }
-
-        .nav-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .nav-section h3 {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--gray-500);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-            padding: 0 2rem;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            color: var(--gray-600);
-            text-decoration: none;
-            transition: var(--transition);
-            border-left: 4px solid transparent;
-            font-weight: 500;
-        }
-
-        .nav-link:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-            border-left-color: var(--primary);
-        }
-
-        .nav-link.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-left-color: var(--primary-dark);
-            box-shadow: var(--shadow);
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .page-header h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--gray-900), var(--gray-600));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 0;
-        }
-
-        .page-header p {
-            color: var(--gray-600);
-            font-size: 1.125rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: var(--radius);
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: var(--transition);
-            gap: 0.5rem;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: var(--shadow);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-        }
-
-        .btn-warning {
-            background: var(--warning);
-            color: white;
-            border: none;
-        }
-
-        .btn-warning:hover {
-            background: #d97706;
-            transform: translateY(-1px);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .stat-icon.revenue { background: var(--primary); }
-        .stat-icon.validated { background: var(--success); }
-        .stat-icon.pending { background: var(--warning); }
-        .stat-icon.overdue { background: var(--error); }
-
-        .stat-info {
-            flex: 1;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .ai-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .ai-main-card, .ai-prediction-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            overflow: hidden;
-        }
-
-        .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .card-header h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .ai-suggestion-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--gray-50);
-            border-radius: var(--radius);
-            border-left: 4px solid var(--primary);
-        }
-
-        .ai-suggestion-item:not(:last-child) {
-            margin-bottom: 1rem;
-        }
-
-        .ai-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: white;
-        }
-
-        .ai-icon.warning { background: var(--warning); }
-        .ai-icon.success { background: var(--success); }
-
-        .ai-content {
-            flex: 1;
-        }
-
-        .ai-content strong {
-            color: var(--gray-900);
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        .ai-content p {
-            color: var(--gray-600);
-            margin: 0;
-            font-size: 0.9rem;
-        }
-
-        .ai-prediction-card .card-body {
-            text-align: center;
-        }
-
-        .prediction-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin: 0 auto 1rem;
-        }
-
-        .prediction-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .prediction-change {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .prediction-change.positive {
-            color: var(--success);
-        }
-
-        .confidence-badge .badge {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .badge.success {
-            background: var(--success-light);
-            color: var(--success);
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-
-        .pending-payments .card-header,
-        .payment-history .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .filters {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .filter-select, .month-filter {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius);
-            font-size: 0.9rem;
-            background: white;
-        }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table th {
-            background: var(--gray-50);
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            color: var(--gray-700);
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .data-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-            vertical-align: middle;
-        }
-
-        .data-table tr:hover {
-            background: var(--gray-50);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .avatar.bg-warning { background: var(--warning); }
-        .avatar.bg-primary { background: var(--primary); }
-
-        .user-details .user-name {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .user-contact, .user-property {
-            font-size: 0.8rem;
-            color: var(--gray-500);
-        }
-
-        .property-info .property-name {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .property-location {
-            font-size: 0.8rem;
-            color: var(--gray-500);
-        }
-
-        .amount {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1rem;
-        }
-
-        .status-badge {
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-badge.danger {
-            background: var(--error-light);
-            color: var(--error);
-        }
-
-        .status-badge.success {
-            background: var(--success-light);
-            color: var(--success);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .payment-ref .ref-number {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .ref-description {
-            font-size: 0.8rem;
-            color: var(--gray-500);
-        }
-
-        .payment-method {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.4rem 0.8rem;
-            background: var(--warning-light);
-            color: var(--warning);
-            border-radius: var(--radius);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            z-index: 10;
-            min-width: 160px;
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            text-decoration: none;
-            color: var(--gray-700);
-            transition: var(--transition);
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        .dropdown-item:hover {
-            background: var(--gray-50);
-            color: var(--primary);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: var(--radius-xl);
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: modalSlideIn 0.3s ease-out;
-            position: relative;
-            z-index: 1001;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .payment-modal {
-            max-width: 500px;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.25rem;
-            cursor: pointer;
-            color: var(--gray-500);
-            padding: 0.25rem;
-            border-radius: 4px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-        }
-
-        .modal-close:hover {
-            background: var(--gray-100);
-            color: var(--gray-700);
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--gray-200);
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
-
-        .payment-form {
-            width: 100%;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--gray-700);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius);
-            font-size: 0.9rem;
-            transition: var(--transition);
-            font-family: inherit;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .payment-summary {
-            background: var(--gray-50);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            margin-bottom: 1.5rem;
-        }
-
-        .payment-details {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .detail-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .detail-item span {
-            color: var(--gray-600);
-        }
-
-        .detail-item strong {
-            color: var(--gray-900);
-        }
-
-        .payment-methods h4 {
-            margin-bottom: 1rem;
-            color: var(--gray-900);
-        }
-
-        .methods-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-        }
-
-        .payment-method-card {
-            background: white;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius);
-            padding: 1.5rem 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .payment-method-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .payment-method-card.selected {
-            border-color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        .method-icon {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .method-name {
-            font-weight: 600;
-            color: var(--gray-700);
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            z-index: 1002;
-            animation: slideInRight 0.3s ease-out;
-            border-left: 4px solid var(--success);
-        }
-
-        .notification.success {
-            border-left-color: var(--success);
-        }
-
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 1.5rem;
-        }
-
-        .notification.success .notification-content i {
-            color: var(--success);
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem 1.5rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h5 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: white;
-            position: relative;
-            display: inline-block;
-        }
-
-        .footer-section h5::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 30px;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .footer-section p {
-            color: var(--gray-300);
-            line-height: 1.6;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: var(--gray-300);
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .footer-section a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .footer-contact li {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            padding: 0.5rem 0;
-        }
-
-        .footer-contact i {
-            color: var(--primary);
-            font-size: 1.1rem;
-            margin-top: 0.2rem;
-            flex-shrink: 0;
-        }
-
-        .footer-contact span {
-            color: var(--gray-300);
-            line-height: 1.5;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius);
-            color: var(--gray-300);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 1.5rem;
-            text-align: center;
-            color: var(--gray-400);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .ai-section {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper {
-                margin-left: 0;
-            }
-            
-            .main-content {
-                padding: 1rem;
-            }
-            
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .header-actions {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .methods-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .filters {
-                flex-direction: column;
-                align-items: stretch;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .methods-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .modal-content {
-                margin: 0;
-                border-radius: 0;
-                max-height: 100vh;
-            }
-        }
-    </style>
 </body>
 </html>

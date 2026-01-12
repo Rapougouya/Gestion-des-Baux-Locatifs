@@ -6,778 +6,8 @@
     <title>Tableau de Bord - Locataire | PNSBIL</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary-color: #64748b;
-            --accent-color: #f59e0b;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-            --info-color: #3b82f6;
-            --background-color: #f8fafc;
-            --surface-color: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --border-radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--background-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Layout principal */
-        .dashboard-page {
-            display: grid;
-            grid-template-areas: 
-                "header header"
-                "sidebar main"
-                "footer footer";
-            grid-template-columns: 280px 1fr;
-            grid-template-rows: auto 1fr auto;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .dashboard-header {
-            grid-area: header;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            display: flex;
-            flex-direction: column;
-            font-weight: 700;
-        }
-
-        .logo span:first-child {
-            font-size: 1.5rem;
-        }
-
-        .logo span:last-child {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            grid-area: sidebar;
-            background: linear-gradient(180deg, var(--surface-color) 0%, #fafbfc 100%);
-            border-right: 1px solid var(--border-color);
-            padding: 2rem 1.5rem;
-            height: calc(100vh - 80px);
-            position: sticky;
-            top: 80px;
-            overflow-y: auto;
-        }
-
-        .nav-section {
-            margin-bottom: 2rem;
-        }
-
-        .nav-section h3 {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.25rem;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.875rem;
-            padding: 0.875rem 1rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            background: var(--primary-color);
-            color: white;
-            transform: translateX(4px);
-        }
-
-        /* Contenu principal */
-        .main-content {
-            grid-area: main;
-            padding: 2rem;
-            background: var(--background-color);
-            overflow-y: auto;
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .page-header h1 {
-            font-size: 2.25rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-header p {
-            color: var(--text-secondary);
-            font-size: 1.125rem;
-        }
-
-        /* Alertes */
-        .tenant-alerts {
-            margin-bottom: 2rem;
-        }
-
-        .alert-banner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border: 1px solid #f59e0b;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        .alert-banner.warning {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border-color: #f59e0b;
-        }
-
-        .alert-content {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex: 1;
-        }
-
-        .alert-content i {
-            font-size: 1.5rem;
-            color: #d97706;
-        }
-
-        /* Boutons */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: inherit;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* Vue d'ensemble */
-        .overview-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--surface-color);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--primary-color);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            padding: 1rem;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 70px;
-            height: 70px;
-        }
-
-        .stat-content {
-            flex: 1;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            line-height: 1;
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-change {
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .stat-change.positive {
-            color: var(--success-color);
-        }
-
-        /* Sections du dashboard */
-        .dashboard-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .dashboard-section {
-            background: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .section-header h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        /* Logement */
-        .property-summary {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-        }
-
-        .property-image {
-            width: 120px;
-            height: 120px;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-        }
-
-        .property-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .property-info {
-            flex: 1;
-        }
-
-        .property-info h4 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .property-address {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .property-features {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .property-owner {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--background-color);
-            border-radius: var(--border-radius);
-        }
-
-        .owner-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-        }
-
-        /* Paiements */
-        .upcoming-payments {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .payment-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--background-color);
-            border-radius: var(--border-radius);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-        }
-
-        .payment-item:hover {
-            transform: translateX(4px);
-            border-color: var(--primary-color);
-        }
-
-        .payment-item.urgent {
-            border-color: var(--error-color);
-            background: linear-gradient(135deg, #fef2f2, #fee2e2);
-        }
-
-        .payment-date {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: var(--primary-color);
-            color: white;
-            padding: 0.5rem;
-            border-radius: 8px;
-            min-width: 60px;
-        }
-
-        .date-day {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .date-month {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-        }
-
-        .payment-details {
-            flex: 1;
-        }
-
-        .payment-details h5 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .payment-details p {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .amount {
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .payment-status {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .payment-status.overdue {
-            background: var(--error-color);
-            color: white;
-        }
-
-        .payment-status.pending {
-            background: var(--warning-color);
-            color: white;
-        }
-
-        /* Actions rapides */
-        .quick-actions {
-            background: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-        }
-
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .action-card {
-            background: var(--background-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            transition: var(--transition);
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .action-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--primary-color);
-        }
-
-        .action-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .action-icon.primary {
-            background: var(--primary-color);
-        }
-
-        .action-icon.warning {
-            background: var(--warning-color);
-        }
-
-        .action-icon.info {
-            background: var(--info-color);
-        }
-
-        .action-icon.success {
-            background: var(--success-color);
-        }
-
-        .action-content h5 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .action-content p {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        /* Activités récentes */
-        .recent-activity {
-            background: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
-        }
-
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--background-color);
-            border-radius: var(--border-radius);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-        }
-
-        .activity-item:hover {
-            transform: translateX(4px);
-            border-color: var(--primary-color);
-        }
-
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .activity-content {
-            flex: 1;
-        }
-
-        .activity-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .activity-desc {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .activity-date {
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-        }
-
-        /* Footer */
-        footer {
-            grid-area: footer;
-            background: var(--text-primary);
-            color: white;
-            padding: 3rem 0 1.5rem;
-            margin-top: auto;
-            margin-left: 280px;
-        }
-
-        footer .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        footer h5 {
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        footer ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        footer a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        footer a:hover {
-            color: white;
-        }
-
-        /* Animations */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .stat-card,
-        .action-card,
-        .payment-item,
-        .activity-item {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .dashboard-page {
-                grid-template-columns: 240px 1fr;
-            }
-            
-            .dashboard-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-page {
-                grid-template-areas: 
-                    "header"
-                    "main"
-                    "footer";
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar {
-                display: none;
-            }
-            
-            .dashboard-header {
-                padding: 1rem;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .overview-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .actions-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .property-summary {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .property-features {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .overview-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .actions-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .main-content {
-                padding: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../css/pages/locataires-dashboard.css">
 </head>
 <body class="dashboard-page">
     <header class="dashboard-header">
@@ -830,55 +60,112 @@
                 </button>
             </div>
         </div>
+        
+            <!-- Mes logements loués -->
+            <div class="dashboard-section properties-section">
+                <div class="section-header">
+                    <h3>🏘️ Mes logements loués</h3>
+                    <div>
+                        <button class="btn btn-outline" onclick="refreshProperties()"><i class="fas fa-sync"></i> Actualiser</button>
+                    </div>
+                </div>
 
-        <!-- Vue d'ensemble -->
-        <div class="tenant-overview">
-            <div class="overview-stats">
-                <div class="stat-card">
-                    <div class="stat-icon">🏠</div>
-                    <div class="stat-content">
-                        <div class="stat-value">Résidence Almadies</div>
-                        <div class="stat-label">Mon logement</div>
-                        <div class="stat-change">Appartement 85m²</div>
-                    </div>
+                <div class="filters">
+                    <select id="citySelect">
+                        <option value="">Toutes les villes</option>
+                    </select>
+                    <select id="neighborhoodSelect">
+                        <option value="">Tous les quartiers</option>
+                    </select>
+                    <input id="searchInput" type="text" class="search-input" placeholder="Rechercher par nom, adresse ou référence" />
+                    <button class="btn btn-primary" id="searchBtn">Rechercher</button>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">💰</div>
-                    <div class="stat-content">
-                        <div class="stat-value">450,000 FCFA</div>
-                        <div class="stat-label">Loyer mensuel</div>
-                        <div class="stat-change positive">Payé jusqu'au 31/03/2024</div>
-                    </div>
+
+                <div style="overflow:auto">
+                    <table class="properties-table" id="propertiesTable">
+                        <thead>
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Nom</th>
+                                        <th>Loyer mensuel</th>
+                                        <th>Ville</th>
+                                        <th>Quartier</th>
+                                        <th>Actions</th>
+                                    </tr>
+                        </thead>
+                        <tbody>
+                            <!-- lignes remplies par JS -->
+                        </tbody>
+                    </table>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📅</div>
-                    <div class="stat-content">
-                        <div class="stat-value">285 jours</div>
-                        <div class="stat-label">Durée restante</div>
-                        <div class="stat-change">Fin: 31/12/2024</div>
+            </div>
+
+            <!-- Modal détails logement (caché) -->
+            <div id="propertyModal" class="modal-overlay" style="display:none;">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h4 id="modalTitle">Détails du logement</h4>
+                        <button class="btn btn-outline" id="closeModalBtn"><i class="fas fa-times"></i></button>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-content">
-                        <div class="stat-value">4.8/5</div>
-                        <div class="stat-label">Satisfaction</div>
-                        <div class="stat-change">12 avis donnés</div>
+                    <div class="modal-body">
+                        <div>
+                            <div id="propertyMap" class="modal-map"></div>
+                            <div style="margin-top:12px;" id="propertyImages"></div>
+                        </div>
+                        <div class="modal-details">
+                            <h5 id="modalName"></h5>
+                            <p id="modalAddress" style="color:var(--text-secondary)"></p>
+                            <p><strong>Loyer :</strong> <span id="modalRent"></span> FCFA / mois</p>
+                            <p><strong>Surface :</strong> <span id="modalSize"></span></p>
+                            <p><strong>Pièces :</strong> <span id="modalRooms"></span></p>
+                            <p><strong>Équipements :</strong> <span id="modalFeatures"></span></p>
+                            <hr />
+                            <p id="modalDescription"></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <div class="top-grid">
+            <div class="tenant-overview">
+                <div class="overview-stats">
+                    <!-- removed duplicate 'Résidence Almadies' stat-card per user request -->
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-content">
+                            <div class="stat-value">450,000 FCFA</div>
+                            <div class="stat-label">Loyer mensuel</div>
+                            <div class="stat-change positive">Payé jusqu'au 31/03/2024</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-content">
+                            <div class="stat-value">285 jours</div>
+                            <div class="stat-label">Durée restante</div>
+                            <div class="stat-change">Fin: 31/12/2024</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <div class="stat-value">4.8/5</div>
+                            <div class="stat-label">Satisfaction</div>
+                            <div class="stat-change">12 avis donnés</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="dashboard-content">
+            <div class="dashboard-content">
             <!-- Mon logement -->
-            <div class="dashboard-section">
+            <div class="dashboard-section" data-property-id="p2">
                 <div class="section-header">
                     <h3>🏠 Mon Logement</h3>
                     <button class="btn btn-outline" onclick="viewPropertyDetails()">
                         <i class="fas fa-eye"></i>Voir détails
                     </button>
                 </div>
-                <div class="property-summary">
+                <div class="property-summary" role="button" tabindex="0" aria-label="Ouvrir les détails du logement" data-property-id="p2">
                     <div class="property-image">
                         <i class="fas fa-home fa-2x"></i>
                     </div>
@@ -1094,6 +381,24 @@
             </div>
         </div>
     </footer>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="../js/locataire-dashboard.js"></script>
+
+    <script>
+        // Small wiring: make stat-cards and the Mon Logement panel open property modal
+        document.addEventListener('DOMContentLoaded', function(){
+            function bindOpen(elem){
+                if(!elem) return;
+                const id = elem.dataset.propertyId;
+                if(!id) return;
+                elem.addEventListener('click', function(){ if(window.openPropertyModal) window.openPropertyModal(id); });
+                elem.addEventListener('keypress', function(e){ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if(window.openPropertyModal) window.openPropertyModal(id); } });
+            }
+
+            document.querySelectorAll('.stat-card[data-property-id]').forEach(bindOpen);
+            document.querySelectorAll('.property-summary[data-property-id]').forEach(bindOpen);
+        });
+    </script>
 
     <script>
         // Dashboard Locataire - JavaScript Fonctionnel
@@ -1358,7 +663,7 @@
                         
                         // Redirection vers la page de connexion
                         setTimeout(() => {
-                            window.location.href = 'login.html';
+                            window.location.href = '../login.html';
                         }, 1000);
                     }, 1500);
                 }

@@ -6,8 +6,27 @@
     <title>Transactions - Agence Immobilière | PNSBIL</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/agences-ministerial.css">
 </head>
 <body>
+    <!-- Banneau Ministériel -->
+    <div class="ministerial-banner">
+        <div class="banner-content">
+            <div class="banner-left">
+                <i class="fas fa-shield-alt"></i>
+                <span>République du Burkina Faso</span>
+            </div>
+            <div class="banner-title">
+                <div class="title-main">MINISTÈRE DE L'HABITAT, DE L'URBANISME ET DE LA VILLE</div>
+                <div class="title-sub">Plateforme PNSBIL - Gestion Intégrée des Baux Locatifs</div>
+            </div>
+            <div class="banner-security">
+                <i class="fas fa-lock"></i>
+                <span>Sécurisé SSL</span>
+            </div>
+        </div>
+    </div>
+
     <header class="dashboard-header">
         <div class="header-content">
             <div class="logo">
@@ -637,15 +656,15 @@
 
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #7209b7;
-            --success: #06d6a0;
-            --warning: #ffd166;
-            --danger: #ef476f;
-            --info: #118ab2;
-            --dark: #1a1a2e;
-            --light: #f8f9fa;
+            --primary: var(--primary-dark);
+            --primary-dark: var(--primary-dark);
+            --secondary: var(--primary-green);
+            --success: var(--success-green);
+            --warning: var(--accent-yellow);
+            --danger: var(--danger-red);
+            --info: var(--primary-green);
+            --dark: var(--text-dark);
+            --light: var(--bg-light);
             --gray-100: #f8f9fa;
             --gray-200: #e9ecef;
             --gray-300: #dee2e6;
@@ -681,6 +700,7 @@
         .dashboard-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+            background-color: blue;
             padding: 1rem 0;
             box-shadow: var(--shadow);
             position: sticky;

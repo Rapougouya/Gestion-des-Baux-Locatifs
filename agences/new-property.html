@@ -3,958 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nouveau Bien Immobilier | Agence Immobilière</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #2A4D8E;
-            --primary-dark: #1E3A6E;
-            --primary-light: #3A6BCC;
-            --secondary: #E8B339;
-            --secondary-dark: #D4A024;
-            --success: #27AE60;
-            --warning: #F39C12;
-            --danger: #E74C3C;
-            --info: #3498DB;
-            --light: #F8F9FA;
-            --dark: #2C3E50;
-            --gray-100: #F8F9FA;
-            --gray-200: #E9ECEF;
-            --gray-300: #DEE2E6;
-            --gray-400: #CED4DA;
-            --gray-500: #ADB5BD;
-            --gray-600: #6C757D;
-            --gray-700: #495057;
-            --gray-800: #343A40;
-            --gray-900: #212529;
-            --border-radius: 12px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            color: var(--gray-800);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .agency-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 1.5rem 0;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .agency-brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .agency-logo {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .agency-info h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .agency-info p {
-            font-size: 0.875rem;
-            opacity: 0.9;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background: var(--secondary);
-            color: var(--dark);
-        }
-
-        .btn-primary:hover {
-            background: var(--secondary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* Main Container */
-        .property-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        /* Form Container */
-        .form-container {
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .form-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 2rem;
-        }
-
-        .form-header h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-header p {
-            opacity: 0.9;
-        }
-
-        .form-progress {
-            display: flex;
-            margin-top: 2rem;
-            position: relative;
-        }
-
-        .progress-step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.5rem;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .step-label {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        .progress-step.active .step-number {
-            background: var(--secondary);
-            color: var(--dark);
-        }
-
-        .progress-step.completed .step-number {
-            background: var(--success);
-        }
-
-        .progress-bar {
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.2);
-            z-index: 1;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--secondary);
-            transition: var(--transition);
-            width: 0%;
-        }
-
-        /* Form Content */
-        .form-content {
-            padding: 2rem;
-        }
-
-        .form-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .form-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-header {
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .section-header h2 {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .section-header p {
-            color: var(--gray-600);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-label .required {
-            color: var(--danger);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(42, 77, 142, 0.1);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236c757d'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1rem;
-        }
-
-        .form-hint {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-top: 0.5rem;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-        }
-
-        .checkbox-group label {
-            font-weight: 500;
-            color: var(--gray-700);
-        }
-
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .feature-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .feature-checkbox:hover {
-            border-color: var(--primary);
-        }
-
-        .feature-checkbox.selected {
-            border-color: var(--primary);
-            background: rgba(42, 77, 142, 0.05);
-        }
-
-        .feature-checkbox input {
-            display: none;
-        }
-
-        .feature-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-        }
-
-        /* File Upload */
-        .file-upload {
-            border: 2px dashed var(--gray-300);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .file-upload:hover {
-            border-color: var(--primary);
-        }
-
-        .file-upload i {
-            font-size: 3rem;
-            color: var(--gray-400);
-            margin-bottom: 1rem;
-        }
-
-        .file-upload p {
-            color: var(--gray-600);
-            margin-bottom: 1rem;
-        }
-
-        .file-list {
-            margin-top: 1rem;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--gray-100);
-            border-radius: var(--border-radius);
-            margin-bottom: 0.5rem;
-        }
-
-        .file-name {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .file-remove {
-            color: var(--danger);
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 6px;
-            transition: var(--transition);
-        }
-
-        .file-remove:hover {
-            background: rgba(231, 76, 60, 0.1);
-        }
-
-        /* Form Actions */
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem;
-            border-top: 1px solid var(--gray-200);
-            background: var(--gray-100);
-        }
-
-        .btn-secondary {
-            background: var(--gray-300);
-            color: var(--gray-700);
-        }
-
-        .btn-secondary:hover {
-            background: var(--gray-400);
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #219653;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-progress {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .progress-step {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                text-align: left;
-            }
-
-            .step-number {
-                margin: 0;
-                flex-shrink: 0;
-            }
-
-            .progress-bar {
-                display: none;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-actions {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .form-actions .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+    <title>Nouveau Bien Immobilier | PNSBIL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/agences-ministerial.css">
+    <link rel="stylesheet" href="../css/pages/sidebar-fix.css">
+    <link rel="stylesheet" href="../css/pages/agences-new-property.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="agency-header">
-        <div class="header-container">
-            <div class="agency-brand">
-                <div class="agency-logo">
-                    <i class="fas fa-home"></i>
-                </div>
-                <div class="agency-info">
-                    <h1>Nouveau Bien Immobilier</h1>
-                    <p>Agence Immobilière Excellence • ID: AG-2024-789</p>
-                </div>
+    <div class="ministerial-banner">
+        <div class="banner-content">
+            <div class="banner-left">
+                <i class="fas fa-shield-alt"></i>
+                <span>République du Burkina Faso</span>
             </div>
-            <div class="agency-actions">
-                <a href="communication.html" class="btn btn-outline">
-                    <i class="fas fa-arrow-left"></i>
-                    Retour
-                </a>
+            <div class="banner-title">
+                <div class="title-main">MINISTÈRE DE L'HABITAT, DE L'URBANISME ET DE LA VILLE</div>
+                <div class="title-sub">Plateforme PNSBIL - Gestion Intégrée des Baux Locatifs</div>
+            </div>
+            <div class="banner-security">
+                <i class="fas fa-lock"></i>
+                <span>Sécurisé SSL</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🏠 PNSBIL</span>
+                <span class="logo-subtitle">Nouveau Bien</span>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Agence Immobilière Premium</span>
+                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="property-container">
-        <div class="form-container">
-            <!-- Form Header -->
-            <div class="form-header">
-                <h1>Enregistrement d'un nouveau bien</h1>
-                <p>Remplissez les informations pour ajouter un bien à votre portefeuille PNSBIL</p>
-                
-                <!-- Progress Steps -->
-                <div class="form-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <div class="progress-step active" data-step="1">
-                        <div class="step-number">1</div>
-                        <div class="step-label">Informations de base</div>
-                    </div>
-                    <div class="progress-step" data-step="2">
-                        <div class="step-number">2</div>
-                        <div class="step-label">Caractéristiques</div>
-                    </div>
-                    <div class="progress-step" data-step="3">
-                        <div class="step-number">3</div>
-                        <div class="step-label">Photos et documents</div>
-                    </div>
-                    <div class="progress-step" data-step="4">
-                        <div class="step-number">4</div>
-                        <div class="step-label">Validation</div>
-                    </div>
-                </div>
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">Gestion Professionnelle</div>
+                <a href="dashboard.html" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    <span>Tableau de bord</span>
+                </a>
+                <a href="portefeuille.html" class="nav-link">
+                    <span class="nav-icon">🏘️</span>
+                    <span>Mon portefeuille</span>
+                </a>
+                <a href="transactions.html" class="nav-link">
+                    <span class="nav-icon">🔄</span>
+                    <span>Transactions</span>
+                </a>
+                <a href="conformite.html" class="nav-link">
+                    <span class="nav-icon">📋</span>
+                    <span>Conformité</span>
+                </a>
+                <a href="rapports-pro.html" class="nav-link">
+                    <span class="nav-icon">📈</span>
+                    <span>Rapports Pro</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Communication</div>
+                <a href="communication.html" class="nav-link">
+                    <span class="nav-icon">💬</span>
+                    <span>Messagerie</span>
+                </a>
             </div>
 
-            <!-- Form Content -->
-            <form id="propertyForm">
-                <!-- Step 1: Basic Information -->
-                <div class="form-section active" id="step1">
-                    <div class="section-header">
-                        <h2>Informations de base du bien</h2>
-                        <p>Informations générales et localisation du bien immobilier</p>
-                    </div>
+            <div class="nav-section">
+                <div class="nav-title">Support</div>
+                <a href="support.html" class="nav-link">
+                    <span class="nav-icon">🛟</span>
+                    <span>Centre d'aide</span>
+                </a>
+                <a href="parametres.html" class="nav-link">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Paramètres</span>
+                </a>
+            </div>
+        </nav>
 
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Type de bien <span class="required">*</span></label>
-                            <select class="form-control form-select" name="propertyType" required>
-                                <option value="">Sélectionnez le type</option>
-                                <option value="apartment">Appartement</option>
-                                <option value="house">Maison</option>
-                                <option value="villa">Villa</option>
-                                <option value="office">Bureau</option>
-                                <option value="commercial">Local commercial</option>
-                                <option value="land">Terrain</option>
-                            </select>
+        <main class="main-content">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>Enregistrement d'un nouveau bien</h1>
+                    <p>Complétez les étapes pour référencer un nouveau bien immobilier sur PNSBIL</p>
+                    
+                    <div class="form-progress">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <div class="progress-step active">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Informations</div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Statut <span class="required">*</span></label>
-                            <select class="form-control form-select" name="propertyStatus" required>
-                                <option value="">Sélectionnez le statut</option>
-                                <option value="for_rent">À louer</option>
-                                <option value="rented">Loué</option>
-                                <option value="vacation">Location saisonnière</option>
-                                <option value="sale">À vendre</option>
-                            </select>
+                        <div class="progress-step">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Détails</div>
                         </div>
-
-                        <div class="form-group full-width">
-                            <label class="form-label">Adresse complète <span class="required">*</span></label>
-                            <input type="text" class="form-control" name="address" placeholder="Numéro, rue, quartier..." required>
+                        <div class="progress-step">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Photos & Doc</div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Ville <span class="required">*</span></label>
-                            <select class="form-control form-select" name="city" required>
-                                <option value="">Sélectionnez la ville</option>
-                                <option value="abidjan">Abidjan</option>
-                                <option value="bouake">Bouaké</option>
-                                <option value="daloa">Daloa</option>
-                                <option value="korhogo">Korhogo</option>
-                                <option value="yamoussoukro">Yamoussoukro</option>
-                                <option value="san-pedro">San Pedro</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Commune</label>
-                            <select class="form-control form-select" name="district">
-                                <option value="">Sélectionnez la commune</option>
-                                <option value="plateau">Plateau</option>
-                                <option value="cocody">Cocody</option>
-                                <option value="abobo">Abobo</option>
-                                <option value="adjame">Adjamé</option>
-                                <option value="yopougon">Yopougon</option>
-                                <option value="koumassi">Koumassi</option>
-                                <option value="marcory">Marcory</option>
-                                <option value="port-bouet">Port-Bouët</option>
-                                <option value="treichville">Treichville</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Loyer mensuel (FCFA) <span class="required">*</span></label>
-                            <input type="number" class="form-control" name="rent" placeholder="Montant du loyer" min="0" required>
-                            <div class="form-hint">Impôt PNSBIL calculé automatiquement: 10% du loyer annuel</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Caution (FCFA)</label>
-                            <input type="number" class="form-control" name="deposit" placeholder="Montant de la caution" min="0">
+                        <div class="progress-step">
+                            <div class="step-number">4</div>
+                            <div class="step-label">Validation</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 2: Characteristics -->
-                <div class="form-section" id="step2">
-                    <div class="section-header">
-                        <h2>Caractéristiques du bien</h2>
-                        <p>Détails techniques et équipements du bien immobilier</p>
-                    </div>
-
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Surface (m²) <span class="required">*</span></label>
-                            <input type="number" class="form-control" name="surface" placeholder="Surface en mètres carrés" min="0" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Nombre de pièces <span class="required">*</span></label>
-                            <input type="number" class="form-control" name="rooms" placeholder="Nombre total de pièces" min="1" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Chambres</label>
-                            <input type="number" class="form-control" name="bedrooms" placeholder="Nombre de chambres" min="0">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Salles de bain</label>
-                            <input type="number" class="form-control" name="bathrooms" placeholder="Nombre de salles de bain" min="0">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Étage</label>
-                            <input type="number" class="form-control" name="floor" placeholder="Numéro d'étage">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Année de construction</label>
-                            <input type="number" class="form-control" name="constructionYear" placeholder="Année de construction" min="1800" max="2024">
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">Équipements et caractéristiques</label>
-                        <div class="features-grid">
-                            <label class="feature-checkbox">
-                                <input type="checkbox" name="features" value="parking">
-                                <div class="feature-icon">
-                                    <i class="fas fa-car"></i>
-                                </div>
-                                <span>Parking</span>
-                            </label>
-                            <label class="feature-checkbox">
-                                <input type="checkbox" name="features" value="garden">
-                                <div class="feature-icon">
-                                    <i class="fas fa-tree"></i>
-                                </div>
-                                <span>Jardin</span>
-                            </label>
-                            <label class="feature-checkbox">
-                                <input type="checkbox" name="features" value="balcony">
-                                <div class="feature-icon">
-                                    <i class="fas fa-home"></i>
-                                </div>
-                                <span>Balcon</span>
-                            </label>
-                            <label class="feature-checkbox">
-                                <input type="checkbox" name="features" value="elevator">
-                                <div class="feature-icon">
-                                    <i class="fas fa-arrow-up"></i>
-                                </div>
-                                <span>Ascenseur</span>
-                            </label>
-                            <label class="feature-checkbox">
-                                <input type="checkbox" name="features" value="air-conditioning">
-                                <div class="feature-icon">
-                                    <i class="fas fa-snowflake"></i>
-                                </div>
-                                <span>Climatisation</span>
-                            </label>
-                            <label class="feature-checkbox">
-                                <input type="checkbox" name="features" value="heating">
-                                <div class="feature-icon">
-                                    <i class="fas fa-fire"></i>
-                                </div>
-                                <span>Chauffage</span>
-                            </label>
-                            <label class="feature-checkbox">
-                                <input type="checkbox" name="features" value="security">
-                                <div class="feature-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <span>Sécurité</span>
-                            </label>
-                            <label class="feature-checkbox">
-                                <input type="checkbox" name="features" value="furnished">
-                                <div class="feature-icon">
-                                    <i class="fas fa-couch"></i>
-                                </div>
-                                <span>Meublé</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">Description du bien</label>
-                        <textarea class="form-control" name="description" placeholder="Décrivez le bien en détail..."></textarea>
-                    </div>
-                </div>
-
-                <!-- Step 3: Photos and Documents -->
-                <div class="form-section" id="step3">
-                    <div class="section-header">
-                        <h2>Photos et documents</h2>
-                        <p>Téléchargez les photos et documents nécessaires pour le bien</p>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">Photos du bien <span class="required">*</span></label>
-                        <div class="file-upload" onclick="document.getElementById('photos').click()">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Cliquez pour télécharger des photos ou glissez-déposez</p>
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="fas fa-camera me-2"></i> Choisir des photos
-                            </button>
-                            <input type="file" id="photos" multiple accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'photos')">
-                        </div>
-                        <div class="file-list" id="photosList"></div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">Documents</label>
-                        <div class="file-upload" onclick="document.getElementById('documents').click()">
-                            <i class="fas fa-file-upload"></i>
-                            <p>Téléchargez les documents (plan, titre de propriété, etc.)</p>
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="fas fa-file me-2"></i> Choisir des documents
-                            </button>
-                            <input type="file" id="documents" multiple accept=".pdf,.doc,.docx" style="display: none;" onchange="handleFileUpload(this, 'documents')">
-                        </div>
-                        <div class="file-list" id="documentsList"></div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="pnsbilDeclaration" name="pnsbilDeclaration" required>
-                            <label for="pnsbilDeclaration">J'accepte de déclarer ce bien à la plateforme PNSBIL et de payer les impôts locatifs correspondants</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 4: Validation -->
-                <div class="form-section" id="step4">
-                    <div class="section-header">
-                        <h2>Validation finale</h2>
-                        <p>Vérifiez les informations avant de soumettre le bien</p>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <div style="background: var(--gray-100); padding: 2rem; border-radius: var(--border-radius);">
-                            <h4 style="margin-bottom: 1rem; color: var(--dark);">Récapitulatif du bien</h4>
-                            <div id="summaryContent">
-                                <!-- Le résumé sera généré dynamiquement -->
+                <form id="propertyForm" class="form-content">
+                    <!-- Step 1: Basic Info -->
+                    <div class="form-section active" id="step1">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Type de bien</label>
+                                <select class="form-control" name="type" required>
+                                    <option value="appartement">Appartement</option>
+                                    <option value="villa">Villa</option>
+                                    <option value="bureau">Bureau</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Titre du bien</label>
+                                <input type="text" class="form-control" name="title" placeholder="Ex: Bel appartement au Plateau" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" name="description" rows="4"></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group full-width">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="terms" name="terms" required>
-                            <label for="terms">Je certifie que les informations fournies sont exactes et complètes</label>
+                    <!-- Step 2: Location & Price -->
+                    <div class="form-section" id="step2">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Ville</label>
+                                <input type="text" class="form-control" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Quartier</label>
+                                <input type="text" class="form-control" name="neighborhood" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Loyer mensuel (FCFA)</label>
+                                <input type="number" class="form-control" name="price" required>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Form Actions -->
+                    <!-- Step 3: Files -->
+                    <div class="form-section" id="step3">
+                        <div class="form-group full-width">
+                            <label class="form-label">Photos du bien</label>
+                            <div class="file-upload" onclick="document.getElementById('photos').click()">
+                                <i class="fas fa-camera fa-2x mb-2"></i>
+                                <p>Cliquez pour ajouter des photos</p>
+                                <input type="file" id="photos" multiple accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'photos')">
+                            </div>
+                            <div id="photosList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Validation -->
+                    <div class="form-section" id="step4">
+                        <div style="background: var(--bg-light); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 1.5rem;">
+                            <h3>Récapitulatif</h3>
+                            <div id="summaryContent" style="margin-top: 1rem;"></div>
+                        </div>
+                    </div>
+                </form>
+
                 <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" id="prevBtn" onclick="previousStep()">
-                        <i class="fas fa-arrow-left me-2"></i> Précédent
-                    </button>
-                    
+                    <button type="button" class="btn btn-outline" id="prevBtn" onclick="previousStep()" style="display: none;">Précédent</button>
                     <div style="display: flex; gap: 1rem;">
-                        <button type="button" class="btn btn-outline-primary" onclick="saveDraft()">
-                            <i class="fas fa-save me-2"></i> Sauvegarder brouillon
-                        </button>
-                        <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
-                            Suivant <i class="fas fa-arrow-right ms-2"></i>
-                        </button>
-                        <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
-                            <i class="fas fa-check me-2"></i> Soumettre le bien
-                        </button>
+                        <button type="button" class="btn btn-outline" onclick="saveDraft()">Brouillon</button>
+                        <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">Suivant</button>
+                        <button type="button" class="btn btn-primary" id="submitBtn" onclick="submitForm()" style="display: none;">Enregistrer le bien</button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </main>
     </div>
 
     <script>
         let currentStep = 1;
         const totalSteps = 4;
-        const uploadedFiles = {
-            photos: [],
-            documents: []
-        };
-
-        document.addEventListener('DOMContentLoaded', function() {
-            updateProgress();
-        });
+        const uploadedFiles = { photos: [] };
 
         function updateProgress() {
-            // Update progress bar
             const progressFill = document.getElementById('progressFill');
-            const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
-            progressFill.style.width = `${progressPercentage}%`;
+            progressFill.style.width = `${((currentStep - 1) / (totalSteps - 1)) * 100}%`;
 
-            // Update steps
             document.querySelectorAll('.progress-step').forEach((step, index) => {
-                const stepNumber = index + 1;
-                if (stepNumber < currentStep) {
-                    step.classList.add('completed');
-                    step.classList.remove('active');
-                } else if (stepNumber === currentStep) {
-                    step.classList.add('active');
-                    step.classList.remove('completed');
-                } else {
-                    step.classList.remove('active', 'completed');
-                }
+                const num = index + 1;
+                step.classList.toggle('active', num === currentStep);
+                step.classList.toggle('completed', num < currentStep);
             });
 
-            // Update buttons
-            document.getElementById('prevBtn').style.display = currentStep === 1 ? 'none' : 'inline-flex';
-            document.getElementById('nextBtn').style.display = currentStep === totalSteps ? 'none' : 'inline-flex';
-            document.getElementById('submitBtn').style.display = currentStep === totalSteps ? 'inline-flex' : 'none';
+            document.getElementById('prevBtn').style.display = currentStep === 1 ? 'none' : 'block';
+            document.getElementById('nextBtn').style.display = currentStep === totalSteps ? 'none' : 'block';
+            document.getElementById('submitBtn').style.display = currentStep === totalSteps ? 'block' : 'none';
 
-            // Update form sections
             document.querySelectorAll('.form-section').forEach((section, index) => {
                 section.classList.toggle('active', (index + 1) === currentStep);
             });
 
-            // Generate summary for step 4
-            if (currentStep === 4) {
-                generateSummary();
-            }
+            if (currentStep === 4) generateSummary();
         }
 
-        function nextStep() {
-            if (validateStep(currentStep)) {
-                currentStep++;
-                updateProgress();
-            }
-        }
-
-        function previousStep() {
-            currentStep--;
-            updateProgress();
-        }
-
-        function validateStep(step) {
-            // Simple validation - you can enhance this
-            const currentSection = document.getElementById(`step${step}`);
-            const requiredFields = currentSection.querySelectorAll('[required]');
-            
-            for (let field of requiredFields) {
-                if (!field.value.trim()) {
-                    alert('Veuillez remplir tous les champs obligatoires');
-                    field.focus();
-                    return false;
-                }
-            }
-            return true;
-        }
+        function nextStep() { if (currentStep < totalSteps) { currentStep++; updateProgress(); } }
+        function previousStep() { if (currentStep > 1) { currentStep--; updateProgress(); } }
 
         function handleFileUpload(input, type) {
             const files = Array.from(input.files);
             uploadedFiles[type] = uploadedFiles[type].concat(files);
-            updateFileList(type);
-        }
-
-        function updateFileList(type) {
             const list = document.getElementById(`${type}List`);
-            list.innerHTML = uploadedFiles[type].map((file, index) => `
+            list.innerHTML = uploadedFiles[type].map((file, i) => `
                 <div class="file-item">
-                    <i class="fas fa-file"></i>
-                    <div class="file-name">${file.name}</div>
-                    <div class="file-remove" onclick="removeFile('${type}', ${index})">
-                        <i class="fas fa-times"></i>
-                    </div>
+                    <i class="fas fa-image"></i>
+                    <span class="file-name">${file.name}</span>
+                    <i class="fas fa-times file-remove" onclick="removeFile('${type}', ${i})"></i>
                 </div>
             `).join('');
         }
 
-        function removeFile(type, index) {
-            uploadedFiles[type].splice(index, 1);
-            updateFileList(type);
-        }
-
         function generateSummary() {
             const formData = new FormData(document.getElementById('propertyForm'));
-            const summaryContent = document.getElementById('summaryContent');
-            
-            // This is a simplified summary - you can enhance it with actual form data
-            summaryContent.innerHTML = `
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div><strong>Type de bien:</strong> Appartement</div>
-                    <div><strong>Statut:</strong> À louer</div>
-                    <div><strong>Adresse:</strong> Rue du Commerce, Plateau</div>
-                    <div><strong>Loyer:</strong> 450,000 FCFA/mois</div>
-                    <div><strong>Surface:</strong> 85 m²</div>
-                    <div><strong>Pièces:</strong> 4</div>
-                    <div><strong>Impôt PNSBIL:</strong> 45,000 FCFA/trimestre</div>
-                    <div><strong>Photos:</strong> ${uploadedFiles.photos.length} fichier(s)</div>
-                </div>
+            document.getElementById('summaryContent').innerHTML = `
+                <p><strong>Bien:</strong> ${formData.get('type')}</p>
+                <p><strong>Loyer:</strong> ${formData.get('price')} FCFA/mois</p>
+                <p><strong>Photos:</strong> ${uploadedFiles.photos.length} fichiers</p>
             `;
         }
 
-        function saveDraft() {
-            alert('Bien sauvegardé en brouillon');
-        }
-
-        // Form submission
-        document.getElementById('propertyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Bien immobilier enregistré avec succès ! Redirection vers la page des biens...');
-            // Here you would typically send the data to your backend
-        });
+        function saveDraft() { alert('Brouillon sauvegardé !'); }
+        function submitForm() { alert('Bien enregistré avec succès !'); window.location.href = 'portefeuille.html'; }
+        function logout() { if (confirm('Déconnexion ?')) window.location.href = '../login.html'; }
     </script>
 </body>
 </html>

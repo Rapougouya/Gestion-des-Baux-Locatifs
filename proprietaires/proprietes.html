@@ -1,1340 +1,277 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Propriétés - PNSBIL</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages/proprietaires-proprietes.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Variables CSS professionnelles */
-        :root {
-            /* Couleurs primaires - Palette professionnelle */
-            --primary-50: #f0f4ff;
-            --primary-100: #dbeafe;
-            --primary-200: #bfdbfe;
-            --primary-300: #93c5fd;
-            --primary-400: #60a5fa;
-            --primary-500: #3b82f6;
-            --primary-600: #2563eb;
-            --primary-700: #1d4ed8;
-            --primary-800: #1e40af;
-            --primary-900: #1e3a8a;
-            
-            /* Couleurs neutres - Palette professionnelle */
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            
-            /* Couleurs sémantiques */
-            --success-50: #ecfdf5;
-            --success-100: #d1fae5;
-            --success-500: #10b981;
-            --success-600: #059669;
-            --success-700: #047857;
-            
-            --warning-50: #fffbeb;
-            --warning-100: #fef3c7;
-            --warning-500: #f59e0b;
-            --warning-600: #d97706;
-            --warning-700: #b45309;
-            
-            --error-50: #fef2f2;
-            --error-100: #fee2e2;
-            --error-500: #ef4444;
-            --error-600: #dc2626;
-            --error-700: #b91c1c;
-            
-            --info-50: #eff6ff;
-            --info-100: #dbeafe;
-            --info-500: #3b82f6;
-            --info-600: #2563eb;
-            --info-700: #1d4ed8;
-            
-            /* Variables de design */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 6px 12px -1px rgba(0, 0, 0, 0.1), 0 3px 6px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            
-            --radius-sm: 4px;
-            --radius: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 20px;
-            
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --header-height: 70px;
-            --sidebar-width: 260px;
-        }
-
-        /* Reset et styles de base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--gray-50);
-            color: var(--gray-800);
-            line-height: 1.6;
-            min-height: 100vh;
-            font-weight: 400;
-        }
-
-        /* Header professionnel */
-        .dashboard-header {
-            background: white;
-            color: var(--gray-800);
-            height: var(--header-height);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            align-items: center;
-        }
-
-        .header-content {
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-text span:first-child {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .logo-text span:last-child {
-            font-size: 0.75rem;
-            color: var(--gray-500);
-            font-weight: 500;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-name {
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--gray-700);
-        }
-
-        /* Sidebar professionnel */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: var(--header-height);
-            height: calc(100vh - var(--header-height));
-            width: var(--sidebar-width);
-            background: white;
-            color: var(--gray-700);
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-            z-index: 999;
-            padding: 1.5rem 0;
-            border-right: 1px solid var(--gray-200);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .nav-section {
-            padding: 0 1.5rem 1.5rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--gray-100);
-        }
-
-        .nav-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .nav-section h3 {
-            color: var(--gray-500);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: var(--gray-600);
-            text-decoration: none;
-            border-radius: var(--radius);
-            transition: var(--transition);
-            margin-bottom: 0.25rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .nav-link:hover {
-            background: var(--primary-50);
-            color: var(--primary-700);
-        }
-
-        .nav-link.active {
-            background: var(--primary-50);
-            color: var(--primary-700);
-            border-left: 3px solid var(--primary-600);
-            font-weight: 600;
-        }
-
-        /* Contenu principal professionnel */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            margin-top: var(--header-height);
-            padding: 2rem;
-            min-height: calc(100vh - var(--header-height));
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .page-header h1 {
-            margin: 0;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            line-height: 1.2;
-        }
-
-        .page-header p {
-            color: var(--gray-600);
-            font-size: 1rem;
-            font-weight: 400;
-        }
-
-        /* Boutons professionnels */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: var(--primary-600);
-            color: white;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-700);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary-600);
-            border: 1px solid var(--primary-300);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary-50);
-            border-color: var(--primary-400);
-        }
-
-        .btn-success {
-            background: var(--success-500);
-            color: white;
-            border: none;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-success:hover {
-            background: var(--success-600);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-warning {
-            background: var(--warning-500);
-            color: white;
-            border: none;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-warning:hover {
-            background: var(--warning-600);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow);
-        }
-
-        /* Filtres et recherche professionnels */
-        .filters-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-200);
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-input-container {
-            position: relative;
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-400);
-            z-index: 2;
-        }
-
-        .search-input, .filter-select {
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius);
-            font-size: 0.875rem;
-            transition: var(--transition);
-            background: white;
-            font-family: inherit;
-            width: 100%;
-            color: var(--gray-700);
-        }
-
-        .search-input:focus, .filter-select:focus {
-            outline: none;
-            border-color: var(--primary-500);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        /* Grille des propriétés professionnelle */
-        .properties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .property-card {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-200);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .property-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--primary-200);
-        }
-
-        .property-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            gap: 1rem;
-        }
-
-        .property-header h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            flex: 1;
-        }
-
-        .status-badge {
-            padding: 0.35rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-
-        .status-badge.occupied {
-            background: var(--success-50);
-            color: var(--success-700);
-            border: 1px solid var(--success-200);
-        }
-
-        .status-badge.vacant {
-            background: var(--warning-50);
-            color: var(--warning-700);
-            border: 1px solid var(--warning-200);
-        }
-
-        .status-badge.maintenance {
-            background: var(--info-50);
-            color: var(--info-700);
-            border: 1px solid var(--info-200);
-        }
-
-        .property-info {
-            margin-bottom: 1.5rem;
-            flex: 1;
-        }
-
-        .property-location {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-600);
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-        }
-
-        .property-details {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-        }
-
-        .property-details span {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-700);
-        }
-
-        .property-tenant {
-            background: var(--gray-50);
-            padding: 1rem;
-            border-radius: var(--radius);
-            font-size: 0.875rem;
-            border-left: 3px solid var(--primary-500);
-        }
-
-        .property-tenant strong {
-            color: var(--gray-900);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .property-actions {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: auto;
-        }
-
-        .property-actions .btn {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            font-size: 0.825rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        /* Statistiques professionnelles */
-        .stats-section {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-200);
-        }
-
-        .stats-section h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .stats-section h2::before {
-            content: '📊';
-            font-size: 1.5rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 1.5rem;
-            background: var(--gray-50);
-            border-radius: var(--radius-md);
-            transition: var(--transition);
-            border: 1px solid var(--gray-200);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-600);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        /* Modal professionnel */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1100;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: modalSlideIn 0.3s ease-out;
-            position: relative;
-            z-index: 1101;
-            box-shadow: var(--shadow-xl);
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.25rem;
-            cursor: pointer;
-            color: var(--gray-500);
-            padding: 0.25rem;
-            border-radius: 4px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-        }
-
-        .modal-close:hover {
-            background: var(--gray-100);
-            color: var(--gray-700);
-        }
-
-        .modal-form {
-            padding: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--gray-700);
-            font-size: 0.875rem;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius);
-            font-size: 0.875rem;
-            transition: var(--transition);
-            font-family: inherit;
-            color: var(--gray-700);
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-500);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        /* Footer professionnel */
-        .site-footer {
-            background: var(--gray-800);
-            color: white;
-            margin-top: auto;
-            margin-left: 280px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem 1.5rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h5 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: white;
-            position: relative;
-            display: inline-block;
-        }
-
-        .footer-section h5::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 30px;
-            height: 2px;
-            background: var(--primary-500);
-        }
-
-        .footer-section p {
-            color: var(--gray-300);
-            line-height: 1.6;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: var(--gray-300);
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .footer-section a:hover {
-            color: white;
-            transform: translateX(3px);
-        }
-
-        .footer-contact li {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            padding: 0.5rem 0;
-        }
-
-        .footer-contact i {
-            color: var(--primary-400);
-            font-size: 1rem;
-            margin-top: 0.2rem;
-            flex-shrink: 0;
-        }
-
-        .footer-contact span {
-            color: var(--gray-300);
-            line-height: 1.5;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius);
-            color: var(--gray-300);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: var(--primary-500);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 1.5rem;
-            text-align: center;
-            color: var(--gray-400);
-            font-size: 0.875rem;
-        }
-
-        /* Responsive Design professionnel */
-        @media (max-width: 1024px) {
-            .properties-grid {
-                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding: 1.5rem;
-            }
-            
-            .header-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filter-group {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .search-input-container {
-                min-width: auto;
-            }
-            
-            .properties-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .property-actions {
-                flex-direction: column;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            /* Menu mobile */
-            .mobile-menu-btn {
-                display: block;
-                background: none;
-                border: none;
-                color: var(--gray-600);
-                font-size: 1.25rem;
-                cursor: pointer;
-                margin-right: 1rem;
-                padding: 0.5rem;
-                border-radius: var(--radius);
-                transition: var(--transition);
-            }
-            
-            .mobile-menu-btn:hover {
-                background: var(--gray-100);
-            }
-            
-            .sidebar.active {
-                transform: translateX(0);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-content {
-                padding: 1rem;
-            }
-            
-            .property-card, .filters-section, .stats-section {
-                padding: 1.25rem;
-            }
-            
-            .modal-content {
-                margin: 0;
-                border-radius: 0;
-                max-height: 100vh;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header-content {
-                padding: 0 1rem;
-            }
-        }
-
-        /* Bouton menu mobile */
-        .mobile-menu-btn {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <header class="dashboard-header">
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">P</div>
-                <div class="logo-text">
-                    <span>PNSBIL</span>
-                    <span>Espace Propriétaire</span>
+    </head>
+<body class="dashboard-page">
+    <!-- Ministerial Banner -->
+    <div class="ministerial-banner" role="banner">
+        <div class="container-fluid">
+            <div class="banner-content">
+                <div class="banner-left">
+                    <div class="banner-seal">
+                        <svg viewBox="0 0 100 100" width="24" height="24">
+                            <circle cx="50" cy="50" r="48" fill="#FCD116" stroke="#CE1126" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="40" fill="#007A5E" stroke="#FCD116" stroke-width="1"/>
+                            <text x="50" y="60" font-size="32" font-weight="bold" fill="#FCD116" text-anchor="middle">BF</text>
+                        </svg>
+                    </div>
+                    <span>République du Burkina Faso • Ministère de l'Habitat</span>
+                </div>
+                <div class="banner-right">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Espace Propriétaire Sécurisé</span>
                 </div>
             </div>
-            <div class="user-menu">
-                <span class="user-name" id="userName">M. Mohamed Diallo</span>
-                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo-area">
+                    <i class="fas fa-home-user"></i>
+                    <div>
+                        <span class="logo-title">PNSBIL</span>
+                        <span class="logo-subtitle">Propriétaires</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">M. Mohamed Diallo</span>
+                        <span class="user-role">Propriétaire</span>
+                    </div>
+                    <div class="user-avatar">MD</div>
+                    <button class="logout-btn" onclick="logout()" title="Déconnexion">
+                        <i class="fas fa-power-off"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <nav class="sidebar" id="sidebar">
-        <div class="nav-section">
-            <h3>Gestion Immobilière</h3>
-            <a href="dashboard.html" class="nav-link">
-                <i class="fas fa-chart-bar"></i>Tableau de bord
-            </a>
-            <a href="proprietes.html" class="nav-link active">
-                <i class="fas fa-home"></i>Mes propriétés
-            </a>
-            <a href="baux.html" class="nav-link">
-                <i class="fas fa-file-contract"></i>Baux locatifs
-            </a>
-            <a href="paiements.html" class="nav-link">
-                <i class="fas fa-credit-card"></i>Paiements
-            </a>
-            <a href="impots.html" class="nav-link">
-                <i class="fas fa-money-bill-wave"></i>Impôts locatifs
-            </a>
-        </div>
-        
-        <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">
-                <i class="fas fa-comments"></i>Messagerie
-            </a>
-        </div>
-    </nav>
-
-    <main class="main-content">
-        <div class="page-header">
-            <div class="header-actions">
-                <h1>Mes Propriétés Immobilières</h1>
-                <button class="btn btn-primary" onclick="showAddPropertyModal()">
-                    <i class="fas fa-plus"></i>Ajouter une propriété
-                </button>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <span class="section-title">Principal</span>
+                    <a href="dashboard.html" class="menu-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                    <a href="proprietes.html" class="menu-item active">
+                        <i class="fas fa-building"></i>
+                        <span>Mes propriétés</span>
+                    </a>
+                    <a href="baux.html" class="menu-item">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Mes baux</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <span class="section-title">Finance & Fiscalité</span>
+                    <a href="paiements.html" class="menu-item">
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Paiements</span>
+                    </a>
+                    <a href="impots.html" class="menu-item">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Impôts locatifs</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <span class="section-title">Support</span>
+                    <a href="communication.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>Messagerie</span>
+                    </a>
+                </div>
             </div>
-            <p>Gérez votre patrimoine immobilier</p>
-        </div>
+        </nav>
 
-        <!-- Filtres et recherche -->
-        <div class="filters-section">
-            <div class="filter-group">
-                <div class="search-input-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" placeholder="Rechercher une propriété..." class="search-input">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="content-header">
+                <div class="header-text">
+                    <h1>Gestion des Propriétés</h1>
+                    <p>Consultez et gérez votre patrimoine immobilier en temps réel</p>
                 </div>
-                <select class="filter-select">
-                    <option value="">Tous les statuts</option>
-                    <option value="occupied">Occupé</option>
-                    <option value="vacant">Vacant</option>
-                    <option value="maintenance">En maintenance</option>
-                </select>
-                <select class="filter-select">
-                    <option value="">Tous les types</option>
-                    <option value="apartment">Appartement</option>
-                    <option value="house">Maison</option>
-                    <option value="villa">Villa</option>
-                    <option value="commercial">Commercial</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Liste des propriétés -->
-        <div class="properties-grid">
-            <!-- Propriété 1 -->
-            <div class="property-card">
-                <div class="property-header">
-                    <h3>Appartement B12</h3>
-                    <span class="status-badge occupied">Occupé</span>
-                </div>
-                <div class="property-info">
-                    <div class="property-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Ouagadougou Plateau, Rue 12
-                    </div>
-                    <div class="property-details">
-                        <span><i class="fas fa-building"></i> Appartement • 3 pièces • 85m²</span>
-                        <span><i class="fas fa-money-bill-wave"></i> Loyer: 450,000 FCFA/mois</span>
-                    </div>
-                    <div class="property-tenant">
-                        <strong><i class="fas fa-user"></i> Locataire:</strong> Aminata Sy (Depuis Jan 2024)
-                    </div>
-                </div>
-                <div class="property-actions">
-                    <button class="btn btn-outline" onclick="viewProperty(1)">
-                        <i class="fas fa-eye"></i>Voir
-                    </button>
-                    <button class="btn btn-primary" onclick="editProperty(1)">
-                        <i class="fas fa-edit"></i>Modifier
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddPropertyModal()">
+                        <i class="fas fa-plus"></i> Ajouter une propriété
                     </button>
                 </div>
             </div>
 
-            <!-- Propriété 2 -->
-            <div class="property-card">
-                <div class="property-header">
-                    <h3>Villa 45</h3>
-                    <span class="status-badge occupied">Occupé</span>
-                </div>
-                <div class="property-info">
-                    <div class="property-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Almadies, Corniche
+            <!-- Filtres -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <div class="search-input-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Rechercher une propriété..." class="search-input">
                     </div>
-                    <div class="property-details">
-                        <span><i class="fas fa-home"></i> Villa • 5 pièces • 220m²</span>
-                        <span><i class="fas fa-money-bill-wave"></i> Loyer: 1,200,000 FCFA/mois</span>
-                    </div>
-                    <div class="property-tenant">
-                        <strong><i class="fas fa-user"></i> Locataire:</strong> Jean Dupont (Depuis Fév 2024)
-                    </div>
-                </div>
-                <div class="property-actions">
-                    <button class="btn btn-outline" onclick="viewProperty(2)">
-                        <i class="fas fa-eye"></i>Voir
-                    </button>
-                    <button class="btn btn-primary" onclick="editProperty(2)">
-                        <i class="fas fa-edit"></i>Modifier
-                    </button>
+                    <select class="filter-select">
+                        <option value="">Tous les statuts</option>
+                        <option value="occupied">Occupé</option>
+                        <option value="vacant">Vacant</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- Propriété 3 -->
-            <div class="property-card">
-                <div class="property-header">
-                    <h3>Studio C5</h3>
-                    <span class="status-badge vacant">Vacant</span>
+            <!-- Liste des propriétés -->
+            <div class="properties-grid">
+                <!-- Propriété 1 -->
+                <div class="property-card">
+                    <div class="property-header">
+                        <h3>Appartement B12</h3>
+                        <span class="status-badge occupied">Occupé</span>
+                    </div>
+                    <div class="property-info">
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Ouagadougou, Zone du Bois
+                        </div>
+                        <div class="property-details">
+                            <span><i class="fas fa-building"></i> Appartement • 3 pièces</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 85 m²</span>
+                            <span><i class="fas fa-money-bill-wave" style="color: #007A5E;"></i> 450,000 FCFA</span>
+                        </div>
+                        <div class="property-tenant">
+                            <i class="fas fa-user-circle"></i> Locataire: <strong>Aminata Sy</strong>
+                        </div>
+                    </div>
+                    <div class="property-actions">
+                        <button class="btn btn-outline"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-edit"></i> Modifier</button>
+                    </div>
                 </div>
-                <div class="property-info">
-                    <div class="property-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Point E, Avenue 10
+
+                <!-- Propriété 2 -->
+                <div class="property-card">
+                    <div class="property-header">
+                        <h3>Villa 45</h3>
+                        <span class="status-badge occupied">Occupé</span>
                     </div>
-                    <div class="property-details">
-                        <span><i class="fas fa-building"></i> Studio • 1 pièce • 35m²</span>
-                        <span><i class="fas fa-money-bill-wave"></i> Loyer: 250,000 FCFA/mois</span>
+                    <div class="property-info">
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Ouaga 2000, Secteur 15
+                        </div>
+                        <div class="property-details">
+                            <span><i class="fas fa-home"></i> Villa • 5 pièces</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 220 m²</span>
+                            <span><i class="fas fa-money-bill-wave" style="color: #007A5E;"></i> 1,200,000 FCFA</span>
+                        </div>
+                        <div class="property-tenant">
+                            <i class="fas fa-user-circle"></i> Locataire: <strong>Jean Dupont</strong>
+                        </div>
                     </div>
-                    <div class="property-tenant">
-                        <strong><i class="fas fa-info-circle"></i> Disponible immédiatement</strong>
+                    <div class="property-actions">
+                        <button class="btn btn-outline"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-edit"></i> Modifier</button>
                     </div>
                 </div>
-                <div class="property-actions">
-                    <button class="btn btn-outline" onclick="viewProperty(3)">
-                        <i class="fas fa-eye"></i>Voir
-                    </button>
-                    <button class="btn btn-success" onclick="addLease(3)">
-                        <i class="fas fa-file-contract"></i>Ajouter bail
-                    </button>
+
+                <!-- Propriété 3 -->
+                <div class="property-card">
+                    <div class="property-header">
+                        <h3>Studio C5</h3>
+                        <span class="status-badge vacant">Vacant</span>
+                    </div>
+                    <div class="property-info">
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Pissy, Près du goudron
+                        </div>
+                        <div class="property-details">
+                            <span><i class="fas fa-building"></i> Studio • 1 pièce</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 35 m²</span>
+                            <span><i class="fas fa-money-bill-wave" style="color: #007A5E;"></i> 250,000 FCFA</span>
+                        </div>
+                        <div class="property-tenant">
+                            <span style="color: #CE1126;"><i class="fas fa-info-circle"></i> Libre immédiatement</span>
+                        </div>
+                    </div>
+                    <div class="property-actions">
+                        <button class="btn btn-outline"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-success"><i class="fas fa-file-contract"></i> Louer</button>
+                    </div>
                 </div>
             </div>
+        </main>
+    </div>
 
-            <!-- Propriété 4 -->
-            <div class="property-card">
-                <div class="property-header">
-                    <h3>Appartement A7</h3>
-                    <span class="status-badge maintenance">Maintenance</span>
-                </div>
-                <div class="property-info">
-                    <div class="property-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Dakar Plateau, Rue 24
-                    </div>
-                    <div class="property-details">
-                        <span><i class="fas fa-building"></i> Appartement • 2 pièces • 65m²</span>
-                        <span><i class="fas fa-money-bill-wave"></i> Loyer: 350,000 FCFA/mois</span>
-                    </div>
-                    <div class="property-tenant">
-                        <strong><i class="fas fa-tools"></i> En rénovation jusqu'au 15/12/2024</strong>
-                    </div>
-                </div>
-                <div class="property-actions">
-                    <button class="btn btn-outline" onclick="viewProperty(4)">
-                        <i class="fas fa-eye"></i>Voir
-                    </button>
-                    <button class="btn btn-warning" onclick="editProperty(4)">
-                        <i class="fas fa-edit"></i>Modifier
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Statistiques des propriétés -->
-        <div class="stats-section">
-            <h2>Statistiques du Patrimoine</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">8</div>
-                    <div class="stat-label">Propriétés totales</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">6</div>
-                    <div class="stat-label">Occupées</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">2</div>
-                    <div class="stat-label">Vacantes</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">2.5M FCFA</div>
-                    <div class="stat-label">Revenus mensuels</div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Modal d'ajout de propriété -->
+    <!-- Modal d'ajout -->
     <div id="addPropertyModal" class="modal">
         <div class="modal-overlay" onclick="closeAddPropertyModal()"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Ajouter une nouvelle propriété</h2>
-                <button class="modal-close" onclick="closeAddPropertyModal()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <h2>Nouvelle Propriété</h2>
+                <button class="modal-close" onclick="closeAddPropertyModal()"><i class="fas fa-times"></i></button>
             </div>
-            <form id="addPropertyForm" class="modal-form">
-                <div class="form-group">
-                    <label>Type de bien</label>
-                    <select required>
-                        <option value="">Sélectionnez...</option>
-                        <option value="apartment">Appartement</option>
-                        <option value="house">Maison</option>
-                        <option value="villa">Villa</option>
-                        <option value="commercial">Local commercial</option>
-                    </select>
+            <form id="addPropertyForm">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Nom du bien</label>
+                    <input type="text" class="form-control" placeholder="ex: Appartement B12" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;">
                 </div>
-                <div class="form-group">
-                    <label>Adresse</label>
-                    <input type="text" required placeholder="Adresse complète">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Loyer mensuel</label>
+                    <input type="number" class="form-control" placeholder="FCFA" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;">
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Surface (m²)</label>
-                        <input type="number" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Nombre de pièces</label>
-                        <input type="number" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Loyer mensuel (FCFA)</label>
-                    <input type="number" required placeholder="Montant du loyer">
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-outline" onclick="closeAddPropertyModal()">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Ajouter la propriété</button>
+                <div class="modal-actions" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-outline" style="flex: 1;" onclick="closeAddPropertyModal()">Annuler</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Enregistrer</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Footer Moderne -->
-    <footer class="site-footer">
+    <!-- Footer Standardisé -->
+    <footer class="dashboard-footer">
         <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h5>PNSBIL</h5>
-                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                    <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
-                    <div class="footer-social">
-                        <a href="#" class="social-link" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <h3>PNSBIL</h3>
+                    <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs au Burkina Faso</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <a href="dashboard.html">Accueil</a>
+                        <a href="proprietes.html">Mes Biens</a>
+                        <a href="baux.html">Mes Baux</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Finance</h4>
+                        <a href="paiements.html">Paiements</a>
+                        <a href="impots.html">Impôts</a>
                     </div>
                 </div>
-                
-                <div class="footer-section">
-                    <h5>Liens rapides</h5>
-                    <ul>
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="properties.html"><i class="fas fa-chevron-right"></i> Propriétés</a></li>
-                        <li><a href="leases.html"><i class="fas fa-chevron-right"></i> Baux</a></li>
-                        <li><a href="taxes.html"><i class="fas fa-chevron-right"></i> Impôts</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h5>Ressources</h5>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guides</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mentions légales</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h5>Contact</h5>
-                    <ul class="footer-contact">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Avenue XXXXX, Ouagadougou, Burkina Faso</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+226 33 123 45 67</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>contact@pnsbil.sn</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <span>Lun - Ven: 8h00 - 18h00</span>
-                        </li>
-                    </ul>
-                </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2025 PNSBIL - Tous droits réservés</p>
+                <p>&copy; 2025 République du Burkina Faso • PNSBIL • Tous droits réservés</p>
             </div>
         </div>
     </footer>
 
+    <script src="../js/auth.js"></script>
+    <script src="../js/form-handler.js"></script>
+    <script src="../js/proprietaires-proprietes.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const user = {name: "M. Mohamed Diallo"};
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-            }
-
-            // Gestion du menu mobile
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const sidebar = document.getElementById('sidebar');
-            
-            if (mobileMenuBtn && sidebar) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    sidebar.classList.toggle('active');
-                });
-            }
-
-            // Fermer le menu mobile en cliquant à l'extérieur
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768 && 
-                    !sidebar.contains(event.target) && 
-                    !mobileMenuBtn.contains(event.target) &&
-                    sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                }
-            });
-        });
-
-        function showAddPropertyModal() {
-            document.getElementById('addPropertyModal').style.display = 'flex';
-        }
-
-        function closeAddPropertyModal() {
-            document.getElementById('addPropertyModal').style.display = 'none';
-        }
-
-        function viewProperty(id) {
-            alert(`Voir les détails de la propriété ${id}`);
-        }
-
-        function editProperty(id) {
-            alert(`Modifier la propriété ${id}`);
-        }
-
-        function addLease(id) {
-            alert(`Ajouter un bail pour la propriété ${id}`);
-        }
-
-        // Fermer la modal en cliquant à l'extérieur
-        document.getElementById('addPropertyModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeAddPropertyModal();
-            }
-        });
-
-        function logout() {
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-                window.location.href = '../index.html';
-            }
-        }
+        function showAddPropertyModal() { document.getElementById('addPropertyModal').style.display = 'block'; }
+        function closeAddPropertyModal() { document.getElementById('addPropertyModal').style.display = 'none'; }
+        function logout() { if (confirm('Souhaitez-vous vous déconnecter ?')) window.location.href = '../login.html'; }
     </script>
 </body>
 </html>

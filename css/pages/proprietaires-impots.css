@@ -1,0 +1,1119 @@
+/* ============================================
+   VARIABLES - COULEURS BURKINA FASO
+   ============================================ */
+:root {
+    /* Couleurs officielles Burkina Faso */
+    --burkina-red: #CE1126;
+    --burkina-green: #007A5E;
+    --burkina-yellow: #FCD116;
+    --burkina-gold: #FFD700;
+    
+    /* Palette principale */
+    --primary-color: #1A365D;
+    --primary-light: #2D4B8E;
+    --secondary-color: #4A5568;
+    --accent-color: #3182CE;
+    
+    /* États fiscaux */
+    --tax-paid: #10B981;
+    --tax-due: #F59E0B;
+    --tax-overdue: #EF4444;
+    --tax-estimated: #8B5CF6;
+    
+    /* États financiers */
+    --success-color: #38A169;
+    --warning-color: #D69E2E;
+    --danger-color: #E53E3E;
+    --info-color: #4299E1;
+    
+    /* Neutres */
+    --light-color: #F7FAFC;
+    --light-gray: #EDF2F7;
+    --medium-gray: #E2E8F0;
+    --dark-gray: #718096;
+    --dark-color: #2D3748;
+    
+    /* Dimensions */
+    --sidebar-width: 260px;
+    --header-height: 80px;
+    --banner-height: 40px;
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+    --border-radius-lg: 16px;
+    
+    /* Effets */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+    
+    /* Transitions */
+    --transition-fast: all 0.2s ease;
+    --transition-normal: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+}
+
+/* ============================================
+   RESET ET BASE
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--dark-color);
+    line-height: 1.6;
+    background: linear-gradient(135deg, #F7FAFC 0%, #EDF2F7 100%);
+    min-height: 100vh;
+}
+
+.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ============================================
+   BANNIÈRE MINISTÉRIELLE
+   ============================================ */
+.ministerial-banner {
+    background: linear-gradient(135deg, var(--burkina-red) 0%, var(--burkina-green) 100%);
+    color: white;
+    padding: 0.75rem 0;
+    font-size: 0.875rem;
+    position: relative;
+    z-index: 1001;
+    box-shadow: var(--shadow-sm);
+    border-bottom: 2px solid var(--burkina-yellow);
+}
+
+.container-fluid {
+    max-width: 100%;
+    padding: 0 2rem;
+    margin: 0 auto;
+}
+
+.banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner-left, .banner-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.banner-seal {
+    display: flex;
+    align-items: center;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.banner-right {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.4rem 1.25rem;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.banner-right i {
+    color: var(--burkina-yellow);
+}
+
+/* ============================================
+   HEADER PRINCIPAL
+   ============================================ */
+.dashboard-header {
+    background: white;
+    height: var(--header-height);
+    border-bottom: 1px solid var(--medium-gray);
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: var(--banner-height);
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-area i {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, var(--burkina-red), var(--burkina-yellow), var(--burkina-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.logo-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.logo-subtitle {
+    font-size: 0.85rem;
+    color: var(--burkina-green);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.header-right .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.user-info {
+    text-align: right;
+}
+
+.user-name {
+    display: block;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+}
+
+.user-role {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--burkina-green);
+    background: rgba(0, 122, 94, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    margin-top: 0.25rem;
+    font-weight: 600;
+    border: 1px solid rgba(0, 122, 94, 0.2);
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--burkina-red), var(--burkina-yellow));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: var(--shadow-md);
+    border: 2px solid white;
+}
+
+.logout-btn {
+    background: none;
+    border: 2px solid var(--medium-gray);
+    color: var(--dark-gray);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-size: 1.1rem;
+}
+
+.logout-btn:hover {
+    border-color: var(--burkina-red);
+    color: var(--burkina-red);
+    background: rgba(206, 17, 38, 0.05);
+    transform: rotate(90deg);
+}
+
+/* ============================================
+   CONTENEUR PRINCIPAL
+   ============================================ */
+.dashboard-container {
+    display: flex;
+    flex: 1;
+    min-height: calc(100vh - var(--header-height) - var(--banner-height));
+}
+
+/* ============================================
+   SIDEBAR NAVIGATION
+   ============================================ */
+.sidebar {
+    width: var(--sidebar-width);
+    background: white;
+    border-right: 1px solid var(--medium-gray);
+    padding: 2rem 1.5rem;
+    position: sticky;
+    top: calc(var(--header-height) + var(--banner-height));
+    height: calc(100vh - var(--header-height) - var(--banner-height));
+    overflow-y: auto;
+    box-shadow: var(--shadow-sm);
+}
+
+.menu-section {
+    margin-bottom: 2.5rem;
+}
+
+.menu-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--dark-gray);
+    letter-spacing: 1px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 1.25rem;
+    padding-left: 0.75rem;
+    position: relative;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 12px;
+    background: linear-gradient(to bottom, var(--burkina-red), var(--burkina-green));
+    border-radius: 2px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    color: var(--dark-color);
+    text-decoration: none;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 0.5rem;
+    transition: var(--transition-normal);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item:hover {
+    background: var(--light-gray);
+    color: var(--primary-color);
+    transform: translateX(8px);
+}
+
+.menu-item.active {
+    background: linear-gradient(135deg, var(--burkina-red) 0%, var(--burkina-yellow) 100%);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.menu-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--burkina-green);
+}
+
+.menu-item i {
+    width: 22px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+/* ============================================
+   CONTENU PRINCIPAL
+   ============================================ */
+.main-content {
+    flex: 1;
+    padding: 2.5rem;
+    max-width: calc(1400px - var(--sidebar-width));
+    width: 100%;
+    margin: 0 auto;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--medium-gray);
+    position: relative;
+}
+
+.content-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, var(--burkina-red), var(--burkina-yellow));
+    border-radius: 2px;
+}
+
+.header-text h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.header-text p {
+    color: var(--dark-gray);
+    font-size: 1.05rem;
+    max-width: 500px;
+}
+
+/* ============================================
+   BOUTONS
+   ============================================ */
+.btn {
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--burkina-green) 0%, #009A73 100%);
+    color: white;
+    border: 1px solid var(--burkina-green);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 122, 94, 0.3);
+    background: linear-gradient(135deg, #009A73 0%, var(--burkina-green) 100%);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--medium-gray);
+    color: var(--dark-color);
+}
+
+.btn-outline:hover {
+    border-color: var(--burkina-yellow);
+    color: var(--burkina-yellow);
+    background: rgba(252, 209, 22, 0.05);
+}
+
+/* ============================================
+   APERÇU FISCAL
+   ============================================ */
+.tax-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.tax-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--medium-gray);
+    border-left: 4px solid var(--burkina-green);
+    transition: var(--transition-normal);
+    animation: slideInUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+.tax-card:nth-child(1) { animation-delay: 0.1s; }
+.tax-card:nth-child(2) { animation-delay: 0.2s; }
+.tax-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tax-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.tax-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 122, 94, 0.1);
+    color: var(--burkina-green);
+    font-size: 2rem;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.tax-card:nth-child(2) .tax-icon {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--tax-due);
+}
+
+.tax-card:nth-child(3) .tax-icon {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--tax-paid);
+}
+
+.tax-info {
+    flex: 1;
+}
+
+.tax-info h3 {
+    font-size: 1rem;
+    color: var(--dark-gray);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tax-amount {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.tax-breakdown,
+.tax-countdown,
+.tax-detail {
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+    font-weight: 500;
+}
+
+.tax-countdown {
+    color: var(--tax-due);
+    font-weight: 600;
+}
+
+/* ============================================
+   CALCULATION SECTION
+   ============================================ */
+.tax-calculation {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--medium-gray);
+    margin-bottom: 2.5rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.tax-calculation .card-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.tax-calculation h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.tax-calculation h3 i {
+    color: var(--burkina-green);
+}
+
+.calculation-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    border: 1px solid var(--light-gray);
+}
+
+.calculation-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.calculation-row:last-child {
+    border-bottom: none;
+}
+
+.calculation-row span {
+    font-size: 1rem;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.calculation-row strong {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.calculation-row.total {
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+    border-top: 2px solid var(--burkina-red);
+}
+
+.calculation-row.total span:last-child {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--burkina-red);
+}
+
+.calculation-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.calculation-actions .btn {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+/* ============================================
+   HISTORIQUE DES DÉCLARATIONS
+   ============================================ */
+.tax-history {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--medium-gray);
+    animation: fadeIn 1s ease-out;
+}
+
+.tax-history .card-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.tax-history h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.tax-history h3 i {
+    color: var(--burkina-green);
+}
+
+.declarations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.declaration-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--light-color);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--light-gray);
+    transition: var(--transition-fast);
+    animation: slideInLeft 0.6s ease forwards;
+    opacity: 0;
+}
+
+.declaration-item:nth-child(1) { animation-delay: 0.2s; }
+.declaration-item:nth-child(2) { animation-delay: 0.4s; }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.declaration-item:hover {
+    background: white;
+    border-color: var(--burkina-yellow);
+    transform: translateX(5px);
+    box-shadow: var(--shadow-sm);
+}
+
+.declaration-year {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--burkina-green), #009A73);
+    color: white;
+    border-radius: var(--border-radius);
+    font-size: 1.5rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-md);
+}
+
+.declaration-info {
+    flex: 1;
+    font-size: 1rem;
+    color: var(--dark-color);
+}
+
+.declaration-info strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.declaration-status {
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid transparent;
+}
+
+.declaration-status.paid {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--tax-paid);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.declaration-status.pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--tax-due);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.declaration-status.overdue {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--tax-overdue);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.declaration-item .btn-outline {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.dashboard-footer {
+    background: var(--primary-color);
+    color: white;
+    margin-top: auto;
+    border-top: 3px solid var(--burkina-yellow);
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem 1.5rem;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    margin-bottom: 2rem;
+}
+
+.footer-brand h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: white;
+    background: linear-gradient(135deg, var(--burkina-yellow), white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-brand p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    max-width: 300px;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.footer-col h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: white;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: var(--burkina-yellow);
+}
+
+.footer-col a {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    margin-bottom: 0.875rem;
+    transition: var(--transition-fast);
+    font-size: 0.95rem;
+    position: relative;
+    padding-left: 0;
+}
+
+.footer-col a:hover {
+    color: white;
+    transform: translateX(8px);
+}
+
+.footer-col a::before {
+    content: '→';
+    position: absolute;
+    left: -15px;
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+.footer-col a:hover::before {
+    opacity: 1;
+    left: -10px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.875rem;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1200px) {
+    .tax-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .main-content {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        top: calc(var(--banner-height) + var(--header-height));
+        height: calc(100vh - var(--banner-height) - var(--header-height));
+        z-index: 999;
+        transition: var(--transition-normal);
+        box-shadow: var(--shadow-xl);
+        width: 280px;
+    }
+    
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .content-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: stretch;
+    }
+    
+    .menu-toggle {
+        display: block !important;
+    }
+    
+    .calculation-actions {
+        flex-direction: column;
+    }
+    
+    .footer-main {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container-fluid, .header-container, .main-content, .footer-container {
+        padding: 0 1.25rem;
+    }
+    
+    .main-content {
+        padding: 1.5rem;
+    }
+    
+    .dashboard-header {
+        height: 70px;
+    }
+    
+    .user-info {
+        display: none;
+    }
+    
+    .tax-overview {
+        grid-template-columns: 1fr;
+    }
+    
+    .tax-card {
+        padding: 1.5rem;
+    }
+    
+    .tax-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
+    }
+    
+    .declaration-item {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1.25rem;
+    }
+    
+    .declaration-year {
+        width: 70px;
+        height: 70px;
+        font-size: 1.3rem;
+    }
+    
+    .footer-links {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-content {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+        padding: 0.5rem 0;
+    }
+    
+    .header-container {
+        padding: 0 1rem;
+    }
+    
+    .user-profile {
+        width: 100%;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+    
+    .content-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .calculation-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1rem 0;
+    }
+    
+    .declaration-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .declaration-info {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ============================================
+   MENU MOBILE TOGGLE
+   ============================================ */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-sm);
+    transition: var(--transition-fast);
+    z-index: 1001;
+}
+
+.menu-toggle:hover {
+    background: var(--light-gray);
+}
+
+/* ============================================
+   SCROLLBAR PERSONNALISÉE
+   ============================================ */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--burkina-red), var(--burkina-yellow), var(--burkina-green));
+    border-radius: 5px;
+    border: 2px solid var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--burkina-green), var(--burkina-yellow), var(--burkina-red));
+}
+
+/* ============================================
+   UTILITAIRES
+   ============================================ */
+.text-money {
+    font-weight: 700;
+    color: var(--burkina-green);
+}
+
+.text-success { color: var(--tax-paid); }
+.text-warning { color: var(--tax-due); }
+.text-danger { color: var(--burkina-red); }
+
+.bg-success-light { background: rgba(16, 185, 129, 0.1); }
+.bg-warning-light { background: rgba(245, 158, 11, 0.1); }
+.bg-danger-light { background: rgba(206, 17, 38, 0.1); }
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+.shadow-hover {
+    transition: var(--transition-normal);
+}
+
+.shadow-hover:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+/* ============================================
+   ANIMATIONS SUPPLÉMENTAIRES
+   ============================================ */
+@keyframes countdownPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.tax-countdown {
+    animation: countdownPulse 2s infinite;
+}
+
+@keyframes moneyRain {
+    0% { transform: translateY(-20px); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.tax-amount {
+    animation: moneyRain 1s ease-out;
+}

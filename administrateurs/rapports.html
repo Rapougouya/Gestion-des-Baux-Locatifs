@@ -6,6 +6,7 @@
     <title>Rapports Système - Administration | PNSBIL</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/pages/admin-shared.css">
     <style>
         :root {
             --primary: #4361ee;
@@ -51,6 +52,7 @@
         .dashboard-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+            background-color: blue;
             padding: 1rem 0;
             box-shadow: var(--shadow);
             position: sticky;
@@ -1216,45 +1218,48 @@
         </main>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">PNSBIL</h5>
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h5>PNSBIL</h5>
                     <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
                     <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Accueil</a></li>
-                        <li class="mb-2"><a href="properties.html" class="text-white-50 text-decoration-none">Propriétés</a></li>
-                        <li class="mb-2"><a href="leases.html" class="text-white-50 text-decoration-none">Baux</a></li>
-                        <li class="mb-2"><a href="taxes.html" class="text-white-50 text-decoration-none">Impôts</a></li>
+                <div class="footer-section">
+                    <h5>Liens rapides</h5>
+                    <ul class="footer-links">
+                        <li><a href="../index.htm">Accueil</a></li>
+                        <li><a href="#">Propriétés</a></li>
+                        <li><a href="#">Baux</a></li>
+                        <li><a href="#">Impôts</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Ressources</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Guides</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Mentions légales</a></li>
+                <div class="footer-section">
+                    <h5>Ressources</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Guides</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Mentions légales</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Ouagadougou, Burkina Faso</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +226 33 123 45 67</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
+                <div class="footer-section">
+                    <h5>Contact</h5>
+                    <ul class="footer-contact">
+                        <li>📍 Avenue Kwamé Nkrumah, Ouagadougou, Burkina Faso</li>
+                        <li>📞 +226 25 00 00 00</li>
+                        <li>✉️ <a href="mailto:contact@pnsbil.bf">contact@pnsbil.bf</a></li>
+                        <li>
+                            <a class="footer-social" href="#" aria-label="Twitter">🐦</a>
+                            <a class="footer-social" href="#" aria-label="Facebook">📘</a>
+                            <a class="footer-social" href="#" aria-label="LinkedIn">🔗</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 PNSBIL - Tous droits réservés</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PNSBIL - Tous droits réservés</p>
             </div>
         </div>
     </footer>

@@ -1,1115 +1,231 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impôts Locatifs - PNSBIL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Reset et styles de base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: #f8fafc;
-            color: #1e293b;
-            line-height: 1.6;
-        }
-
-        /* Header */
-        .dashboard-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo span:first-child {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .logo span:last-child {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-name {
-            font-weight: 600;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 80px;
-            height: calc(100vh - 80px);
-            width: 280px;
-            background: #1e293b;
-            color: white;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-section {
-            padding: 1.5rem;
-            border-bottom: 1px solid #334155;
-        }
-
-        .nav-section h3 {
-            color: #94a3b8;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: #cbd5e1;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            margin-bottom: 0.25rem;
-        }
-
-        .nav-link:hover {
-            background: #334155;
-            color: white;
-        }
-
-        .nav-link.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        /* Contenu principal */
-        .main-content {
-            margin-left: 280px;
-            margin-top: 80px;
-            padding: 2rem;
-            min-height: calc(100vh - 80px);
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .page-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-header p {
-            color: #64748b;
-            font-size: 1.1rem;
-        }
-
-        /* Boutons */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .btn-outline:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-        }
-
-        /* Cartes et layout */
-        .tax-overview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .tax-card, .tax-calculation, .tax-history, .tax-deadlines {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
-        }
-
-        .tax-card {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .tax-icon {
-            font-size: 2rem;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 12px;
-            color: white;
-        }
-
-        .tax-info h3 {
-            font-size: 1rem;
-            color: #64748b;
-            margin-bottom: 0.5rem;
-        }
-
-        .tax-amount, .tax-date {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
-
-        .tax-status {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .tax-status.paid {
-            color: #10b981;
-        }
-
-        .tax-breakdown, .tax-countdown, .tax-detail {
-            font-size: 0.9rem;
-            color: #64748b;
-        }
-
-        /* Calcul des impôts */
-        .calculation-card {
-            max-width: 500px;
-            margin-top: 1rem;
-        }
-
-        .calculation-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .calculation-row.total {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #1e293b;
-            border-bottom: none;
-        }
-
-        .calculation-divider {
-            height: 2px;
-            background: #667eea;
-            margin: 0.5rem 0;
-        }
-
-        .calculation-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        /* Historique */
-        .declarations-list {
-            margin-top: 1rem;
-        }
-
-        .declaration-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .declaration-item:hover {
-            background: #f1f5f9;
-        }
-
-        .declaration-year {
-            font-size: 1.2rem;
-            font-weight: 700;
-            min-width: 80px;
-        }
-
-        .declaration-info {
-            flex: 1;
-            margin: 0 2rem;
-        }
-
-        .declaration-amount {
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .declaration-date {
-            font-size: 0.9rem;
-            color: #64748b;
-        }
-
-        .declaration-status {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-right: 1rem;
-        }
-
-        .declaration-status.paid {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .declaration-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        /* Échéances */
-        .deadlines-list {
-            margin-top: 1rem;
-        }
-
-        .deadline-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            background: #f0f4ff;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border-left: 4px solid #667eea;
-            transition: all 0.3s ease;
-        }
-
-        .deadline-item:hover {
-            transform: translateX(4px);
-        }
-
-        .deadline-item.future {
-            background: #f8fafc;
-            border-left-color: #cbd5e1;
-            opacity: 0.7;
-        }
-
-        .deadline-date {
-            font-weight: 700;
-            min-width: 100px;
-        }
-
-        .deadline-description {
-            flex: 1;
-            margin: 0 2rem;
-        }
-
-        .deadline-amount {
-            font-weight: 600;
-            margin-right: 1rem;
-        }
-
-        /* Footer */
-        footer {
-            margin-left: 280px;
-            background: #1e293b;
-            color: white;
-            padding: 2rem;
-        }
-
-        footer a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: white;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h5 {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid #334155;
-        }
-
-        /* Modales et notifications */
-        .tax-toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            color: white;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            animation: slideIn 0.3s ease;
-        }
-
-        .tax-toast-info {
-            background: #3b82f6;
-        }
-
-        .tax-toast-success {
-            background: #10b981;
-        }
-
-        .tax-toast-error {
-            background: #ef4444;
-        }
-
-        .tax-toast button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0;
-            width: 20px;
-            height: 20px;
-        }
-
-        .tax-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .modal-content h3 {
-            margin-bottom: 1rem;
-            color: #1e293b;
-        }
-
-        .payment-details, .declaration-details {
-            margin: 1.5rem 0;
-        }
-
-        .payment-details p, .declaration-details p {
-            margin: 0.5rem 0;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            margin-top: 1.5rem;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                z-index: 1000;
-            }
-            
-            .main-content, footer {
-                margin-left: 0;
-            }
-            
-            .tax-overview {
-                grid-template-columns: 1fr;
-            }
-            
-            .calculation-actions {
-                flex-direction: column;
-            }
-            
-            .declaration-item, .deadline-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .declaration-info, .deadline-description {
-                margin: 0;
-            }
-            
-            .declaration-actions, .deadline-actions {
-                align-self: flex-end;
-            }
-            
-            .tax-toast {
-                left: 20px;
-                right: 20px;
-            }
-            
-            .modal-actions {
-                flex-direction: column;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-        }
-
-        /* Menu mobile */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .sidebar.active {
-                transform: translateX(0);
-            }
-        }
-    </style>
+    <title>Impôts Locatifs - Espace Propriétaire | PNSBIL</title>
+    <!-- CSS Standardisé -->
+    <link rel="stylesheet" href="../css/agences-ministerial.css">
+    <link rel="stylesheet" href="../css/pages/proprietaires-impots.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="dashboard-header">
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="header-content">
-            <div class="logo">
-                <span>🏠 PNSBIL</span>
-                <span>Espace Propriétaire</span>
-            </div>
-            <div class="user-menu">
-                <span class="user-name" id="userName">M. Mohamed Diallo</span>
-                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
-            </div>
-        </div>
-    </header>
-
-    <nav class="sidebar" id="sidebar">
-        <div class="nav-section">
-            <h3>Gestion Immobilière</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="proprietes.html" class="nav-link">🏠 Mes propriétés</a>
-            <a href="baux.html" class="nav-link">📑 Baux locatifs</a>
-            <a href="paiements.html" class="nav-link">💳 Paiements</a>
-            <a href="impots.html" class="nav-link active">💰 Impôts locatifs</a>
-        </div>
-        
-        <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">💬 Messagerie</a>
-        </div>
-    </nav>
-
-    <main class="main-content">
-        <div class="page-header">
-            <h1>Impôts Locatifs</h1>
-            <p>Gérez vos obligations fiscales liées à la location</p>
-        </div>
-
-        <!-- Aperçu fiscal -->
-        <div class="tax-overview">
-            <div class="tax-card">
-                <div class="tax-icon">💰</div>
-                <div class="tax-info">
-                    <h3>Impôt Annuel 2024</h3>
-                    <div class="tax-amount"> 3,420,000 FCFA</div>
-                    <div class="tax-breakdown">10% des loyers annuels</div>
-                </div>
-            </div>
-            <div class="tax-card">
-                <div class="tax-icon">📅</div>
-                <div class="tax-info">
-                    <h3>Prochaine Échéance</h3>
-                    <div class="tax-date">31/12/2024</div>
-                    <div class="tax-countdown">45 jours restants</div>
-                </div>
-            </div>
-            <div class="tax-card">
-                <div class="tax-icon">✅</div>
-                <div class="tax-info">
-                    <h3>Statut</h3>
-                    <div class="tax-status paid">À jour</div>
-                    <div class="tax-detail">Dernier paiement: 31/12/2023</div>
+    <div class="dashboard-layout">
+        <!-- Ministerial Banner -->
+        <div class="ministerial-banner" role="banner">
+            <div class="container-fluid">
+                <div class="banner-content">
+                    <div class="banner-left">
+                        <div class="banner-seal">
+                            <svg viewBox="0 0 100 100" width="24" height="24">
+                                <circle cx="50" cy="50" r="48" fill="#FCD116" stroke="#CE1126" stroke-width="2"/>
+                                <circle cx="50" cy="50" r="40" fill="#007A5E" stroke="#FCD116" stroke-width="1"/>
+                                <text x="50" y="60" font-size="32" font-weight="bold" fill="#FCD116" text-anchor="middle">BF</text>
+                            </svg>
+                        </div>
+                        <span>République du Burkina Faso • Ministère de l'Habitat</span>
+                    </div>
+                    <div class="banner-right">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Espace Propriétaire Sécurisé</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Calcul automatique -->
-        <div class="tax-calculation">
-            <h2>Calcul des Impôts 2024</h2>
-            <div class="calculation-card">
-                <div class="calculation-row">
-                    <span>Revenus locatifs annuels estimés</span>
-                    <span> 34,200,000 FCFA</span>
+        <!-- Main Header -->
+        <header class="dashboard-header">
+            <div class="header-container">
+                <div class="header-left">
+                    <div class="logo-area">
+                        <i class="fas fa-home-user"></i>
+                        <div>
+                            <span class="logo-title">PNSBIL</span>
+                            <span class="logo-subtitle">Propriétaires</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="calculation-row">
-                    <span>Taux d'imposition (10%)</span>
-                    <span>10%</span>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name" id="userName">M. Mohamed Diallo</span>
+                            <span class="user-role">Propriétaire</span>
+                        </div>
+                        <div class="user-avatar">MD</div>
+                        <button class="logout-btn" onclick="logout()" title="Déconnexion">
+                            <i class="fas fa-power-off"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="calculation-divider"></div>
-                <div class="calculation-row total">
-                    <span>Impôt à payer</span>
-                    <span> 3,420,000 FCFA</span>
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <span class="section-title">Principal</span>
+                    <a href="dashboard.html" class="menu-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                    <a href="proprietes.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>Mes propriétés</span>
+                    </a>
+                    <a href="baux.html" class="menu-item">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Mes baux</span>
+                    </a>
                 </div>
-                <div class="calculation-actions">
-                    <button class="btn btn-primary" onclick="generateTaxStatement()">
-                        📄 Générer la déclaration
+                <div class="menu-section">
+                    <span class="section-title">Finance & Fiscalité</span>
+                    <a href="paiements.html" class="menu-item">
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Paiements</span>
+                    </a>
+                    <a href="impots.html" class="menu-item active">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Impôts locatifs</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <span class="section-title">Support</span>
+                    <a href="communication.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>Messagerie</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="content-header">
+                <div class="header-text">
+                    <h1>Fiscalité Immobilière</h1>
+                    <p>Suivez vos obligations fiscales et déclarez vos revenus locatifs</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-file-invoice"></i> Déclarer revenus
                     </button>
-                    <button class="btn btn-outline" onclick="simulatePayment()">
-                        💳 Simuler le paiement
-                    </button>
                 </div>
             </div>
-        </div>
 
-        <!-- Historique des déclarations -->
-        <div class="tax-history">
-            <h2>Historique des Déclarations</h2>
-            <div class="declarations-list">
-                <div class="declaration-item">
-                    <div class="declaration-year">2023</div>
-                    <div class="declaration-info">
-                        <div class="declaration-amount"> 2,850,000 FCFA</div>
-                        <div class="declaration-date">Déclarée le 15/12/2023</div>
-                    </div>
-                    <div class="declaration-status paid">Payée</div>
-                    <div class="declaration-actions">
-                        <button class="btn-sm btn-outline" onclick="viewDeclaration(2023)">Voir</button>
-                        <button class="btn-sm btn-primary" onclick="downloadDeclaration(2023)">📄</button>
+            <!-- Aperçu Fiscal -->
+            <div class="tax-overview">
+                <div class="tax-card">
+                    <div class="tax-icon" style="color: var(--primary-dark);"><i class="fas fa-coins"></i></div>
+                    <div class="tax-info">
+                        <h3>Impôt Annuel 2024</h3>
+                        <div class="tax-amount">3,420,000 FCFA</div>
+                        <div class="tax-breakdown">Calculé sur 10% des revenus</div>
                     </div>
                 </div>
-                
-                <div class="declaration-item">
-                    <div class="declaration-year">2022</div>
-                    <div class="declaration-info">
-                        <div class="declaration-amount"> 2,400,000 FCFA</div>
-                        <div class="declaration-date">Déclarée le 20/12/2022</div>
+                <div class="tax-card" style="border-left-color: #f59e0b;">
+                    <div class="tax-icon" style="color: #f59e0b;"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="tax-info">
+                        <h3>Échéance</h3>
+                        <div class="tax-amount">31/12/2024</div>
+                        <div class="tax-countdown">45 jours restants</div>
                     </div>
-                    <div class="declaration-status paid">Payée</div>
-                    <div class="declaration-actions">
-                        <button class="btn-sm btn-outline" onclick="viewDeclaration(2022)">Voir</button>
-                        <button class="btn-sm btn-primary" onclick="downloadDeclaration(2022)">📄</button>
+                </div>
+                <div class="tax-card" style="border-left-color: #10b981;">
+                    <div class="tax-icon" style="color: #10b981;"><i class="fas fa-check-circle"></i></div>
+                    <div class="tax-info">
+                        <h3>Statut 2023</h3>
+                        <div class="tax-amount">À jour</div>
+                        <div class="tax-detail">Payé le 15/12/2023</div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Échéances à venir -->
-        <div class="tax-deadlines">
-            <h2>Échéances Fiscales</h2>
-            <div class="deadlines-list">
-                <div class="deadline-item">
-                    <div class="deadline-date">31/12/2024</div>
-                    <div class="deadline-description">
-                        <strong>Déclaration des loyers 2024</strong>
-                        <span>Impôt sur les revenus locatifs</span>
-                    </div>
-                    <div class="deadline-amount"> 3,420,000 FCFA</div>
-                    <div class="deadline-actions">
-                        <button class="btn btn-primary" onclick="prepareDeclaration()">Préparer</button>
-                    </div>
+            <!-- Calcul et Déclaration -->
+            <div class="tax-calculation">
+                <div class="card-header">
+                    <h3><i class="fas fa-calculator"></i> Calcul Estimatif 2024</h3>
                 </div>
-                
-                <div class="deadline-item future">
-                    <div class="deadline-date">31/03/2025</div>
-                    <div class="deadline-description">
-                        <strong>Taxe foncière 2025</strong>
-                        <span>Premier acompte</span>
+                <div class="calculation-card">
+                    <div class="calculation-row">
+                        <span>Revenus locatifs bruts (estimés)</span>
+                        <strong>34,200,000 FCFA</strong>
                     </div>
-                    <div class="deadline-amount">À calculer</div>
-                    <div class="deadline-actions">
-                        <button class="btn btn-outline" disabled>Bientôt</button>
+                    <div class="calculation-row">
+                        <span>Taux d'imposition en vigueur</span>
+                        <strong>10%</strong>
+                    </div>
+                    <div class="calculation-row total">
+                        <span>Montant total de l'impôt</span>
+                        <span class="tax-result">3,420,000 FCFA</span>
+                    </div>
+                    <div class="calculation-actions">
+                        <button class="btn btn-primary"><i class="fas fa-file-pdf"></i> Générer attestation</button>
+                        <button class="btn btn-outline"><i class="fas fa-credit-card"></i> Payer en ligne</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h5>PNSBIL</h5>
-                <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
+            <!-- Historique -->
+            <div class="tax-history">
+                <div class="card-header">
+                    <h3><i class="fas fa-archive"></i> Historique des Déclarations</h3>
+                </div>
+                <div class="declarations-list">
+                    <div class="declaration-item">
+                        <div class="declaration-year">2023</div>
+                        <div class="declaration-info">
+                            <strong>2,850,000 FCFA</strong> • Déclaré le 15/12/2023
+                        </div>
+                        <span class="declaration-status paid">Payé</span>
+                        <button class="icon-btn" title="Télécharger"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="declaration-item">
+                        <div class="declaration-year">2022</div>
+                        <div class="declaration-info">
+                            <strong>2,400,000 FCFA</strong> • Déclaré le 20/12/2022
+                        </div>
+                        <span class="declaration-status paid">Payé</span>
+                        <button class="icon-btn" title="Télécharger"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
             </div>
-            <div class="footer-section">
-                <h5>Liens rapides</h5>
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="properties.html">Propriétés</a></li>
-                    <li><a href="leases.html">Baux</a></li>
-                    <li><a href="taxes.html">Impôts</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h5>Ressources</h5>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Guides</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Mentions légales</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h5>Contact</h5>
-                <ul>
-                    <li><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Ouagadougou, Burkina Faso</li>
-                    <li><i class="fas fa-phone me-2"></i> +226 33 123 45 67</li>
-                    <li><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 PNSBIL - Tous droits réservés</p>
-        </div>
-    </footer>
+        </main>
 
+        <!-- Footer Standardisé -->
+        <footer class="dashboard-footer">
+            <div class="footer-container">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <h3>PNSBIL</h3>
+                        <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs au Burkina Faso</p>
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-col">
+                            <h4>Navigation</h4>
+                            <a href="dashboard.html">Accueil</a>
+                            <a href="proprietes.html">Mes Biens</a>
+                            <a href="baux.html">Mes Baux</a>
+                        </div>
+                        <div class="footer-col">
+                            <h4>Finance</h4>
+                            <a href="paiements.html">Paiements</a>
+                            <a href="impots.html">Impôts</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 République du Burkina Faso • PNSBIL • Tous droits réservés</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/proprietaires-impots.js"></script>
     <script>
-        // Gestion de l'authentification
-        class AuthManager {
-            constructor() {
-                this.currentUser = null;
-                this.init();
-            }
-
-            init() {
-                // Vérifier si l'utilisateur est connecté au chargement
-                const savedUser = localStorage.getItem('currentUser');
-                if (savedUser) {
-                    this.currentUser = JSON.parse(savedUser);
-                } else {
-                    // Simulation de connexion pour le développement
-                    this.simulateLogin({
-                        name: "M. Mohamed Diallo",
-                        role: "proprietaire",
-                        email: "m.diallo@example.com"
-                    });
-                }
-            }
-
-            // Vérifier l'authentification
-            checkAuth(requiredRole = null) {
-                if (!this.currentUser) {
-                    window.location.href = '../index.html';
-                    return false;
-                }
-
-                if (requiredRole && this.currentUser.role !== requiredRole) {
-                    window.location.href = '../index.html';
-                    return false;
-                }
-
-                return true;
-            }
-
-            // Obtenir l'utilisateur actuel
-            getCurrentUser() {
-                return this.currentUser;
-            }
-
-            // Déconnexion
-            logout() {
-                localStorage.removeItem('currentUser');
-                this.currentUser = null;
-                window.location.href = '../index.html';
-            }
-
-            // Simulation de connexion (pour le développement)
-            simulateLogin(userData) {
-                this.currentUser = userData;
-                localStorage.setItem('currentUser', JSON.stringify(userData));
-            }
-        }
-
-        // Gestion des fonctionnalités spécifiques aux impôts
-        class TaxManager {
-            constructor() {
-                this.initEventListeners();
-                this.loadTaxData();
-            }
-
-            initEventListeners() {
-                // Gestionnaires d'événements pour les boutons
-                document.addEventListener('click', (e) => {
-                    if (e.target.matches('[data-tax-action]')) {
-                        this.handleTaxAction(e.target.dataset.taxAction);
-                    }
-                });
-            }
-
-            loadTaxData() {
-                // Charger les données fiscales (simulation)
-                const taxData = {
-                    annualTax: 3420000,
-                    nextDeadline: '31/12/2024',
-                    daysRemaining: 45,
-                    status: 'paid',
-                    annualRevenue: 34200000,
-                    taxRate: 10
-                };
-
-                this.updateTaxDisplay(taxData);
-            }
-
-            updateTaxDisplay(data) {
-                // Mettre à jour l'affichage avec les données
-                const elements = {
-                    annualTax: document.querySelector('.tax-amount'),
-                    nextDeadline: document.querySelector('.tax-date'),
-                    daysRemaining: document.querySelector('.tax-countdown'),
-                    status: document.querySelector('.tax-status'),
-                    annualRevenue: document.querySelector('.calculation-row:nth-child(1) span:last-child'),
-                    taxAmount: document.querySelector('.calculation-row.total span:last-child')
-                };
-
-                if (elements.annualTax) elements.annualTax.textContent = this.formatCurrency(data.annualTax);
-                if (elements.nextDeadline) elements.nextDeadline.textContent = data.nextDeadline;
-                if (elements.daysRemaining) elements.daysRemaining.textContent = `${data.daysRemaining} jours restants`;
-                if (elements.annualRevenue) elements.annualRevenue.textContent = this.formatCurrency(data.annualRevenue);
-                if (elements.taxAmount) elements.taxAmount.textContent = this.formatCurrency(data.annualTax);
-            }
-
-            formatCurrency(amount) {
-                return new Intl.NumberFormat('fr-FR', {
-                    style: 'currency',
-                    currency: 'XOF'
-                }).format(amount);
-            }
-
-            // Générer une déclaration fiscale
-            generateTaxStatement() {
-                this.showNotification('Génération de la déclaration fiscale 2024...', 'info');
-                
-                // Simulation de génération avec délai
-                setTimeout(() => {
-                    const pdfUrl = this.createTaxPDF();
-                    this.showNotification('Déclaration générée avec succès!', 'success');
-                    this.downloadFile(pdfUrl, 'declaration-fiscale-2024.pdf');
-                }, 2000);
-            }
-
-            // Simuler un paiement
-            simulatePayment() {
-                this.showNotification('Simulation de paiement en cours...', 'info');
-                
-                setTimeout(() => {
-                    const paymentData = {
-                        amount: 3420000,
-                        method: 'Carte bancaire',
-                        reference: 'TAX-' + Date.now()
-                    };
-                    
-                    this.showPaymentModal(paymentData);
-                }, 1500);
-            }
-
-            // Voir une déclaration
-            viewDeclaration(year) {
-                this.showNotification(`Ouverture de la déclaration ${year}...`, 'info');
-                
-                // Simulation d'ouverture de modal avec les détails
-                setTimeout(() => {
-                    this.showDeclarationModal(year);
-                }, 1000);
-            }
-
-            // Télécharger une déclaration
-            downloadDeclaration(year) {
-                this.showNotification(`Téléchargement de la déclaration ${year}...`, 'info');
-                
-                setTimeout(() => {
-                    const pdfUrl = this.createTaxPDF(year);
-                    this.downloadFile(pdfUrl, `declaration-fiscale-${year}.pdf`);
-                    this.showNotification('Déclaration téléchargée!', 'success');
-                }, 1500);
-            }
-
-            // Préparer une déclaration
-            prepareDeclaration() {
-                this.showNotification('Préparation de la déclaration 2024...', 'info');
-                
-                // Redirection vers le formulaire de déclaration
-                setTimeout(() => {
-                    // window.location.href = 'declaration-form.html';
-                    this.showNotification('Fonctionnalité de préparation bientôt disponible!', 'info');
-                }, 2000);
-            }
-
-            // Méthodes utilitaires
-            showNotification(message, type = 'info') {
-                // Créer une notification toast
-                const toast = document.createElement('div');
-                toast.className = `tax-toast tax-toast-${type}`;
-                toast.innerHTML = `
-                    <span>${message}</span>
-                    <button onclick="this.parentElement.remove()">×</button>
-                `;
-                
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    if (toast.parentElement) {
-                        toast.remove();
-                    }
-                }, 5000);
-            }
-
-            createTaxPDF(year = 2024) {
-                // Simulation de création de PDF
-                return URL.createObjectURL(new Blob(['Simulation PDF'], { type: 'application/pdf' }));
-            }
-
-            downloadFile(url, filename) {
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = filename;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-
-            showPaymentModal(paymentData) {
-                const modal = document.createElement('div');
-                modal.className = 'tax-modal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <h3>Simulation de Paiement</h3>
-                        <div class="payment-details">
-                            <p><strong>Montant:</strong> ${this.formatCurrency(paymentData.amount)}</p>
-                            <p><strong>Méthode:</strong> ${paymentData.method}</p>
-                            <p><strong>Référence:</strong> ${paymentData.reference}</p>
-                        </div>
-                        <div class="modal-actions">
-                            <button class="btn btn-outline" onclick="this.closest('.tax-modal').remove()">Annuler</button>
-                            <button class="btn btn-primary" onclick="this.closest('.tax-modal').remove(); taxManager.showNotification('Paiement simulé avec succès!', 'success')">Confirmer</button>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(modal);
-            }
-
-            showDeclarationModal(year) {
-                const modal = document.createElement('div');
-                modal.className = 'tax-modal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <h3>Déclaration Fiscale ${year}</h3>
-                        <div class="declaration-details">
-                            <p><strong>Année:</strong> ${year}</p>
-                            <p><strong>Montant:</strong> ${this.formatCurrency(year === 2023 ? 2850000 : 2400000)}</p>
-                            <p><strong>Statut:</strong> Payée</p>
-                            <p><strong>Date de déclaration:</strong> ${year === 2023 ? '15/12/2023' : '20/12/2022'}</p>
-                        </div>
-                        <div class="modal-actions">
-                            <button class="btn btn-primary" onclick="taxManager.downloadDeclaration(${year})">Télécharger</button>
-                            <button class="btn btn-outline" onclick="this.closest('.tax-modal').remove()">Fermer</button>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(modal);
-            }
-        }
-
-        // Initialisation du gestionnaire d'authentification
-        const authManager = new AuthManager();
-
-        // Fonctions globales accessibles depuis HTML
-        function checkAuth(requiredRole = null) {
-            return authManager.checkAuth(requiredRole);
-        }
-
-        function getCurrentUser() {
-            return authManager.getCurrentUser();
-        }
-
-        function logout() {
-            authManager.logout();
-        }
-
-        // Initialisation
-        let taxManager;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Vérifier l'authentification
-            if (!checkAuth('proprietaire')) {
-                return;
-            }
-
-            // Initialiser le gestionnaire d'impôts
-            taxManager = new TaxManager();
-
-            // Mettre à jour le nom d'utilisateur
-            const user = getCurrentUser();
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-            }
-
-            // Gestion du menu mobile
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const sidebar = document.getElementById('sidebar');
-            
-            if (mobileMenuBtn && sidebar) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    sidebar.classList.toggle('active');
-                });
-            }
-
-            // Fermer le menu mobile en cliquant à l'extérieur
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768 && 
-                    !sidebar.contains(event.target) && 
-                    !mobileMenuBtn.contains(event.target) &&
-                    sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                }
-            });
-        });
-
-        // Fonctions globales pour les événements onclick
-        function generateTaxStatement() {
-            taxManager.generateTaxStatement();
-        }
-
-        function simulatePayment() {
-            taxManager.simulatePayment();
-        }
-
-        function viewDeclaration(year) {
-            taxManager.viewDeclaration(year);
-        }
-
-        function downloadDeclaration(year) {
-            taxManager.downloadDeclaration(year);
-        }
-
-        function prepareDeclaration() {
-            taxManager.prepareDeclaration();
-        }
+        function logout() { if (confirm('Souhaitez-vous vous déconnecter ?')) window.location.href = '../login.html'; }
     </script>
 </body>
 </html>

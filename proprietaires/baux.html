@@ -1,792 +1,146 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baux Locatifs - PNSBIL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Reset et styles de base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: #f8fafc;
-            color: #1e293b;
-            line-height: 1.6;
-        }
-
-        /* Header */
-        .dashboard-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo span:first-child {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .logo span:last-child {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-name {
-            font-weight: 600;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 80px;
-            height: calc(100vh - 80px);
-            width: 280px;
-            background: #1e293b;
-            color: white;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-section {
-            padding: 1.5rem;
-            border-bottom: 1px solid #334155;
-        }
-
-        .nav-section h3 {
-            color: #94a3b8;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: #cbd5e1;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            margin-bottom: 0.25rem;
-        }
-
-        .nav-link:hover {
-            background: #334155;
-            color: white;
-        }
-
-        .nav-link.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        /* Contenu principal */
-        .main-content {
-            margin-left: 280px;
-            margin-top: 80px;
-            padding: 2rem;
-            min-height: calc(100vh - 80px);
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .page-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .page-header p {
-            color: #64748b;
-            font-size: 1.1rem;
-        }
-
-        /* Boutons */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .btn-outline:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-warning {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .btn-warning:hover {
-            background: #d97706;
-        }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-        }
-
-        /* Cartes de métriques */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .metric-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .metric-icon {
-            font-size: 2rem;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 12px;
-            color: white;
-        }
-
-        .metric-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
-
-        .metric-change {
-            font-size: 0.9rem;
-        }
-
-        .metric-change.positive {
-            color: #10b981;
-        }
-
-        /* Section des baux */
-        .leases-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .view-options {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .view-option {
-            padding: 0.5rem 1rem;
-            border: 1px solid #e2e8f0;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .view-option.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        /* Grille et liste des baux */
-        .leases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .leases-grid.list-view {
-            grid-template-columns: 1fr;
-        }
-
-        .lease-card {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 1.5rem;
-            border-left: 4px solid #667eea;
-            transition: all 0.3s ease;
-        }
-
-        .lease-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .lease-card.warning {
-            border-left-color: #f59e0b;
-            background: #fffbeb;
-        }
-
-        .lease-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .lease-status {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .lease-status.active {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .lease-status.expiring {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .lease-info {
-            margin-bottom: 1.5rem;
-        }
-
-        .lease-tenant, .lease-dates, .lease-amount {
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-        }
-
-        .lease-dates {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .lease-progress {
-            margin-top: 1rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 3px;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #667eea;
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-
-        .lease-notice {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 0.5rem;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
-        }
-
-        .lease-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        /* Baux expirés */
-        .expired-leases {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        .leases-list {
-            margin-top: 1rem;
-        }
-
-        .lease-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .lease-item:hover {
-            background: #f1f5f9;
-        }
-
-        .lease-item.expired {
-            opacity: 0.7;
-        }
-
-        .lease-summary {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        /* Style pour la vue liste */
-        .leases-grid.list-view .lease-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .leases-grid.list-view .lease-info {
-            flex: 1;
-            margin-bottom: 0;
-            margin-right: 2rem;
-        }
-
-        .leases-grid.list-view .lease-header {
-            margin-bottom: 0;
-            min-width: 200px;
-        }
-
-        /* Footer */
-        footer {
-            margin-left: 280px;
-            background: #1e293b;
-            color: white;
-            padding: 2rem;
-        }
-
-        footer a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: white;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h5 {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid #334155;
-        }
-
-        /* Modales et notifications */
-        .lease-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #64748b;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .lease-toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            color: white;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            animation: slideIn 0.3s ease;
-        }
-
-        .lease-toast-info {
-            background: #3b82f6;
-        }
-
-        .lease-toast-success {
-            background: #10b981;
-        }
-
-        .lease-toast-error {
-            background: #ef4444;
-        }
-
-        .lease-toast button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0;
-            width: 20px;
-            height: 20px;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                z-index: 1000;
-            }
-            
-            .main-content, footer {
-                margin-left: 0;
-            }
-            
-            .metrics-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .leases-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header-actions {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .section-header {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .view-options {
-                align-self: flex-end;
-            }
-            
-            .lease-actions {
-                flex-direction: column;
-            }
-            
-            .leases-grid.list-view .lease-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .leases-grid.list-view .lease-info {
-                margin-right: 0;
-                margin-bottom: 1rem;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-            }
-            
-            .lease-toast {
-                left: 20px;
-                right: 20px;
-            }
-        }
-
-        /* Menu mobile */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .sidebar.active {
-                transform: translateX(0);
-            }
-        }
-    </style>
+    <title>Mes Baux - Espace Propriétaire | PNSBIL</title>
+    <!-- CSS Standardisé -->
+    <link rel="stylesheet" href="../css/agences-ministerial.css">
+    <link rel="stylesheet" href="../css/pages/proprietaires-baux.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="dashboard-header">
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="header-content">
-            <div class="logo">
-                <span>🏠 PNSBIL</span>
-                <span>Espace Propriétaire</span>
-            </div>
-            <div class="user-menu">
-                <span class="user-name" id="userName">M. Mohamed Diallo</span>
-                <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
-            </div>
-        </div>
-    </header>
-
-    <nav class="sidebar" id="sidebar">
-        <div class="nav-section">
-            <h3>Gestion Immobilière</h3>
-            <a href="dashboard.html" class="nav-link">📊 Tableau de bord</a>
-            <a href="proprietes.html" class="nav-link">🏠 Mes propriétés</a>
-            <a href="baux.html" class="nav-link active">📑 Baux locatifs</a>
-            <a href="paiements.html" class="nav-link">💳 Paiements</a>
-            <a href="impots.html" class="nav-link">💰 Impôts locatifs</a>
-        </div>
-        
-        <div class="nav-section">
-            <h3>Communication</h3>
-            <a href="communication.html" class="nav-link">💬 Messagerie</a>
-        </div>
-    </nav>
-
-    <main class="main-content">
-        <div class="page-header">
-            <div class="header-actions">
-                <h1>Gestion des Baux Locatifs</h1>
-                <button class="btn btn-primary" onclick="showAddLeaseModal()">
-                    📝 Nouveau bail
-                </button>
-            </div>
-            <p>Suivez et gérez tous vos contrats de location</p>
-        </div>
-
-        <!-- Statistiques des baux -->
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-icon">📑</div>
-                <div class="metric-info">
-                    <h3>Baux Actifs</h3>
-                    <div class="metric-value">6</div>
-                    <div class="metric-change">94% occupation</div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">⏰</div>
-                <div class="metric-info">
-                    <h3>À Renouveler</h3>
-                    <div class="metric-value">2</div>
-                    <div class="metric-change">Dans 3 mois</div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">✅</div>
-                <div class="metric-info">
-                    <h3>Conformité</h3>
-                    <div class="metric-value">100%</div>
-                    <div class="metric-change positive">À jour</div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">💰</div>
-                <div class="metric-info">
-                    <h3>Loyers Mensuels</h3>
-                    <div class="metric-value"> 2.5M FCFA</div>
-                    <div class="metric-change positive">+12%</div>
+    <div class="dashboard-layout">
+        <!-- Ministerial Banner -->
+        <div class="ministerial-banner" role="banner">
+            <div class="container-fluid">
+                <div class="banner-content">
+                    <div class="banner-left">
+                        <div class="banner-seal">
+                            <svg viewBox="0 0 100 100" width="24" height="24">
+                                <circle cx="50" cy="50" r="48" fill="#FCD116" stroke="#CE1126" stroke-width="2"/>
+                                <circle cx="50" cy="50" r="40" fill="#007A5E" stroke="#FCD116" stroke-width="1"/>
+                                <text x="50" y="60" font-size="32" font-weight="bold" fill="#FCD116" text-anchor="middle">BF</text>
+                            </svg>
+                        </div>
+                        <span>République du Burkina Faso • Ministère de l'Habitat</span>
+                    </div>
+                    <div class="banner-right">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Espace Propriétaire Sécurisé</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Liste des baux -->
-        <div class="leases-section">
-            <div class="section-header">
-                <h2>Baux en Cours</h2>
-                <div class="view-options">
-                    <button class="view-option active" data-view="grid">📊 Grille</button>
-                    <button class="view-option" data-view="list">📋 Liste</button>
+        <!-- Main Header -->
+        <header class="dashboard-header">
+            <div class="header-container">
+                <div class="header-left">
+                    <div class="logo-area">
+                        <i class="fas fa-home-user"></i>
+                        <div>
+                            <span class="logo-title">PNSBIL</span>
+                            <span class="logo-subtitle">Propriétaires</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name" id="userName">M. Mohamed Diallo</span>
+                            <span class="user-role">Propriétaire</span>
+                        </div>
+                        <div class="user-avatar">MD</div>
+                        <button class="logout-btn" onclick="logout()" title="Déconnexion">
+                            <i class="fas fa-power-off"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <span class="section-title">Principal</span>
+                    <a href="dashboard.html" class="menu-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                    <a href="proprietes.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>Mes propriétés</span>
+                    </a>
+                    <a href="baux.html" class="menu-item active">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Mes baux</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <span class="section-title">Finance & Fiscalité</span>
+                    <a href="paiements.html" class="menu-item">
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Paiements</span>
+                    </a>
+                    <a href="impots.html" class="menu-item">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Impôts locatifs</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <span class="section-title">Support</span>
+                    <a href="communication.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>Messagerie</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="content-header">
+                <div class="header-text">
+                    <h1>Gestion des Baux</h1>
+                    <p>Suivez l'état de vos contrats de location et leurs renouvellements</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Nouveau bail
+                    </button>
                 </div>
             </div>
 
-            <div class="leases-grid" id="leasesView">
+            <!-- Métriques -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon" style="color: #007A5E;"><i class="fas fa-file-signature"></i></div>
+                    <div class="metric-info">
+                        <h3>Baux Actifs</h3>
+                        <div class="metric-value">6</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon" style="color: #f59e0b;"><i class="fas fa-clock"></i></div>
+                    <div class="metric-info">
+                        <h3>À renouveler</h3>
+                        <div class="metric-value">2</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon" style="color: #667eea;"><i class="fas fa-percentage"></i></div>
+                    <div class="metric-info">
+                        <h3>Occupation</h3>
+                        <div class="metric-value">94%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Liste des baux -->
+            <div class="leases-grid">
                 <!-- Bail 1 -->
                 <div class="lease-card">
                     <div class="lease-header">
@@ -795,25 +149,23 @@
                     </div>
                     <div class="lease-info">
                         <div class="lease-tenant">
-                            <strong>Locataire:</strong> Aminata Sy
+                            <i class="fas fa-user-circle"></i> Locataire: <strong>Aminata Sy</strong>
                         </div>
                         <div class="lease-dates">
-                            <span>📅 Début: 01/01/2024</span>
-                            <span>📅 Fin: 31/12/2024</span>
+                            <span><i class="fas fa-calendar-alt"></i> Début: 01/01/2024</span>
+                            <span><i class="fas fa-calendar-check"></i> Fin: 31/12/2024</span>
                         </div>
                         <div class="lease-amount">
-                            💰 Loyer:  450,000 FCFA/mois
+                            <span><i class="fas fa-money-bill-wave" style="color: #007A5E;"></i> 450,000 FCFA/mois</span>
                         </div>
                         <div class="lease-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 75%"></div>
-                            </div>
-                            <span>75% écoulé</span>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+                            <span class="progress-label">75% du contrat écoulé</span>
                         </div>
                     </div>
                     <div class="lease-actions">
-                        <button class="btn btn-outline" onclick="viewLease(1)">👁️ Détails</button>
-                        <button class="btn btn-primary" onclick="renewLease(1)">🔄 Renouveler</button>
+                        <button class="btn btn-outline" title="Télécharger PDF"><i class="fas fa-file-pdf"></i></button>
+                        <button class="btn btn-primary" style="flex: 1;">Détails</button>
                     </div>
                 </div>
 
@@ -825,597 +177,88 @@
                     </div>
                     <div class="lease-info">
                         <div class="lease-tenant">
-                            <strong>Locataire:</strong> Jean Dupont
+                            <i class="fas fa-user-circle"></i> Locataire: <strong>Jean Dupont</strong>
                         </div>
                         <div class="lease-dates">
-                            <span>📅 Début: 01/02/2024</span>
-                            <span>📅 Fin: 31/01/2025</span>
+                            <span><i class="fas fa-calendar-alt"></i> Début: 01/02/2024</span>
+                            <span><i class="fas fa-calendar-check"></i> Fin: 31/01/2025</span>
                         </div>
                         <div class="lease-amount">
-                            💰 Loyer:  1,200,000 FCFA/mois
+                            <span><i class="fas fa-money-bill-wave" style="color: #007A5E;"></i> 1,200,000 FCFA/mois</span>
                         </div>
                         <div class="lease-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 60%"></div>
-                            </div>
-                            <span>60% écoulé</span>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
+                            <span class="progress-label">60% du contrat écoulé</span>
                         </div>
                     </div>
                     <div class="lease-actions">
-                        <button class="btn btn-outline" onclick="viewLease(2)">👁️ Détails</button>
-                        <button class="btn btn-primary" onclick="renewLease(2)">🔄 Renouveler</button>
+                        <button class="btn btn-outline" title="Télécharger PDF"><i class="fas fa-file-pdf"></i></button>
+                        <button class="btn btn-primary" style="flex: 1;">Détails</button>
                     </div>
                 </div>
 
-                <!-- Bail 3 - À renouveler -->
+                <!-- Bail 3 -->
                 <div class="lease-card warning">
                     <div class="lease-header">
                         <h3>Studio C5</h3>
-                        <span class="lease-status expiring">À renouveler</span>
+                        <span class="lease-status expiring">Expire bientôt</span>
                     </div>
                     <div class="lease-info">
                         <div class="lease-tenant">
-                            <strong>Locataire:</strong> Mariam Sow
+                            <i class="fas fa-user-circle"></i> Locataire: <strong>Mariam Sow</strong>
                         </div>
                         <div class="lease-dates">
-                            <span>📅 Début: 01/03/2023</span>
-                            <span>📅 Fin: 28/02/2024</span>
+                            <span><i class="fas fa-calendar-alt"></i> Début: 01/03/2023</span>
+                            <span><i class="fas fa-calendar-times" style="color: #CE1126;"></i> Fin: 28/02/2024</span>
                         </div>
                         <div class="lease-amount">
-                            💰 Loyer:  250,000 FCFA/mois
+                            <span><i class="fas fa-money-bill-wave" style="color: #007A5E;"></i> 250,000 FCFA/mois</span>
                         </div>
                         <div class="lease-notice">
-                            ⚠️ Expire dans 90 jours
+                            <i class="fas fa-exclamation-triangle"></i> Renouvellement à prévoir
                         </div>
                     </div>
                     <div class="lease-actions">
-                        <button class="btn btn-outline" onclick="viewLease(3)">👁️ Détails</button>
-                        <button class="btn btn-warning" onclick="renewLease(3)">📅 Renouveler</button>
+                        <button class="btn btn-outline" title="Télécharger PDF"><i class="fas fa-file-pdf"></i></button>
+                        <button class="btn btn-warning" style="flex: 1; background-color: #f59e0b; color: white;">Renouveler</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <!-- Baux expirés -->
-        <div class="expired-leases">
-            <h2>Baux Terminés</h2>
-            <div class="leases-list">
-                <div class="lease-item expired">
-                    <div class="lease-summary">
-                        <strong>Appartement A8</strong>
-                        <span>Ancien locataire: Paul Martin</span>
-                        <span>Période: 01/06/2022 - 31/05/2023</span>
+        <!-- Footer Standardisé -->
+        <footer class="dashboard-footer">
+            <div class="footer-container">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <h3>PNSBIL</h3>
+                        <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs au Burkina Faso</p>
                     </div>
-                    <button class="btn btn-outline" onclick="viewArchivedLease(4)">📁 Archives</button>
+                    <div class="footer-links">
+                        <div class="footer-col">
+                            <h4>Navigation</h4>
+                            <a href="dashboard.html">Accueil</a>
+                            <a href="proprietes.html">Mes Biens</a>
+                            <a href="baux.html">Mes Baux</a>
+                        </div>
+                        <div class="footer-col">
+                            <h4>Finance</h4>
+                            <a href="paiements.html">Paiements</a>
+                            <a href="impots.html">Impôts</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 République du Burkina Faso • PNSBIL • Tous droits réservés</p>
                 </div>
             </div>
-        </div>
-    </main>
+        </footer>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h5>PNSBIL</h5>
-                <p>Plateforme Nationale de Suivi des Baux et Perception des Impôts Locatifs</p>
-                <p>Modernisation et digitalisation de la gestion du marché locatif.</p>
-            </div>
-            <div class="footer-section">
-                <h5>Liens rapides</h5>
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="properties.html">Propriétés</a></li>
-                    <li><a href="leases.html">Baux</a></li>
-                    <li><a href="taxes.html">Impôts</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h5>Ressources</h5>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Guides</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Mentions légales</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h5>Contact</h5>
-                <ul>
-                    <li><i class="fas fa-map-marker-alt me-2"></i> Avenue XXXXX, Ouagadougou, Burkina Faso</li>
-                    <li><i class="fas fa-phone me-2"></i> +226 33 123 45 67</li>
-                    <li><i class="fas fa-envelope me-2"></i> contact@pnsbil.sn</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 PNSBIL - Tous droits réservés</p>
-        </div>
-    </footer>
-
+    <script src="../js/auth.js"></script>
+    <script src="../js/proprietaires-baux.js"></script>
     <script>
-        // Gestion de l'authentification
-        class AuthManager {
-            constructor() {
-                this.currentUser = null;
-                this.init();
-            }
-
-            init() {
-                // Vérifier si l'utilisateur est connecté au chargement
-                const savedUser = localStorage.getItem('currentUser');
-                if (savedUser) {
-                    this.currentUser = JSON.parse(savedUser);
-                } else {
-                    // Simulation de connexion pour le développement
-                    this.simulateLogin({
-                        name: "M. Mohamed Diallo",
-                        role: "proprietaire",
-                        email: "m.diallo@example.com"
-                    });
-                }
-            }
-
-            // Vérifier l'authentification
-            checkAuth(requiredRole = null) {
-                if (!this.currentUser) {
-                    window.location.href = '../index.html';
-                    return false;
-                }
-
-                if (requiredRole && this.currentUser.role !== requiredRole) {
-                    window.location.href = '../index.html';
-                    return false;
-                }
-
-                return true;
-            }
-
-            // Obtenir l'utilisateur actuel
-            getCurrentUser() {
-                return this.currentUser;
-            }
-
-            // Déconnexion
-            logout() {
-                localStorage.removeItem('currentUser');
-                this.currentUser = null;
-                window.location.href = '../index.html';
-            }
-
-            // Simulation de connexion (pour le développement)
-            simulateLogin(userData) {
-                this.currentUser = userData;
-                localStorage.setItem('currentUser', JSON.stringify(userData));
-            }
-        }
-
-        // Gestion des baux locatifs
-        class LeaseManager {
-            constructor() {
-                this.initEventListeners();
-                this.loadLeasesData();
-            }
-
-            initEventListeners() {
-                // Gestion de la vue (grille/liste)
-                document.querySelectorAll('.view-option').forEach(option => {
-                    option.addEventListener('click', function() {
-                        document.querySelectorAll('.view-option').forEach(opt => opt.classList.remove('active'));
-                        this.classList.add('active');
-                        
-                        const view = this.dataset.view;
-                        const container = document.getElementById('leasesView');
-                        
-                        if (view === 'list') {
-                            container.classList.add('list-view');
-                        } else {
-                            container.classList.remove('list-view');
-                        }
-                    });
-                });
-            }
-
-            loadLeasesData() {
-                // Charger les données des baux (simulation)
-                const leasesData = {
-                    activeLeases: 6,
-                    toRenew: 2,
-                    compliance: 100,
-                    monthlyRent: 2500000
-                };
-
-                this.updateLeasesDisplay(leasesData);
-            }
-
-            updateLeasesDisplay(data) {
-                // Mettre à jour l'affichage avec les données
-                // Cette fonction pourrait mettre à jour les métriques si nécessaire
-            }
-
-            // Afficher le modal d'ajout de bail
-            showAddLeaseModal() {
-                this.showNotification('Ouverture du formulaire de création de bail...', 'info');
-                
-                const modal = document.createElement('div');
-                modal.className = 'lease-modal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Nouveau Bail Locatif</h2>
-                            <button class="modal-close" onclick="this.closest('.lease-modal').remove()">×</button>
-                        </div>
-                        <form id="leaseForm">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="property">Propriété *</label>
-                                    <select class="form-control" id="property" required>
-                                        <option value="">Sélectionnez une propriété</option>
-                                        <option value="appartement-b12">Appartement B12</option>
-                                        <option value="villa-45">Villa 45</option>
-                                        <option value="studio-c5">Studio C5</option>
-                                        <option value="appartement-a8">Appartement A8</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="rentAmount">Loyer Mensuel (FCFA) *</label>
-                                    <input type="number" class="form-control" id="rentAmount" required>
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="startDate">Date de début *</label>
-                                    <input type="date" class="form-control" id="startDate" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="endDate">Date de fin *</label>
-                                    <input type="date" class="form-control" id="endDate" required>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="tenantName">Nom du locataire *</label>
-                                <input type="text" class="form-control" id="tenantName" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="tenantEmail">Email du locataire</label>
-                                <input type="email" class="form-control" id="tenantEmail">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="tenantPhone">Téléphone du locataire *</label>
-                                <input type="tel" class="form-control" id="tenantPhone" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="deposit">Dépôt de garantie (FCFA)</label>
-                                <input type="number" class="form-control" id="deposit">
-                            </div>
-                            
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-outline" onclick="this.closest('.lease-modal').remove()">Annuler</button>
-                                <button type="submit" class="btn btn-primary">Créer le bail</button>
-                            </div>
-                        </form>
-                    </div>
-                `;
-                
-                document.body.appendChild(modal);
-                
-                // Gérer la soumission du formulaire
-                document.getElementById('leaseForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.createLease();
-                });
-            }
-
-            // Créer un nouveau bail
-            createLease() {
-                this.showNotification('Création du bail en cours...', 'info');
-                
-                // Simulation de création avec délai
-                setTimeout(() => {
-                    this.showNotification('Bail créé avec succès!', 'success');
-                    document.querySelector('.lease-modal').remove();
-                    
-                    // Recharger les données (simulation)
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                }, 2000);
-            }
-
-            // Voir les détails d'un bail
-            viewLease(id) {
-                this.showNotification(`Ouverture des détails du bail ${id}...`, 'info');
-                
-                // Simulation d'ouverture de modal avec les détails
-                setTimeout(() => {
-                    this.showLeaseDetailsModal(id);
-                }, 1000);
-            }
-
-            // Renouveler un bail
-            renewLease(id) {
-                this.showNotification(`Renouvellement du bail ${id}...`, 'info');
-                
-                // Simulation de renouvellement
-                setTimeout(() => {
-                    this.showRenewalModal(id);
-                }, 1500);
-            }
-
-            // Voir un bail archivé
-            viewArchivedLease(id) {
-                this.showNotification(`Ouverture des archives du bail ${id}...`, 'info');
-                
-                setTimeout(() => {
-                    this.showArchivedLeaseModal(id);
-                }, 1000);
-            }
-
-            // Afficher les détails d'un bail
-            showLeaseDetailsModal(id) {
-                const modal = document.createElement('div');
-                modal.className = 'lease-modal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Détails du Bail #${id}</h2>
-                            <button class="modal-close" onclick="this.closest('.lease-modal').remove()">×</button>
-                        </div>
-                        <div class="lease-details">
-                            <div class="form-group">
-                                <label>Propriété:</label>
-                                <p>Appartement B12</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Locataire:</label>
-                                <p>Aminata Sy</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Période:</label>
-                                <p>01/01/2024 - 31/12/2024</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Loyer mensuel:</label>
-                                <p> 450,000 FCFA</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Dépôt de garantie:</label>
-                                <p> 900,000 FCFA</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Statut:</label>
-                                <p><span class="lease-status active">Actif</span></p>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn btn-primary" onclick="leaseManager.downloadLeaseContract(${id})">📄 Télécharger le contrat</button>
-                            <button class="btn btn-outline" onclick="this.closest('.lease-modal').remove()">Fermer</button>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(modal);
-            }
-
-            // Afficher le modal de renouvellement
-            showRenewalModal(id) {
-                const modal = document.createElement('div');
-                modal.className = 'lease-modal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Renouveler le Bail #${id}</h2>
-                            <button class="modal-close" onclick="this.closest('.lease-modal').remove()">×</button>
-                        </div>
-                        <form id="renewalForm">
-                            <div class="form-group">
-                                <label for="newEndDate">Nouvelle date de fin *</label>
-                                <input type="date" class="form-control" id="newEndDate" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="newRent">Nouveau loyer (FCFA)</label>
-                                <input type="number" class="form-control" id="newRent" value="450000">
-                            </div>
-                            
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-outline" onclick="this.closest('.lease-modal').remove()">Annuler</button>
-                                <button type="submit" class="btn btn-primary">Renouveler le bail</button>
-                            </div>
-                        </form>
-                    </div>
-                `;
-                
-                document.body.appendChild(modal);
-                
-                // Gérer la soumission du formulaire
-                document.getElementById('renewalForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.confirmRenewal(id);
-                });
-            }
-
-            // Confirmer le renouvellement
-            confirmRenewal(id) {
-                this.showNotification(`Renouvellement du bail ${id} en cours...`, 'info');
-                
-                setTimeout(() => {
-                    this.showNotification('Bail renouvelé avec succès!', 'success');
-                    document.querySelector('.lease-modal').remove();
-                    
-                    // Recharger les données (simulation)
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                }, 2000);
-            }
-
-            // Afficher les détails d'un bail archivé
-            showArchivedLeaseModal(id) {
-                const modal = document.createElement('div');
-                modal.className = 'lease-modal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Bail Archivé #${id}</h2>
-                            <button class="modal-close" onclick="this.closest('.lease-modal').remove()">×</button>
-                        </div>
-                        <div class="lease-details">
-                            <div class="form-group">
-                                <label>Propriété:</label>
-                                <p>Appartement A8</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Ancien locataire:</label>
-                                <p>Paul Martin</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Période:</label>
-                                <p>01/06/2022 - 31/05/2023</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Loyer mensuel:</label>
-                                <p> 350,000 FCFA</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Dépôt rendu:</label>
-                                <p> 700,000 FCFA</p>
-                            </div>
-                            <div class="form-group">
-                                <label>État de restitution:</label>
-                                <p>Bon état</p>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn btn-primary" onclick="leaseManager.downloadLeaseContract(${id})">📄 Télécharger l'archive</button>
-                            <button class="btn btn-outline" onclick="this.closest('.lease-modal').remove()">Fermer</button>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(modal);
-            }
-
-            // Télécharger un contrat de bail
-            downloadLeaseContract(id) {
-                this.showNotification(`Téléchargement du contrat ${id}...`, 'info');
-                
-                setTimeout(() => {
-                    const pdfUrl = this.createLeasePDF(id);
-                    this.downloadFile(pdfUrl, `contrat-bail-${id}.pdf`);
-                    this.showNotification('Contrat téléchargé!', 'success');
-                }, 1500);
-            }
-
-            // Méthodes utilitaires
-            showNotification(message, type = 'info') {
-                // Créer une notification toast
-                const toast = document.createElement('div');
-                toast.className = `lease-toast lease-toast-${type}`;
-                toast.innerHTML = `
-                    <span>${message}</span>
-                    <button onclick="this.parentElement.remove()">×</button>
-                `;
-                
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    if (toast.parentElement) {
-                        toast.remove();
-                    }
-                }, 5000);
-            }
-
-            createLeasePDF(id) {
-                // Simulation de création de PDF
-                return URL.createObjectURL(new Blob(['Simulation PDF'], { type: 'application/pdf' }));
-            }
-
-            downloadFile(url, filename) {
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = filename;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-        }
-
-        // Initialisation du gestionnaire d'authentification
-        const authManager = new AuthManager();
-
-        // Fonctions globales accessibles depuis HTML
-        function checkAuth(requiredRole = null) {
-            return authManager.checkAuth(requiredRole);
-        }
-
-        function getCurrentUser() {
-            return authManager.getCurrentUser();
-        }
-
-        function logout() {
-            authManager.logout();
-        }
-
-        // Initialisation
-        let leaseManager;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Vérifier l'authentification
-            if (!checkAuth('proprietaire')) {
-                return;
-            }
-
-            // Initialiser le gestionnaire de baux
-            leaseManager = new LeaseManager();
-
-            // Mettre à jour le nom d'utilisateur
-            const user = getCurrentUser();
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-            }
-
-            // Gestion du menu mobile
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const sidebar = document.getElementById('sidebar');
-            
-            if (mobileMenuBtn && sidebar) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    sidebar.classList.toggle('active');
-                });
-            }
-
-            // Fermer le menu mobile en cliquant à l'extérieur
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768 && 
-                    !sidebar.contains(event.target) && 
-                    !mobileMenuBtn.contains(event.target) &&
-                    sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                }
-            });
-        });
-
-        // Fonctions globales pour les événements onclick
-        function showAddLeaseModal() {
-            leaseManager.showAddLeaseModal();
-        }
-
-        function viewLease(id) {
-            leaseManager.viewLease(id);
-        }
-
-        function renewLease(id) {
-            leaseManager.renewLease(id);
-        }
-
-        function viewArchivedLease(id) {
-            leaseManager.viewArchivedLease(id);
-        }
+        function logout() { if (confirm('Souhaitez-vous vous déconnecter ?')) window.location.href = '../login.html'; }
     </script>
 </body>
 </html>
